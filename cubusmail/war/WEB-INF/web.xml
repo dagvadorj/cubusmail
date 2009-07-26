@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>cubusmail</display-name>
+
+	<welcome-file-list>
+		<welcome-file>cubusmail.jsp</welcome-file>
+	</welcome-file-list>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:cubus_beans.xml</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>cubusService</servlet-name>
+		<servlet-class>com.cubusmail.gwtui.server.services.CubusService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cubusService</servlet-name>
+		<url-pattern>/cubusmail/cubusService.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>mailboxService</servlet-name>
+		<servlet-class>com.cubusmail.gwtui.server.services.MailboxService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mailboxService</servlet-name>
+		<url-pattern>/cubusmail/mailboxService.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>userAccountService</servlet-name>
+		<servlet-class>com.cubusmail.gwtui.server.services.UserAccountService</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userAccountService</servlet-name>
+		<url-pattern>/cubusmail/userAccountService.rpc</url-pattern>
+	</servlet-mapping>
+
+<!-- 
+	<servlet>
+	  <servlet-name>jUnitHostImpl</servlet-name>
+	  <servlet-class>com.google.gwt.junit.server.JUnitHostImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>jUnitHostImpl</servlet-name>
+	  <url-pattern>/cubusmail/junithost</url-pattern>
+	</servlet-mapping>
+ -->
+ 
+	<servlet>
+		<servlet-name>showMessageSource</servlet-name>
+		<servlet-class>
+			com.cubusmail.gwtui.server.services.ShowMessageSourceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>showMessageSource</servlet-name>
+		<url-pattern>/cubusmail/showMessageSource.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>attachmentUpload</servlet-name>
+		<servlet-class>
+			com.cubusmail.gwtui.server.services.AttachmentUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>attachmentUpload</servlet-name>
+		<url-pattern>/cubusmail/attachmentUpload.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>retrieveAttachment</servlet-name>
+		<servlet-class>
+			com.cubusmail.gwtui.server.services.RetrieveAttachmentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>retrieveAttachment</servlet-name>
+		<url-pattern>/cubusmail/retrieveAttachment.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>retrieveImage</servlet-name>
+		<servlet-class>
+			com.cubusmail.gwtui.server.services.RetrieveImageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>retrieveImage</servlet-name>
+	  <url-pattern>/cubusmail/retrieveImage.rpc</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>mainFilter</filter-name>
+		<filter-class>com.cubusmail.gwtui.server.services.MainFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>mainFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			com.cubusmail.gwtui.server.services.CubusSessionListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			com.cubusmail.gwtui.server.services.CubusStartupListener</listener-class>
+	</listener>
+
+</web-app>
