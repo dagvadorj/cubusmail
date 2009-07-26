@@ -1,0 +1,61 @@
+
+html, body {
+	margin: 20px;
+	margin-right: 30px;
+	padding: 0px;
+	width: 95%;
+	height: 95%;
+}
+body {
+	background-color: #FFFFFF;
+}
+table, td {
+    empty-cells: show;
+}
+.detailprint { 
+	empty-cells: show;
+}
+.printcontent {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	line-height: 1.5em;
+	height: 1.6em;
+}
+.printline {
+	background-color: #000000;
+	color: #000000;
+}
+.printimage {
+	background-color: #000000;
+	position: absolute;
+}
+.printcontent, .printcontenttitle {
+	padding-left: 7px;
+	padding-right: 7px;	
+	font-weight : bold;	
+}
+.printheader {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	line-height: 1.5em;
+	height: 1.6em;
+	padding-left: 7px;
+	padding-right: 7px;	
+	font-weight: bold;
+	font-style: italic;
+}
+.printtitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+	padding-left: 7px;
+	padding-right: 7px;	
+	font-weight: bold;
+}
+.printcontent, .printcontentname {
+	padding-left: 7px;
+	padding-right: 7px;	
+	font-weight : normal;	
+}
+.printmailcontent {
+    font-size: 9pt;
+}

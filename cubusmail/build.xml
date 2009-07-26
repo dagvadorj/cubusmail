@@ -1,0 +1,90 @@
+<project name="Cubusmail" basedir="." default="all">
+
+	<property name="src.dir" value="./src" />
+	<property name="res.dir" value="./resources" />
+	<property name="war.dir" value="./war" />
+	
+	<property name="webapp.lib.dir" value="${war.dir}/WEB-INF/lib" />
+
+	<property name="classes.dir" value="${war.dir}/WEB-INF/classes" />
+	<property name="gwt.dir" value="gwtlib" />
+
+
+
+	<target name="clean">
+		<delete dir="${classes.dir}" />
+		<delete dir="${war.dir}/cubusmail" />
+	</target>
+	
+	
+	<target name="compile">
+		<mkdir dir="${classes.dir}" />
+		<javac destdir="${classes.dir}" srcdir="${src.dir}" excludes="**/client/**">
+			<classpath>
+				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
+				<fileset dir="./lib" includes="**/*.jar" />
+				<filelist>
+					<file name="${gwt.dir}/gwt-user.jar" />
+				</filelist>
+			</classpath>
+		</javac>
+		<copy todir="${classes.dir}">
+			<fileset dir="${res.dir}" />
+		</copy>
+	</target>
+
+	<target name="gwtcompile" depends="compile">
+		<java dir="." classname="com.google.gwt.dev.Compiler" fork="true" failonerror="true" maxmemory="1024m">			
+            <jvmarg value="-Xss1024k"/>
+			<arg value="-war" />
+			<arg value="./war" />
+			<arg value="-style" />
+			<arg value="OBF" />
+			<arg value="com.cubusmail.gwtui.Cubusmail"/>
+			<classpath>
+				<pathelement path="${src.dir}" />
+				<pathelement path="${res.dir}" />
+				<pathelement location="${gwt.dir}/gwt-user.jar" />
+				<pathelement location="${gwt.dir}/gwt-dev-linux.jar" />
+				<fileset dir="./lib" includes="**/*.jar" />
+				<pathelement location="${webapp.lib.dir}/gwittir-core-0.4.4.jar" />
+				<pathelement location="${webapp.lib.dir}/hibernate4gwt-1.1.1.jar" />
+				<pathelement location="${webapp.lib.dir}/ejb3-persistence.jar" />
+				<pathelement location="${webapp.lib.dir}/hibernate-annotations.jar" />
+			</classpath>
+		</java>
+	</target>
+	
+	<target name="war">
+		<war destfile="./cubusmail.war">
+			<fileset dir="${war.dir}" />
+			<classes dir="${classes.dir}"/>		
+		</war>
+	</target>
+
+	<target name="demo" depends="clean">
+		<antcall target="compile"/>
+		<replace file="resources/com/cubusmail/gwtui/client/CubusMessages.properties">
+			<replacetoken>demo_username=</replacetoken>
+			<replacevalue>demo_username=demo1</replacevalue>
+		</replace>
+		<replace file="resources/com/cubusmail/gwtui/client/CubusMessages.properties">
+			<replacetoken>demo_password=</replacetoken>
+			<replacevalue>demo_password=demo</replacevalue>
+		</replace>
+		<replace file="war/WEB-INF/classes/cubus_beans.xml">
+			<replacetoken>${cubus.config}</replacetoken>
+			<replacevalue>/etc/cubusmail/demo.properties</replacevalue>
+		</replace>
+		<antcall target="gwtcompile"/>
+		<war destfile="./demo.war">
+			<fileset dir="${war.dir}" />
+			<classes dir="${classes.dir}"/>
+		</war>
+	</target>
+	
+	<target name="all" depends="clean, gwtcompile, war">
+	</target>
+	
+</project>
+

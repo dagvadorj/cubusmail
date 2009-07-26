@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<module rename-to="cubusmail">
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.i18n.I18N"/>
+	<inherits name="com.google.gwt.junit.JUnit"/>
+
+	<!-- Inherit the GWT Ext stuff.                  -->
+	<inherits name="com.gwtext.GwtExt"/>
+    <inherits name="com.gwtextux.GwtExtUx"/>
+    <inherits name="com.gwtextux.LiveGrid"/>
+    <inherits name="com.gwtextux.ManagedIFrame"/>
+    <inherits name="com.gwtextux.UploadDialog"/>
+    <inherits name="com.gwtextux.GridSearchPlugin"/>
+	<inherits name="com.gwtextux.LovCombo"/>
+	<inherits name="com.gwtextux.ToastWindow"/>
+
+	<!-- Gwittir stuff -->
+    <inherits name='com.totsp.gwittir.Gwittir' />
+    <inherits name='com.totsp.gwittir.LoggingDisabled' />
+  
+	<!-- Inherit Hibernate4Gwt stuff.                  -->
+	<inherits name="net.sf.hibernate4gwt.Hibernate4Gwt15"/>
+    <inherits name="net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3"/>
+    
+    <!-- Logging 
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+	<extend-property name="log_level" values="DEBUG"/>
+	<set-property name="log_ConsoleLogger" value="DISABLED" />
+	<set-property name="log_DivLogger" value="DISABLED" />
+	<set-property name="log_FirebugLogger" value="DISABLED" />
+	<set-property name="log_GWTLogger" value="DISABLED" />
+	<set-property name="log_SystemLogger" value="DISABLED" />
+	<set-property name="log_RemoteLogger" value="DISABLED" />
+	<set-property name="log_WindowLogger" value="DISABLED" />
+	-->
+	
+	<!-- Specify the app entry point class. -->  
+	<entry-point class="com.cubusmail.gwtui.client.Cubusmail"/>
+    <extend-property name="locale" values="de"/>
+    <extend-property name="locale" values="en_UK"/>
+  
+	<servlet class="com.cubusmail.gwtui.server.services.CubusService" path="/cubusService.rpc"/>
+	<servlet class="com.cubusmail.gwtui.server.services.MailboxService" path="/mailboxService.rpc"/>
+	<servlet class="com.cubusmail.gwtui.server.services.UserAccountService" path="/userAccountService.rpc"/>
+
+	<servlet class="com.cubusmail.gwtui.server.services.ShowMessageSourceServlet" path="/showMessageSource.rpc"/>
+	<servlet class="com.cubusmail.gwtui.server.services.AttachmentUploadServlet" path="/attachmentUpload.rpc"/>
+	<servlet class="com.cubusmail.gwtui.server.services.RetrieveAttachmentServlet" path="/retrieveAttachment.rpc"/>
+	<servlet class="com.cubusmail.gwtui.server.services.RetrieveImageServlet" path="/retrieveImage.rpc"/>
+	
+    <source path="domain"/> 
+    <source path="client"/> 	  
+</module>
