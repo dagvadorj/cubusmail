@@ -1,10 +1,6 @@
-Cubusmail is a webbased IMAP mail client wich has a desktop application like user interface.
-It provides functions like MIME support, address book, folder manipulation, drag & drop and
-message searching.
+Cubusmail is a web based IMAP mail client which has a desktop application like user interface. It provides functions like MIME support, address book, folder manipulation, drag & drop and message searching.
 
-Cubusmail is written in Java and applies the Google Webtool Kit (GWT). It requires no external
-database so the date is stored by the hinternal H2 database. Other databases like MySQL will be
-supported later.
+Cubusmail is written in Java and applies the Google Web Toolkit (GWT). It requires no external database. The data is stored by H2. Other databases like MySQL will be supported later.
 
     * Advanced user interface
     * Full support for HTML messages
