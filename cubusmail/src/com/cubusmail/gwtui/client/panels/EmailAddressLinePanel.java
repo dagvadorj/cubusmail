@@ -33,7 +33,6 @@ import com.cubusmail.gwtui.client.widgets.EmailAddressLink;
  */
 public class EmailAddressLinePanel extends Panel {
 
-
 	public EmailAddressLinePanel() {
 
 		setLayout( new ColumnLayout() );
@@ -47,8 +46,13 @@ public class EmailAddressLinePanel extends Panel {
 
 		clear();
 		if ( addresses != null ) {
-			for (GWTAddress address : addresses) {
-				add( new EmailAddressLink( address ) );
+			for (int i = 0; i < addresses.length; i++) {
+				if ( i < (addresses.length - 1) ) {
+					add( new EmailAddressLink( addresses[i], true ) );
+				}
+				else {
+					add( new EmailAddressLink( addresses[i], false ) );
+				}
 			}
 		}
 	}
