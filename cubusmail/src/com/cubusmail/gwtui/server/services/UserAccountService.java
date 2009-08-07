@@ -350,8 +350,12 @@ public class UserAccountService extends HibernateRemoteService implements IUserA
 		getUserAccountDao().deleteContacts( ids );
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.gwtui.client.services.IUserAccountService#moveContacts(java.lang.Long[], com.cubusmail.gwtui.domain.ContactFolder)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.gwtui.client.services.IUserAccountService#moveContacts(
+	 * java.lang.Long[], com.cubusmail.gwtui.domain.ContactFolder)
 	 */
 	public void moveContacts( Long[] contactIds, ContactFolder targetFolder ) {
 

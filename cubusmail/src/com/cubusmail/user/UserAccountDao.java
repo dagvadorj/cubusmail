@@ -257,9 +257,12 @@ public class UserAccountDao extends HibernateDaoSupport {
 	public void deleteContacts( Long[] ids ) {
 
 		// needs optimizing
-		Collection<?> list = getHibernateTemplate().find( "from Contact c where c.id=?", ids );
-		if ( list != null ) {
-			this.getHibernateTemplate().deleteAll( list );
+		try {
+			getHibernateTemplate().bulkUpdate( "delete from ContactAddress a where contact_fk = ?", ids );
+			getHibernateTemplate().bulkUpdate( "delete from Contact c where c.id=?", ids );
+		}
+		catch (Throwable e) {
+			logger.error( e.getMessage(), e );
 		}
 	}
 
