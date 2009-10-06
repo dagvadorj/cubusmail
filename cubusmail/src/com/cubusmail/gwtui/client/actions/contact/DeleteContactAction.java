@@ -37,7 +37,7 @@ import com.cubusmail.gwtui.client.util.TextProvider;
  * 
  * @author Jürgen Schlierf
  */
-public class DeleteContactAction extends BaseGridAction implements AsyncCallback<Object> {
+public class DeleteContactAction extends BaseGridAction implements AsyncCallback<Void> {
 
 	private DeletionStoreListener deletionStoreListener;
 	private boolean deletionProcessed;
@@ -77,7 +77,7 @@ public class DeleteContactAction extends BaseGridAction implements AsyncCallback
 		}
 	}
 
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		for (int i = 0; i < getStore().getCount(); i++) {
 			if ( getSelectionModel().isSelected( i ) ) {

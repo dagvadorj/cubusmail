@@ -38,7 +38,7 @@ import com.cubusmail.gwtui.client.util.TextProvider;
  * 
  * @author schlierf
  */
-public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback<Object> {
+public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback<Void> {
 
 	/**
 	 * 
@@ -103,7 +103,7 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		PanelRegistry.LEFT_PANEL.unmask();
 		getSelectedTreeNode().remove();

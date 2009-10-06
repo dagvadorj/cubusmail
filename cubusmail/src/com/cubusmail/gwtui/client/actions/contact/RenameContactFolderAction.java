@@ -17,7 +17,7 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
-*/
+ */
 package com.cubusmail.gwtui.client.actions.contact;
 
 import com.gwtext.client.widgets.MessageBox;
@@ -53,18 +53,18 @@ public class RenameContactFolderAction extends GWTFolderAction {
 	 */
 	public void execute() {
 
-		MessageBox.prompt( TextProvider.get().actions_newfolder_text(),
-				TextProvider.get().actions_rename_contactfolder_question(), new MessageBox.PromptCallback() {
+		MessageBox.prompt( TextProvider.get().actions_newfolder_text(), TextProvider.get()
+				.actions_rename_contactfolder_question(), new MessageBox.PromptCallback() {
 
-					public void execute( String btnID, String text ) {
+			public void execute( String btnID, String text ) {
 
-						if ( "ok".equals( btnID ) ) {
-							if ( getSelectedTreeNode() != null ) {
-								renameFolder( getSelectedTreeNode(), text );
-							}
-						}
+				if ( "ok".equals( btnID ) ) {
+					if ( getSelectedTreeNode() != null ) {
+						renameFolder( getSelectedTreeNode(), text );
 					}
-				} );
+				}
+			}
+		} );
 	}
 
 	/**
@@ -76,10 +76,10 @@ public class RenameContactFolderAction extends GWTFolderAction {
 		PanelRegistry.LEFT_PANEL.mask();
 		ContactFolder folder = (ContactFolder) node.getUserObject();
 		folder.setFolderName( name );
-		ServiceProvider.getUserAccountService().saveContactFolder( folder, new AsyncCallbackAdapter<Object>() {
+		ServiceProvider.getUserAccountService().saveContactFolder( folder, new AsyncCallbackAdapter<Void>() {
 
 			@Override
-			public void onSuccess( Object result ) {
+			public void onSuccess( Void result ) {
 
 				node.setText( name );
 				PanelRegistry.LEFT_PANEL.unmask();

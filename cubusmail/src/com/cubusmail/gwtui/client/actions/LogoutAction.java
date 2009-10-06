@@ -17,7 +17,7 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
-*/
+ */
 package com.cubusmail.gwtui.client.actions;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -36,7 +36,7 @@ import com.cubusmail.gwtui.domain.UserAccount;
  * @author schlierf
  * 
  */
-public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
+public class LogoutAction extends GWTAction implements AsyncCallback<Void> {
 
 	/**
 	 * 
@@ -44,9 +44,9 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	public LogoutAction() {
 
 		super();
-		setText(TextProvider.get().actions_logout_text());
-		setImageName(ImageProvider.SYSTEM_LOGOUT);
-		setTooltipText(TextProvider.get().actions_logout_tooltip());
+		setText( TextProvider.get().actions_logout_text() );
+		setImageName( ImageProvider.SYSTEM_LOGOUT );
+		setTooltipText( TextProvider.get().actions_logout_tooltip() );
 	}
 
 	/*
@@ -56,9 +56,9 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
 	 * )
 	 */
-	public void onFailure(Throwable caught) {
+	public void onFailure( Throwable caught ) {
 
-		GWTExceptionHandler.handleException(caught);
+		GWTExceptionHandler.handleException( caught );
 		EventBroker.get().fireLogut();
 	}
 
@@ -68,7 +68,7 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess(Object result) {
+	public void onSuccess( Void result ) {
 
 		EventBroker.get().fireLogut();
 	}
@@ -80,18 +80,19 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	 */
 	public void execute() {
 
-		ServiceProvider.getUserAccountService().saveUserAccount(GWTSessionManager.get().getUserAccount(),
+		ServiceProvider.getUserAccountService().saveUserAccount( GWTSessionManager.get().getUserAccount(),
 				new AsyncCallbackAdapter<UserAccount>() {
 
-					public void onSuccess(UserAccount result) {
+					public void onSuccess( UserAccount result ) {
 
-						if (GWTSessionManager.get().getPreferences().isEmptyTrashAfterLogout()) {
+						if ( GWTSessionManager.get().getPreferences().isEmptyTrashAfterLogout() ) {
 							deleteTrash();
-						} else {
+						}
+						else {
 							logout();
 						}
 					}
-				});
+				} );
 	}
 
 	/**
@@ -99,7 +100,7 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	 */
 	private void logout() {
 
-		ServiceProvider.getCubusService().logout(this);
+		ServiceProvider.getCubusService().logout( this );
 	}
 
 	/**
@@ -108,15 +109,15 @@ public class LogoutAction extends GWTAction implements AsyncCallback<Object> {
 	private void deleteTrash() {
 
 		IGWTFolder folder = GWTSessionManager.get().getMailbox().getTrashFolder();
-		if (folder != null) {
-			ServiceProvider.getMailboxService().emptyFolder(folder.getId(), new AsyncCallbackAdapter<Object>() {
+		if ( folder != null ) {
+			ServiceProvider.getMailboxService().emptyFolder( folder.getId(), new AsyncCallbackAdapter<Void>() {
 
 				@Override
-				public void onSuccess(Object result) {
+				public void onSuccess( Void result ) {
 
 					logout();
 				}
-			});
+			} );
 		}
 		else {
 			logout();

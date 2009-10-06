@@ -42,7 +42,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
  * 
  * @author Jürgen Schlierf
  */
-public class CopyMoveMessagesAction extends BaseGridAction implements AsyncCallback<Object> {
+public class CopyMoveMessagesAction extends BaseGridAction implements AsyncCallback<Void> {
 
 	private boolean toMove;
 	private ButtonListenerAdapter okButtonListener;
@@ -123,7 +123,7 @@ public class CopyMoveMessagesAction extends BaseGridAction implements AsyncCallb
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		if ( this.toMove ) {
 			Record[] records = getSelectionModel().getSelections();

@@ -37,7 +37,7 @@ import com.cubusmail.gwtui.domain.ContactListFields;
  * 
  * @author Jürgen Schlierf
  */
-public class NewMessageForContactAction extends BaseGridAction implements AsyncCallback<Object> {
+public class NewMessageForContactAction extends BaseGridAction implements AsyncCallback<Void> {
 
 	/**
 	 * 
@@ -56,7 +56,7 @@ public class NewMessageForContactAction extends BaseGridAction implements AsyncC
 		ServiceProvider.getMailboxService().prepareNewMessage( this );
 	}
 
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		StringBuffer to = new StringBuffer();
 		Record[] records = getSelectionModel().getSelections();

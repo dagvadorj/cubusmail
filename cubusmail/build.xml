@@ -1,19 +1,30 @@
-<project name="Cubusmail" basedir="." default="all">
+<project name="Cubusmail" basedir="." default="war">
 
 	<property name="src.dir" value="./src" />
 	<property name="res.dir" value="./resources" />
+	<property name="build.dir" value="./build" />
 	<property name="war.dir" value="./war" />
-	
+	<property name="war.file.name" value="cubusmail.war" />
+	<property name="war.file" value="${build.dir}/${war.file.name}" />
+	<property name="dist.dir" value="./dist" />
+	<property name="docs.dir" value="./docs" />
+	<property name="etc.dir" value="./etc" />
+	<property name="classes.dir" value="${war.dir}/WEB-INF/classes" />
+	<property name="gwt.dir" value="./gwtlib" />
 	<property name="webapp.lib.dir" value="${war.dir}/WEB-INF/lib" />
 
-	<property name="classes.dir" value="${war.dir}/WEB-INF/classes" />
-	<property name="gwt.dir" value="gwtlib" />
-
-
+	<path id="release.files">
+		<fileset dir="." includes="${war.file}"/>
+		<fileset dir="${etc.dir}" includes="cubus.properties"/>
+		<fileset dir="${docs.dir}" includes="INSTALL.txt"/>
+		<fileset dir="${docs.dir}" includes="LICENSE.txt"/>
+		<fileset dir="${docs.dir}" includes="README.txt"/>
+	</path>
 
 	<target name="clean">
 		<delete dir="${classes.dir}" />
 		<delete dir="${war.dir}/cubusmail" />
+		<delete file="${war.file}" />
 	</target>
 	
 	
@@ -23,9 +34,7 @@
 			<classpath>
 				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
 				<fileset dir="./lib" includes="**/*.jar" />
-				<filelist>
-					<file name="${gwt.dir}/gwt-user.jar" />
-				</filelist>
+				<fileset dir="${gwt.dir}" includes="gwt-user.jar" />
 			</classpath>
 		</javac>
 		<copy todir="${classes.dir}">
@@ -39,7 +48,7 @@
 			<arg value="-war" />
 			<arg value="./war" />
 			<arg value="-style" />
-			<arg value="OBF" />
+			<arg value="OBF" /> 
 			<arg value="com.cubusmail.gwtui.Cubusmail"/>
 			<classpath>
 				<pathelement path="${src.dir}" />
@@ -56,7 +65,7 @@
 	</target>
 	
 	<target name="war">
-		<war destfile="./cubusmail.war">
+		<war destfile="${war.file}">
 			<fileset dir="${war.dir}" />
 			<classes dir="${classes.dir}"/>		
 		</war>
@@ -77,13 +86,27 @@
 			<replacevalue>/etc/cubusmail/demo.properties</replacevalue>
 		</replace>
 		<antcall target="gwtcompile"/>
-		<war destfile="./demo.war">
+		<war destfile="./build/demo.war">
 			<fileset dir="${war.dir}" />
 			<classes dir="${classes.dir}"/>
 		</war>
 	</target>
 	
-	<target name="all" depends="clean, gwtcompile, war">
+	<target name="release" depends="clean, gwtcompile, war">
+		<propertyfile file="${build.dir}/buildnumber.properties">
+			<entry key="cubusmail.buildnumber" value="1" operation="+" type="int"/>
+		</propertyfile>
+		<property file="${build.dir}/buildnumber.properties"/>
+		<mkdir dir="${dist.dir}" />		
+		<zip destfile="${dist.dir}/cubusmail_build${cubusmail.buildnumber}.zip" >
+			<path refid="release.files"/>
+		</zip>
+		<tar destfile="${dist.dir}/cubusmail_build${cubusmail.buildnumber}.tar.gz" compression="gzip">
+			<path refid="release.files"/>
+		</tar>
+	</target>
+	
+	<target name="all" depends="clean, gwtcompile, war, release">
 	</target>
 	
 </project>

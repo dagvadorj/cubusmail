@@ -60,12 +60,12 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @param folder
 	 */
-	public void saveContactFolder( ContactFolder folder, AsyncCallback<?> callback );
+	public void saveContactFolder( ContactFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void deleteContactFolder( ContactFolder folder, AsyncCallback<?> callback );
+	public void deleteContactFolder( ContactFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * Retrieve the contacts especially for the grid.
@@ -78,18 +78,18 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @param contact
 	 */
-	public void saveContact( Contact contact, AsyncCallback<?> callback );
+	public void saveContact( Contact contact, AsyncCallback<Void> callback );
 
 	/**
 	 * @param contacts
 	 */
-	public void deleteContacts( Long[] ids, AsyncCallback<?> callback );
+	public void deleteContacts( Long[] ids, AsyncCallback<Void> callback );
 
 	/**
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public void moveContacts( Long[] contactIds, ContactFolder targetFolder, AsyncCallback<?> callback );
+	public void moveContacts( Long[] contactIds, ContactFolder targetFolder, AsyncCallback<Void> callback );
 
 	/**
 	 * @param id

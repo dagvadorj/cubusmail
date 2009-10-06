@@ -45,7 +45,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
  * 
  * @author Jürgen Schlierf
  */
-public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<Object> {
+public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<Void> {
 
 	private ButtonListenerAdapter okButtonListener;
 
@@ -123,7 +123,8 @@ public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<O
 		if ( caught instanceof GWTMailFolderExistException ) {
 			MessageBox.alert( TextProvider.get().common_error(), TextProvider.get().exception_folder_already_exist(
 					e.getFolderName() ) );
-		} else {
+		}
+		else {
 			MessageBox.alert( TextProvider.get().common_error(), TextProvider.get().exception_folder_move(
 					e.getFolderName() ) );
 		}
@@ -137,7 +138,7 @@ public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<O
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		PanelRegistry.LEFT_PANEL.unmask();
 		EventBroker.get().fireFoldersReload();
@@ -153,7 +154,8 @@ public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<O
 				String sourceFolderId = ((GWTMailFolder) getSelectedTreeNode().getUserObject()).getId();
 				String targetFolderId = window.getSelectedFolderId();
 				moveFolder( sourceFolderId, targetFolderId );
-			} else {
+			}
+			else {
 				MessageBox.alert( "Bitte wählen einen Ordner aus" );
 			}
 		}

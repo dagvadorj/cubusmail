@@ -34,7 +34,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
  *
  * @author Jürgen Schlierf
  */
-public class NewMessageAction extends GWTAction implements AsyncCallback<Object> {
+public class NewMessageAction extends GWTAction implements AsyncCallback<Void> {
 
 	public NewMessageAction() {
 
@@ -60,7 +60,7 @@ public class NewMessageAction extends GWTAction implements AsyncCallback<Object>
 		GWTExceptionHandler.handleException( caught );
 	}
 
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		WindowRegistry.COMPOSE_MESSAGE_WINDOW.open();
 	}

@@ -396,10 +396,10 @@ public class ContactWindow extends Window implements IGWTWindow {
 			}
 			contactToEdit.setContactFolder( folder );
 
-			ServiceProvider.getUserAccountService().saveContact( contactToEdit, new AsyncCallbackAdapter<Object>() {
+			ServiceProvider.getUserAccountService().saveContact( contactToEdit, new AsyncCallbackAdapter<Void>() {
 
 				@Override
-				public void onSuccess( Object result ) {
+				public void onSuccess( Void result ) {
 
 					hide();
 					EventBroker.get().fireReloadContacts();

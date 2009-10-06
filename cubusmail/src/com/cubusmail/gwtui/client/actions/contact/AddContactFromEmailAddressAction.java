@@ -41,7 +41,7 @@ import com.cubusmail.gwtui.domain.ContactFolder;
  * 
  * @author Jürgen Schlierf
  */
-public class AddContactFromEmailAddressAction extends GWTAction implements AsyncCallback<Object> {
+public class AddContactFromEmailAddressAction extends GWTAction implements AsyncCallback<Void> {
 
 	private GWTAddress address;
 
@@ -96,7 +96,7 @@ public class AddContactFromEmailAddressAction extends GWTAction implements Async
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		// nothing to do
 	}

@@ -40,7 +40,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
  * 
  * @author Jürgen Schlierf
  */
-public class SaveMessageDraftAction extends GWTAction implements AsyncCallback<Object> {
+public class SaveMessageDraftAction extends GWTAction implements AsyncCallback<Void> {
 
 	/**
 	 * 
@@ -101,7 +101,7 @@ public class SaveMessageDraftAction extends GWTAction implements AsyncCallback<O
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		WindowRegistry.COMPOSE_MESSAGE_WINDOW.unmask();
 		WindowRegistry.COMPOSE_MESSAGE_WINDOW.close();

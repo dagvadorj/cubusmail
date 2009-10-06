@@ -56,9 +56,9 @@ public class CancelSendAction extends GWTAction {
 	public void execute() {
 
 		WindowRegistry.COMPOSE_MESSAGE_WINDOW.close();
-		ServiceProvider.getMailboxService().cancelComposeMessage( new AsyncCallbackAdapter<Object>() {
+		ServiceProvider.getMailboxService().cancelComposeMessage( new AsyncCallbackAdapter<Void>() {
 		} );
-		
+
 		// MessageBox.confirm( "Abbruch",
 		// "Die eingegebene Nachricht geht verloren. Wollen Sie wirklich abbrechen?",
 		// new MessageBox.ConfirmCallback() {

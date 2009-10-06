@@ -75,10 +75,10 @@ public class DeleteContactFolderAction extends GWTFolderAction {
 	private void deleteFolder( final TreeNode node ) {
 
 		ContactFolder folder = (ContactFolder) node.getUserObject();
-		ServiceProvider.getUserAccountService().deleteContactFolder( folder, new AsyncCallbackAdapter<Object>() {
+		ServiceProvider.getUserAccountService().deleteContactFolder( folder, new AsyncCallbackAdapter<Void>() {
 
 			@Override
-			public void onSuccess( Object result ) {
+			public void onSuccess( Void result ) {
 
 				node.remove();
 			}

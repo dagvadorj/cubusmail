@@ -60,7 +60,7 @@ public interface IMailboxServiceAsync {
 	 * @param targetFolderId
 	 * @throws Exception
 	 */
-	public void moveFolder( String sourceFolderId, String targetFolderId, AsyncCallback<?> callback );
+	public void moveFolder( String sourceFolderId, String targetFolderId, AsyncCallback<Void> callback );
 
 	/**
 	 * Rename a mail folder.
@@ -77,7 +77,7 @@ public interface IMailboxServiceAsync {
 	 * @param folderId
 	 * @throws Exception
 	 */
-	public void deleteFolder( String folderId, AsyncCallback<?> callback );
+	public void deleteFolder( String folderId, AsyncCallback<Void> callback );
 
 	/**
 	 * Empty a mail folder.
@@ -85,7 +85,7 @@ public interface IMailboxServiceAsync {
 	 * @param folderId
 	 * @throws Exception
 	 */
-	public void emptyFolder( String folderId, AsyncCallback<?> callback );
+	public void emptyFolder( String folderId, AsyncCallback<Void> callback );
 
 	/**
 	 * Retrieve all messages and set this mail folder to the current folder.
@@ -121,7 +121,7 @@ public interface IMailboxServiceAsync {
 	 * @param mark
 	 * @throws Exception
 	 */
-	public void markMessage( long[] messageIds, MessageListFields flagField, boolean mark, AsyncCallback<?> callback );
+	public void markMessage( long[] messageIds, MessageListFields flagField, boolean mark, AsyncCallback<Void> callback );
 
 	/**
 	 * Copy or move messages to a targed mail folder.
@@ -131,7 +131,7 @@ public interface IMailboxServiceAsync {
 	 * @param move
 	 * @throws Exception
 	 */
-	public void copyMoveMessages( long[] messageIds, String targetFolderId, boolean move, AsyncCallback<?> callback );
+	public void copyMoveMessages( long[] messageIds, String targetFolderId, boolean move, AsyncCallback<Void> callback );
 
 	/**
 	 * Delete messages in the current folder.
@@ -139,7 +139,7 @@ public interface IMailboxServiceAsync {
 	 * @param messageIds
 	 * @throws Exception
 	 */
-	public void deleteMessages( long[] messageIds, AsyncCallback<?> callback );
+	public void deleteMessages( long[] messageIds, AsyncCallback<Void> callback );
 
 	/**
 	 * Send a message.
@@ -147,12 +147,12 @@ public interface IMailboxServiceAsync {
 	 * @param message
 	 * @throws Exception
 	 */
-	public void sendMessage( GWTMessage message, AsyncCallback<?> callback );
+	public void sendMessage( GWTMessage message, AsyncCallback<Void> callback );
 
 	/**
 	 * Prepare a new message.
 	 */
-	public void prepareNewMessage( AsyncCallback<?> callback );
+	public void prepareNewMessage( AsyncCallback<Void> callback );
 
 	/**
 	 * Prepare the reply message.
@@ -167,7 +167,7 @@ public interface IMailboxServiceAsync {
 	/**
 	 * 
 	 */
-	public void cancelComposeMessage( AsyncCallback<?> callback );
+	public void cancelComposeMessage( AsyncCallback<Void> callback );
 
 	/**
 	 * Open a draft message.
@@ -201,7 +201,7 @@ public interface IMailboxServiceAsync {
 	 * @param message
 	 * @throws Exception
 	 */
-	public void saveMessageAsDraft( GWTMessage message, AsyncCallback<?> callback );
+	public void saveMessageAsDraft( GWTMessage message, AsyncCallback<Void> callback );
 
 	/**
 	 * @param htmlText

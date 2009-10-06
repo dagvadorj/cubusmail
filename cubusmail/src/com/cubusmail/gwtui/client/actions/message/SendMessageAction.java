@@ -39,7 +39,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
  * 
  * @author Jürgen Schlierf
  */
-public class SendMessageAction extends GWTAction implements AsyncCallback<Object> {
+public class SendMessageAction extends GWTAction implements AsyncCallback<Void> {
 
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class SendMessageAction extends GWTAction implements AsyncCallback<Object
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		WindowRegistry.COMPOSE_MESSAGE_WINDOW.close();
 		ToastMessage.showMessage( TextProvider.get().actions_compose_send_hint_header(), TextProvider.get()

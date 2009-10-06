@@ -97,10 +97,10 @@ public class ContactsDragAndDropListener extends TreePanelListenerAdapter {
 					if ( ids != null && ids.length > 0 ) {
 						PanelRegistry.CONTACT_LIST_PANEL.mask();
 						ServiceProvider.getUserAccountService().moveContacts( ids, targetFolder,
-								new AsyncCallbackAdapter<Object>() {
+								new AsyncCallbackAdapter<Void>() {
 
 									@Override
-									public void onSuccess( Object result ) {
+									public void onSuccess( Void result ) {
 
 										PanelRegistry.CONTACT_LIST_PANEL.unmask();
 										EventBroker.get().fireReloadContacts();

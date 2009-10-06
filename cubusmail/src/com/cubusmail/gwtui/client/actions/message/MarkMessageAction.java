@@ -37,7 +37,7 @@ import com.cubusmail.gwtui.domain.MessageListFields;
  * 
  * @author Jürgen Schlierf
  */
-public class MarkMessageAction extends BaseGridAction implements AsyncCallback<Object> {
+public class MarkMessageAction extends BaseGridAction implements AsyncCallback<Void> {
 
 	private MarkActionType markActionType;
 
@@ -88,13 +88,13 @@ public class MarkMessageAction extends BaseGridAction implements AsyncCallback<O
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( Object result ) {
+	public void onSuccess( Void result ) {
 
 		RowSelectionModel model = getSelectionModel();
 		if ( model != null ) {
 			Record[] selectedMsgs = model.getSelections();
 			if ( selectedMsgs != null && selectedMsgs.length > 0 ) {
-				for ( int i = 0; i < selectedMsgs.length; i++ ) {
+				for (int i = 0; i < selectedMsgs.length; i++) {
 					selectedMsgs[i].set( this.markActionType.getFlagField().name(), this.markActionType.isMark() );
 				}
 			}

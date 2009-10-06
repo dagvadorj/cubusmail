@@ -46,7 +46,7 @@ public interface ICubusServiceAsync {
 	 * 
 	 * @throws Exception
 	 */
-	public void logout(AsyncCallback<?> callback);
+	public void logout(AsyncCallback<Void> callback);
 
 	/**
 	 * get mailbox
