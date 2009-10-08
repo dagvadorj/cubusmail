@@ -14,7 +14,7 @@
 	<property name="webapp.lib.dir" value="${war.dir}/WEB-INF/lib" />
 
 	<path id="release.files">
-		<fileset dir="." includes="${war.file}"/>
+		<fileset dir="${build.dir}" includes="${war.file.name}"/>
 		<fileset dir="${etc.dir}" includes="cubus.properties"/>
 		<fileset dir="${docs.dir}" includes="INSTALL.txt"/>
 		<fileset dir="${docs.dir}" includes="LICENSE.txt"/>
@@ -92,18 +92,16 @@
 		</war>
 	</target>
 	
+	
 	<target name="release" depends="clean, gwtcompile, war">
-		<propertyfile file="${build.dir}/buildnumber.properties">
-			<entry key="cubusmail.buildnumber" value="1" operation="+" type="int"/>
-		</propertyfile>
-		<property file="${build.dir}/buildnumber.properties"/>
 		<mkdir dir="${dist.dir}" />		
-		<zip destfile="${dist.dir}/cubusmail_build${cubusmail.buildnumber}.zip" >
+		<zip destfile="${dist.dir}/cubusmail.zip" >
 			<path refid="release.files"/>
 		</zip>
-		<tar destfile="${dist.dir}/cubusmail_build${cubusmail.buildnumber}.tar.gz" compression="gzip">
+		<tar destfile="${dist.dir}/cubusmail.tar.gz" compression="gzip">
 			<path refid="release.files"/>
 		</tar>
+		<delete file="${war.file}" />
 	</target>
 	
 	<target name="all" depends="clean, gwtcompile, war, release">
