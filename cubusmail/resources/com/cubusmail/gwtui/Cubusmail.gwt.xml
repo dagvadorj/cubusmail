@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.1//EN" 
+	"http://google-web-toolkit.googlecode.com/svn/tags/1.7.1/distro-source/core/src/gwt-module.dtd">
+	
 <module rename-to="cubusmail">
 	<!-- Inherit the core Web Toolkit stuff.                  -->
 	<inherits name="com.google.gwt.user.User"/>
     <inherits name="com.google.gwt.i18n.I18N"/>
 	<inherits name="com.google.gwt.junit.JUnit"/>
-
+	
 	<!-- Inherit the GWT Ext stuff.                  -->
 	<inherits name="com.gwtext.GwtExt"/>
     <inherits name="com.gwtextux.GwtExtUx"/>
-    <inherits name="com.gwtextux.LiveGrid"/>
     <inherits name="com.gwtextux.ManagedIFrame"/>
     <inherits name="com.gwtextux.UploadDialog"/>
     <inherits name="com.gwtextux.GridSearchPlugin"/>
-	<inherits name="com.gwtextux.LovCombo"/>
 	<inherits name="com.gwtextux.ToastWindow"/>
 
 	<!-- Gwittir stuff -->

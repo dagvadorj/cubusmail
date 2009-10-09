@@ -21,7 +21,6 @@
 package com.cubusmail.user;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
@@ -30,11 +29,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.web.util.HtmlUtils;
 
-import com.cubusmail.core.BeanFactory;
 import com.cubusmail.core.BeanIds;
 import com.cubusmail.gwtui.domain.Contact;
 import com.cubusmail.gwtui.domain.ContactFolder;
@@ -49,9 +50,11 @@ import com.cubusmail.mail.util.MessageUtils;
  * 
  * @author Jürgen Schlierf
  */
-public class UserAccountDao extends HibernateDaoSupport {
+public class UserAccountDao extends HibernateDaoSupport implements ApplicationContextAware {
 
 	private Logger logger = Logger.getLogger( this.getClass() );
+
+	private ApplicationContext applicationContext;
 
 	/**
 	 * @param id
@@ -78,7 +81,7 @@ public class UserAccountDao extends HibernateDaoSupport {
 		else if ( list.size() == 1 ) {
 			UserAccount account = list.get( 0 );
 			if ( account.getPreferences() == null ) {
-				account.setPreferences( (Preferences) BeanFactory.getBean( BeanIds.PREFERENCES_BEAN ) );
+				account.setPreferences( (Preferences) this.applicationContext.getBean( BeanIds.PREFERENCES_BEAN ) );
 			}
 			if ( !StringUtils.isEmpty( account.getPreferencesJson() ) ) {
 				json2Preferences( account.getPreferencesJson(), account.getPreferences() );
@@ -256,7 +259,6 @@ public class UserAccountDao extends HibernateDaoSupport {
 	 */
 	public void deleteContacts( Long[] ids ) {
 
-		// needs optimizing
 		try {
 			getHibernateTemplate().bulkUpdate( "delete from ContactAddress a where contact_fk = ?", ids );
 			getHibernateTemplate().bulkUpdate( "delete from Contact c where c.id=?", ids );
@@ -352,10 +354,12 @@ public class UserAccountDao extends HibernateDaoSupport {
 	 */
 	private void prepareAccount( UserAccount account ) {
 
-		for (Identity identity : account.getIdentities()) {
-			identity.setInternetAddress( MessageUtils
-					.toInternetAddress( identity.getEmail(), identity.getDisplayName() ) );
-			identity.setEscapedInternetAddress( HtmlUtils.htmlEscape( identity.getInternetAddress() ) );
+		if ( account.getIdentities() != null ) {
+			for (Identity identity : account.getIdentities()) {
+				identity.setInternetAddress( MessageUtils.toInternetAddress( identity.getEmail(), identity
+						.getDisplayName() ) );
+				identity.setEscapedInternetAddress( HtmlUtils.htmlEscape( identity.getInternetAddress() ) );
+			}
 		}
 	}
 
@@ -384,5 +388,17 @@ public class UserAccountDao extends HibernateDaoSupport {
 				}
 			}
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.context.ApplicationContextAware#setApplicationContext
+	 * (org.springframework.context.ApplicationContext)
+	 */
+	public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException {
+
+		this.applicationContext = applicationContext;
 	}
 }

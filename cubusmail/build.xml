@@ -107,5 +107,32 @@
 	<target name="all" depends="clean, gwtcompile, war, release">
 	</target>
 	
+    <target name="test" depends="compile">
+        <mkdir dir="dist/test-classes"/>
+        <javac srcdir="test" destdir="dist/test-classes">
+            <classpath>
+                <pathelement location="${classes.dir}"/>
+				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
+				<fileset dir="./lib" includes="**/*.jar" />
+				<fileset dir="${gwt.dir}" includes="gwt-user.jar" />
+            </classpath>
+        </javac>
+        <mkdir dir="dist/test-results"/>
+        <junit haltonfailure="no" printsummary="on">
+            <classpath >
+                <pathelement location="${classes.dir}"/>
+                <pathelement location="dist/test-classes"/>
+				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
+				<fileset dir="./lib" includes="**/*.jar" />
+				<fileset dir="${gwt.dir}" includes="gwt-user.jar" />
+            </classpath>
+            <formatter type="brief" usefile="false"/>
+            <formatter type="xml" />
+            <batchtest todir="dist/test-results" >
+                <fileset dir="dist/test-classes" includes="**/*UserAccountDaoTest.class"/>
+            </batchtest>
+        </junit>
+    </target>
+	
 </project>
 

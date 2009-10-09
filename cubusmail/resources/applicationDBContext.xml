@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-autowire="no"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:property-placeholder location="file:${cubus.config}" />
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<!-- property name="cacheQueries" value="true" /-->
+	</bean>
+
+	<!-- Hibernate configuration -->
+	<bean id="userAccountDao" class="com.cubusmail.user.UserAccountDao"
+		scope="singleton">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.cubusmail.gwtui.domain.UserAccount
+				</value>
+				<value>com.cubusmail.gwtui.domain.Identity
+				</value>
+				<value>com.cubusmail.gwtui.domain.ContactFolder
+				</value>
+				<value>com.cubusmail.gwtui.domain.Contact
+				</value>
+				<value>com.cubusmail.gwtui.domain.ContactAddress
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.jdbc.batch_size">0</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${cubus.db.driverClass}" />
+		<property name="jdbcUrl" value="${cubus.db.jdbcUrl}" />
+		<property name="user" value="${cubus.db.user}" />
+		<property name="password" value="${cubus.db.password}" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="pojoStore"
+		class="net.sf.hibernate4gwt.core.store.stateless.StatelessPojoStore" />
+
+	<bean id="hibernateBeanManager" class="net.sf.hibernate4gwt.core.HibernateBeanManager">
+		<property name="pojoStore" ref="pojoStore" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+</beans>
