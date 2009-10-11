@@ -109,7 +109,7 @@
 	
     <target name="test" depends="compile">
         <mkdir dir="dist/test-classes"/>
-        <javac srcdir="test" destdir="dist/test-classes">
+        <javac srcdir="test" destdir="dist/test-classes" excludes="**/client/**">
             <classpath>
                 <pathelement location="${classes.dir}"/>
 				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
