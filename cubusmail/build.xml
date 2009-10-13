@@ -10,6 +10,9 @@
 	<property name="docs.dir" value="./docs" />
 	<property name="etc.dir" value="./etc" />
 	<property name="classes.dir" value="${war.dir}/WEB-INF/classes" />
+	<property name="test.src.dir" value="test" />
+	<property name="test.classes.dir" value="${build.dir}/test-classes" />
+	<property name="test.results.dir" value="${build.dir}/test-results" />
 	<property name="gwt.dir" value="./gwtlib" />
 	<property name="webapp.lib.dir" value="${war.dir}/WEB-INF/lib" />
 
@@ -25,6 +28,7 @@
 		<delete dir="${classes.dir}" />
 		<delete dir="${war.dir}/cubusmail" />
 		<delete file="${war.file}" />
+		<delete dir="${dist.dir}" />
 	</target>
 	
 	
@@ -46,7 +50,7 @@
 		<java dir="." classname="com.google.gwt.dev.Compiler" fork="true" failonerror="true" maxmemory="1024m">			
             <jvmarg value="-Xss1024k"/>
 			<arg value="-war" />
-			<arg value="./war" />
+			<arg value="${war.dir}" />
 			<arg value="-style" />
 			<arg value="OBF" /> 
 			<arg value="com.cubusmail.gwtui.Cubusmail"/>
@@ -56,7 +60,6 @@
 				<pathelement location="${gwt.dir}/gwt-user.jar" />
 				<pathelement location="${gwt.dir}/gwt-dev-linux.jar" />
 				<fileset dir="./lib" includes="**/*.jar" />
-				<pathelement location="${webapp.lib.dir}/gwittir-core-0.4.4.jar" />
 				<pathelement location="${webapp.lib.dir}/hibernate4gwt-1.1.1.jar" />
 				<pathelement location="${webapp.lib.dir}/ejb3-persistence.jar" />
 				<pathelement location="${webapp.lib.dir}/hibernate-annotations.jar" />
@@ -108,28 +111,34 @@
 	</target>
 	
     <target name="test" depends="compile">
-        <mkdir dir="dist/test-classes"/>
-        <javac srcdir="test" destdir="dist/test-classes" excludes="**/client/**">
+        <mkdir dir="${test.classes.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}">
             <classpath>
+				<pathelement location="${src.dir}" />
                 <pathelement location="${classes.dir}"/>
 				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
 				<fileset dir="./lib" includes="**/*.jar" />
 				<fileset dir="${gwt.dir}" includes="gwt-user.jar" />
             </classpath>
         </javac>
-        <mkdir dir="dist/test-results"/>
+		<copy todir="${test.classes.dir}" >
+			<fileset dir="${test.src.dir}" >
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+        <mkdir dir="${test.results.dir}"/>
         <junit haltonfailure="no" printsummary="on">
             <classpath >
                 <pathelement location="${classes.dir}"/>
-                <pathelement location="dist/test-classes"/>
+                <pathelement location="${test.classes.dir}"/>
 				<fileset dir="${webapp.lib.dir}" includes="**/*.jar" />
 				<fileset dir="./lib" includes="**/*.jar" />
 				<fileset dir="${gwt.dir}" includes="gwt-user.jar" />
             </classpath>
             <formatter type="brief" usefile="false"/>
             <formatter type="xml" />
-            <batchtest todir="dist/test-results" >
-                <fileset dir="dist/test-classes" includes="**/*UserAccountDaoTest.class"/>
+            <batchtest todir="${test.results.dir}" >
+                <fileset dir="${test.classes.dir}" includes="**/*UserAccountDaoTest.class"/>
             </batchtest>
         </junit>
     </target>
