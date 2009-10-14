@@ -134,7 +134,7 @@
 	</target>
 	
 	
-	<target name="release" depends="clean, war">
+	<target name="release" depends="war">
 		<mkdir dir="${dist.dir}" />		
 		<zip destfile="${dist.dir}/cubusmail.zip" >
 			<path refid="release.files"/>
@@ -149,7 +149,7 @@
 	</target>
 	
 	
-    <target name="test" depends="clean, compile-test">
+    <target name="test" depends="compile-test">
         <mkdir dir="${test.results.dir}"/>
         <junit haltonfailure="no" printsummary="on">
             <classpath >
