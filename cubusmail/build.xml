@@ -4,10 +4,10 @@
 	<property name="res.dir" value="./resources" />
 	<property name="build.dir" value="./build" />
 	<property name="lib.dir" value="./lib" />	
+	<property name="dist.dir" value="./dist" />
 	<property name="war.dir" value="${build.dir}/war" />
 	<property name="war.file.name" value="cubusmail.war" />
 	<property name="war.file" value="${build.dir}/${war.file.name}" />
-	<property name="dist.dir" value="./dist" />
 	<property name="docs.dir" value="./docs" />
 	<property name="etc.dir" value="./etc" />
 	<property name="client.classes.dir" value="${build.dir}/client-classes" />
@@ -105,8 +105,8 @@
 		</java>
 	</target>
 	
-	<target name="war" depends="compile-server, compile-gwt">
-		<war destfile="${war.file}" basedir="${war.dir}">
+	<target name="war" depends="compile-server, compile-gwt">		
+		<war destfile="${war.file}" basedir="${war.dir}" webxml="${war.dir}/WEB-INF/web.xml">
 			<classes dir="${server.classes.dir}" />
 			<lib dir="${webapp.lib.dir}"/>
 		</war>
@@ -136,6 +136,7 @@
 	
 	<target name="release" depends="war">
 		<mkdir dir="${dist.dir}" />		
+		<copy file="${war.file}" todir="${dist.dir}" />
 		<zip destfile="${dist.dir}/cubusmail.zip" >
 			<path refid="release.files"/>
 		</zip>
