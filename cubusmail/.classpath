@@ -46,5 +46,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.120.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
