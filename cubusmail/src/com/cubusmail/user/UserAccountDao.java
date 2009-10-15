@@ -276,7 +276,7 @@ public class UserAccountDao extends HibernateDaoSupport implements ApplicationCo
 
 		try {
 			getHibernateTemplate().bulkUpdate(
-					"update Contact set CONTACTFOLDERS_FK = " + targetFolder.getId() + " where ID = ?", contactIds );
+					"update Contact set CONTACTFOLDERS_FK = " + targetFolder.getId() + " where ID in ?", contactIds );
 		}
 		catch (Throwable e) {
 			logger.error( e.getMessage(), e );

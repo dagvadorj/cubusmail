@@ -43,7 +43,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect
 				</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 				<prop key="hibernate.jdbc.batch_size">0</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
@@ -77,21 +77,47 @@
 	</bean>
 
 	<util:list id="testContactFolders">
-		<ref local="testContactFolder" />
+		<ref local="testContactFolder1" />
+		<ref local="testContactFolder2" />
 	</util:list>
 
-	<bean id="testContactFolder" class="com.cubusmail.gwtui.domain.ContactFolder">
-		<property name="folderName" value="testfolder" />
-		<property name="contactList" ref="testContacts" />
+	<bean id="testContactFolder1" class="com.cubusmail.gwtui.domain.ContactFolder">
+		<property name="folderName" value="testfolder1" />
+		<property name="contactList" ref="testContacts1" />
+		<property name="userAccount" ref="testUserAccount" />
+	</bean>
+	<bean id="testContactFolder2" class="com.cubusmail.gwtui.domain.ContactFolder">
+		<property name="folderName" value="testfolder2" />
+		<property name="contactList" ref="testContacts2" />
 		<property name="userAccount" ref="testUserAccount" />
 	</bean>
 
-	<util:list id="testContacts">
+	<util:list id="testContacts1">
 		<bean class=" com.cubusmail.gwtui.domain.Contact">
-			<property name="firstName" value="Hans" />
-			<property name="lastName" value="Meier" />
-			<property name="email" value="hans@meier.de" />
-			<property name="contactFolder" ref="testContactFolder" />
+			<property name="firstName" value="Hans1" />
+			<property name="lastName" value="Meier1" />
+			<property name="email" value="hans@meier1.de" />
+			<property name="contactFolder" ref="testContactFolder1" />
+		</bean>
+		<bean class=" com.cubusmail.gwtui.domain.Contact">
+			<property name="firstName" value="Hans2" />
+			<property name="lastName" value="Meier2" />
+			<property name="email" value="hans@meier2.de" />
+			<property name="contactFolder" ref="testContactFolder1" />
+		</bean>
+	</util:list>
+	<util:list id="testContacts2">
+		<bean class=" com.cubusmail.gwtui.domain.Contact">
+			<property name="firstName" value="Hans3" />
+			<property name="lastName" value="Meier3" />
+			<property name="email" value="hans@meier3.de" />
+			<property name="contactFolder" ref="testContactFolder2" />
+		</bean>
+		<bean class=" com.cubusmail.gwtui.domain.Contact">
+			<property name="firstName" value="Hans4" />
+			<property name="lastName" value="Meier4" />
+			<property name="email" value="hans@meier4.de" />
+			<property name="contactFolder" ref="testContactFolder2" />
 		</bean>
 	</util:list>
 

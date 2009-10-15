@@ -24,6 +24,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,6 +62,12 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		this.userAccountDao.saveUserAccount( userAccount );
 	}
 
+	@After
+	public void closeDB() {
+
+		this.userAccountDao.getSessionFactory().openSession();
+	}
+
 	/**
 	 * Compare test user account with the persistent one.
 	 */
@@ -82,6 +89,24 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		Assert.assertEquals( contactList.size(), userAccount.getContactFolders().get( 0 ).getContactList().size() );
 	}
 
+	/**
+	 * Test moveContacts().
+	 */
+	// @Test
+	public void testMoveContacts() {
+
+		UserAccount userAccount = (UserAccount) this.context.getBean( "testUserAccount" );
+		UserAccount savedUserAccount = this.userAccountDao.getUserAccountByUsername( userAccount.getUsername() );
+		Assert.assertNotNull( savedUserAccount );
+		List<ContactFolder> contactFolders = this.userAccountDao.retrieveContactFolders( userAccount );
+
+		ContactFolder targetFolder = contactFolders.get( 0 );
+		ContactFolder sourceFolder = contactFolders.get( 1 );
+		List<Contact> contacts = this.userAccountDao.retrieveContactList( sourceFolder );
+		Long[] contactIds = new Long[] { contacts.get( 0 ).getId(), contacts.get( 1 ).getId() };
+		
+		this.userAccountDao.moveContacts( contactIds, targetFolder );
+	}
 
 	/*
 	 * (non-Javadoc)
