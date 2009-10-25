@@ -1,5 +1,6 @@
 package com.cubusmail.smartgwt.client.mail;
 
+import com.cubusmail.smartgwt.client.DemoData;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.tree.Tree;
@@ -11,11 +12,11 @@ public class MailfolderTree extends TreeGrid {
 	public MailfolderTree() {
 		setWidth100();
 		setHeight100();
-		setCustomIconProperty("icon");
+		// setCustomIconProperty("icon");
 		setAnimateFolderTime(100);
 		setAnimateFolders(true);
 		setAnimateFolderSpeed(1000);
-		setNodeIcon("silk/application_view_list.png");
+		// setNodeIcon("silk/application_view_list.png");
 		setShowSortArrow(SortArrow.CORNER);
 		setShowAllRecords(true);
 		setLoadDataOnDemand(false);
@@ -34,5 +35,8 @@ public class MailfolderTree extends TreeGrid {
 		tree.setIdField("nodeID");
 		tree.setParentIdField("parentNodeID");
 		tree.setRootValue("root");
+		tree.setData(DemoData.getData());
+
+		setData(tree);
 	}
 }

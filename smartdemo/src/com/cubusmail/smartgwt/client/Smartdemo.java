@@ -1,5 +1,6 @@
 package com.cubusmail.smartgwt.client;
 
+import com.cubusmail.smartgwt.client.mail.MailPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.widgets.Canvas;
@@ -24,16 +25,8 @@ public class Smartdemo implements EntryPoint {
 		main.setHeight100();
 		main.setLayoutMargin(5);
 
-		this.mainTabSet = new TabSet();
-		mainTabSet.setTabBarThickness(23);
-		mainTabSet.setWidth100();
-		mainTabSet.setHeight100();
-
-        this.mainTabSet.addTab(new Tab("Mail"));
-        this.mainTabSet.addTab(new Tab("Address Book"));
-        this.mainTabSet.addTab(new Tab("Calender"));
-        this.mainTabSet.addTab(new Tab("Preferences"));
-        
+		createTabs();
+		
 		HLayout hLayout = new HLayout();
 		hLayout.setWidth100();
 		hLayout.setHeight100();
@@ -51,5 +44,20 @@ public class Smartdemo implements EntryPoint {
 
 		RootPanel.getBodyElement().removeChild(
 				RootPanel.get("loadingWrapper").getElement());
+	}
+	
+	private void createTabs() {
+		this.mainTabSet = new TabSet();
+		mainTabSet.setTabBarThickness(23);
+		mainTabSet.setWidth100();
+		mainTabSet.setHeight100();
+
+		Tab tab = new Tab("Mail");
+		tab.setPane(new MailPanel());
+        this.mainTabSet.addTab(tab);
+        
+        this.mainTabSet.addTab(new Tab("Address Book"));
+        this.mainTabSet.addTab(new Tab("Calender"));
+        this.mainTabSet.addTab(new Tab("Preferences"));
 	}
 }
