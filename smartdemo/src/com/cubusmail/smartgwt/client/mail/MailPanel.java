@@ -25,14 +25,13 @@ public class MailPanel extends Canvas {
 		vLayout.setWidth100();
 		vLayout.setHeight100();
 
-		Label listingLabel = new Label();
+		MessageListCanvas listingLabel = new MessageListCanvas();
 		listingLabel.setContents("Listing");
 		listingLabel.setAlign(Alignment.CENTER);
 		listingLabel.setOverflow(Overflow.HIDDEN);
 		listingLabel.setHeight("30%");
 		listingLabel.setBorder("1px solid blue");
-		listingLabel.setAutoFit(true);
-		listingLabel.setShowResizeBar(true);
+		// listingLabel.setShowResizeBar(true);
 
 		Label detailsLabel = new Label();
 		detailsLabel.setContents("Details");
