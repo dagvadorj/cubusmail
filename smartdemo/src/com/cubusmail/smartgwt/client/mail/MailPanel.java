@@ -10,42 +10,46 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class MailPanel extends Canvas {
 
 	public MailPanel() {
-		HLayout mainLayout = new HLayout();
+		VLayout mainLayout = new VLayout();
 		mainLayout.setWidth100();
 		mainLayout.setHeight100();
+
+		HLayout mailLayout = new HLayout();
+		mailLayout.setWidth100();
+		mailLayout.setHeight100();
 
 		MailfolderTree tree = new MailfolderTree();
 		tree.setWidth("30%");
 		tree.setShowResizeBar(true);
 		tree.setOverflow(Overflow.HIDDEN);
 
-		mainLayout.addMember(tree);
+		mailLayout.addMember(tree);
 
 		VLayout vLayout = new VLayout();
 		vLayout.setWidth100();
 		vLayout.setHeight100();
 
 		MessageListCanvas listingLabel = new MessageListCanvas();
-		listingLabel.setContents("Listing");
-		listingLabel.setAlign(Alignment.CENTER);
-		listingLabel.setOverflow(Overflow.HIDDEN);
-		listingLabel.setHeight("30%");
-		listingLabel.setBorder("1px solid blue");
-		// listingLabel.setShowResizeBar(true);
+		listingLabel.setHeight("50%");
+		listingLabel.setShowResizeBar(true);
 
 		Label detailsLabel = new Label();
 		detailsLabel.setContents("Details");
 		detailsLabel.setAlign(Alignment.CENTER);
 		detailsLabel.setOverflow(Overflow.HIDDEN);
-		detailsLabel.setHeight("70%");
+		detailsLabel.setHeight("50%");
 		detailsLabel.setBorder("1px solid blue");
 		detailsLabel.setAutoFit(true);
 
 		vLayout.addMember(listingLabel);
 		vLayout.addMember(detailsLabel);
 
-		mainLayout.addMember(vLayout);
+		mailLayout.addMember(vLayout);
+
+		mainLayout.addMember(new MailToolbar());
+		mainLayout.addMember(mailLayout);
 
 		addChild(mainLayout);
+
 	}
 }

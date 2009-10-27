@@ -13,9 +13,21 @@ public class MailData {
 	}
 
 	public static MailRecord[] getNewRecords() {
-		return new MailRecord[] { new MailRecord("mail_unread.png", "", "",
-				"Oliver Test", "Help from Support",
-				new Date(1776 - 1900, 6, 4), 43243) };
+		return new MailRecord[] {
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243),
+				new MailRecord("mail_unread.png", "", "", "Oliver Test",
+						"Help from Support", new Date(), 43243) };
 	}
 
 }

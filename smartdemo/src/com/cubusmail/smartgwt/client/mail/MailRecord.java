@@ -5,78 +5,71 @@ import java.util.Date;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class MailRecord extends ListGridRecord {
-	private String read;
-	private String priority;
-	private String attachment;
-	private String from;
-	private String subject;
-	private Date receiveDate;
-	private long size;
 
 	public MailRecord(String read, String priority, String attachment,
-			String from, String subject, Date receiveDate, long size) {
-		this.read = read;
-		this.priority = priority;
-		this.attachment = attachment;
-		this.from = from;
-		this.subject = subject;
-		this.receiveDate = receiveDate;
-		this.size = size;
+			String from, String subject, Date receiveDate, int size) {
+		setRead(read);
+		setPriority(priority);
+		setAttachment(attachment);
+		setFrom(from);
+		setSubject(subject);
+		setReceiveDate(receiveDate);
+		setSize(size);
 	}
 
 	public String getRead() {
-		return read;
+		return getAttribute("read");
 	}
 
 	public void setRead(String read) {
-		this.read = read;
+		setAttribute("read", read);
 	}
 
 	public String getPriority() {
-		return priority;
+		return getAttribute("priority");
 	}
 
 	public void setPriority(String priority) {
-		this.priority = priority;
+		setAttribute("property", priority);
 	}
 
 	public String getAttachment() {
-		return attachment;
+		return getAttribute("attachment");
 	}
 
 	public void setAttachment(String attachment) {
-		this.attachment = attachment;
+		setAttribute("attachment", attachment);
 	}
 
 	public String getFrom() {
-		return from;
+		return getAttribute("from");
 	}
 
 	public void setFrom(String from) {
-		this.from = from;
+		setAttribute("from", from);
 	}
 
 	public String getSubject() {
-		return subject;
+		return getAttribute("subject");
 	}
 
 	public void setSubject(String subject) {
-		this.subject = subject;
+		setAttribute("subject", subject);
 	}
 
 	public Date getReceiveDate() {
-		return receiveDate;
+		return getAttributeAsDate("receiveDate");
 	}
 
 	public void setReceiveDate(Date receiveDate) {
-		this.receiveDate = receiveDate;
+		setAttribute("receiveDate", receiveDate);
 	}
 
-	public long getSize() {
-		return size;
+	public int getSize() {
+		return getAttributeAsInt("size");
 	}
 
-	public void setSize(long size) {
-		this.size = size;
+	public void setSize(int size) {
+		setAttribute("size", size);
 	}
 }
