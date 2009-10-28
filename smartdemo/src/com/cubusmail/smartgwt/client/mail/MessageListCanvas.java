@@ -4,20 +4,39 @@ import com.cubusmail.smartgwt.client.ImageProvider;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.ImgButton;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.layout.SectionStack;
+import com.smartgwt.client.widgets.layout.SectionStackSection;
 
-public class MessageListCanvas extends ListGrid {
+public class MessageListCanvas extends SectionStack {
 
 	public MessageListCanvas() {
 		super();
-		setAlternateRecordStyles(true);
-		// setShowAllRecords(true);
-		// setAutoFitData(Autofit.BOTH);
-		// messageGrid.setAutoWidth();
-		// messageGrid.setAutoHeight();
-		setHoverWidth(200);
-		setHoverHeight(20);
+
+		SectionStackSection section = new SectionStackSection("Inbox");
+		section.setCanCollapse(false);
+		section.setExpanded(true);
+		section.setResizeable(true);
+
+		TextItem textItem = new TextItem();
+		textItem.setTitle("Search");
+		DynamicForm searchCanvas = new DynamicForm();
+		searchCanvas.setItems(textItem);
+
+		Button searchButton = new Button("");
+		searchButton.setBorder("0px");
+		searchButton.setIcon(ImageProvider.FIND);
+		searchButton.setAutoFit(true);
+
+		section.setControls(searchCanvas, searchButton);
+
+		ListGrid grid = new ListGrid();
+		grid.setAlternateRecordStyles(true);
+		grid.setWidth100();
 
 		ListGridField readField = new ListGridField("read", "");
 		readField.setAlign(Alignment.CENTER);
@@ -50,9 +69,12 @@ public class MessageListCanvas extends ListGrid {
 		ListGridField sizeField = new ListGridField("size", "Size");
 		sizeField.setWidth(80);
 
-		setFields(readField, priorityField, attachmentField, fromField,
+		grid.setFields(readField, priorityField, attachmentField, fromField,
 				subjectField, receivedField, sizeField);
-		setData(MailData.getRecords());
+		grid.setData(MailData.getRecords());
+
+		section.setItems(grid);
+		setSections(section);
 	}
 
 }
