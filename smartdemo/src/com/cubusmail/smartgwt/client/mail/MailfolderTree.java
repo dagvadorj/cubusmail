@@ -21,6 +21,7 @@ public class MailfolderTree extends TreeGrid {
 		setShowAllRecords(true);
 		setLoadDataOnDemand(false);
 		setCanSort(false);
+		setCellHeight(17);
 
 		TreeGridField field = new TreeGridField();
 		field.setCanFilter(true);

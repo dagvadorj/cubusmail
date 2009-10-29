@@ -4,7 +4,6 @@ import com.cubusmail.smartgwt.client.ImageProvider;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -31,13 +30,15 @@ public class MessageListCanvas extends SectionStack {
 		searchButton.setBorder("0px");
 		searchButton.setIcon(ImageProvider.FIND);
 		searchButton.setAutoFit(true);
-
 		section.setControls(searchCanvas, searchButton);
+		
 
 		ListGrid grid = new ListGrid();
 		grid.setAlternateRecordStyles(true);
 		grid.setWidth100();
-
+		grid.setCellHeight(17);
+		grid.setBaseStyle("myOtherGridCell");
+		
 		ListGridField readField = new ListGridField("read", "");
 		readField.setAlign(Alignment.CENTER);
 		readField.setType(ListGridFieldType.IMAGE);
