@@ -3,6 +3,7 @@
  */
 package com.cubusmail.smartgwt.client.mail;
 
+import com.cubusmail.smartgwt.client.addressbook.AddressbookCanvas;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -12,10 +13,20 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  */
 public class NavigationView extends VLayout {
-
-	public NavigationView() {
-		MailfolderTree tree = new MailfolderTree();
-		addMember(tree);
+	public static final int VIEW_MAIL = 0;
+	public static final int VIEW_ADDRESSBOOK = 1;
+	public static final int VIEW_CALENDER = 2;
+	public static final int VIEW_PREFERNCES = 3;
+	
+	public NavigationView(final int viewid) {
+		switch(viewid) {
+			case VIEW_MAIL:
+				addMember(new MailfolderTree());
+				break;
+			case VIEW_ADDRESSBOOK:
+				addMember(new AddressbookCanvas());
+				break;
+		}
 
 		DateChooser chooser = new DateChooser();
 		chooser.setWidth100();

@@ -1,24 +1,14 @@
 package com.cubusmail.smartgwt.client.mail;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class MailPanel extends Canvas {
 
 	public MailPanel() {
-
-		addDrawHandler(new DrawHandler() {
-
-			public void onDraw(DrawEvent event) {
-				GWT.log("Drawevent " + event.getID(), null);
-			}
-		});
 
 		VLayout mainLayout = new VLayout();
 		mainLayout.setWidth100();
@@ -28,7 +18,7 @@ public class MailPanel extends Canvas {
 		mailLayout.setWidth100();
 		mailLayout.setHeight100();
 
-		NavigationView view = new NavigationView();
+		NavigationView view = new NavigationView(NavigationView.VIEW_MAIL);
 		view.setWidth("40%");
 		view.setShowResizeBar(true);
 		view.setOverflow(Overflow.CLIP_V);
@@ -56,6 +46,5 @@ public class MailPanel extends Canvas {
 		mainLayout.addMember(mailLayout);
 
 		addChild(mainLayout);
-
 	}
 }

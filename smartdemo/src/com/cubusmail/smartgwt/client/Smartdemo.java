@@ -1,12 +1,10 @@
 package com.cubusmail.smartgwt.client;
 
+import com.cubusmail.smartgwt.client.addressbook.AddressbookCanvas;
 import com.cubusmail.smartgwt.client.mail.MailPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.Window;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
@@ -68,22 +66,10 @@ public class Smartdemo implements EntryPoint {
 		this.mainTabSet.addTabSelectedHandler(new TabSelectedHandler() {
 
 			public void onTabSelected(TabSelectedEvent event) {
-				if ("Calendar".equals(event.getTab().getTitle())) {
+				if ("Address Book".equals(event.getTab().getTitle())) {
 					if (event.getTab().getPane() == null) {
 						final Tab tab = event.getTab();
-						final Window window = new Window();
-						window.setTitle("Window with footer");
-						window.setWidth(200);
-						window.setHeight(200);
-						window.setCanDragResize(true);
-						window.setShowFooter(true);
-						window.addDrawHandler(new DrawHandler() {
-
-							public void onDraw(DrawEvent event) {
-								tab.setPane(new MailPanel());
-							}
-						});
-						window.draw();
+						tab.setPane(new AddressbookCanvas());
 					}
 				}
 			}
