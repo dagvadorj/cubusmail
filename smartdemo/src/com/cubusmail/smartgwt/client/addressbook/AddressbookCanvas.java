@@ -28,8 +28,9 @@ public class AddressbookCanvas extends Canvas {
 
 		HLayout addressHLayout = new HLayout();
 		AddressList list = new AddressList();
-		list.setWidth("30%");
+		list.setWidth("220px");
 		addressHLayout.addMember(list);
+		addressHLayout.addMember(new AddressEditForm());
 		addressListLayout.addMember(addressHLayout);
 
 		addressBookLayout.setMembers(view, addressListLayout);

@@ -18,7 +18,7 @@ public class AddressFilterToolbar extends ToolStrip {
 		super();
 		setBorder("0px");
 		IButton button = new IButton("All");
-		button.setAutoWidth();
+		button.setAutoFit(true);
 		button.setActionType(SelectionType.RADIO);
 		button.setRadioGroup("addressFilter");
 		addMember(button);
