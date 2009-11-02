@@ -1,21 +1,16 @@
-package com.cubusmail.smartgwt.client.mail;
+package com.cubusmail.smartgwt.client.addressbook;
 
 import com.cubusmail.smartgwt.client.DemoData;
-import com.cubusmail.smartgwt.client.ImageProvider;
-import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
-import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
-import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 
-public class MailfolderTree extends SectionStack {
-
-	public MailfolderTree() {
+public class AddressbookTree extends SectionStack {
+	public AddressbookTree() {
 		super();
 		SectionStackSection section = new SectionStackSection();
 		section.setCanCollapse(false);
@@ -51,36 +46,8 @@ public class MailfolderTree extends SectionStack {
 		treeData.setData(DemoData.getMailTreeData());
 
 		tree.setData(treeData);
-		section.setControls(createToolbar());
 		section.setItems(tree);
 
 		setSections(section);
-	}
-
-	private ToolStrip createToolbar() {
-		ToolStrip strip = new ToolStrip();
-		strip.setAutoWidth();
-		strip.setOverflow(Overflow.VISIBLE);
-		strip.setBorder("0px");
-		strip.addMember(createButton(ImageProvider.MSG_REFRESH));
-		strip.addMember(createButton(ImageProvider.MAIL_FOLDER_NEW));
-		strip.addMember(createButton(ImageProvider.MSG_MOVE));
-		strip.addMember(createButton(ImageProvider.MAIL_FOLDER_DRAFTS));
-		strip.addMember(createButton(ImageProvider.MAIL_FOLDER_DELETE));
-		strip.addMember(createButton(ImageProvider.MAIL_FOLDER_TRASH_EMPTY));
-
-		return strip;
-	}
-
-	private Button createButton(String icon) {
-		Button button1 = new Button("");
-		button1.setIcon(icon);
-		button1.setWidth(22);
-		button1.setBorder("0px");
-		button1.setShowDown(true);
-		button1.setShowOverCanvas(true);
-		button1.setPadding(0);
-
-		return button1;
 	}
 }

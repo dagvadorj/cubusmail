@@ -18,6 +18,11 @@ import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 public class Smartdemo implements EntryPoint {
 	private TabSet mainTabSet;
 
+	private static final String TITLE_MAIL = "Mail";
+	private static final String TITLE_ADDRESSBOOK = "Address Book";
+	private static final String TITLE_CALENDAR = "Calendar";
+	private static final String TITLE_PREFERNCES = "Preferences";
+
 	/**
 	 * This is the entry point method.
 	 */
@@ -55,18 +60,18 @@ public class Smartdemo implements EntryPoint {
 		mainTabSet.setWidth100();
 		mainTabSet.setHeight100();
 
-		Tab tab = new Tab("Mail");
+		Tab tab = new Tab(TITLE_MAIL);
 		tab.setPane(new MailPanel());
 		this.mainTabSet.addTab(tab);
 
-		this.mainTabSet.addTab(new Tab("Address Book"));
-		this.mainTabSet.addTab(new Tab("Calendar"));
-		this.mainTabSet.addTab(new Tab("Preferences"));
+		this.mainTabSet.addTab(new Tab(TITLE_ADDRESSBOOK));
+		this.mainTabSet.addTab(new Tab(TITLE_CALENDAR));
+		this.mainTabSet.addTab(new Tab(TITLE_PREFERNCES));
 
 		this.mainTabSet.addTabSelectedHandler(new TabSelectedHandler() {
 
 			public void onTabSelected(TabSelectedEvent event) {
-				if ("Address Book".equals(event.getTab().getTitle())) {
+				if (TITLE_ADDRESSBOOK.equals(event.getTab().getTitle())) {
 					if (event.getTab().getPane() == null) {
 						final Tab tab = event.getTab();
 						tab.setPane(new AddressbookCanvas());

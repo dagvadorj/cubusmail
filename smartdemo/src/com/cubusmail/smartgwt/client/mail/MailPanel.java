@@ -21,7 +21,7 @@ public class MailPanel extends Canvas {
 		NavigationView view = new NavigationView(NavigationView.VIEW_MAIL);
 		view.setWidth("40%");
 		view.setShowResizeBar(true);
-		view.setOverflow(Overflow.CLIP_V);
+		view.setOverflow(Overflow.CLIP_H);
 		mailLayout.addMember(view);
 
 		VLayout vLayout = new VLayout();

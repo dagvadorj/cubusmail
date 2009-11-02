@@ -77,5 +77,4 @@ public class MessageListCanvas extends SectionStack {
 		section.setItems(grid);
 		setSections(section);
 	}
-
 }
