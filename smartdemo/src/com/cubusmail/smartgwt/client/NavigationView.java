@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.cubusmail.smartgwt.client.mail;
+package com.cubusmail.smartgwt.client;
 
-import com.cubusmail.smartgwt.client.addressbook.AddressbookCanvas;
+import com.cubusmail.smartgwt.client.addressbook.AddressbookTree;
+import com.cubusmail.smartgwt.client.mail.MailfolderTree;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -24,7 +25,7 @@ public class NavigationView extends VLayout {
 				addMember(new MailfolderTree());
 				break;
 			case VIEW_ADDRESSBOOK:
-				addMember(new AddressbookCanvas());
+				addMember(new AddressbookTree());
 				break;
 		}
 

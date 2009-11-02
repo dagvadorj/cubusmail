@@ -1,7 +1,7 @@
 package com.cubusmail.smartgwt.client;
 
 import com.cubusmail.smartgwt.client.addressbook.AddressbookCanvas;
-import com.cubusmail.smartgwt.client.mail.MailPanel;
+import com.cubusmail.smartgwt.client.mail.MailCanvas;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.widgets.Canvas;
@@ -60,17 +60,23 @@ public class Smartdemo implements EntryPoint {
 		mainTabSet.setWidth100();
 		mainTabSet.setHeight100();
 
-		Tab tab = new Tab(TITLE_MAIL);
-		tab.setPane(new MailPanel());
-		this.mainTabSet.addTab(tab);
-
-		this.mainTabSet.addTab(new Tab(TITLE_ADDRESSBOOK));
+		this.mainTabSet.addTab(new Tab(TITLE_MAIL));
+		Tab addressTab = new Tab(TITLE_ADDRESSBOOK);
+		addressTab.setPane(new AddressbookCanvas());
+		this.mainTabSet.addTab(addressTab);
 		this.mainTabSet.addTab(new Tab(TITLE_CALENDAR));
 		this.mainTabSet.addTab(new Tab(TITLE_PREFERNCES));
+		this.mainTabSet.setSelectedTab(1);
 
 		this.mainTabSet.addTabSelectedHandler(new TabSelectedHandler() {
 
 			public void onTabSelected(TabSelectedEvent event) {
+				if (TITLE_MAIL.equals(event.getTab().getTitle())) {
+					if (event.getTab().getPane() == null) {
+						final Tab tab = event.getTab();
+						tab.setPane(new MailCanvas());
+					}
+				}
 				if (TITLE_ADDRESSBOOK.equals(event.getTab().getTitle())) {
 					if (event.getTab().getPane() == null) {
 						final Tab tab = event.getTab();

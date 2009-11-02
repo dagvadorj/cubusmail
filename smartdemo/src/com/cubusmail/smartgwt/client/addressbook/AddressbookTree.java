@@ -43,7 +43,7 @@ public class AddressbookTree extends SectionStack {
 		treeData.setIdField("nodeID");
 		treeData.setParentIdField("parentNodeID");
 		treeData.setRootValue("root");
-		treeData.setData(DemoData.getMailTreeData());
+		treeData.setData(DemoData.getAddressBookTreeData());
 
 		tree.setData(treeData);
 		section.setItems(tree);

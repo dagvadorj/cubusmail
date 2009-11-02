@@ -1,14 +1,15 @@
 package com.cubusmail.smartgwt.client.mail;
 
+import com.cubusmail.smartgwt.client.NavigationView;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class MailPanel extends Canvas {
+public class MailCanvas extends Canvas {
 
-	public MailPanel() {
+	public MailCanvas() {
 
 		VLayout mainLayout = new VLayout();
 		mainLayout.setWidth100();

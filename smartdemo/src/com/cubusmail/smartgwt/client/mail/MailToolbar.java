@@ -9,7 +9,6 @@ public class MailToolbar extends ToolStrip {
 
 	public MailToolbar() {
 		super();
-
 		Button button = new Button("Compose");
 		button.setBorder("0px");
 		button.setIcon(ImageProvider.MSG_NEW);

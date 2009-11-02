@@ -3,6 +3,8 @@
  */
 package com.cubusmail.smartgwt.client;
 
+import com.cubusmail.smartgwt.client.addressbook.AddressRecord;
+
 /**
  * @author schlierf
  * 
@@ -11,6 +13,7 @@ public class DemoData {
 
 	private static ExplorerTreeNode[] mailTreeData;
 	private static ExplorerTreeNode[] addressBookTreeData;
+	private static AddressRecord[] addressListData;
 
 	public static ExplorerTreeNode[] getMailTreeData() {
 		if (mailTreeData == null) {
@@ -36,13 +39,26 @@ public class DemoData {
 					new ExplorerTreeNode("Contacts",
 							"addressbookfolder_contacts", "",
 							ImageProvider.CONTACT_FOLDER),
-					new ExplorerTreeNode("Contacts",
-							"addressbookfolder_contacts", "",
+					new ExplorerTreeNode("Recipients",
+							"addressbookfolder_recipients", "",
 							ImageProvider.CONTACT_FOLDER),
-					new ExplorerTreeNode("Contacts",
-							"addressbookfolder_contacts", "",
+					new ExplorerTreeNode("Special",
+							"addressbookfolder_special", "",
 							ImageProvider.CONTACT_FOLDER) };
 		}
 		return addressBookTreeData;
 	}
+
+	public static AddressRecord[] getAddressListData() {
+		if (addressListData == null) {
+			addressListData = new AddressRecord[] {
+					new AddressRecord("White, Jack"),
+					new AddressRecord("Rabbit, Black"),
+					new AddressRecord("Depp, Jonny"),
+					new AddressRecord("Croft, Lara"),
+					new AddressRecord("Idea, No") };
+		}
+		return addressListData;
+	}
+
 }
