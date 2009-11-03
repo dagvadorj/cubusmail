@@ -101,4 +101,6 @@ public interface ImageProvider {
 	
 	public static final String BUTTON_ADD = "btn_add.png";
 	public static final String BUTTON_REMOVE = "btn_remove.png";
+	
+	public static final String TEST_PICTURE = "testpicture.jpg";
 }

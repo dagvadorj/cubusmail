@@ -5,7 +5,6 @@ import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -54,11 +53,13 @@ public class AddressEditForm extends Canvas {
 		headForm.setNumCols(3);
 
 		FormItemIcon picture = new FormItemIcon();
-		picture.setSrc(ImageProvider.CONTACT_FOLDER);
+		picture.setSrc(ImageProvider.TEST_PICTURE);
 		StaticTextItem item = new StaticTextItem();
 		item.setIcons(picture);
 		item.setShowTitle(false);
 		item.setEndRow(false);
+		item.setIconWidth(60);
+		item.setIconHeight(75);
 
 		TextItem lastname = new TextItem("lastName", "Last Name");
 		TextItem firstname = new TextItem("firstName", "First Name");
@@ -75,7 +76,7 @@ public class AddressEditForm extends Canvas {
 		this.emailForm.setWrapItemTitles(false);
 		this.emailForm.setColWidths("*", "20", "20");
 
-		TextItem email = new TextItem("enail", "Email Home");
+		TextItem email = new TextItem("email", "Email Home");
 		email.setEndRow(false);
 		StaticTextItem remove = new StaticTextItem("remove");
 		remove.setShowTitle(false);
