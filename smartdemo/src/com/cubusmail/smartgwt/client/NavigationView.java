@@ -9,10 +9,6 @@ import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.DateChooser;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-/**
- * @author ex71824
- * 
- */
 public class NavigationView extends VLayout {
 	public static final int VIEW_MAIL = 0;
 	public static final int VIEW_ADDRESSBOOK = 1;

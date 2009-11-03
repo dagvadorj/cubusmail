@@ -9,10 +9,6 @@ import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-/**
- * @author ex71824
- * 
- */
 public class AddressList extends ListGrid {
 	public AddressList() {
 		super();

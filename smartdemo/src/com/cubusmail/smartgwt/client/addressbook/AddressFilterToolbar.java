@@ -7,10 +7,6 @@ import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
-/**
- * @author ex71824
- * 
- */
 public class AddressFilterToolbar extends ToolStrip {
 	private final static String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -18,6 +14,7 @@ public class AddressFilterToolbar extends ToolStrip {
 		super();
 		setBorder("0px");
 		IButton button = new IButton("All");
+		button.setSelected(true);
 		button.setAutoFit(true);
 		button.setActionType(SelectionType.RADIO);
 		button.setRadioGroup("addressFilter");

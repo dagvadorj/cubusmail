@@ -28,6 +28,7 @@ public class Smartdemo implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		VLayout main = new VLayout();
+		main.setBackgroundImage("[SKIN]/shared/background.gif");
 
 		main.setWidth100();
 		main.setHeight100();
