@@ -1,11 +1,15 @@
 package com.cubusmail.smartgwt.client.addressbook;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+
 import com.cubusmail.smartgwt.client.ImageProvider;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
@@ -13,15 +17,23 @@ import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public class AddressEditForm extends Canvas {
+	private static final Integer LABEL_WIDTH = 80;
+	private static final Integer BUTTON_WIDTH = 18;
+
 	private FormItemIcon addIcon = null;
 	private FormItemIcon removeIcon = null;
 
 	private DynamicForm emailForm;
 	private VLayout editLayout;
 
+	private LinkedHashMap<String, String> phoneTypes;
+	private LinkedHashMap<String, String> emailTypes;
+
 	public AddressEditForm() {
 
 		super();
+
+		init();
 
 		this.addIcon = new FormItemIcon();
 		this.addIcon.setSrc(ImageProvider.BUTTON_ADD);
@@ -35,11 +47,31 @@ public class AddressEditForm extends Canvas {
 		this.editLayout = new VLayout();
 		this.editLayout.setWidth100();
 		this.editLayout.setHeight100();
+		this.editLayout.setPadding(5);
 
 		this.editLayout.addMember(createHeadForm());
-		this.editLayout.addMember(createEmailForm());
+		// this.editLayout.addMember(createEmailForm());
+		createEmailForms();
+		createPhoneForms();
 
 		addChild(this.editLayout);
+	}
+
+	private void init() {
+		this.phoneTypes = new LinkedHashMap<String, String>();
+		this.phoneTypes.put("Private Phone", "Private Phone");
+		this.phoneTypes.put("Private Mobile", "Private Mobile");
+		this.phoneTypes.put("Private Fax", "Private Fax");
+		this.phoneTypes.put("Business Phone", "Business Phone");
+		this.phoneTypes.put("Business Mobile", "Business Mobile");
+		this.phoneTypes.put("Business Fax", "Business Fax");
+
+		this.emailTypes = new LinkedHashMap<String, String>();
+		this.emailTypes.put("Email 1", "Email 1");
+		this.emailTypes.put("Email 2", "Email 2");
+		this.emailTypes.put("Email 3", "Email 3");
+		this.emailTypes.put("Email 4", "Email 4");
+		this.emailTypes.put("Email 5", "Email 5");
 	}
 
 	private DynamicForm createHeadForm() {
@@ -71,7 +103,6 @@ public class AddressEditForm extends Canvas {
 
 	private DynamicForm createEmailForm() {
 		this.emailForm = new DynamicForm();
-		this.emailForm.setBorder("1px solid");
 		this.emailForm.setNumCols(4);
 		this.emailForm.setWrapItemTitles(false);
 		this.emailForm.setColWidths("*", "20", "20");
@@ -110,5 +141,60 @@ public class AddressEditForm extends Canvas {
 		});
 
 		return this.emailForm;
+	}
+
+	private void createPhoneForms() {
+
+		for (Iterator<String> iterator = this.phoneTypes.values().iterator(); iterator
+				.hasNext();) {
+			String value = iterator.next();
+
+			DynamicForm form = new DynamicForm();
+			form.setNumCols(4);
+			form.setColWidths(LABEL_WIDTH, "*", BUTTON_WIDTH, BUTTON_WIDTH);
+			SelectItem phoneTypesSelect = new SelectItem();
+			phoneTypesSelect.setShowTitle(false);
+			phoneTypesSelect.setValueMap(this.phoneTypes);
+			TextItem phone = new TextItem("phone" + value, "phone");
+			phone.setEndRow(false);
+			phone.setShowTitle(false);
+			StaticTextItem remove = new StaticTextItem("remove");
+			remove.setShowTitle(false);
+			remove.setIcons(this.removeIcon);
+			StaticTextItem add = new StaticTextItem("add");
+			add.setShowTitle(false);
+			add.setIcons(this.addIcon);
+			form.setFields(phoneTypesSelect, phone, remove, add);
+			phoneTypesSelect.setValue(value);
+			this.editLayout.addMember(form);
+		}
+
+	}
+
+	private void createEmailForms() {
+
+		for (Iterator<String> iterator = this.emailTypes.values().iterator(); iterator
+				.hasNext();) {
+			String value = iterator.next();
+			DynamicForm form = new DynamicForm();
+			form.setNumCols(4);
+			form.setColWidths(LABEL_WIDTH, "*", BUTTON_WIDTH, BUTTON_WIDTH);
+			SelectItem phoneTypesSelect = new SelectItem();
+			phoneTypesSelect.setShowTitle(false);
+			phoneTypesSelect.setValueMap(this.phoneTypes);
+			TextItem phone = new TextItem("email" + value, "email");
+			phone.setEndRow(false);
+			phone.setShowTitle(false);
+			StaticTextItem remove = new StaticTextItem("remove");
+			remove.setShowTitle(false);
+			remove.setIcons(this.removeIcon);
+			StaticTextItem add = new StaticTextItem("add");
+			add.setShowTitle(false);
+			add.setIcons(this.addIcon);
+			form.setFields(phoneTypesSelect, phone, remove, add);
+			phoneTypesSelect.setValue(value);
+			this.editLayout.addMember(form);
+		}
+
 	}
 }
