@@ -1,6 +1,6 @@
 /* ContactListPanel.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -78,7 +78,7 @@ import com.cubusmail.gwtui.domain.ContactListFields;
 /**
  * Panel for the contact list.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class ContactListPanel extends Panel implements ContactFolderSelectedListener, ReloadContactsListener {
 
@@ -311,7 +311,7 @@ public class ContactListPanel extends Panel implements ContactFolderSelectedList
 	/**
 	 * Delay timer for contact loading.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class ContactLoadTimer extends Timer {
 
@@ -371,7 +371,7 @@ public class ContactListPanel extends Panel implements ContactFolderSelectedList
 	/**
 	 * Contact list proxy.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class ContactListProxy extends GWTProxy {
 
@@ -409,7 +409,7 @@ public class ContactListPanel extends Panel implements ContactFolderSelectedList
 	/**
 	 * Listener for key events (e.g. DEL key).
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class KeyGridListener extends GridListenerAdapter {
 
@@ -425,7 +425,7 @@ public class ContactListPanel extends Panel implements ContactFolderSelectedList
 	/**
 	 * Listener for context menu.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class ContextMenuListener extends GridRowListenerAdapter {
 

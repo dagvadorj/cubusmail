@@ -1,6 +1,6 @@
 /* GWTMailFolderException.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -24,7 +24,7 @@ package com.cubusmail.gwtui.client.exceptions.folder;
 /**
  * General exception for all mailfoler operations.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class GWTMailFolderException extends Exception {
 

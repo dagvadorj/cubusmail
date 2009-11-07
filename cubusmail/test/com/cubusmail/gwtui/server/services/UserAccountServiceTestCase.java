@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 /**
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class UserAccountServiceTestCase extends TestCase {
 

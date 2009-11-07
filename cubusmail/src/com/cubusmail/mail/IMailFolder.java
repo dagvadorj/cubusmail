@@ -1,6 +1,6 @@
 /* IMailFolder.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -35,7 +35,7 @@ import com.sun.mail.imap.Rights;
 /**
  * Interface for a mail folder.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public interface IMailFolder extends Serializable {
 

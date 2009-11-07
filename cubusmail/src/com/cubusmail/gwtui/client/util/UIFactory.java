@@ -1,6 +1,6 @@
 /* UIFactory.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -32,7 +32,7 @@ import com.cubusmail.gwtui.client.model.GWTMailbox;
 /**
  * Factory for UI elements.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class UIFactory {
 

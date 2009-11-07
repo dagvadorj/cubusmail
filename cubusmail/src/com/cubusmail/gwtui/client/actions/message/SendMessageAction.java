@@ -1,6 +1,6 @@
 /* SendMessageAction.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -37,7 +37,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
 /**
  * Send the message.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class SendMessageAction extends GWTAction implements AsyncCallback<Void> {
 

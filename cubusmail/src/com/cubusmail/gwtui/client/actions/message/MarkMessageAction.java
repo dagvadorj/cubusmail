@@ -1,6 +1,6 @@
 /* MarkMessageAction.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -35,7 +35,7 @@ import com.cubusmail.gwtui.domain.MessageListFields;
 /**
  * Mark messages.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class MarkMessageAction extends BaseGridAction implements AsyncCallback<Void> {
 
@@ -105,7 +105,7 @@ public class MarkMessageAction extends BaseGridAction implements AsyncCallback<V
 	/**
 	 * Type of message marks.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	public static enum MarkActionType {
 		READ(TextProvider.get().actions_markread_text(), TextProvider.get().actions_markread_tooltip(),

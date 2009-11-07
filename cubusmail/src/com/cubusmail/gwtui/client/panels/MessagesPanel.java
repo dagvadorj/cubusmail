@@ -1,6 +1,6 @@
 /* MessagesPanel.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -46,7 +46,7 @@ import com.cubusmail.gwtui.domain.Preferences;
 /**
  * Container panel for messages list and preview.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class MessagesPanel extends Panel implements FolderSelectedListener, PreferencesChangedListener {
 
@@ -177,7 +177,7 @@ public class MessagesPanel extends Panel implements FolderSelectedListener, Pref
 	/**
 	 * ContextMenuListener that shows the context menu.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class ContextMenuListener extends GridRowListenerAdapter {
 
@@ -207,7 +207,7 @@ public class MessagesPanel extends Panel implements FolderSelectedListener, Pref
 	/**
 	 * Listener for key events (e.g. DEL key).
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class MessageGridListener extends GridListenerAdapter {
 

@@ -1,6 +1,6 @@
 /* ModelFormPanel.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -33,7 +33,7 @@ import com.totsp.gwittir.client.beans.Property;
 /**
  * Base form panel. It maps values between form panel and POJOs via reflection.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class ModelFormPanel<T extends Object> extends FormPanel {
 

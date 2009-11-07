@@ -1,6 +1,6 @@
 /* IErrorCodes.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -23,7 +23,7 @@ package com.cubusmail.mail.exceptions;
 /**
  * Detailed error codes for mail exceptions.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public interface IErrorCodes {
 

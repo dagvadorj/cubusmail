@@ -5,7 +5,7 @@ package com.cubusmail.mail.test;
 /**
  * Cipher test.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

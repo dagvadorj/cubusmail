@@ -1,6 +1,6 @@
 /* ContactListWindow.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -48,7 +48,7 @@ import com.cubusmail.gwtui.domain.ContactListFields;
 /**
  * Contact list dialog.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class ContactListWindow extends Window implements IGWTWindow {
 
@@ -240,7 +240,7 @@ public class ContactListWindow extends Window implements IGWTWindow {
 	/**
 	 * Grid row listener.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class ContactGridRowListener extends GridRowListenerAdapter {
 

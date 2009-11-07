@@ -1,6 +1,6 @@
 /* GWTLoginException.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -25,7 +25,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * Exception for login operations.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class GWTLoginException extends Exception implements IsSerializable {
 

@@ -1,6 +1,6 @@
 /* PreferencesChangedListener.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -25,7 +25,7 @@ import com.cubusmail.gwtui.domain.Preferences;
 /**
  * Listener for changed preferences.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public interface PreferencesChangedListener {
 

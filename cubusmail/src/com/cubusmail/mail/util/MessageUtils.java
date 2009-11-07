@@ -1,6 +1,6 @@
 /* MessageUtils.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -61,14 +61,14 @@ import com.cubusmail.mail.IMailFolder;
 /**
  * Util class for general message functions.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class MessageUtils {
 
 	/**
 	 * Type of address string
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	public enum AddressStringType {
 		// personal name and Email

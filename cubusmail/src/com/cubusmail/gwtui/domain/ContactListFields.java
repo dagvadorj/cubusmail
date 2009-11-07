@@ -1,6 +1,6 @@
 /* ContactListFields.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -23,7 +23,7 @@ package com.cubusmail.gwtui.domain;
 /**
  * Enum of fields of the contact list table.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public enum ContactListFields {
 

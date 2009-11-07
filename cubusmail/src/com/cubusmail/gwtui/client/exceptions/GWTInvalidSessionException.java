@@ -1,6 +1,6 @@
 /* GWTInvalidAddressException.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -25,7 +25,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * This exception is thrown when session is invalid.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class GWTInvalidSessionException extends Exception implements IsSerializable {
 

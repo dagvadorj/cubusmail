@@ -1,6 +1,6 @@
 /* AllCertificatesTrustManager.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -28,7 +28,7 @@ import javax.net.ssl.X509TrustManager;
 /**
  * Trusmanager for all kinds of certificates, eg. self signed.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 class AllCertificatesTrustManager implements X509TrustManager {
 

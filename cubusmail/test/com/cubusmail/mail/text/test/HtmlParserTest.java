@@ -23,7 +23,7 @@ import org.htmlparser.visitors.NodeVisitor;
 
 /**
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class HtmlParserTest {
 

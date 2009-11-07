@@ -1,6 +1,6 @@
 /* CopyMoveMessagesAction.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -40,7 +40,7 @@ import com.cubusmail.gwtui.client.windows.WindowRegistry;
 /**
  * Action for copying and moving messages.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class CopyMoveMessagesAction extends BaseGridAction implements AsyncCallback<Void> {
 
@@ -142,7 +142,7 @@ public class CopyMoveMessagesAction extends BaseGridAction implements AsyncCallb
 	/**
 	 * TODO: documentation
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class OKButtonListener extends ButtonListenerAdapter {
 

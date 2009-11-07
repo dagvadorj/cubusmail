@@ -1,6 +1,6 @@
 /* PanelRegistry.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -33,7 +33,7 @@ import com.cubusmail.gwtui.client.panels.contact.ContactListPanel;
 /**
  * Registry for all important panels in Cubusmail.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public enum PanelRegistry {
 	MAIL_FOLDER_PANEL, LEFT_PANEL, MESSAGE_LIST_PANEL,

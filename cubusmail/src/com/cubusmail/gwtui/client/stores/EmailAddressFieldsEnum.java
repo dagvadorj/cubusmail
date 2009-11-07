@@ -1,6 +1,6 @@
 /* EmailAddressFieldsEnum.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -24,7 +24,7 @@ package com.cubusmail.gwtui.client.stores;
 /**
  * Enum for email address combo box fields.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public enum EmailAddressFieldsEnum {
 	EMAIL_ADDRESS, HTML_ESCAPED_EMAIL_ADDRESS

@@ -12,7 +12,7 @@ import com.cubusmail.gwtui.domain.UserAccount;
 import com.cubusmail.user.UserAccountDao;
 
 /**
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class UserAccountTestCase extends AbstractAnnotationAwareTransactionalTests {
 
@@ -26,7 +26,7 @@ public class UserAccountTestCase extends AbstractAnnotationAwareTransactionalTes
 		account.setUsername( "schlierf3" );
 
 		Identity identity = new Identity();
-		identity.setDisplayName( "Jürgen Schlierf" );
+		identity.setDisplayName( "Juergen Schlierf" );
 		identity.setEmail( "test@test.de" );
 		account.addIdentity( identity );
 

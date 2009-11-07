@@ -1,6 +1,6 @@
 /* IMAPMailbox.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -54,7 +54,7 @@ import com.cubusmail.mail.security.MailboxAuthenticator;
 /**
  * Implementation of an imap mailbox.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
 public class IMAPMailbox implements IMailbox {
@@ -561,7 +561,7 @@ public class IMAPMailbox implements IMailbox {
 	 */
 	public String getFullName() {
 
-		return "Jürgen Schlierf";
+		return "Juergen Schlierf";
 	}
 
 	/**

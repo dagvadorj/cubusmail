@@ -1,6 +1,6 @@
 /* AddContactAction.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -39,7 +39,7 @@ import com.cubusmail.gwtui.domain.ContactFolder;
 /**
  * Add a contact from email address.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class AddContactFromEmailAddressAction extends GWTAction implements AsyncCallback<Void> {
 

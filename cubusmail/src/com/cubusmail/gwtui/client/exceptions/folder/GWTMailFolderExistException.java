@@ -1,6 +1,6 @@
 /* GWTMailFolderExistException.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -23,7 +23,7 @@ package com.cubusmail.gwtui.client.exceptions.folder;
 /**
  * Is thrown when a folder is created which already exist.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class GWTMailFolderExistException extends GWTMailFolderException {
 

@@ -1,6 +1,6 @@
 /* MessageListPanel.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -74,7 +74,7 @@ import com.cubusmail.gwtui.domain.Preferences;
 /**
  * Contains the table of the messages.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class MessageListPanel extends Panel implements FolderSelectedListener, MessagesReloadListener,
 		MessageLoadedListener, PreferencesChangedListener, AsyncCallback<GWTMessage[]> {
@@ -539,7 +539,7 @@ public class MessageListPanel extends Panel implements FolderSelectedListener, M
 
 	/**
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class MessagePreviewTimer extends Timer {
 
@@ -569,7 +569,7 @@ public class MessageListPanel extends Panel implements FolderSelectedListener, M
 	 * Selection Listener for the list of messages. It loads the selected
 	 * message.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class MessageGridRowSelectionListener extends RowSelectionListenerAdapter {
 
@@ -587,7 +587,7 @@ public class MessageListPanel extends Panel implements FolderSelectedListener, M
 	/**
 	 * Selection listener.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class OpenMessageGridRowSelectionListener extends GridRowListenerAdapter implements
 			AsyncCallback<GWTMessage> {

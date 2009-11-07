@@ -12,7 +12,7 @@ import com.cubusmail.gwtui.client.services.ServiceProvider;
 /**
  * Unit test
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class GWTUserAccountTestCase extends GWTTestCase {
 

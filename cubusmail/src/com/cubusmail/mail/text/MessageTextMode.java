@@ -1,6 +1,6 @@
 /* MessageTextMode.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -23,7 +23,7 @@ package com.cubusmail.mail.text;
 /**
  * How should the mail text prepared?
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public enum MessageTextMode {
 	DISPLAY, REPLY, DRAFT;

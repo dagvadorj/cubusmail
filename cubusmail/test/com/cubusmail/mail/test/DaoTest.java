@@ -13,7 +13,7 @@ import com.cubusmail.user.UserAccountDao;
 
 /**
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class DaoTest {
 

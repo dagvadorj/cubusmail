@@ -1,6 +1,6 @@
 /* ContactFolder.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -40,7 +40,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 /**
  * Contact folder POJO
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
 @Entity

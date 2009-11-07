@@ -1,6 +1,6 @@
 /* Preferences.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -29,7 +29,7 @@ import com.totsp.gwittir.client.beans.annotations.Introspectable;
 /**
  * Preferences POJO.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
 @Introspectable

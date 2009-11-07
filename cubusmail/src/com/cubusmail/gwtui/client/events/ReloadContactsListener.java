@@ -1,6 +1,6 @@
 /* ReloadContactsListener.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -24,7 +24,7 @@ package com.cubusmail.gwtui.client.events;
 /**
  * Listener for reloading contacts.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public interface ReloadContactsListener {
 

@@ -1,6 +1,6 @@
 /* Cubusmail.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -144,7 +144,7 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 	/**
 	 * Action for the Login.
 	 * 
-	 * @author Jürgen Schlierf
+	 * @author Juergen Schlierf
 	 */
 	private class LoginAction extends GWTAction implements AsyncCallback<GWTMailbox> {
 

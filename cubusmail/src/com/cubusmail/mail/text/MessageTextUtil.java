@@ -1,6 +1,6 @@
 /* MessageTextUtil.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -50,7 +50,7 @@ import com.cubusmail.mail.util.MessageUtils;
 /**
  * Util class for message text preparation.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class MessageTextUtil {
 

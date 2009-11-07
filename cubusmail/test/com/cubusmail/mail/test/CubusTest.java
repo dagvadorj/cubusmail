@@ -9,7 +9,7 @@ import org.apache.commons.lang.LocaleUtils;
 
 /**
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class CubusTest {
 

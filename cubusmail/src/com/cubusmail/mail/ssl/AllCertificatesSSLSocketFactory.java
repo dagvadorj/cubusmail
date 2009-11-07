@@ -1,6 +1,6 @@
 /* AllCertificatesSSLSocketFactory.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -36,7 +36,7 @@ import javax.net.ssl.TrustManager;
 /**
  * Trust all kinds of certificates, including self signed.
  *
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class AllCertificatesSSLSocketFactory extends SSLSocketFactory {
 

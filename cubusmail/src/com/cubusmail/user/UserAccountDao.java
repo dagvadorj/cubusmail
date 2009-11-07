@@ -1,6 +1,6 @@
 /* MessageUtils.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -48,7 +48,7 @@ import com.cubusmail.mail.util.MessageUtils;
 /**
  * DAO for user account operations.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class UserAccountDao extends HibernateDaoSupport implements ApplicationContextAware {
 

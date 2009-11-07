@@ -1,6 +1,6 @@
 /* SecurityUtils.java
 
-   Copyright (c) 2009 Jürgen Schlierf, All Rights Reserved
+   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -27,7 +27,7 @@ import javax.security.auth.Subject;
 /**
  * Util class for security functions.
  * 
- * @author Jürgen Schlierf
+ * @author Juergen Schlierf
  */
 public class SecurityUtils {
 
