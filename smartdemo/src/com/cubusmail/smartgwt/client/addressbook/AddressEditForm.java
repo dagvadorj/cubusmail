@@ -28,13 +28,12 @@ public class AddressEditForm extends Canvas {
 
 	private LinkedHashMap<String, String> phoneTypes;
 	private LinkedHashMap<String, String> emailTypes;
+	private LinkedHashMap<String, String> addressTypes;
 
 	public AddressEditForm() {
 
 		super();
-
 		init();
-
 		this.addIcon = new FormItemIcon();
 		this.addIcon.setSrc(ImageProvider.BUTTON_ADD);
 		this.addIcon.setWidth(12);
@@ -50,6 +49,7 @@ public class AddressEditForm extends Canvas {
 		this.editLayout.setPadding(5);
 
 		this.editLayout.addMember(createHeadForm());
+		this.editLayout.addMember(createHeadForm());
 		// this.editLayout.addMember(createEmailForm());
 		createEmailForms();
 		createPhoneForms();
@@ -57,6 +57,7 @@ public class AddressEditForm extends Canvas {
 		addChild(this.editLayout);
 	}
 
+	
 	private void init() {
 		this.phoneTypes = new LinkedHashMap<String, String>();
 		this.phoneTypes.put("Private Phone", "Private Phone");
@@ -72,6 +73,10 @@ public class AddressEditForm extends Canvas {
 		this.emailTypes.put("Email 3", "Email 3");
 		this.emailTypes.put("Email 4", "Email 4");
 		this.emailTypes.put("Email 5", "Email 5");
+
+		this.addressTypes = new LinkedHashMap<String, String>();
+		this.addressTypes.put("Work Address", "Work Address");
+		this.addressTypes.put("Private Address", "Private Address");
 	}
 
 	private DynamicForm createHeadForm() {
@@ -195,6 +200,5 @@ public class AddressEditForm extends Canvas {
 			phoneTypesSelect.setValue(value);
 			this.editLayout.addMember(form);
 		}
-
 	}
 }
