@@ -23,6 +23,7 @@ import com.cubusmail.client.actions.IGWTAction;
 import com.cubusmail.client.util.TextProvider;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -50,6 +51,7 @@ public class LoginWindow extends Window {
 		setShowCloseButton( false );
 		setShowMinimizeButton( false );
 		setShowMaximizeButton( false );
+		setPadding(10);
 
 		DynamicForm form = new DynamicForm();
 		form.setWidth100();
@@ -67,8 +69,14 @@ public class LoginWindow extends Window {
 		form.setFields( this.username, this.password );
 
 		Button loginButton = new Button( TextProvider.get().logindialog_button_login() );
+		loginButton.setAlign( Alignment.CENTER );
+		VLayout buttonLayout = new VLayout();
+		buttonLayout.setWidth100();
+		buttonLayout.setAutoHeight();
+		buttonLayout.setAlign( Alignment.CENTER );
+		buttonLayout.setMembers( loginButton );
 		addItem( form );
-		addItem( loginButton );
+		addItem( buttonLayout );
 	}
 
 	public void addListener( IGWTAction action ) {

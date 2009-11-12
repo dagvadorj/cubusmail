@@ -16,7 +16,7 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package com.cubusmail.client;
 
@@ -52,6 +52,8 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 		EventBroker.get().addLgoutListener( this );
 
 		checkUserAccount();
+
+		RootPanel.getBodyElement().removeChild( RootPanel.get( "loadingWrapper" ).getElement() );
 	}
 
 	/**
@@ -96,8 +98,8 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 	 */
 	private void openWorkbench() {
 
-//		this.worbenchPanel = new WorkbenchPanel();
-//		new Viewport( this.worbenchPanel );
+		// this.worbenchPanel = new WorkbenchPanel();
+		// new Viewport( this.worbenchPanel );
 	}
 
 	public void onHistoryChanged( String historyToken ) {
@@ -109,15 +111,15 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 
 		GWT.log( "Unerwartet", e );
 
-//		MessageBox.alert( "Unwerwarteter Fehler",
-//				"Es ist ein unwerwarteter Fehler aufgetreten. Bitte melden Sie sich neu an: <br><br><pre>"
-//						+ e.toString() + "</pre>", new AlertCallback() {
-//
-//					public void execute() {
-//
-//						EventBroker.get().fireLogut();
-//					}
-//				} );
+		// MessageBox.alert( "Unwerwarteter Fehler",
+		// "Es ist ein unwerwarteter Fehler aufgetreten. Bitte melden Sie sich neu an: <br><br><pre>"
+		// + e.toString() + "</pre>", new AlertCallback() {
+		//
+		// public void execute() {
+		//
+		// EventBroker.get().fireLogut();
+		// }
+		// } );
 	}
 
 	/*
@@ -135,68 +137,74 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 	 * 
 	 * @author Juergen Schlierf
 	 */
-//	private class LoginAction extends GWTAction implements AsyncCallback<GWTMailbox> {
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see
-//		 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.
-//		 * Throwable)
-//		 */
-//		public void onFailure( Throwable e ) {
-//
-//			LoginWindow.stopProgress();
-//			MessageBox.setIconCls( MessageBox.ERROR );
-//
-//			if ( e instanceof GWTAuthenticationException ) {
-//				MessageBox.alert( TextProvider.get().logindialog_title(), TextProvider.get()
-//						.exception_login_authentication() );
-//			}
-//			else if ( e instanceof GWTConnectionException ) {
-//				MessageBox.alert( TextProvider.get().logindialog_title(), TextProvider.get()
-//						.exception_login_connection() );
-//			}
-//			else {
-//				MessageBox.alert( TextProvider.get().logindialog_title(), TextProvider.get()
-//						.exception_login_connection() );
-//			}
-//
-//			GWTExceptionHandler.handleException( e );
-//		}
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see
-//		 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.
-//		 * Object)
-//		 */
-//		public void onSuccess( GWTMailbox result ) {
-//
-//			// load Preferences
-//			GWTSessionManager.get().setMailbox( result );
-//			Window.Location.reload();
-//		}
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see com.cubusmail.gwtui.client.actions.GWTAction#execute()
-//		 */
-//		public void execute() {
-//
-//			if ( !GWTUtil.hasText( loginDialog.getUsername() ) ) {
-//				MessageBox.alert( TextProvider.get().common_error(), TextProvider.get().logindialog_empty_username() );
-//				return;
-//			}
-//
-//			LoginWindow.startProgress();
-//
-//			ServiceProvider.getCubusService().login( loginDialog.getUsername(), loginDialog.getPassword(), this );
-//			loginDialog.deletePassword();
-//		}
-//	}
+	// private class LoginAction extends GWTAction implements
+	// AsyncCallback<GWTMailbox> {
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see
+	// * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.
+	// * Throwable)
+	// */
+	// public void onFailure( Throwable e ) {
+	//
+	// LoginWindow.stopProgress();
+	// MessageBox.setIconCls( MessageBox.ERROR );
+	//
+	// if ( e instanceof GWTAuthenticationException ) {
+	// MessageBox.alert( TextProvider.get().logindialog_title(),
+	// TextProvider.get()
+	// .exception_login_authentication() );
+	// }
+	// else if ( e instanceof GWTConnectionException ) {
+	// MessageBox.alert( TextProvider.get().logindialog_title(),
+	// TextProvider.get()
+	// .exception_login_connection() );
+	// }
+	// else {
+	// MessageBox.alert( TextProvider.get().logindialog_title(),
+	// TextProvider.get()
+	// .exception_login_connection() );
+	// }
+	//
+	// GWTExceptionHandler.handleException( e );
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see
+	// * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.
+	// * Object)
+	// */
+	// public void onSuccess( GWTMailbox result ) {
+	//
+	// // load Preferences
+	// GWTSessionManager.get().setMailbox( result );
+	// Window.Location.reload();
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see com.cubusmail.gwtui.client.actions.GWTAction#execute()
+	// */
+	// public void execute() {
+	//
+	// if ( !GWTUtil.hasText( loginDialog.getUsername() ) ) {
+	// MessageBox.alert( TextProvider.get().common_error(),
+	// TextProvider.get().logindialog_empty_username() );
+	// return;
+	// }
+	//
+	// LoginWindow.startProgress();
+	//
+	// ServiceProvider.getCubusService().login( loginDialog.getUsername(),
+	// loginDialog.getPassword(), this );
+	// loginDialog.deletePassword();
+	// }
+	// }
 
 	public void onValueChange( ValueChangeEvent<String> event ) {
 
