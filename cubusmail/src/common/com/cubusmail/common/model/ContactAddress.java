@@ -32,8 +32,6 @@ import javax.persistence.Table;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
-import com.totsp.gwittir.client.beans.annotations.Introspectable;
-
 /**
  * Contact address POJO.
  * 
@@ -42,7 +40,6 @@ import com.totsp.gwittir.client.beans.annotations.Introspectable;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "addresses")
-@Introspectable
 public class ContactAddress extends LazyPojo implements Serializable {
 
 	@Id

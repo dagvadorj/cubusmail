@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-autowire="no"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:property-placeholder location="file:${cubus.config}" />
+	
+	<bean id="mailboxFactory" class="com.cubusmail.server.mail.MailboxFactory"
+		scope="singleton">
+		<property name="mailboxMap">
+			<map>
+				<entry key="imap" value="imapMailbox" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="imapMailbox" class="com.cubusmail.server.mail.imap.IMAPMailbox"
+		scope="prototype">
+		<property name="imapFetchsize" value="${cubus.mail.imapFetchsize}" />
+		<property name="imapPartialfetch" value="${cubus.mail.imapPartialfetch}" />
+		<property name="imapSSL" value="${cubus.mail.imapSSL}" />
+		<property name="imapHost" value="${cubus.mail.imapHost}" />
+		<property name="imapPort" value="${cubus.mail.imapPort}" />
+		<property name="smtpSSL" value="${cubus.mail.smtpSSL}" />
+		<property name="smtpHost" value="${cubus.mail.smtpHost}" />
+		<property name="smtpPort" value="${cubus.mail.smtpPort}" />
+		<property name="domainName" value="${cubus.mail.domainName}" />
+		<property name="mailboxAuthenticator" ref="mailboxAuthenticator" />
+	</bean>
+	
+	<bean id="imapMailFolder" class="com.cubusmail.server.mail.imap.IMAPMailFolder" scope="prototype">
+	</bean>
+
+	<bean id="mailboxAuthenticator" class="com.cubusmail.server.mail.security.MailboxAuthenticator"
+		scope="prototype">
+		<property name="mailPasswordEncryptor" ref="mailPasswordEncryptor" />
+	</bean>
+
+	<bean id="mailPasswordEncryptor" class="com.cubusmail.server.mail.security.MailPasswordEncryptor"
+		scope="singleton" init-method="init">
+		<property name="algorithm" value="RSA" />
+	</bean>
+
+	<bean id="messageHandler" class="com.cubusmail.server.mail.MessageHandler"
+		scope="prototype">
+		<property name="charset" value="ISO-8859-1" />
+		<property name="subjectEncoding" value="Q" />
+	</bean>	
+</beans>

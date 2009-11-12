@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans default-autowire="no"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<import resource="applicationMailContext.xml"/>
+	<import resource="applicationDBContext.xml"/>
+	
+	<context:property-placeholder location="file:${cubus.config}" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="global" />
+	</bean>
+
+	<bean id="userAccount" class="com.cubusmail.common.model.UserAccount"
+		scope="prototype">
+		<property name="preferences" ref="preferencesBean" />
+	</bean>
+
+	<bean id="identity" class="com.cubusmail.common.model.Identity"
+		scope="prototype">
+	</bean>
+
+	<bean id="preferencesBean" class="com.cubusmail.common.model.Preferences"
+		scope="prototype">
+		<!-- default values -->
+		<property name="language" value="en" />
+		<property name="timezone" value="MEZ" />
+		<property name="inboxFolderName" value="${cubus.mail.inboxFolderName}" />
+		<property name="draftFolderName" value="${cubus.mail.draftFolderName}" />
+		<property name="sentFolderName" value="${cubus.mail.sentFolderName}" />
+		<property name="trashFolderName" value="${cubus.mail.trashFolderName}" />
+		<property name="messagesReloadPeriod" value="300000" />
+		<property name="pageCount" value="100" />
+		<property name="shortTimeFormat" value="false" />
+		<property name="showHtml" value="true" />
+		<property name="createHtmlMsgs" value="true" />
+		<property name="markAsDeletedWithoutTrash" value="true" />
+		<property name="theme" value="Aero Glass" />
+		<property name="emptyTrashAfterLogout" value="false" />
+		<property name="readingPane" value="0" />
+	</bean>
+
+</beans>

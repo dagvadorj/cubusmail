@@ -33,8 +33,6 @@ import javax.persistence.Transient;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
-import com.totsp.gwittir.client.beans.annotations.Introspectable;
-
 /**
  * Identity POJO.
  * 
@@ -44,7 +42,6 @@ import com.totsp.gwittir.client.beans.annotations.Introspectable;
 @Entity
 @Table(name = "identities")
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Introspectable
 public class Identity extends LazyPojo implements Serializable {
 
 	@Id

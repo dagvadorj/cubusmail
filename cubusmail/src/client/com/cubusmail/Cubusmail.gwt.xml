@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.1//EN" 
+	"http://google-web-toolkit.googlecode.com/svn/tags/1.7.1/distro-source/core/src/gwt-module.dtd">
+	
+<module rename-to="cubusmail">
+	<!-- Inherit the core Web Toolkit stuff.                  -->
+	<inherits name="com.google.gwt.user.User"/>
+    <inherits name="com.google.gwt.i18n.I18N"/>
+	<inherits name="com.google.gwt.junit.JUnit"/>
+	
+	<!-- SmartGWT stuff -->
+	<inherits name="com.smartgwt.SmartGwt"/>
+	
+	<!-- Gwittir stuff -->
+<!--     <inherits name='com.totsp.gwittir.Gwittir' />
+    <inherits name='com.totsp.gwittir.LoggingDisabled' />
+-->
+  
+	<!-- Inherit Hibernate4Gwt stuff.                  -->
+	<inherits name="net.sf.hibernate4gwt.Hibernate4Gwt15"/>
+    <inherits name="net.sf.hibernate4gwt.emul.java5.ejb3.Ejb3"/>
+    
+    <!-- Logging 
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+	<extend-property name="log_level" values="DEBUG"/>
+	<set-property name="log_ConsoleLogger" value="DISABLED" />
+	<set-property name="log_DivLogger" value="DISABLED" />
+	<set-property name="log_FirebugLogger" value="DISABLED" />
+	<set-property name="log_GWTLogger" value="DISABLED" />
+	<set-property name="log_SystemLogger" value="DISABLED" />
+	<set-property name="log_RemoteLogger" value="DISABLED" />
+	<set-property name="log_WindowLogger" value="DISABLED" />
+	-->
+	
+	<!-- Specify the app entry point class. -->  
+	<entry-point class="com.cubusmail.client.Cubusmail"/>
+    <extend-property name="locale" values="de"/>
+    <extend-property name="locale" values="en_UK"/>
+  
+	<servlet class="com.cubusmail.server.services.CubusService" path="/cubusService.rpc"/>
+	<servlet class="com.cubusmail.server.services.MailboxService" path="/mailboxService.rpc"/>
+	<servlet class="com.cubusmail.server.services.UserAccountService" path="/userAccountService.rpc"/>
+
+	<servlet class="com.cubusmail.server.services.ShowMessageSourceServlet" path="/showMessageSource.rpc"/>
+	<servlet class="com.cubusmail.server.services.AttachmentUploadServlet" path="/attachmentUpload.rpc"/>
+	<servlet class="com.cubusmail.server.services.RetrieveAttachmentServlet" path="/retrieveAttachment.rpc"/>
+	<servlet class="com.cubusmail.server.services.RetrieveImageServlet" path="/retrieveImage.rpc"/>
+	
+    <source path="client"/> 	  
+    <source path="common"/> 
+</module>

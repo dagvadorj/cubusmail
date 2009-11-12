@@ -24,15 +24,12 @@ import java.io.Serializable;
 
 import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 
-import com.totsp.gwittir.client.beans.annotations.Introspectable;
-
 /**
  * Preferences POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Introspectable
 public class Preferences extends LazyPojo implements Serializable {
 
 	public static final int READING_PANE_BOTTOM = 0;

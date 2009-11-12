@@ -1,0 +1,83 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@page import="com.cubusmail.server.util.ServletUtil;"%>
+
+<html>
+	<head>
+	
+		<!--                                           -->
+		<!-- Any title is fine                         -->
+		<!--                                           -->
+		<title>Cubusmail</title>
+
+		<!--                                           -->
+		<!-- The module reference below is the link    -->
+		<!-- between html and your Web Toolkit module  -->		
+		<!--                                           -->
+		 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+		<meta name='gwt:module' content='com.cubusmail.gwtui.Cubusmail'/>
+		<meta name="gwt:property" content="locale=<%=ServletUtil.getDefaultLocale(request) %>">
+
+	    <style type="text/css">
+	        body { overflow:hidden }
+	        #loading {
+	            border: 1px solid #ccc;
+	            position: absolute;
+	            left: 45%;
+	            top: 40%;
+	            padding: 2px;
+	            z-index: 20001;
+	            height: auto;
+	        }
+	
+	        #loading a {
+	            color: #225588;
+	        }
+	
+	        #loading .loadingIndicator {
+	            background: white;
+	            font: bold 13px tahoma, arial, helvetica;
+	            padding: 10px;
+	            margin: 0;
+	            height: auto;
+	            color: #444;
+	        }
+	
+	        #loadingMsg {
+	            font: normal 10px arial, tahoma, sans-serif;
+	        }
+	    </style>
+		<link rel="stylesheet" type="text/css" href="css/cubusmail.css"/>
+
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="must-revalidate">
+
+	</head>
+
+	<!--                                           -->
+	<!-- The body can have arbitrary html, or      -->
+	<!-- we leave the body empty because we want   -->
+	<!-- to create a completely dynamic ui         -->
+	<!--                                           -->
+	<body>
+
+		<iframe id="__printingFrame" style="width:0;height:0;border:0"></iframe> 
+	    <iframe src="javascript:''" id="__gwt_historyFrame" style="position:absolute;width:0;height:0;border:0"></iframe>
+	
+		<!--add loading indicator while the app is being loaded-->
+		<div id="loadingWrapper">
+		<div id="loading">
+		    <div class="loadingIndicator">
+		        <img src="images/loading.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>Cubusmail<br/>
+		        <span id="loadingMsg">Loading styles and images...</span></div>
+		</div>
+		</div>
+	
+	    <!-- IMPORTANT : You must set the variable isomorphicDir to [MODULE_NAME]/sc/ so that the SmartGWT resource are 
+		  correctly resolved -->	
+		<script> var isomorphicDir = "cubusmail/sc/"; </script> 
+	
+		<script type="text/javascript">document.getElementById('loadingMsg').innerHTML = 'Loading application...';</script>
+	    <script type="text/javascript" language="javascript" src="cubusmail/cubusmail.nocache.js"></script>
+
+	</body>
+</html>

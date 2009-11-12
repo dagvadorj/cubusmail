@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src/server"/>
 	<classpathentry kind="src" path="src/common"/>
 	<classpathentry kind="src" path="src/client"/>
+	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/activation.jar"/>
@@ -34,9 +35,8 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.5.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar" sourcepath="C:/projects/cubusmail/frameworks/spring-framework-2.5.5/dist/spring-sources.jar"/>
 	<classpathentry kind="lib" path="lib/el-api.jar"/>
-	<classpathentry kind="lib" path="lib/gwittir-core-0.4.5.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-gears.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-el.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-jdt.jar"/>
@@ -45,5 +45,6 @@
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
+	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
