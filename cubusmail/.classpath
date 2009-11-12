@@ -38,8 +38,6 @@
 	<classpathentry kind="lib" path="lib/el-api.jar"/>
 	<classpathentry kind="lib" path="lib/gwittir-core-0.4.5.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-gears.jar"/>
-	<classpathentry kind="lib" path="lib/gwtext.jar"/>
-	<classpathentry kind="lib" path="lib/gwtextux.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-el.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-jdt.jar"/>
 	<classpathentry kind="lib" path="lib/jasper.jar"/>
