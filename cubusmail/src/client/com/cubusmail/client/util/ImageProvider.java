@@ -22,78 +22,79 @@ package com.cubusmail.client.util;
 
 /**
  * File name constants for images.
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface ImageProvider {
 
 	// Message related icons
-	public static final String MSG_NEW = "icons/mail-message-new.png";
-	public static final String MSG_REFRESH = "icons/mail_refresh.png";
-	public static final String MSG_REPLY = "icons/mail-reply-sender.png";
-	public static final String MSG_REPLY_ALL = "icons/mail-reply-all.png";
-	public static final String MSG_FORWARD = "icons/mail-forward.png";
-	public static final String MSG_READING_PANE_RIGHT = "icons/message/preview-right.gif";
-	public static final String MSG_READING_PANE_BOTTOM = "icons/message/preview-bottom.gif";
-	public static final String MSG_READING_PANE_HIDE = "icons/message/preview-hide.gif";
-	public static final String MSG_COPY = "icons/edit-copy.png";
-	public static final String MSG_MOVE = "icons/shape_move_forwards.png";
-	public static final String MSG_DELETE = "icons/user-trash.png";
-	public static final String MSG_SOURCE = "icons/email_source.png";
-	public static final String MSG_MARK = "icons/message/mark.gif";
+	public static final String MSG_NEW = "mail-message-new.png";
+	public static final String MSG_REFRESH = "mail_refresh.png";
+	public static final String MSG_REPLY = "mail-reply-sender.png";
+	public static final String MSG_REPLY_ALL = "mail-reply-all.png";
+	public static final String MSG_FORWARD = "mail-forward.png";
+	public static final String MSG_READING_PANE_RIGHT = "message/preview-right.gif";
+	public static final String MSG_READING_PANE_BOTTOM = "message/preview-bottom.gif";
+	public static final String MSG_READING_PANE_HIDE = "message/preview-hide.gif";
+	public static final String MSG_COPY = "edit-copy.png";
+	public static final String MSG_MOVE = "shape_move_forwards.png";
+	public static final String MSG_DELETE = "user-trash.png";
+	public static final String MSG_SOURCE = "email_source.png";
+	public static final String MSG_MARK = "message/mark.gif";
 
-	public static final String MSG_STATUS_READ = "icons/internet-mail.png";
-	public static final String MSG_STATUS_UNREAD = "icons/mail_unread.png";
-	public static final String MSG_STATUS_DELETED = "icons/message/email_deleted.png";
-	public static final String MSG_STATUS_ANSWERED = "icons/mail-reply-sender.png";
-	public static final String MSG_STATUS_DRAFT = "icons/message/mail_draft.png";
+	public static final String MSG_STATUS_READ = "internet-mail.png";
+	public static final String MSG_STATUS_UNREAD = "mail_unread.png";
+	public static final String MSG_STATUS_DELETED = "message/email_deleted.png";
+	public static final String MSG_STATUS_ANSWERED = "mail-reply-sender.png";
+	public static final String MSG_STATUS_DRAFT = "message/mail_draft.png";
 
-	public static final String MSG_SEND = "icons/message/email_go.png";
-	public static final String MSG_SAVE_DRAFT = "icons/message/email_edit.png";
-	public static final String MSG_ADD_ATTACHMENT = "icons/message/email_attach.png";
+	public static final String MSG_SEND = "message/email_go.png";
+	public static final String MSG_SAVE_DRAFT = "message/email_edit.png";
+	public static final String MSG_ADD_ATTACHMENT = "message/email_attach.png";
 
-	public static final String MSG_ATTACHMENT = "icons/attach.png";
-	public static final String MSG_DOWNLOAD = "icons/message/disk.png";
-	public static final String MSG_IMAGES_WARNING = "icons/message/warning.gif";
+	public static final String MSG_ATTACHMENT = "attach.png";
+	public static final String MSG_DOWNLOAD = "message/disk.png";
+	public static final String MSG_IMAGES_WARNING = "message/warning.gif";
 
 	// Folder related icons
-	public static final String MAIL_FOLDER_NEW = "icons/folder_add.png";
-	public static final String MAIL_FOLDER_DELETE = "icons/folder_delete.png";
-	public static final String MAIL_FOLDER_MOVE = "icons/shape_move_forwards.png";
-	public static final String MAIL_FOLDER_RENAME = "icons/folder_edit.png";
-	public static final String MAIL_FOLDER_REFRESH = "icons/mail_refresh.png";
-	public static final String MAIL_FOLDER_EMPTY = "icons/user-trash.png";
-	public static final String MAIL_FOLDER = "icons/folder.png";
-	public static final String MAIL_FOLDER_INBOX = "icons/folder/folder_table.png";
-	public static final String MAIL_FOLDER_SENT = "icons/folder_go.png";
-	public static final String MAIL_FOLDER_DRAFT = "icons/folder_edit.png";
-	public static final String MAIL_FOLDER_TRASH_FULL = "icons/user-trash-full.png";
-	public static final String MAIL_FOLDER_TRASH_EMPTY = "icons/user-trash.png";
-	public static final String MAIL_FOLDER_MAILBOX = "icons/email_link.png";
+	public static final String MAIL_FOLDER_NEW = "folder_add.png";
+	public static final String MAIL_FOLDER_DELETE = "folder_delete.png";
+	public static final String MAIL_FOLDER_MOVE = "shape_move_forwards.png";
+	public static final String MAIL_FOLDER_RENAME = "folder_edit.png";
+	public static final String MAIL_FOLDER_REFRESH = "mail_refresh.png";
+	public static final String MAIL_FOLDER_EMPTY = "user-trash.png";
+	public static final String MAIL_FOLDER = "folder.png";
+	public static final String MAIL_FOLDER_INBOX = "folder/folder_table.png";
+	public static final String MAIL_FOLDER_SENT = "folder_go.png";
+	public static final String MAIL_FOLDER_DRAFT = "folder_edit.png";
+	public static final String MAIL_FOLDER_TRASH_FULL = "user-trash-full.png";
+	public static final String MAIL_FOLDER_TRASH_EMPTY = "user-trash.png";
+	public static final String MAIL_FOLDER_MAILBOX = "email_link.png";
 
 	// Contact related icons
-	public static final String CONTACT_ADD = "icons/contact/user_add.png";
-	public static final String CONTACT_EDIT = "icons/contact/user_edit.png";
-	public static final String CONTACT_DELETE = "icons/contact/user_delete.png";
-	public static final String CONTACT_FOLDER_NEW = "icons/folder_add.png";
-	public static final String CONTACT_FOLDER_DELETE = "icons/folder_delete.png";
-	public static final String CONTACT_FOLDER_RENAME = "icons/folder_edit.png";
-	public static final String CONTACT_FOLDER = "icons/contact/folder_user.png";
+	public static final String CONTACT_ADD = "contact/user_add.png";
+	public static final String CONTACT_EDIT = "contact/user_edit.png";
+	public static final String CONTACT_DELETE = "contact/user_delete.png";
+	public static final String CONTACT_FOLDER_NEW = "folder_add.png";
+	public static final String CONTACT_FOLDER_DELETE = "folder_delete.png";
+	public static final String CONTACT_FOLDER_RENAME = "folder_edit.png";
+	public static final String CONTACT_FOLDER = "contact/folder_user.png";
 
 	// Identitiy related icons
-	public static final String IDENTITY_ADD = "icons/newspaper_add.png";
-	public static final String IDENTITY_DELETE = "icons/newspaper_delete.png";
+	public static final String IDENTITY_ADD = "newspaper_add.png";
+	public static final String IDENTITY_DELETE = "newspaper_delete.png";
 
 	// global icons
-	public static final String SYSTEM_LOGOUT = "icons/system-log-out.png";
-	public static final String FILE_BLANK = "icons/file.png";
-	public static final String PRINTER = "icons/printer.gif";
+	public static final String SYSTEM_LOGOUT = "system-log-out.png";
+	public static final String FILE_BLANK = "file.png";
+	public static final String PRINTER = "printer.gif";
 
-	public static final String PRIORITY_HIGH = "icons/important.gif";
-	public static final String PRIORITY_LOW = "icons/arrow_down.png";
-	public static final String PRIORITY_NORMAL = "icons/arrow_in.png";
+	public static final String PRIORITY_HIGH = "important.gif";
+	public static final String PRIORITY_LOW = "arrow_down.png";
+	public static final String PRIORITY_NORMAL = "arrow_in.png";
 
-	public static final String PREFERENCES = "icons/preferences.png";
-	public static final String CLOSE = "icons/cross.png";
-	public static final String CANCEL = "icons/cancel.png";
+	public static final String LOADING = "loading.gif";
+	public static final String PREFERENCES = "preferences.png";
+	public static final String CLOSE = "cross.png";
+	public static final String CANCEL = "cancel.png";
 }

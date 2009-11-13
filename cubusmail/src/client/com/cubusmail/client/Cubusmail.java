@@ -28,20 +28,19 @@ import com.cubusmail.client.windows.LoginWindow;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Dialog;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.UncaughtExceptionHandler, LogoutListener {
+public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, LogoutListener {
 
 	// private WorkbenchPanel worbenchPanel;
-
-	// private LoginAction loginAction;
 
 	private LoginWindow loginDialog;
 
@@ -87,10 +86,8 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 	 */
 	private void openLogin() {
 
-		// this.loginAction = new LoginAction();
 		this.loginDialog = new LoginWindow();
-		// this.loginDialog.addListener( this.loginAction );
-		this.loginDialog.show();
+		this.loginDialog.draw();
 	}
 
 	/**
@@ -111,15 +108,15 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 
 		GWT.log( "Unerwartet", e );
 
-		// MessageBox.alert( "Unwerwarteter Fehler",
-		// "Es ist ein unwerwarteter Fehler aufgetreten. Bitte melden Sie sich neu an: <br><br><pre>"
-		// + e.toString() + "</pre>", new AlertCallback() {
-		//
-		// public void execute() {
-		//
-		// EventBroker.get().fireLogut();
-		// }
-		// } );
+		SC.warn( "Unwerwarteter Fehler",
+				"Es ist ein unwerwarteter Fehler aufgetreten. Bitte melden Sie sich neu an: <br><br><pre>"
+						+ e.toString() + "</pre>", new BooleanCallback() {
+
+					public void execute( Boolean value ) {
+
+						EventBroker.get().fireLogut();
+					}
+				}, new Dialog() );
 	}
 
 	/*
@@ -130,85 +127,5 @@ public class Cubusmail implements EntryPoint, ValueChangeHandler<String>, GWT.Un
 	public void onLogout() {
 
 		Window.Location.reload();
-	}
-
-	/**
-	 * Action for the Login.
-	 * 
-	 * @author Juergen Schlierf
-	 */
-	// private class LoginAction extends GWTAction implements
-	// AsyncCallback<GWTMailbox> {
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see
-	// * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.
-	// * Throwable)
-	// */
-	// public void onFailure( Throwable e ) {
-	//
-	// LoginWindow.stopProgress();
-	// MessageBox.setIconCls( MessageBox.ERROR );
-	//
-	// if ( e instanceof GWTAuthenticationException ) {
-	// MessageBox.alert( TextProvider.get().logindialog_title(),
-	// TextProvider.get()
-	// .exception_login_authentication() );
-	// }
-	// else if ( e instanceof GWTConnectionException ) {
-	// MessageBox.alert( TextProvider.get().logindialog_title(),
-	// TextProvider.get()
-	// .exception_login_connection() );
-	// }
-	// else {
-	// MessageBox.alert( TextProvider.get().logindialog_title(),
-	// TextProvider.get()
-	// .exception_login_connection() );
-	// }
-	//
-	// GWTExceptionHandler.handleException( e );
-	// }
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see
-	// * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.
-	// * Object)
-	// */
-	// public void onSuccess( GWTMailbox result ) {
-	//
-	// // load Preferences
-	// GWTSessionManager.get().setMailbox( result );
-	// Window.Location.reload();
-	// }
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see com.cubusmail.gwtui.client.actions.GWTAction#execute()
-	// */
-	// public void execute() {
-	//
-	// if ( !GWTUtil.hasText( loginDialog.getUsername() ) ) {
-	// MessageBox.alert( TextProvider.get().common_error(),
-	// TextProvider.get().logindialog_empty_username() );
-	// return;
-	// }
-	//
-	// LoginWindow.startProgress();
-	//
-	// ServiceProvider.getCubusService().login( loginDialog.getUsername(),
-	// loginDialog.getPassword(), this );
-	// loginDialog.deletePassword();
-	// }
-	// }
-
-	public void onValueChange( ValueChangeEvent<String> event ) {
-
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -1,4 +1,4 @@
-/* IGWTAction.java
+/* GWTExceptionHandler.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -18,25 +18,34 @@
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
  */
-package com.cubusmail.client.actions;
+package com.cubusmail.client.exceptions;
 
-import com.google.gwt.user.client.Command;
+import com.cubusmail.client.events.EventBroker;
+import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.common.exceptions.GWTInvalidSessionException;
+import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 
 /**
- * @author Juergen Schlierf
+ * Handle general exceptions.
  * 
+ * @author Juergen Schlierf
  */
-public interface IGWTAction extends Command {
+public class GWTExceptionHandler {
 
-	public String getText();
+	public static void handleException( Throwable e ) {
 
-	public String getTooltipText();
+		GWT.log( e.getMessage(), e );
+		// Log.error( e.getMessage(), e );
+		if ( e instanceof GWTInvalidSessionException ) {
+			SC.warn( TextProvider.get().exception_invalid_session(), new BooleanCallback() {
 
-	public String getImageName();
+				public void execute( Boolean value ) {
 
-	// public void registerComponent( Component component );
-	//
-	// public void unregisterComponent( Component component );
-
-	// public void setDisabled( boolean disabled );
+					EventBroker.get().fireLogut();
+				}
+			} );
+		}
+	}
 }
