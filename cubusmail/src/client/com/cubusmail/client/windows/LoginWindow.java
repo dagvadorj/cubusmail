@@ -19,6 +19,7 @@
  */
 package com.cubusmail.client.windows;
 
+import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.IGWTAction;
 import com.cubusmail.client.actions.LoginAction;
 import com.cubusmail.client.util.GWTUtil;
@@ -137,7 +138,7 @@ public class LoginWindow extends Window {
 			}
 		} );
 
-		this.loginAction = new LoginAction();
+		this.loginAction = ActionRegistry.LOGIN.get( LoginAction.class );
 		addHandlers();
 	}
 

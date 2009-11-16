@@ -26,6 +26,7 @@ import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * Several utils for gwt frontend.
@@ -42,6 +43,8 @@ public abstract class GWTUtil {
 	public static final String HTML_LESS_THAN = "&lt;";
 	public static final String HTML_GREATER_THAN = "&gt;";
 	public static final String HTML_DASH_POINT = "&acute;";
+
+	public static final String NODE_USER_DATA = "userData";
 
 	private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat( TextProvider.get()
 			.common_message_date_format() );
@@ -116,5 +119,23 @@ public abstract class GWTUtil {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param node
+	 * @return
+	 */
+	public static Object getUserData( TreeNode node ) {
+
+		return node.getAttributeAsObject( NODE_USER_DATA );
+	}
+
+	/**
+	 * @param node
+	 * @param value
+	 */
+	public static void setUserData( TreeNode node, Object value ) {
+
+		node.setAttribute( NODE_USER_DATA, value );
 	}
 }
