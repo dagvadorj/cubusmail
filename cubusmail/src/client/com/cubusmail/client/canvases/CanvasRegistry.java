@@ -30,7 +30,7 @@ import com.smartgwt.client.widgets.Canvas;
  * @author Juergen Schlierf
  */
 public enum CanvasRegistry {
-	WORKBENCH_CANVAS;
+	WORKBENCH_CANVAS, MAIL_FOLDER_CANVAS;
 
 	private static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
 
@@ -61,6 +61,8 @@ public enum CanvasRegistry {
 		switch (this) {
 		case WORKBENCH_CANVAS:
 			return new WorkbenchCanvas();
+		case MAIL_FOLDER_CANVAS:
+			return new MailfolderCanvas();
 		}
 
 		throw new IllegalArgumentException( "Panel missing: " + name() );

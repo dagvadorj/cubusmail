@@ -90,6 +90,11 @@ public class GWTMailbox implements IGWTFolder, IsSerializable {
 		return this.mailFolders;
 	}
 
+	public GWTMailFolder[] getSubfolders() {
+	
+		return getMailFolders();
+	}
+	
 	/**
 	 * @param mailFolders
 	 *            The mailFolders to set.
@@ -187,5 +192,12 @@ public class GWTMailbox implements IGWTFolder, IsSerializable {
 	public boolean isRenameSupported() {
 
 		return false;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.cubusmail.common.model.IGWTFolder#getName()
+	 */
+	public String getName() {
+		return getEmailAddress();
 	}
 }

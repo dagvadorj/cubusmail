@@ -1,4 +1,4 @@
-/* WorkbenchCanvas.java
+/* RefreshFolderAction.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -16,26 +16,40 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
+   
  */
-package com.cubusmail.client.canvases;
+package com.cubusmail.client.actions.folder;
 
-import com.smartgwt.client.widgets.layout.HLayout;
+import com.cubusmail.client.actions.GWTAction;
+import com.cubusmail.client.events.EventBroker;
+import com.cubusmail.client.util.ImageProvider;
+import com.cubusmail.client.util.TextProvider;
 
 /**
- * Workbench Canvas.
+ * Refresh folder tree.
  * 
  * @author Juergen Schlierf
  */
-public class WorkbenchCanvas extends HLayout {
-
-	public WorkbenchCanvas() {
+public class RefreshFolderAction extends GWTAction {
+	
+	/**
+	 * 
+	 */
+	public RefreshFolderAction() {
 
 		super();
-		setBackgroundImage("[SKIN]/shared/background.gif");
-		setPadding( 5 );
-		setWidth100();
-		setHeight100();
+		setText( TextProvider.get().actions_renamefolder_text() );
+		setImageName( ImageProvider.MAIL_FOLDER_REFRESH );
+		setTooltipText( TextProvider.get().actions_renamefolder_tooltip() );
+	}
 
-		addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.cubusmail.gwtui.client.actions.GWTAction#execute()
+	 */
+	public void execute() {
+
+		EventBroker.get().fireFoldersReload();
 	}
 }

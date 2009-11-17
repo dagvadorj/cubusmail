@@ -22,13 +22,19 @@ package com.cubusmail.client.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cubusmail.client.actions.folder.RefreshFolderAction;
+
 /**
  * Registry for all actions used by Cubusmail.
  * 
  * @author Juergen Schlierf
  */
 public enum ActionRegistry {
-	LOGIN;
+	// comman actions
+	LOGIN,
+
+	// mail folder actions
+	REFRESH_FOLDER;
 
 	private static Map<ActionRegistry, IGWTAction> ACTION_MAP = new HashMap<ActionRegistry, IGWTAction>();
 
@@ -66,6 +72,9 @@ public enum ActionRegistry {
 		switch (this) {
 		case LOGIN:
 			return new LoginAction();
+
+		case REFRESH_FOLDER:
+			return new RefreshFolderAction();
 		}
 
 		throw new IllegalArgumentException( "Action missing: " + name() );

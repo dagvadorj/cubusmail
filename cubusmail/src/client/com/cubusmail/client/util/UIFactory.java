@@ -20,9 +20,13 @@
 package com.cubusmail.client.util;
 
 import com.cubusmail.client.actions.IGWTAction;
+import com.cubusmail.common.model.GWTMailFolder;
+import com.cubusmail.common.model.GWTMailbox;
+import com.cubusmail.common.model.IGWTFolder;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * Factory for UI elements.
@@ -32,7 +36,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 public abstract class UIFactory {
 
 	/**
-	 * Creates buttons.
+	 * Create buttons.
 	 * 
 	 * @param action
 	 * @return
@@ -58,5 +62,78 @@ public abstract class UIFactory {
 			}
 		} );
 		return button;
+	}
+
+	/**
+	 * Create image buttons.
+	 * 
+	 * @param action
+	 * @return
+	 */
+	public static Button createToolbarImageButton( final IGWTAction action ) {
+
+		Button button = new Button( "" );
+		button.setIcon( action.getImageName() );
+		if ( action.getTooltipText() != null ) {
+			button.setTooltip( action.getTooltipText() );
+		}
+		button.setShowDown( true );
+		button.setShowOverCanvas( true );
+		button.setWidth( 22 );
+		button.setBorder( "0px" );
+		button.addClickHandler( new ClickHandler() {
+
+			public void onClick( ClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+		return button;
+	}
+
+	/**
+	 * @param mailFolder
+	 * @return
+	 */
+	public static TreeNode createTreeNode( IGWTFolder mailFolder ) {
+
+		TreeNode node = new TreeNode( mailFolder.getName() );
+		node.setAttribute( "icon", getFolderIcon( mailFolder ) );
+		GWTUtil.setUserData( node, mailFolder );
+
+		if ( mailFolder.getSubfolders() != null && mailFolder.getSubfolders().length > 0 ) {
+			TreeNode[] nodes = new TreeNode[mailFolder.getSubfolders().length];
+			for (int i = 0; i < mailFolder.getSubfolders().length; i++) {
+				nodes[i] = createTreeNode( mailFolder.getSubfolders()[i] );
+			}
+			node.setChildren( nodes );
+		}
+
+		return node;
+	}
+
+	private static String getFolderIcon( IGWTFolder folder ) {
+
+		if ( folder instanceof GWTMailbox ) {
+			return ImageProvider.MAIL_FOLDER_MAILBOX;
+		}
+		else {
+			GWTMailFolder mailFolder = (GWTMailFolder) folder;
+			if ( mailFolder.isInbox() ) {
+				return ImageProvider.MAIL_FOLDER_INBOX;
+			}
+			else if ( mailFolder.isDraft() ) {
+				return ImageProvider.MAIL_FOLDER_DRAFT;
+			}
+			else if ( mailFolder.isSent() ) {
+				return ImageProvider.MAIL_FOLDER_SENT;
+			}
+			else if ( mailFolder.isTrash() ) {
+				return ImageProvider.MAIL_FOLDER_TRASH_FULL;
+			}
+			else {
+				return ImageProvider.MAIL_FOLDER;
+			}
+		}
 	}
 }

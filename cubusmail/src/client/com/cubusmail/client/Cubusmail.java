@@ -20,6 +20,7 @@
 
 package com.cubusmail.client;
 
+import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.LogoutListener;
 import com.cubusmail.client.util.GWTSessionManager;
@@ -39,8 +40,6 @@ import com.smartgwt.client.widgets.Dialog;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, LogoutListener {
-
-	// private WorkbenchPanel worbenchPanel;
 
 	private LoginWindow loginDialog;
 
@@ -95,8 +94,7 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 	 */
 	private void openWorkbench() {
 
-		// this.worbenchPanel = new WorkbenchPanel();
-		// new Viewport( this.worbenchPanel );
+		CanvasRegistry.WORKBENCH_CANVAS.get().draw();
 	}
 
 	public void onHistoryChanged( String historyToken ) {

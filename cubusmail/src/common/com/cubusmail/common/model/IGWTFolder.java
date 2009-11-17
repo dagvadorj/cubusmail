@@ -33,10 +33,20 @@ public interface IGWTFolder {
 	public String getId();
 
 	/**
+	 * @return Returns the name.
+	 */
+	public String getName();
+	
+	/**
 	 * @return
 	 */
 	public IGWTFolder getParent();
 
+	/**
+	 * @return
+	 */
+	public GWTMailFolder[] getSubfolders();
+	
 	/**
 	 * @return
 	 */

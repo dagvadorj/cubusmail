@@ -20,14 +20,11 @@
 package com.cubusmail.client.windows;
 
 import com.cubusmail.client.actions.ActionRegistry;
-import com.cubusmail.client.actions.IGWTAction;
 import com.cubusmail.client.actions.LoginAction;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ImageProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.EventHandler;
-import com.smartgwt.client.event.AbstractSmartEvent;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ImageStyle;
 import com.smartgwt.client.util.BooleanCallback;
