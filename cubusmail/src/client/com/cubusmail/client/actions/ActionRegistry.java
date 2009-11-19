@@ -22,7 +22,11 @@ package com.cubusmail.client.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cubusmail.client.actions.folder.DeleteFolderAction;
+import com.cubusmail.client.actions.folder.EmptyFolderAction;
+import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RefreshFolderAction;
+import com.cubusmail.client.actions.folder.RenameFolderAction;
 
 /**
  * Registry for all actions used by Cubusmail.
@@ -34,7 +38,7 @@ public enum ActionRegistry {
 	LOGIN,
 
 	// mail folder actions
-	REFRESH_FOLDER;
+	REFRESH_FOLDER, NEW_FOLDER, MOVE_FOLDER, RENAME_FOLDER, DELETE_FOLDER, EMPTY_FOLDER;
 
 	private static Map<ActionRegistry, IGWTAction> ACTION_MAP = new HashMap<ActionRegistry, IGWTAction>();
 
@@ -75,6 +79,14 @@ public enum ActionRegistry {
 
 		case REFRESH_FOLDER:
 			return new RefreshFolderAction();
+		case NEW_FOLDER:
+			return new NewFolderAction();
+		case RENAME_FOLDER:
+			return new RenameFolderAction();
+		case DELETE_FOLDER:
+			return new DeleteFolderAction();
+		case EMPTY_FOLDER:
+			return new EmptyFolderAction();
 		}
 
 		throw new IllegalArgumentException( "Action missing: " + name() );

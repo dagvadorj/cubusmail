@@ -17,13 +17,16 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
-*/
+ */
 
 package com.cubusmail.client.actions.folder;
 
 import com.cubusmail.client.actions.GWTAction;
 import com.smartgwt.client.widgets.tree.TreeNode;
-
+import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
+import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
+import com.smartgwt.client.widgets.tree.events.NodeContextClickEvent;
+import com.smartgwt.client.widgets.tree.events.NodeContextClickHandler;
 
 /**
  * base action for all mail folder actions
@@ -34,20 +37,21 @@ public abstract class GWTFolderAction extends GWTAction {
 
 	private TreeNode selectedTreeNode;
 
-	
-//	private TreePanelListener treePanelListener = new TreePanelListenerAdapter() {
-//
-//		public void onClick( TreeNode node, EventObject e ) {
-//
-//			selectedTreeNode = node;
-//		}
-//				
-//
-//		public void onContextMenu( TreeNode node, EventObject e ) {
-//
-//			selectedTreeNode = node;
-//		}
-//	};
+	private NodeClickHandler nodeClickHandler = new NodeClickHandler() {
+
+		public void onNodeClick( NodeClickEvent event ) {
+
+			selectedTreeNode = event.getNode();
+		}
+	};
+
+	private NodeContextClickHandler nodeContextClickHandler = new NodeContextClickHandler() {
+
+		public void onNodeContextClick( NodeContextClickEvent event ) {
+
+			selectedTreeNode = event.getNode();
+		}
+	};
 
 	/**
 	 * @return Returns the selectedTreeNode.
@@ -58,18 +62,21 @@ public abstract class GWTFolderAction extends GWTAction {
 	}
 
 	/**
-	 * @param selectedTreeNode The selectedTreeNode to set.
+	 * @param selectedTreeNode
+	 *            The selectedTreeNode to set.
 	 */
 	public void setSelectedTreeNode( TreeNode selectedTreeNode ) {
 
 		this.selectedTreeNode = selectedTreeNode;
 	}
 
-	/**
-	 * @return Returns the treePanelListener.
-	 */
-//	public TreePanelListener getTreePanelListener() {
-//
-//		return this.treePanelListener;
-//	}
+	public NodeClickHandler getNodeClickHandler() {
+
+		return nodeClickHandler;
+	}
+
+	public NodeContextClickHandler getNodeContextClickHandler() {
+
+		return nodeContextClickHandler;
+	}
 }

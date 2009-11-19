@@ -20,6 +20,7 @@
 package com.cubusmail.client.canvases;
 
 import com.cubusmail.client.actions.ActionRegistry;
+import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FoldersReloadListener;
 import com.cubusmail.client.events.MessagesChangedListener;
@@ -55,6 +56,7 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 
 	private TreeNode currentTreeNode;
 	private Tree treeData;
+	private TreeGrid tree;
 
 	// Toolbar items
 	private Button refreshFolderButton;
@@ -73,31 +75,21 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 		section.setExpanded( true );
 		section.setResizeable( true );
 
-		TreeGrid tree = new TreeGrid();
-		tree.setWidth100();
-		tree.setHeight100();
-		tree.setAnimateFolderTime( 100 );
-		tree.setAnimateFolders( true );
-		tree.setAnimateFolderSpeed( 1000 );
-		tree.setShowSortArrow( SortArrow.CORNER );
-		tree.setShowAllRecords( true );
-		tree.setLoadDataOnDemand( false );
-		tree.setCanSort( false );
-		tree.setCellHeight( 17 );
-		tree.setShowHeader( false );
+		createTree();
+		section.setItems( this.tree );
 
 		TreeGridField field = new TreeGridField();
 		field.setCanFilter( true );
 		field.setName( "name" );
 		field.setTitle( "<b>SmartGWT Showcase</b>" );
-		tree.setFields( field );
+		this.tree.setFields( field );
 
 		this.treeData = new Tree();
 		treeData.setModelType( TreeModelType.PARENT );
 		treeData.setNameProperty( "name" );
 		treeData.setIdField( "ID" );
 		treeData.setParentIdField( "parentID" );
-		treeData.setRootValue( "root" );
+		this.tree.setData( this.treeData );
 
 		createToolbar( section );
 
@@ -115,6 +107,32 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 		} );
 	}
 
+	/**
+	 * 
+	 */
+	private void createTree() {
+
+		this.tree = new TreeGrid();
+		this.tree.setWidth100();
+		this.tree.setHeight100();
+		this.tree.setAnimateFolderTime( 100 );
+		this.tree.setAnimateFolders( true );
+		this.tree.setAnimateFolderSpeed( 1000 );
+		this.tree.setShowSortArrow( SortArrow.CORNER );
+		this.tree.setShowAllRecords( true );
+		this.tree.setLoadDataOnDemand( false );
+		this.tree.setCanSort( false );
+		this.tree.setShowHeader( false );
+		this.tree.setShowRoot( true );
+		
+		// add action handler to the 
+		this.tree.addNodeClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeClickHandler());
+		this.tree.addNodeContextClickHandler(  ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeContextClickHandler());
+	}
+
+	/**
+	 * @param section
+	 */
 	private void createToolbar( SectionStackSection section ) {
 
 		ToolStrip strip = new ToolStrip();
@@ -124,15 +142,37 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 
 		this.refreshFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.REFRESH_FOLDER.get() );
 		strip.addMember( this.refreshFolderButton );
+		this.newFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.NEW_FOLDER.get() );
+		strip.addMember( this.newFolderButton );
+		this.renameFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.RENAME_FOLDER.get() );
+		strip.addMember( this.renameFolderButton );
+		this.deleteFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.DELETE_FOLDER.get() );
+		strip.addMember( this.deleteFolderButton );
+		this.emptyFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.EMPTY_FOLDER.get() );
+		strip.addMember( this.emptyFolderButton );
 
-		section.setControls( this.refreshFolderButton );
+		section.setControls( this.refreshFolderButton, this.newFolderButton, this.renameFolderButton,
+				this.deleteFolderButton, this.emptyFolderButton );
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
+	 * )
+	 */
 	public void onFailure( Throwable caught ) {
 
 		GWTExceptionHandler.handleException( caught );
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
+	 */
 	public void onSuccess( GWTMailFolder[] result ) {
 
 		GWTSessionManager.get().getMailbox().setMailFolders( result );
@@ -146,6 +186,11 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.cubusmail.client.events.FoldersReloadListener#onFoldersReload()
+	 */
 	public void onFoldersReload() {
 
 		this.currentTreeNode = null;
