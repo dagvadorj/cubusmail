@@ -36,6 +36,9 @@ public class WorkbenchCanvas extends HLayout {
 		setWidth100();
 		setHeight100();
 
+		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
+		
 		addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
+		addMember( CanvasRegistry.MESSAGE_LIST_CANVAS.get() );
 	}
 }

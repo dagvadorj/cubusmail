@@ -1,4 +1,4 @@
-/* CanvasRegistry.java
+/* DataSourceRegestry.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -17,56 +17,59 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cubusmail.client.canvases;
+package com.cubusmail.client.datasource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.data.DataSource;
 
 /**
- * Registry for all important canvases in Cubusmail.
+ * Regestry for all DataSources in Cubusmail.
  * 
  * @author Juergen Schlierf
  */
-public enum CanvasRegistry {
-	WORKBENCH_CANVAS, MAIL_FOLDER_CANVAS, MESSAGE_LIST_CANVAS;
+public enum DataSourceRegistry {
+	MESSAGE_LIST;
 
-	private static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
-
-	public Canvas get() {
-
-		Canvas result = CANVAS_MAP.get( this );
-		if ( result == null ) {
-			result = create();
-			result.setID( this.name() );
-			CANVAS_MAP.put( this, result );
-		}
-
-		return result;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T extends Canvas> T get( Class<T> type ) {
-
-		// type.cast() is not pssible with GWT
-		return (T) get();
-	}
+	private static Map<DataSourceRegistry, DataSource> DATASOURCE_MAP = new HashMap<DataSourceRegistry, DataSource>();
 
 	/**
 	 * @return
 	 */
-	private Canvas create() {
+	public DataSource get() {
+
+		DataSource result = DATASOURCE_MAP.get( this );
+		if ( result == null ) {
+			result = create();
+			DATASOURCE_MAP.put( this, result );
+		}
+		return result;
+	}
+
+	/**
+	 * create data sources
+	 */
+	private DataSource create() {
 
 		switch (this) {
-		case WORKBENCH_CANVAS:
-			return new WorkbenchCanvas();
-		case MAIL_FOLDER_CANVAS:
-			return new MailfolderCanvas();
-		case MESSAGE_LIST_CANVAS:
-			return new MessageListCanvas();
+		case MESSAGE_LIST:
+			return new MessageListDataSource();
+
 		}
 
-		throw new IllegalArgumentException( "Panel missing: " + name() );
+		throw new IllegalArgumentException( "DataSource missing: " + name() );
+	}
+
+	/**
+	 * @param <T>
+	 * @param type
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends DataSource> T get( Class<T> type ) {
+
+		// type.cast() is not pssible with GWT
+		return (T) get();
 	}
 }

@@ -69,7 +69,7 @@ public enum ActionRegistry {
 	}
 
 	/**
-	 * create actions for the main toolbar
+	 * create actions
 	 */
 	private IGWTAction create() {
 

@@ -33,6 +33,7 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.Button;
@@ -113,21 +114,21 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 	private void createTree() {
 
 		this.tree = new TreeGrid();
+		this.tree.setSelectionType( SelectionStyle.SINGLE );
 		this.tree.setWidth100();
 		this.tree.setHeight100();
-		this.tree.setAnimateFolderTime( 100 );
-		this.tree.setAnimateFolders( true );
-		this.tree.setAnimateFolderSpeed( 1000 );
+		this.tree.setAnimateFolders( false );
 		this.tree.setShowSortArrow( SortArrow.CORNER );
 		this.tree.setShowAllRecords( true );
 		this.tree.setLoadDataOnDemand( false );
 		this.tree.setCanSort( false );
 		this.tree.setShowHeader( false );
 		this.tree.setShowRoot( true );
-		
-		// add action handler to the 
-		this.tree.addNodeClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeClickHandler());
-		this.tree.addNodeContextClickHandler(  ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeContextClickHandler());
+
+		// add action handler to the
+		this.tree.addNodeClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeClickHandler() );
+		this.tree.addNodeContextClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class )
+				.getNodeContextClickHandler() );
 	}
 
 	/**

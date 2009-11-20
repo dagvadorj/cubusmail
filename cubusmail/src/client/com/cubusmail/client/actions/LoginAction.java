@@ -91,11 +91,14 @@ public class LoginAction extends GWTAction implements AsyncCallback<GWTMailbox> 
 	public void execute() {
 
 		if ( !GWTUtil.hasText( this.username ) ) {
-			SC.warn( TextProvider.get().common_error(), TextProvider.get().logindialog_empty_username(), null, new Dialog() );
+			SC.warn( TextProvider.get().common_error(), TextProvider.get().logindialog_empty_username(), null,
+					new Dialog() );
 			return;
 		}
 
-		this.actionCallback.execute( true );
+		if ( this.actionCallback != null ) {
+			this.actionCallback.execute( true );
+		}
 
 		ServiceProvider.getCubusService().login( this.username, this.password, this );
 		this.password = null;

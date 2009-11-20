@@ -97,4 +97,5 @@ public interface ImageProvider {
 	public static final String PREFERENCES = "preferences.png";
 	public static final String CLOSE = "cross.png";
 	public static final String CANCEL = "cancel.png";
+	public static final String FIND = "find.png";
 }

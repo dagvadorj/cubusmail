@@ -20,6 +20,7 @@
 
 package com.cubusmail.client;
 
+import com.cubusmail.client.actions.LoginAction;
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.LogoutListener;
@@ -64,7 +65,8 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 			public void onSuccess( GWTMailbox result ) {
 
 				if ( result == null || !result.isLoggedIn() ) {
-					openLogin();
+					// openLoginWindow();
+					testLogin();
 				}
 				else {
 					GWTSessionManager.get().setMailbox( result );
@@ -75,7 +77,7 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 			public void onFailure( Throwable caught ) {
 
 				GWT.log( caught.getMessage(), caught );
-				openLogin();
+				openLoginWindow();
 			}
 		} );
 	}
@@ -83,10 +85,23 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 	/**
 	 * 
 	 */
-	private void openLogin() {
+	private void openLoginWindow() {
 
 		this.loginDialog = new LoginWindow();
 		this.loginDialog.draw();
+	}
+
+	/**
+	 * For test purposes only.
+	 */
+	private void testLogin() {
+
+		try {
+			new TestLoginAction().execute();
+		}
+		catch (Exception e) {
+			GWT.log( e.getMessage(), e );
+		}
 	}
 
 	/**
@@ -125,5 +140,27 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 	public void onLogout() {
 
 		Window.Location.reload();
+	}
+
+	/**
+	 * For test purposes only.
+	 *
+	 * @author Juergen Schlierf
+	 */
+	private class TestLoginAction extends LoginAction {
+
+		
+		public TestLoginAction() {
+			super();
+			setUsername( "schlierf" );
+			setPassword( "schlierf" );
+		}
+		
+		@Override
+		public void onSuccess( GWTMailbox result ) {
+
+			GWTSessionManager.get().setMailbox( result );
+			openWorkbench();
+		}
 	}
 }
