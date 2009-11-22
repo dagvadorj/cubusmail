@@ -181,8 +181,8 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 			buildTree( GWTSessionManager.get().getMailbox() );
 			this.currentTreeNode = getInboxTreeNode();
 			GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) GWTUtil.getUserData( this.currentTreeNode ) );
-			EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getUserData( this.currentTreeNode ) );
-			EventBroker.get().fireMessagesChanged();
+//			EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getUserData( this.currentTreeNode ) );
+//			EventBroker.get().fireMessagesChanged();
 		}
 
 	}

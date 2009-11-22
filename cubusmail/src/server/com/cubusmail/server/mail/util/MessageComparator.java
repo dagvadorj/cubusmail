@@ -78,7 +78,7 @@ public class MessageComparator implements Comparator<Message> {
 				} else {
 					result = -1;
 				}
-			} else if ( MessageListFields.DATE.name().equals( this.field ) ) {
+			} else if ( MessageListFields.SEND_DATE.name().equals( this.field ) ) {
 				Date date1 = msg1.getSentDate();
 				Date date2 = msg2.getSentDate();
 				if ( date1 != null && date2 != null ) {

@@ -503,7 +503,7 @@ public class MessageUtils {
 									AddressStringType.COMPLETE );
 							contains = StringUtils.containsIgnoreCase( from, searchText ) || contains;
 						}
-						else if ( searchDate != null && MessageListFields.DATE.name().equals( searchField ) ) {
+						else if ( searchDate != null && MessageListFields.SEND_DATE.name().equals( searchField ) ) {
 							Date sendDate = message.getSentDate();
 							contains = (sendDate != null && DateUtils.isSameDay( searchDate, sendDate )) || contains;
 						}
@@ -649,7 +649,7 @@ public class MessageUtils {
 				else if ( MessageListFields.SUBJECT.name().equals( sortfield )
 						|| MessageListFields.FROM.name().equals( sortfield )
 						|| MessageListFields.TO.name().equals( sortfield )
-						|| MessageListFields.DATE.name().equals( sortfield ) ) {
+						|| MessageListFields.SEND_DATE.name().equals( sortfield ) ) {
 					fp.add( FetchProfile.Item.ENVELOPE );
 				}
 				else if ( MessageListFields.SIZE.name().equals( sortfield ) ) {

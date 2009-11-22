@@ -59,12 +59,14 @@ public class CubusSessionListener implements HttpSessionListener {
 
 		try {
 			log.debug( "Session expired. Execute logout." );
-			IMailbox mailbox = SessionManager.get( event.getSession() ).getMailbox();
-			if ( mailbox != null && mailbox.isLoggedIn() ) {
-				mailbox.logout();
+			if ( SessionManager.get( event.getSession() ) != null ) {
+				IMailbox mailbox = SessionManager.get( event.getSession() ).getMailbox();
+				if ( mailbox != null && mailbox.isLoggedIn() ) {
+					mailbox.logout();
+				}
 			}
 		}
-		catch ( Throwable ex ) {
+		catch (Throwable ex) {
 			// nothing to do
 			log.warn( ex.getMessage() );
 		}

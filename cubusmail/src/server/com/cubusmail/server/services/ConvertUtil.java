@@ -193,7 +193,7 @@ public class ConvertUtil {
 		result[MessageListFields.TO.ordinal()] = MessageUtils.getMailAdressString(
 				msg.getRecipients( RecipientType.TO ), AddressStringType.PERSONAL );
 		if ( msg.getSentDate() != null ) {
-			result[MessageListFields.DATE.ordinal()] = dateFormat.format( msg.getSentDate() );
+			result[MessageListFields.SEND_DATE.ordinal()] = dateFormat.format( msg.getSentDate() );
 		}
 		result[MessageListFields.SIZE.ordinal()] = MessageUtils.formatPartSize( MessageUtils
 				.calculateAttachmentSize( msg.getSize() ), decimalFormat );
