@@ -643,10 +643,12 @@ public class MessageUtils {
 		}
 		else {
 			if ( sortfield != null ) {
-				if ( MessageListFields.ATTACHMENT_FLAG.name().equals( sortfield ) ) {
-					fp.add( FetchProfile.Item.CONTENT_INFO );
-				}
-				else if ( MessageListFields.SUBJECT.name().equals( sortfield )
+				// if ( MessageListFields.ATTACHMENT_FLAG.name().equals(
+				// sortfield ) ) {
+				// fp.add( FetchProfile.Item.CONTENT_INFO );
+				// }
+
+				if ( MessageListFields.SUBJECT.name().equals( sortfield )
 						|| MessageListFields.FROM.name().equals( sortfield )
 						|| MessageListFields.TO.name().equals( sortfield )
 						|| MessageListFields.SEND_DATE.name().equals( sortfield ) ) {

@@ -20,7 +20,6 @@
  */
 package com.cubusmail.server.mail.util;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -67,40 +66,48 @@ public class MessageComparator implements Comparator<Message> {
 			if ( MessageListFields.SUBJECT.name().equals( this.field ) ) {
 				if ( msg1.getSubject() != null && msg2.getSubject() != null ) {
 					result = msg1.getSubject().compareToIgnoreCase( msg2.getSubject() );
-				} else {
+				}
+				else {
 					result = -1;
 				}
-			} else if ( MessageListFields.FROM.name().equals( this.field ) ) {
+			}
+			else if ( MessageListFields.FROM.name().equals( this.field ) ) {
 				String fromString1 = MessageUtils.getMailAdressString( msg1.getFrom(), AddressStringType.PERSONAL );
 				String fromString2 = MessageUtils.getMailAdressString( msg2.getFrom(), AddressStringType.PERSONAL );
 				if ( fromString1 != null && fromString2 != null ) {
 					result = fromString1.compareToIgnoreCase( fromString2 );
-				} else {
+				}
+				else {
 					result = -1;
 				}
-			} else if ( MessageListFields.SEND_DATE.name().equals( this.field ) ) {
+			}
+			else if ( MessageListFields.SEND_DATE.name().equals( this.field ) ) {
 				Date date1 = msg1.getSentDate();
 				Date date2 = msg2.getSentDate();
 				if ( date1 != null && date2 != null ) {
 					result = date1.compareTo( date2 );
-				} else {
+				}
+				else {
 					result = -1;
 				}
-			} else if ( MessageListFields.SIZE.name().equals( this.field ) ) {
+			}
+			else if ( MessageListFields.SIZE.name().equals( this.field ) ) {
 				int size1 = msg1.getSize();
 				int size2 = msg2.getSize();
 				result = Integer.valueOf( size1 ).compareTo( Integer.valueOf( size2 ) );
 
-			} else if ( MessageListFields.ATTACHMENT_FLAG.name().equals( this.field ) ) {
-				Boolean attach1 = Boolean.valueOf( MessageUtils.hasAttachments( msg1 ) );
-				Boolean attach2 = Boolean.valueOf( MessageUtils.hasAttachments( msg2 ) );
-				result = attach1.compareTo( attach2 );
 			}
+			// not sortable by attachments
+			// else if ( MessageListFields.ATTACHMENT_FLAG.name().equals(
+			// this.field ) ) {
+			// Boolean attach1 = Boolean.valueOf( MessageUtils.hasAttachments(
+			// msg1 ) );
+			// Boolean attach2 = Boolean.valueOf( MessageUtils.hasAttachments(
+			// msg2 ) );
+			// result = attach1.compareTo( attach2 );
+			// }
 		}
-		catch ( MessagingException e ) {
-			log.warn( e.getMessage(), e );
-		}
-		catch ( IOException e ) {
+		catch (MessagingException e) {
 			log.warn( e.getMessage(), e );
 		}
 

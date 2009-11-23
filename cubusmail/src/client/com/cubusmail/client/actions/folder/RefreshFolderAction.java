@@ -22,8 +22,8 @@ package com.cubusmail.client.actions.folder;
 
 import com.cubusmail.client.actions.GWTAction;
 import com.cubusmail.client.events.EventBroker;
-import com.cubusmail.client.util.ImageProvider;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.common.util.ImageProvider;
 
 /**
  * Refresh folder tree.

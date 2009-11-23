@@ -21,7 +21,6 @@ package com.cubusmail.client.datasource;
 
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.ServiceProvider;
-import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -29,7 +28,6 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
-import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
@@ -42,15 +40,14 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 	public MessageListDataSource() {
 
-		DataSourceField field;
-		field = new DataSourceIntegerField( MessageListFields.ID.name(), "ID" );
-		field.setPrimaryKey( true );
-		// AutoIncrement on server.
-		field.setRequired( true );
-		addField( field );
-		field = new DataSourceTextField( MessageListFields.SUBJECT.name(), TextProvider.get().grid_messages_subject() );
-		field.setRequired( true );
-		addField( field );
+		for (MessageListFields fieldDef : MessageListFields.values()) {
+			DataSourceField field = new DataSourceIntegerField( fieldDef.name() );
+			if ( MessageListFields.ID.equals( fieldDef ) ) {
+				field.setRequired( true );
+				field.setPrimaryKey( true );
+			}
+			addField( field );
+		}
 	}
 
 	/*
@@ -86,14 +83,14 @@ public class MessageListDataSource extends GwtRpcDataSource {
 					public void onSuccess( GWTMessageList result ) {
 
 						mapResponse( response, result );
-		                processResponse (requestId, response);
+						processResponse( requestId, response );
 					}
 
 					public void onFailure( Throwable caught ) {
 
 						GWTExceptionHandler.handleException( caught );
-		                response.setStatus (RPCResponse.STATUS_FAILURE);
-		                processResponse (requestId, response);
+						response.setStatus( RPCResponse.STATUS_FAILURE );
+						processResponse( requestId, response );
 					}
 				} );
 	}
@@ -135,8 +132,9 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			for (int i = 0; i < data.getTotalRecords(); i++) {
 				String[] source = data.getMessages()[i];
 				records[i] = new ListGridRecord();
-				records[i].setAttribute( MessageListFields.ID.name(), source[MessageListFields.ID.ordinal()] );
-				records[i].setAttribute( MessageListFields.SUBJECT.name(), source[MessageListFields.SUBJECT.ordinal()] );
+				for (MessageListFields fieldDef : MessageListFields.values()) {
+					records[i].setAttribute( fieldDef.name(), source[fieldDef.ordinal()] );
+				}
 			}
 			response.setData( records );
 		}

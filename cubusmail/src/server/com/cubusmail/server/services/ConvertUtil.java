@@ -40,6 +40,7 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.util.ImageProvider;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.util.MessageUtils;
@@ -175,16 +176,14 @@ public class ConvertUtil {
 
 		result[MessageListFields.ID.ordinal()] = Long.toString( folder.getUID( msg ) );
 		try {
-			result[MessageListFields.ATTACHMENT_FLAG.ordinal()] = Boolean.toString( MessageUtils.hasAttachments( msg ) );
+			result[MessageListFields.ATTACHMENT_IMAGE.ordinal()] = MessageUtils.hasAttachments( msg ) ? ImageProvider.MSG_ATTACHMENT
+					: null;
 		}
 		catch (IOException e) {
 			// do nothing
 		}
-		result[MessageListFields.READ_FLAG.ordinal()] = Boolean.toString( msg.isSet( Flags.Flag.SEEN ) );
-		result[MessageListFields.DELETED_FLAG.ordinal()] = Boolean.toString( msg.isSet( Flags.Flag.DELETED ) );
-		result[MessageListFields.ANSWERED_FLAG.ordinal()] = Boolean.toString( msg.isSet( Flags.Flag.ANSWERED ) );
-		result[MessageListFields.DRAFT_FLAG.ordinal()] = Boolean.toString( msg.isSet( Flags.Flag.DRAFT ) );
-		result[MessageListFields.PRIORITY.ordinal()] = Integer.toString( MessageUtils.getMessagePriority( msg ) );
+		result[MessageListFields.FLAG_IMAGE.ordinal()] = getFlagImage( msg );
+		result[MessageListFields.PRIORITY_IMAGE.ordinal()] = getPriorityImage( msg );
 		if ( !StringUtils.isEmpty( msg.getSubject() ) ) {
 			result[MessageListFields.SUBJECT.ordinal()] = msg.getSubject();
 		}
@@ -197,6 +196,37 @@ public class ConvertUtil {
 		}
 		result[MessageListFields.SIZE.ordinal()] = MessageUtils.formatPartSize( MessageUtils
 				.calculateAttachmentSize( msg.getSize() ), decimalFormat );
+	}
+
+	/**
+	 * @param msg
+	 * @return
+	 * @throws MessagingException 
+	 */
+	private static String getFlagImage( Message msg ) throws MessagingException {
+		if ( msg.isSet( Flags.Flag.DELETED ) ) {
+			return ImageProvider.MSG_STATUS_DELETED;
+		}
+		else if ( msg.isSet( Flags.Flag.ANSWERED ) ) {
+			return ImageProvider.MSG_STATUS_DELETED;
+		}
+		else if ( msg.isSet( Flags.Flag.DRAFT ) ) {
+			return ImageProvider.MSG_STATUS_DRAFT;
+		}		
+		else if ( !msg.isSet( Flags.Flag.SEEN) ) {
+			return ImageProvider.MSG_STATUS_UNREAD;
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @param msg
+	 * @return
+	 */
+	private static String getPriorityImage( Message msg ) {
+
+		return null;
 	}
 
 	/**

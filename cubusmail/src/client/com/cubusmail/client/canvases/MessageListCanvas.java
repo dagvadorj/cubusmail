@@ -20,12 +20,16 @@
 package com.cubusmail.client.canvases;
 
 import com.cubusmail.client.datasource.DataSourceRegistry;
+import com.cubusmail.client.events.EventBroker;
+import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
-import com.cubusmail.client.util.ImageProvider;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.util.ImageProvider;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -39,25 +43,25 @@ import com.smartgwt.client.widgets.layout.SectionStackSection;
  * 
  * @author Juergen Schlierf
  */
-public class MessageListCanvas extends SectionStack implements MessagesReloadListener {
+public class MessageListCanvas extends SectionStack implements MessagesReloadListener, FolderSelectedListener {
 
 	private SectionStackSection section;
 	private ListGrid grid;
+	private TextItem searchItem;
 
 	public MessageListCanvas() {
 
 		super();
-		setShowResizeBar( true );
 
-		this.section = new SectionStackSection( "Inbox" );
+		this.section = new SectionStackSection();
 		this.section.setCanCollapse( false );
 		this.section.setExpanded( true );
 		this.section.setResizeable( true );
 
-		TextItem textItem = new TextItem();
-		textItem.setTitle( "Search" );
+		this.searchItem = new TextItem();
+		this.searchItem.setTitle( "Search" );
 		DynamicForm searchCanvas = new DynamicForm();
-		searchCanvas.setItems( textItem );
+		searchCanvas.setItems( this.searchItem );
 
 		Button searchButton = new Button( "" );
 		searchButton.setBorder( "0px" );
@@ -66,18 +70,19 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		section.setControls( searchCanvas, searchButton );
 
 		this.grid = new ListGrid();
+		this.grid.setSelectionType( SelectionStyle.MULTIPLE );
 		this.grid.setAutoFetchData( false );
 		this.grid.setAlternateRecordStyles( true );
 		this.grid.setWidth100();
-		this.grid.setCellHeight( 17 );
-		this.grid.setBaseStyle( "myOtherGridCell" );
+		// this.grid.setBaseStyle( "myOtherGridCell" );
 		this.grid.setFields( generateFields() );
-		this.grid.setAutoFetchData( true );
 		this.grid.setDataSource( DataSourceRegistry.MESSAGE_LIST.get() );
 		this.section.setItems( this.grid );
 
 		setSections( this.section );
 
+		EventBroker.get().addMessagesReloadListener( this );
+		EventBroker.get().addFolderSelectedListener( this );
 	}
 
 	/**
@@ -90,7 +95,7 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		ListGridField[] fields = new ListGridField[7];
 
 		// read flag
-		fields[0] = new ListGridField( MessageListFields.READ_FLAG.name(), "", 25 );
+		fields[0] = new ListGridField( MessageListFields.FLAG_IMAGE.name(), "", 25 );
 		fields[0].setAlign( Alignment.CENTER );
 		fields[0].setType( ListGridFieldType.IMAGE );
 		Button headerButton = new Button();
@@ -98,7 +103,7 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		fields[0].setHeaderButtonProperties( headerButton );
 
 		// attachment flag
-		fields[1] = new ListGridField( MessageListFields.ATTACHMENT_FLAG.name(), "", 25 );
+		fields[1] = new ListGridField( MessageListFields.ATTACHMENT_IMAGE.name(), "", 25 );
 		fields[1].setAlign( Alignment.CENTER );
 		fields[1].setType( ListGridFieldType.IMAGE );
 		headerButton = new Button();
@@ -106,7 +111,7 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		fields[1].setHeaderButtonProperties( headerButton );
 
 		// priority flag
-		fields[2] = new ListGridField( MessageListFields.PRIORITY.name(), TextProvider.get().grid_messages_subject(),
+		fields[2] = new ListGridField( MessageListFields.PRIORITY_IMAGE.name(), TextProvider.get().grid_messages_subject(),
 				25 );
 		fields[2].setAlign( Alignment.CENTER );
 		fields[2].setType( ListGridFieldType.IMAGE );
@@ -117,22 +122,37 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		// subject
 		fields[3] = new ListGridField( MessageListFields.SUBJECT.name(), TextProvider.get().grid_messages_subject(),
 				500 );
+		fields[3].setAlign( Alignment.LEFT );
 
 		// from
 		fields[4] = new ListGridField( MessageListFields.FROM.name(), TextProvider.get().grid_messages_from(), 200 );
+		fields[4].setAlign( Alignment.LEFT );
 
 		// send date
 		fields[5] = new ListGridField( MessageListFields.SEND_DATE.name(), TextProvider.get().grid_messages_date(), 120 );
+		fields[5].setAlign( Alignment.LEFT );
 
 		// size
 		fields[6] = new ListGridField( MessageListFields.SIZE.name(), TextProvider.get().grid_messages_size(), 120 );
+		fields[6].setAlign( Alignment.RIGHT );
 
 		return fields;
 	}
 
-	@Override
+	/* (non-Javadoc)
+	 * @see com.cubusmail.client.events.MessagesReloadListener#onMessagesReload()
+	 */
 	public void onMessagesReload() {
 
+		this.grid.fetchData();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.cubusmail.client.events.FolderSelectedListener#onFolderSelected(com.cubusmail.common.model.GWTMailFolder)
+	 */
+	public void onFolderSelected( GWTMailFolder mailFolder ) {
+
+		this.section.setTitle( mailFolder.getName() );
 		this.grid.fetchData();
 	}
 }
