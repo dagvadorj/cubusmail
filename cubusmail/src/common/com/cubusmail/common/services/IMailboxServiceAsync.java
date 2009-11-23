@@ -20,13 +20,12 @@
  */
 package com.cubusmail.common.services;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
-import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.model.MessageFlags;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Interface for MailboxService.
@@ -121,7 +120,7 @@ public interface IMailboxServiceAsync {
 	 * @param mark
 	 * @throws Exception
 	 */
-	public void markMessage( long[] messageIds, MessageListFields flagField, boolean mark, AsyncCallback<Void> callback );
+	public void markMessage( long[] messageIds, MessageFlags flag, boolean mark, AsyncCallback<Void> callback );
 
 	/**
 	 * Copy or move messages to a targed mail folder.

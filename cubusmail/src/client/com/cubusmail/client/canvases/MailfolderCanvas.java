@@ -31,12 +31,14 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
+import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.layout.SectionStack;
@@ -46,6 +48,8 @@ import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
+import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
+import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
 
 /**
  * Panel for mail folder.
@@ -92,6 +96,7 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 		treeData.setIdField( "ID" );
 		treeData.setParentIdField( "parentID" );
 		this.tree.setData( this.treeData );
+		this.tree.addNodeClickHandler( new MailfolderClickHandler() );
 
 		createToolbar( section );
 
@@ -246,5 +251,23 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 			}
 		}
 		return null;
+	}
+
+	private class MailfolderClickHandler implements NodeClickHandler {
+
+		@Override
+		public void onNodeClick( NodeClickEvent event ) {
+
+			TreeNode selectedNode = event.getNode();
+			IGWTFolder mailFolder = (IGWTFolder) GWTUtil.getUserData( selectedNode );
+			if ( !selectedNode.equals( currentTreeNode ) ) {
+				currentTreeNode = selectedNode;
+				// changeToolbarButtonStatus( mailFolder );
+				if ( mailFolder instanceof GWTMailFolder ) {
+					GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) mailFolder );
+					EventBroker.get().fireFolderSelected( (GWTMailFolder) mailFolder );
+				}
+			}
+		}
 	}
 }

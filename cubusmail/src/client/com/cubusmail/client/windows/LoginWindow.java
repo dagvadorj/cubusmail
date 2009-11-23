@@ -23,7 +23,7 @@ import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.LoginAction;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.util.ImageProvider;
+import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ImageStyle;

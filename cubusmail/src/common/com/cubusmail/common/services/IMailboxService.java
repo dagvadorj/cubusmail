@@ -20,14 +20,13 @@
  */
 package com.cubusmail.common.services;
 
-import com.google.gwt.user.client.rpc.RemoteService;
-
 import com.cubusmail.common.exceptions.GWTInvalidSessionException;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
-import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.model.MessageFlags;
+import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * Interface for MailboxService.
@@ -122,7 +121,7 @@ public interface IMailboxService extends RemoteService {
 	 * @param mark
 	 * @throws Exception
 	 */
-	public void markMessage( long[] messageIds, MessageListFields flagField, boolean mark ) throws Exception;
+	public void markMessage( long[] messageIds, MessageFlags flag, boolean mark ) throws Exception;
 
 	/**
 	 * Copy or move messages to a targed mail folder.

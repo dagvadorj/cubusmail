@@ -25,8 +25,9 @@ import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailFolder;
+import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
-import com.cubusmail.common.util.ImageProvider;
+import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.SelectionStyle;
@@ -153,6 +154,8 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 	public void onFolderSelected( GWTMailFolder mailFolder ) {
 
 		this.section.setTitle( mailFolder.getName() );
-		this.grid.fetchData();
+		// DataSourceRegistry.MESSAGE_LIST.get().fetchData();
+		Criteria critera = new Criteria( "folder", mailFolder.getId() );
+		this.grid.fetchData(critera);
 	}
 }

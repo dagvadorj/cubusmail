@@ -18,7 +18,7 @@
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
  */
-package com.cubusmail.common.util;
+package com.cubusmail.common.model;
 
 /**
  * File name constants for images.

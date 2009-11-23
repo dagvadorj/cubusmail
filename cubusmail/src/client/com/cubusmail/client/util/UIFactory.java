@@ -23,7 +23,7 @@ import com.cubusmail.client.actions.IGWTAction;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
-import com.cubusmail.common.util.ImageProvider;
+import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;

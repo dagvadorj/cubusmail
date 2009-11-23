@@ -29,6 +29,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.rpc.RPCResponse;
+import com.smartgwt.client.types.DSServerType;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
@@ -39,7 +40,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public class MessageListDataSource extends GwtRpcDataSource {
 
 	public MessageListDataSource() {
-
+		setServerType( DSServerType.GENERIC );
 		for (MessageListFields fieldDef : MessageListFields.values()) {
 			DataSourceField field = new DataSourceIntegerField( fieldDef.name() );
 			if ( MessageListFields.ID.equals( fieldDef ) ) {
@@ -76,8 +77,10 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		final int startIndex = (request.getStartRow() < 0) ? 0 : request.getStartRow();
 		final int endIndex = (request.getEndRow() == null) ? -1 : request.getEndRow();
+		
+		final String folderId = request.getCriteria().getAttribute( "folder" );
 
-		ServiceProvider.getMailboxService().retrieveMessages( "INBOX", startIndex, endIndex, "", "", new String[2][0],
+		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, endIndex, "", "", new String[2][0],
 				new AsyncCallback<GWTMessageList>() {
 
 					public void onSuccess( GWTMessageList result ) {

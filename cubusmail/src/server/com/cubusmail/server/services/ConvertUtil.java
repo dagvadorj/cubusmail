@@ -36,11 +36,12 @@ import javax.mail.Message.RecipientType;
 import org.apache.commons.lang.StringUtils;
 
 import com.cubusmail.common.model.GWTAddress;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.GWTMessage;
+import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
-import com.cubusmail.common.util.ImageProvider;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.util.MessageUtils;
@@ -201,9 +202,10 @@ public class ConvertUtil {
 	/**
 	 * @param msg
 	 * @return
-	 * @throws MessagingException 
+	 * @throws MessagingException
 	 */
 	private static String getFlagImage( Message msg ) throws MessagingException {
+
 		if ( msg.isSet( Flags.Flag.DELETED ) ) {
 			return ImageProvider.MSG_STATUS_DELETED;
 		}
@@ -212,11 +214,11 @@ public class ConvertUtil {
 		}
 		else if ( msg.isSet( Flags.Flag.DRAFT ) ) {
 			return ImageProvider.MSG_STATUS_DRAFT;
-		}		
-		else if ( !msg.isSet( Flags.Flag.SEEN) ) {
+		}
+		else if ( !msg.isSet( Flags.Flag.SEEN ) ) {
 			return ImageProvider.MSG_STATUS_UNREAD;
 		}
-		
+
 		return null;
 	}
 
@@ -225,6 +227,17 @@ public class ConvertUtil {
 	 * @return
 	 */
 	private static String getPriorityImage( Message msg ) {
+
+		int priority = MessageUtils.getMessagePriority( msg );
+		if ( priority == GWTMailConstants.PRIORITY_NONE ) {
+			return null;
+		}
+		else if ( priority == GWTMailConstants.PRIORITY_VERY_LOW || priority == GWTMailConstants.PRIORITY_LOW ) {
+			return ImageProvider.PRIORITY_LOW;
+		}
+		else if ( priority == GWTMailConstants.PRIORITY_VERY_HIGH || priority == GWTMailConstants.PRIORITY_VERY_HIGH ) {
+			return ImageProvider.PRIORITY_HIGH;
+		}
 
 		return null;
 	}
