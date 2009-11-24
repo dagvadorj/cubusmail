@@ -93,7 +93,7 @@ public interface IMailboxServiceAsync {
 	 * @return
 	 * @throws Exception
 	 */
-	public void retrieveMessages( String folderId, int start, int limit, String sort, String dir, String[][] params,
+	public void retrieveMessages( String folderId, int start, int limit, String sortColumn, boolean ascending, String[][] params,
 			AsyncCallback<GWTMessageList> callback );
 
 	/**

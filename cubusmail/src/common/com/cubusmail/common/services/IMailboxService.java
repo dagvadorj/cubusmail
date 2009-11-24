@@ -94,7 +94,7 @@ public interface IMailboxService extends RemoteService {
 	 * @return
 	 * @throws Exception
 	 */
-	public GWTMessageList retrieveMessages( String folderId, int start, int limit, String sort, String dir,
+	public GWTMessageList retrieveMessages( String folderId, int start, int limit, String sort, boolean ascending,
 			String[][] params ) throws Exception;
 
 	/**

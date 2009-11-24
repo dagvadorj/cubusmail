@@ -48,7 +48,6 @@ import com.cubusmail.common.exceptions.GWTMessageException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTAttachment;
-import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
@@ -282,7 +281,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#retrieveMessages(
 	 * java.lang.String)
 	 */
-	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, String sortField, String dir,
+	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, String sortField, boolean ascending,
 			String[][] params ) throws Exception {
 
 		if ( folderId != null ) {
@@ -297,8 +296,8 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				Message[] msgs = currentFolder.retrieveMessages( sortField );
 
 				String quickSearchFields = MessageUtils.getParamValue( params, "fields" );
-				String extendedSearchFields = MessageUtils.getParamValue( params,
-						GWTMailConstants.EXTENDED_SEARCH_FIELDS );
+//				String extendedSearchFields = MessageUtils.getParamValue( params,
+//						GWTMailConstants.EXTENDED_SEARCH_FIELDS );
 
 				// all messages with only header data
 
@@ -307,11 +306,10 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 					String quickSearchText = MessageUtils.getParamValue( params, "query" );
 					msgs = MessageUtils.quickFilterMessages( msgs, quickSearchFields, quickSearchText );
 				}
-				else if ( extendedSearchFields != null ) {
-					msgs = MessageUtils.filterMessages( currentFolder, msgs, extendedSearchFields, params );
-				}
+//				else if ( extendedSearchFields != null ) {
+//					msgs = MessageUtils.filterMessages( currentFolder, msgs, extendedSearchFields, params );
+//				}
 
-				boolean ascending = "ASC".equals( dir );
 				MessageUtils.sortMessages( msgs, sortField, ascending );
 
 				if ( msgs != null && msgs.length > 0 ) {

@@ -27,12 +27,13 @@ package com.cubusmail.common.model;
  */
 public interface GWTMailConstants {
 
-	public final static String EXTENDED_SEARCH_FIELDS = "extendedSearchFields";
-
 	public final static int PRIORITY_NONE = 0;
 	public final static int PRIORITY_VERY_HIGH = 1;
 	public final static int PRIORITY_HIGH = 2;
 	public final static int PRIORITY_NORMAL = 3;
 	public final static int PRIORITY_LOW = 4;
 	public final static int PRIORITY_VERY_LOW = 5;
+
+	public final static String PARAM_FOLDER_ID = "folderId";
+	public final static int MESSAGE_LIST_PAGE_SIZE = 100;
 }

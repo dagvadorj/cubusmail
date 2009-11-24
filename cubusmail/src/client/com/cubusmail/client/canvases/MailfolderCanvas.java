@@ -255,7 +255,6 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 
 	private class MailfolderClickHandler implements NodeClickHandler {
 
-		@Override
 		public void onNodeClick( NodeClickEvent event ) {
 
 			TreeNode selectedNode = event.getNode();

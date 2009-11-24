@@ -20,7 +20,9 @@
 package com.cubusmail.client.datasource;
 
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -40,6 +42,8 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public class MessageListDataSource extends GwtRpcDataSource {
 
 	public MessageListDataSource() {
+
+		super();
 		setServerType( DSServerType.GENERIC );
 		for (MessageListFields fieldDef : MessageListFields.values()) {
 			DataSourceField field = new DataSourceIntegerField( fieldDef.name() );
@@ -77,11 +81,18 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		final int startIndex = (request.getStartRow() < 0) ? 0 : request.getStartRow();
 		final int endIndex = (request.getEndRow() == null) ? -1 : request.getEndRow();
-		
-		final String folderId = request.getCriteria().getAttribute( "folder" );
+		final int pageSize = (endIndex != -1) ? (endIndex - startIndex) : GWTMailConstants.MESSAGE_LIST_PAGE_SIZE;
 
-		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, endIndex, "", "", new String[2][0],
-				new AsyncCallback<GWTMessageList>() {
+		final String folderId = request.getCriteria().getAttribute( GWTMailConstants.PARAM_FOLDER_ID );
+		String sortColumn = request.getSortBy();
+		boolean ascending = true;
+		if ( GWTUtil.hasText( sortColumn ) && sortColumn.charAt( 0 ) == '-' ) {
+			ascending = false;
+			sortColumn = sortColumn.substring( 1 );
+		}
+
+		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
+				new String[2][0], new AsyncCallback<GWTMessageList>() {
 
 					public void onSuccess( GWTMessageList result ) {
 
@@ -130,9 +141,10 @@ public class MessageListDataSource extends GwtRpcDataSource {
 	 */
 	private void mapResponse( DSResponse response, GWTMessageList data ) {
 
-		if ( data != null && data.getTotalRecords() > 0 ) {
-			ListGridRecord[] records = new ListGridRecord[data.getTotalRecords()];
-			for (int i = 0; i < data.getTotalRecords(); i++) {
+		if ( data != null && data.getMessages().length > 0 ) {
+			int recordCount = data.getMessages().length;
+			ListGridRecord[] records = new ListGridRecord[recordCount];
+			for (int i = 0; i < recordCount; i++) {
 				String[] source = data.getMessages()[i];
 				records[i] = new ListGridRecord();
 				for (MessageListFields fieldDef : MessageListFields.values()) {
@@ -140,6 +152,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 				}
 			}
 			response.setData( records );
+			response.setTotalRows( data.getTotalRecords() );
 		}
 	}
 }
