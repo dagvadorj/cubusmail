@@ -29,17 +29,14 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
 import com.smartgwt.client.data.Criteria;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.SelectionStyle;
-import com.smartgwt.client.types.SummaryFunctionType;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.SummaryFunction;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 
@@ -84,8 +81,8 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		this.grid.setDataSource( DataSourceRegistry.MESSAGE_LIST.get() );
 		this.grid.setDataPageSize( GWTMailConstants.MESSAGE_LIST_PAGE_SIZE );
 		this.grid.setFastCellUpdates( false );
-		this.grid.setShowFilterEditor( true );
-		this.grid.setShowGridSummary( true );
+//		this.grid.setShowFilterEditor( true );
+//		this.grid.setShowGridSummary( true );
 		this.section.setItems( this.grid );
 
 		setSections( this.section );
@@ -143,15 +140,15 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 				500 );
 		fields[3].setAlign( Alignment.LEFT );
 		fields[3].setCanGroupBy( false );
-		fields[3].setShowGridSummary( true );
-		fields[3].setSummaryFunction( new SummaryFunction() {
-
-			public Object getSummaryValue( Record[] records, ListGridField field ) {
-
-				int count = records != null ? records.length : 0;
-				return count + " " + TextProvider.get().grid_messages_count();
-			}
-		} );
+//		fields[3].setShowGridSummary( true );
+//		fields[3].setSummaryFunction( new SummaryFunction() {
+//
+//			public Object getSummaryValue( Record[] records, ListGridField field ) {
+//
+//				int count = records != null ? records.length : 0;
+//				return count + " " + TextProvider.get().grid_messages_count();
+//			}
+//		} );
 
 		// from
 		fields[4] = new ListGridField( MessageListFields.FROM.name(), TextProvider.get().grid_messages_from(), 200 );
