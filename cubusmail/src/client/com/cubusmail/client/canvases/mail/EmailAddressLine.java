@@ -45,6 +45,7 @@ public class EmailAddressLine extends HLayout {
 		super();
 		setWidth100();
 		setAutoHeight();
+		setVisible( false );
 
 		this.label = new Label( labelText );
 		this.label.setWidth( LABEL_WIDTH );
@@ -67,12 +68,13 @@ public class EmailAddressLine extends HLayout {
 		if ( addresses != null ) {
 
 			for (int i = 0; i < addresses.length; i++) {
+				boolean withSeparator = false;
 				if ( i < (addresses.length - 1) ) {
-					this.emailAddresses.add( new EmailAddressLink( addresses[i], true ) );
+					withSeparator = true;
 				}
-				else {
-					this.emailAddresses.add( new EmailAddressLink( addresses[i], false ) );
-				}
+				EmailAddressLink link = new EmailAddressLink( addresses[i], withSeparator );
+				link.getElement().getStyle().setProperty( "display", "inline" );
+				this.emailAddresses.add( link );
 			}
 		}
 

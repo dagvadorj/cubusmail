@@ -19,8 +19,10 @@
  */
 package com.cubusmail.client.canvases.mail;
 
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMessage;
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -34,6 +36,8 @@ public class MessageReadingPaneHeader extends VLayout {
 	private Label subject;
 	private EmailAddressLine from;
 	private EmailAddressLine to;
+	private EmailAddressLine cc;
+	private EmailAddressLine replyTo;
 
 	public MessageReadingPaneHeader() {
 
@@ -42,6 +46,7 @@ public class MessageReadingPaneHeader extends VLayout {
 		setWidth100();
 		setAutoHeight();
 		setPadding( 4 );
+		setOverflow( Overflow.VISIBLE );
 
 		this.subject = new Label( "" );
 		this.subject.setWidth100();
@@ -50,8 +55,10 @@ public class MessageReadingPaneHeader extends VLayout {
 
 		this.from = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_from() );
 		this.to = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_to() );
+		this.cc = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_cc() );
+		this.replyTo = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_replyto() );
 
-		setMembers( this.subject, this.from, this.to );
+		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo );
 	}
 
 	/**
@@ -59,9 +66,38 @@ public class MessageReadingPaneHeader extends VLayout {
 	 */
 	public void setMessage( GWTMessage message ) {
 
-		this.subject.setContents( message.getSubject() );
-		this.from.setAddresses( message.getFromArray() );
-		this.to.setAddresses( message.getToArray() );
+		this.subject.setContents( "" );
+		if ( GWTUtil.hasText( message.getSubject() ) ) {
+			this.subject.setContents( message.getSubject() );
+		}
+		if ( !GWTUtil.isEmpty( message.getFromArray() ) ) {
+			this.from.setVisible( true );
+			this.from.setAddresses( message.getFromArray() );
+		}
+		else {
+			this.from.setVisible( false );
+		}
+		if ( !GWTUtil.isEmpty( message.getToArray() ) ) {
+			this.to.setVisible( true );
+			this.to.setAddresses( message.getToArray() );
+		}
+		else {
+			this.to.setVisible( false );
+		}
+		if ( !GWTUtil.isEmpty( message.getCcArray() ) ) {
+			this.cc.setVisible( true );
+			this.cc.setAddresses( message.getCcArray() );
+		}
+		else {
+			this.cc.setVisible( false );
+		}
+		if ( !GWTUtil.isEmpty( message.getReplyToArray() ) ) {
+			this.replyTo.setVisible( true );
+			this.replyTo.setAddresses( message.getReplyToArray() );
+		}
+		else {
+			this.replyTo.setVisible( false );
+		}
 		this.redraw();
 	}
 }
