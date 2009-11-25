@@ -1,3 +1,11 @@
+.messageReadingPaneHeader {
+	background-color:#eeeeee;
+}
+
+.message-subject {
+	font: bold 14px arial, tahoma, sans-serif;
+}
+
 .gwt-HTML {
 	display: inline;
 }

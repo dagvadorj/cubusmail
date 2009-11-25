@@ -32,7 +32,7 @@ public abstract class GWTAction  implements IGWTAction {
 	private String text;
 	private String imageName;
 	private String tooltipText;
-	private boolean disabled;
+	// private boolean disabled;
 
 	// private List<Component> componentList = new ArrayList<Component>();
 

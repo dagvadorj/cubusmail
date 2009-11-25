@@ -27,6 +27,7 @@ import com.cubusmail.client.actions.folder.EmptyFolderAction;
 import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RefreshFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
+import com.cubusmail.client.actions.message.LoadMessageAction;
 
 /**
  * Registry for all actions used by Cubusmail.
@@ -37,6 +38,9 @@ public enum ActionRegistry {
 	// comman actions
 	LOGIN,
 
+	// message actions
+	LOAD_MESSAGE,
+	
 	// mail folder actions
 	REFRESH_FOLDER, NEW_FOLDER, MOVE_FOLDER, RENAME_FOLDER, DELETE_FOLDER, EMPTY_FOLDER;
 
@@ -77,6 +81,10 @@ public enum ActionRegistry {
 		case LOGIN:
 			return new LoginAction();
 
+			// messages
+		case LOAD_MESSAGE:
+			return new LoadMessageAction();
+			
 		case REFRESH_FOLDER:
 			return new RefreshFolderAction();
 		case NEW_FOLDER:

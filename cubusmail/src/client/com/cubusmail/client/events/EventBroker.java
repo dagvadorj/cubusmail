@@ -44,8 +44,6 @@ public class EventBroker {
 
 	private List<FolderSelectedListener> folderSelectedListenerList = null;
 
-	private List<MessageSelectedListener> messageSelectedListenerList = null;
-
 	private List<MessageLoadedListener> messageLoadedListenerList = null;
 
 	private List<MessagesReloadListener> messagesReloadListenerList = null;
@@ -69,7 +67,6 @@ public class EventBroker {
 		this.logoutListenerList = new ArrayList<LogoutListener>();
 		this.foldersReloadListenerList = new ArrayList<FoldersReloadListener>();
 		this.folderSelectedListenerList = new ArrayList<FolderSelectedListener>();
-		this.messageSelectedListenerList = new ArrayList<MessageSelectedListener>();
 		this.messageLoadedListenerList = new ArrayList<MessageLoadedListener>();
 		this.contactSelectedListenerList = new ArrayList<ContactSelectedListener>();
 		this.messagesReloadListenerList = new ArrayList<MessagesReloadListener>();
@@ -164,24 +161,6 @@ public class EventBroker {
 		for (int i = 0; i < this.messageLoadedListenerList.size(); i++) {
 			MessageLoadedListener listener = this.messageLoadedListenerList.get( i );
 			listener.onMessageLoaded( message );
-		}
-	}
-
-	public void addMessageSelectedListener( MessageSelectedListener listener ) {
-
-		this.messageSelectedListenerList.add( listener );
-	}
-
-	public void removeMessageSelectedListener( MessageSelectedListener listener ) {
-
-		this.messageSelectedListenerList.remove( listener );
-	}
-
-	public void fireMessageSelected( int messageId ) {
-
-		for (int i = 0; i < this.messageSelectedListenerList.size(); i++) {
-			MessageSelectedListener listener = this.messageSelectedListenerList.get( i );
-			listener.onMessageSelected( messageId );
 		}
 	}
 

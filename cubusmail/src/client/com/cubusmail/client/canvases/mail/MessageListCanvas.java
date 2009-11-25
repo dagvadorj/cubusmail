@@ -17,12 +17,16 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cubusmail.client.canvases;
+package com.cubusmail.client.canvases.mail;
 
+import com.cubusmail.client.actions.ActionRegistry;
+import com.cubusmail.client.actions.message.LoadMessageAction;
+import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
@@ -37,16 +41,22 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Canvas for the message list.
  * 
  * @author Juergen Schlierf
  */
-public class MessageListCanvas extends SectionStack implements MessagesReloadListener, FolderSelectedListener {
+public class MessageListCanvas extends VLayout implements MessagesReloadListener, FolderSelectedListener {
 
+	private SectionStack sectionStack;
 	private SectionStackSection section;
 	private ListGrid grid;
 	private TextItem searchItem;
@@ -55,10 +65,13 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 
 		super();
 
+		this.sectionStack = new SectionStack();
+
 		this.section = new SectionStackSection();
 		this.section.setCanCollapse( false );
 		this.section.setExpanded( true );
 		this.section.setResizeable( true );
+		this.section.setShowHeader( true );
 
 		this.searchItem = new TextItem();
 		this.searchItem.setTitle( "Search" );
@@ -76,16 +89,24 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		this.grid.setAutoFetchData( false );
 		this.grid.setAlternateRecordStyles( true );
 		this.grid.setWidth100();
-		// this.grid.setBaseStyle( "myOtherGridCell" );
 		this.grid.setFields( generateFields() );
 		this.grid.setDataSource( DataSourceRegistry.MESSAGE_LIST.get() );
 		this.grid.setDataPageSize( GWTMailConstants.MESSAGE_LIST_PAGE_SIZE );
 		this.grid.setFastCellUpdates( false );
-//		this.grid.setShowFilterEditor( true );
-//		this.grid.setShowGridSummary( true );
+		addGridHandlers();
 		this.section.setItems( this.grid );
 
-		setSections( this.section );
+		this.sectionStack.setSections( this.section );
+
+		if ( GWTSessionManager.get().getPreferences().isShowReadingPane() ) {
+			this.sectionStack.setHeight( "50%" );
+			this.sectionStack.setShowResizeBar( true );
+			setMembers( this.sectionStack, CanvasRegistry.MESSAGE_READING_PANE.get() );
+		}
+		else {
+			this.sectionStack.setHeight100();
+			setMembers( this.sectionStack );
+		}
 
 		EventBroker.get().addMessagesReloadListener( this );
 		EventBroker.get().addFolderSelectedListener( this );
@@ -140,15 +161,6 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 				500 );
 		fields[3].setAlign( Alignment.LEFT );
 		fields[3].setCanGroupBy( false );
-//		fields[3].setShowGridSummary( true );
-//		fields[3].setSummaryFunction( new SummaryFunction() {
-//
-//			public Object getSummaryValue( Record[] records, ListGridField field ) {
-//
-//				int count = records != null ? records.length : 0;
-//				return count + " " + TextProvider.get().grid_messages_count();
-//			}
-//		} );
 
 		// from
 		fields[4] = new ListGridField( MessageListFields.FROM.name(), TextProvider.get().grid_messages_from(), 200 );
@@ -169,6 +181,27 @@ public class MessageListCanvas extends SectionStack implements MessagesReloadLis
 		fields[6].setShowGridSummary( false );
 
 		return fields;
+	}
+
+	/**
+	 * Add all necessary handlers.
+	 */
+	private void addGridHandlers() {
+
+		this.grid.addRecordClickHandler( new RecordClickHandler() {
+
+			public void onRecordClick( RecordClickEvent event ) {
+
+				int selected = event.getViewer().getSelection() != null ? event.getViewer().getSelection().length : 0;
+				if ( selected == 1 ) {
+					String messageID = event.getRecord().getAttribute( MessageListFields.ID.name() );
+					LoadMessageAction action = ActionRegistry.LOAD_MESSAGE.get( LoadMessageAction.class );
+					action.setLoadImages( true );
+					action.setMessageId( Long.parseLong( messageID ) );
+					action.execute();
+				}
+			}
+		} );
 	}
 
 	/*

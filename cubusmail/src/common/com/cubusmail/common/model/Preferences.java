@@ -249,7 +249,7 @@ public class Preferences extends LazyPojo implements Serializable {
 	/**
 	 * @return Returns the previewWindow.
 	 */
-	public boolean isPreviewWindow() {
+	public boolean isShowReadingPane() {
 
 		return this.readingPane != READING_PANE_HIDE;
 	}

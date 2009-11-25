@@ -44,7 +44,6 @@ public class GWTSessionManager {
 	private GWTMailFolder mailFolder;
 	private GWTMailFolder currentMailFolder;
 	private ContactFolder currentContactFolder;
-	private GWTMessage currentMessage;
 
 	private List<ContactFolder> contactFolderList;
 	private Contact currentContact;
@@ -211,22 +210,5 @@ public class GWTSessionManager {
 	public void setCurrentContact( Contact currentContact ) {
 
 		this.currentContact = currentContact;
-	}
-
-	/**
-	 * @param currentMessage
-	 *            The currentMessage to set.
-	 */
-	public void setCurrentMessage( GWTMessage currentMessage ) {
-
-		this.currentMessage = currentMessage;
-	}
-
-	/**
-	 * @return Returns the currentMessage.
-	 */
-	public GWTMessage getCurrentMessage() {
-
-		return this.currentMessage;
 	}
 }

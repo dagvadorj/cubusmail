@@ -17,7 +17,7 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cubusmail.client.canvases;
+package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.folder.NewFolderAction;
