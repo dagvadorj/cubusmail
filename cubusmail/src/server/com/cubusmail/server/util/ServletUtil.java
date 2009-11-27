@@ -24,8 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.server.mail.SessionManager;
 
+
 /**
- * TODO: documentation
+ * ServletUtil
  * 
  * @author Juergen Schlierf
  */

@@ -33,6 +33,7 @@
 		<!-- default values -->
 		<property name="language" value="en" />
 		<property name="timezone" value="MEZ" />
+		<property name="timezoneOffset" value="0" />
 		<property name="inboxFolderName" value="${cubus.mail.inboxFolderName}" />
 		<property name="draftFolderName" value="${cubus.mail.draftFolderName}" />
 		<property name="sentFolderName" value="${cubus.mail.sentFolderName}" />

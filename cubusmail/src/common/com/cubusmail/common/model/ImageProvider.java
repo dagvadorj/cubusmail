@@ -26,7 +26,8 @@ package com.cubusmail.common.model;
  * @author Juergen Schlierf
  */
 public interface ImageProvider {
-
+	public static final String IMAGE_PREFIX = "images/";
+	
 	// Message related icons
 	public static final String MSG_NEW = "mail-message-new.png";
 	public static final String MSG_REFRESH = "mail_refresh.png";

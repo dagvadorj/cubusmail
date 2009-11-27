@@ -25,18 +25,17 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.MouseListenerCollection;
+import com.smartgwt.client.widgets.events.MouseDownEvent;
+import com.smartgwt.client.widgets.events.MouseDownHandler;
+import com.smartgwt.client.widgets.events.RightMouseDownEvent;
+import com.smartgwt.client.widgets.events.RightMouseDownHandler;
 
 /**
- * Image hyperlink implementation with right and left button listener.
+ * Image hyperlink implementation with right and left button handlers.
  * 
  * @author Juergen Schlierf
  */
 public class ImageHyperlink extends Hyperlink {
-
-	private MouseListenerCollection leftButtonListeners;
-	private MouseListenerCollection rightButtonListeners;
 
 	public ImageHyperlink() {
 
@@ -51,7 +50,7 @@ public class ImageHyperlink extends Hyperlink {
 	public ImageHyperlink( Image img, String targetHistoryToken ) {
 
 		super();
-	    setStyleName("gwt-Hyperlink");
+		setStyleName( "gwt-Hyperlink" );
 		if ( img != null ) {
 			DOM.insertChild( getElement(), img.getElement(), 0 );
 			img.unsinkEvents( Event.ONCLICK | Event.MOUSEEVENTS );
@@ -62,51 +61,29 @@ public class ImageHyperlink extends Hyperlink {
 		GWTUtil.disableContextMenu( getElement() );
 	}
 
-	public void addLeftButtonListener( MouseListener listener ) {
+	public void addLeftButtonHandler( MouseDownHandler handler ) {
 
-		if ( leftButtonListeners == null )
-			leftButtonListeners = new MouseListenerCollection();
-		leftButtonListeners.add( listener );
+		addHandler( handler, MouseDownEvent.getType() );
 	}
 
-	public void removeLeftButtonListener( MouseListener listener ) {
+	public void addRightButtonHandler( RightMouseDownHandler handler ) {
 
-		if ( leftButtonListeners != null )
-			leftButtonListeners.remove( listener );
-	}
-
-	public void addRightButtonListener( MouseListener listener ) {
-
-		if ( rightButtonListeners == null )
-			rightButtonListeners = new MouseListenerCollection();
-		rightButtonListeners.add( listener );
-	}
-
-	public void removeRightButtonListener( MouseListener listener ) {
-
-		if ( rightButtonListeners != null )
-			rightButtonListeners.remove( listener );
+		addHandler( handler, RightMouseDownEvent.getType() );
 	}
 
 	public void onBrowserEvent( Event event ) {
 
 		super.onBrowserEvent( event );
 
-		switch ( DOM.eventGetType( event ) )
-		{
-			case Event.ONMOUSEDOWN:
-			{
-				if ( Event.BUTTON_LEFT == event.getButton() ) {
-					if ( leftButtonListeners != null )
-						leftButtonListeners.fireMouseEvent( this, event );
-					break;
-				} else if ( Event.BUTTON_RIGHT == event.getButton() ) {
-					if ( rightButtonListeners != null )
-						rightButtonListeners.fireMouseEvent( this, event );
-					break;
-				}
+		switch (DOM.eventGetType( event )) {
+		case Event.ONMOUSEDOWN: {
+			if ( Event.BUTTON_LEFT == event.getButton() ) {
+				fireEvent( new MouseDownEvent( event ) );
+			}
+			else if ( Event.BUTTON_RIGHT == event.getButton() ) {
+				fireEvent( new RightMouseDownEvent( event ) );
 			}
 		}
+		}
 	}
-
 }

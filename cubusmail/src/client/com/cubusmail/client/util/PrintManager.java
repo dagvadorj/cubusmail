@@ -122,7 +122,8 @@ public abstract class PrintManager {
 			result.append( "<tr class=\"printcontent\"><td class=\"printcontenttitle\">" );
 			result.append( TextProvider.get().message_reading_pane_panel_date() );
 			result.append( "</td><td class=\"printcontentname\">" );
-			result.append( GWTUtil.formatDate( message.getDate() ) );
+			result.append( GWTUtil.formatDate( message.getDate(), GWTSessionManager.get().getPreferences()
+					.getTimezoneOffset() ) );
 			result.append( "</td></tr>" );
 		}
 

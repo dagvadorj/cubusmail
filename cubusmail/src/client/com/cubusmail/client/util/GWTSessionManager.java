@@ -27,7 +27,6 @@ import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
-import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 

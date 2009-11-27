@@ -22,7 +22,8 @@ package com.cubusmail.client.canvases.mail;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.MessageLoadedListener;
 import com.cubusmail.common.model.GWTMessage;
-import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.HTMLPane;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -33,14 +34,18 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class MessageReadingPaneCanvas extends VLayout implements MessageLoadedListener {
 
 	private MessageReadingPaneHeader header;
-	private Canvas content;
+	private HTMLPane content;
 
 	public MessageReadingPaneCanvas() {
 
 		super();
 
 		this.header = new MessageReadingPaneHeader();
-		this.content = new Canvas();
+		this.content = new HTMLPane();
+		this.content.setWidth100();
+		this.content.setHeight100();
+		this.content.setVisible( false );
+		this.content.setOverflow( Overflow.SCROLL );
 
 		setMembers( this.header, this.content );
 
@@ -57,5 +62,9 @@ public class MessageReadingPaneCanvas extends VLayout implements MessageLoadedLi
 	public void onMessageLoaded( GWTMessage message ) {
 
 		this.header.setMessage( message );
+		if ( !this.content.isVisible() ) {
+			this.content.setVisible( true );
+		}
+		this.content.setContents( message.getMessageText() );
 	}
 }

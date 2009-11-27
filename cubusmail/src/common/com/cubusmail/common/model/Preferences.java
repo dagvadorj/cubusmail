@@ -46,6 +46,10 @@ public class Preferences extends LazyPojo implements Serializable {
 	public int messagesReloadPeriod;
 
 	public String timezone;
+	/**
+	 * Offset in minutes.
+	 */
+	public int timezoneOffset;
 	public int pageCount;
 	public boolean shortTimeFormat;
 	public boolean showHtml;
@@ -74,6 +78,18 @@ public class Preferences extends LazyPojo implements Serializable {
 	public void setLanguage( String language ) {
 
 		this.language = language;
+	}
+
+	
+	public int getTimezoneOffset() {
+	
+		return timezoneOffset;
+	}
+
+	
+	public void setTimezoneOffset( int timezoneOffset ) {
+	
+		this.timezoneOffset = timezoneOffset;
 	}
 
 	/**
@@ -313,6 +329,7 @@ public class Preferences extends LazyPojo implements Serializable {
 		clone.emptyTrashAfterLogout = this.emptyTrashAfterLogout;
 		clone.theme = this.theme;
 		clone.readingPane = this.readingPane;
+		clone.timezoneOffset = this.timezoneOffset;
 
 		return clone;
 	}

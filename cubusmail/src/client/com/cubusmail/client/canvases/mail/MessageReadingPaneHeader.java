@@ -19,11 +19,17 @@
  */
 package com.cubusmail.client.canvases.mail;
 
+import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.client.widgets.AttachmentWidget;
+import com.cubusmail.common.model.GWTAttachment;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -38,6 +44,9 @@ public class MessageReadingPaneHeader extends VLayout {
 	private EmailAddressLine to;
 	private EmailAddressLine cc;
 	private EmailAddressLine replyTo;
+	private HLayout dateLine;
+	private Label date;
+	private FlowPanel attachmentLine;
 
 	public MessageReadingPaneHeader() {
 
@@ -58,7 +67,23 @@ public class MessageReadingPaneHeader extends VLayout {
 		this.cc = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_cc() );
 		this.replyTo = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_replyto() );
 
-		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo );
+		this.dateLine = new HLayout();
+		this.dateLine.setWidth100();
+		this.dateLine.setAutoHeight();
+		this.dateLine.setVisible( false );
+		this.date = new Label( "" );
+		this.date.setWidth100();
+		this.date.setAutoHeight();
+		Label dateLabel = new Label( TextProvider.get().message_reading_pane_panel_date() );
+		dateLabel.setWidth( GWTMailConstants.MESSAGE_READING_PANE_LABEL_WIDTH );
+		dateLabel.setAutoHeight();
+		this.dateLine.setMembers( dateLabel, this.date );
+
+		this.attachmentLine = new FlowPanel();
+		this.attachmentLine.setWidth( "100%" );
+
+		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine );
+		addMember( this.attachmentLine );
 	}
 
 	/**
@@ -66,9 +91,11 @@ public class MessageReadingPaneHeader extends VLayout {
 	 */
 	public void setMessage( GWTMessage message ) {
 
+		this.attachmentLine.clear();
 		this.subject.setContents( "" );
+
 		if ( GWTUtil.hasText( message.getSubject() ) ) {
-			this.subject.setContents( message.getSubject() );
+			this.subject.setContents( GWTUtil.htmlEncode( message.getSubject() ) );
 		}
 		if ( !GWTUtil.isEmpty( message.getFromArray() ) ) {
 			this.from.setVisible( true );
@@ -98,6 +125,24 @@ public class MessageReadingPaneHeader extends VLayout {
 		else {
 			this.replyTo.setVisible( false );
 		}
-		this.redraw();
+		if ( message.getDate() != null ) {
+			this.date.setContents( GWTUtil.formatDate( message.getDate(), GWTSessionManager.get().getPreferences()
+					.getTimezoneOffset() ) );
+			this.dateLine.setVisible( true );
+		}
+		else {
+			this.dateLine.setVisible( false );
+		}
+		if ( !GWTUtil.isEmpty( message.getAttachments() ) ) {
+			for (GWTAttachment attachment : message.getAttachments()) {				
+				this.attachmentLine.add( new AttachmentWidget( attachment ) );
+			}
+			this.attachmentLine.setVisible( true );
+		}
+		else {
+			this.attachmentLine.setVisible( false );
+		}
+
+		this.reflow();
 	}
 }

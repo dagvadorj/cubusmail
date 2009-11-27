@@ -210,7 +210,7 @@ public class ConvertUtil {
 			return ImageProvider.MSG_STATUS_DELETED;
 		}
 		else if ( msg.isSet( Flags.Flag.ANSWERED ) ) {
-			return ImageProvider.MSG_STATUS_DELETED;
+			return ImageProvider.MSG_STATUS_ANSWERED;
 		}
 		else if ( msg.isSet( Flags.Flag.DRAFT ) ) {
 			return ImageProvider.MSG_STATUS_DRAFT;

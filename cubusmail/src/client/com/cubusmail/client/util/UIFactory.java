@@ -27,6 +27,8 @@ import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.menu.MenuItem;
+import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -136,5 +138,26 @@ public abstract class UIFactory {
 				return ImageProvider.MAIL_FOLDER;
 			}
 		}
+	}
+
+	/**
+	 * @param action
+	 * @return
+	 */
+	public static MenuItem createMenuItem( final IGWTAction action ) {
+
+		MenuItem menuItem = new MenuItem( action.getText() );
+		if ( action.getImageName() != null ) {
+			menuItem.setIcon( action.getImageName() );
+		}
+		menuItem.addClickHandler( new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+
+			public void onClick( MenuItemClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+
+		return menuItem;
 	}
 }

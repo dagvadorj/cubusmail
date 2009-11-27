@@ -25,6 +25,7 @@ import java.util.Date;
 import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Element;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -49,9 +50,10 @@ public abstract class GWTUtil {
 	private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat( TextProvider.get()
 			.common_message_date_format() );
 
-	public static String formatDate( Date date ) {
+	public static String formatDate( Date date, int timeZoneOffset ) {
 
-		return DATE_FORMAT.format( date );
+		TimeZone zone = TimeZone.createTimeZone( timeZoneOffset );
+		return DATE_FORMAT.format( date, zone );
 	}
 
 	/**

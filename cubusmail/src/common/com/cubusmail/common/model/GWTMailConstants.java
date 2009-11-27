@@ -36,4 +36,6 @@ public interface GWTMailConstants {
 
 	public final static String PARAM_FOLDER_ID = "folderId";
 	public final static int MESSAGE_LIST_PAGE_SIZE = 100;
+	
+	public final static int MESSAGE_READING_PANE_LABEL_WIDTH = 80;
 }
