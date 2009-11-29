@@ -19,26 +19,43 @@
  */
 package com.cubusmail.client.canvases;
 
+import com.cubusmail.client.util.TextProvider;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
 
 /**
  * Workbench Canvas.
  * 
  * @author Juergen Schlierf
  */
-public class WorkbenchCanvas extends HLayout {
+public class WorkbenchCanvas extends TabSet {
+
+	private HLayout mailCanvas;
 
 	public WorkbenchCanvas() {
 
 		super();
-		setBackgroundImage("[SKIN]/shared/background.gif");
-		setPadding( 5 );
+
+		setTabBarThickness( 23 );
 		setWidth100();
 		setHeight100();
 
+		this.mailCanvas = new HLayout();
+		this.mailCanvas.setBackgroundImage( "[SKIN]/shared/background.gif" );
+		this.mailCanvas.setPadding( 5 );
+		this.mailCanvas.setWidth100();
+		this.mailCanvas.setHeight100();
 		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
-		
-		addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
-		addMember( CanvasRegistry.MESSAGE_LIST_CANVAS.get() );
+
+		this.mailCanvas.addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
+		this.mailCanvas.addMember( CanvasRegistry.MESSAGE_LIST_CANVAS.get() );
+
+		Tab tab = new Tab( TextProvider.get().tab_email() );
+		tab.setPane( this.mailCanvas );
+
+		addTab( tab );
+		addTab( new Tab( TextProvider.get().tab_address_book() ) );
+		addTab( new Tab( TextProvider.get().tab_preferences() ) );
 	}
 }

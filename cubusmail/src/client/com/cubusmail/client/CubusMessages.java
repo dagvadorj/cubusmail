@@ -48,6 +48,11 @@ public interface CubusMessages extends Messages {
 	public String dialog_contactlist_label_cc();
 	public String dialog_contactlist_label_bcc();
 
+	// tabs
+	public String tab_email();
+	public String tab_address_book();
+	public String tab_preferences();
+	
 	public String window_compose_message_title();
 	public String window_compose_message_label_from();
 	public String window_compose_message_label_priority();
