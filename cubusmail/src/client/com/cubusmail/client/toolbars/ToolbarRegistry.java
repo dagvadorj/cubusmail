@@ -19,6 +19,11 @@
  */
 package com.cubusmail.client.toolbars;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.smartgwt.client.widgets.toolbar.ToolStrip;
+
 /**
  * Mananages all Toolbars.
  * 
@@ -26,5 +31,33 @@ package com.cubusmail.client.toolbars;
  */
 public enum ToolbarRegistry {
 	MAIL, ADDRESS_BOOK;
-	
+
+	private static Map<ToolbarRegistry, ToolStrip> TOOLBAR_MAP = new HashMap<ToolbarRegistry, ToolStrip>();
+
+	/**
+	 * @return
+	 */
+	public ToolStrip get() {
+
+		ToolStrip result = TOOLBAR_MAP.get( this );
+		if ( result == null ) {
+			result = create();
+			TOOLBAR_MAP.put( this, result );
+		}
+
+		return result;
+	}
+
+	/**
+	 * create actions
+	 */
+	private ToolStrip create() {
+
+		switch (this) {
+		case MAIL:
+			return new MailToolbar();
+		}
+
+		throw new IllegalArgumentException( "ToolStrip missing: " + name() );
+	}
 }

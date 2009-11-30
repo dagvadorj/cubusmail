@@ -27,7 +27,6 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageFlags;
-import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**

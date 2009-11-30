@@ -27,8 +27,16 @@ import com.cubusmail.client.actions.folder.EmptyFolderAction;
 import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RefreshFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
+import com.cubusmail.client.actions.message.ComposeMessageAction;
+import com.cubusmail.client.actions.message.DeleteMessagesAction;
+import com.cubusmail.client.actions.message.ForwardAction;
 import com.cubusmail.client.actions.message.LoadMessageAction;
 import com.cubusmail.client.actions.message.MarkMessageAction;
+import com.cubusmail.client.actions.message.PrintMessageAction;
+import com.cubusmail.client.actions.message.RefreshMessagesAction;
+import com.cubusmail.client.actions.message.ReplyAction;
+import com.cubusmail.client.actions.message.ReplyAllAction;
+import com.cubusmail.client.actions.message.ShowMessageSourceAction;
 import com.cubusmail.client.actions.message.MarkMessageAction.MarkActionType;
 
 /**
@@ -41,8 +49,8 @@ public enum ActionRegistry {
 	LOGIN,
 
 	// message actions
-	LOAD_MESSAGE, MARK_AS_DELETED,
-	
+	REFRESH_MESSAGES, COMPOSE_MESSAGE, REPLY, REPLY_ALL, FORWARD, COPY_MESSAGES, MOVE_MESSAGES, DELETE_MESSAGES, DELETE_WINDOW_MESSAGE, MARK_AS_READ, MARK_AS_UNREAD, MARK_AS_UNDELETED, SHOW_MESSAGE_SOURCE, PRINT_MESSAGE, LOAD_MESSAGE, MARK_AS_DELETED,
+
 	// mail folder actions
 	REFRESH_FOLDER, NEW_FOLDER, MOVE_FOLDER, RENAME_FOLDER, DELETE_FOLDER, EMPTY_FOLDER;
 
@@ -86,9 +94,31 @@ public enum ActionRegistry {
 			// messages
 		case LOAD_MESSAGE:
 			return new LoadMessageAction();
+		case REFRESH_MESSAGES:
+			return new RefreshMessagesAction();
+		case COMPOSE_MESSAGE:
+			return new ComposeMessageAction();
+		case REPLY:
+			return new ReplyAction();
+		case REPLY_ALL:
+			return new ReplyAllAction();
+		case FORWARD:
+			return new ForwardAction();
+		case DELETE_MESSAGES:
+			return new DeleteMessagesAction();
+		case MARK_AS_READ:
+			return new MarkMessageAction( MarkActionType.READ );
+		case MARK_AS_UNREAD:
+			return new MarkMessageAction( MarkActionType.UNREAD );
 		case MARK_AS_DELETED:
 			return new MarkMessageAction( MarkActionType.DELETED );
-			
+		case MARK_AS_UNDELETED:
+			return new MarkMessageAction( MarkActionType.UNDELETED );
+		case SHOW_MESSAGE_SOURCE:
+			return new ShowMessageSourceAction();
+		case PRINT_MESSAGE:
+			return new PrintMessageAction();
+
 		case REFRESH_FOLDER:
 			return new RefreshFolderAction();
 		case NEW_FOLDER:
