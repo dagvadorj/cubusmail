@@ -41,10 +41,6 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
-import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
-import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
-import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -188,20 +184,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	private void addGridHandlers() {
 
-		this.grid.addRecordClickHandler( new RecordClickHandler() {
-
-			public void onRecordClick( RecordClickEvent event ) {
-
-				int selected = event.getViewer().getSelection() != null ? event.getViewer().getSelection().length : 0;
-				if ( selected == 1 ) {
-					String messageID = event.getRecord().getAttribute( MessageListFields.ID.name() );
-					LoadMessageAction action = ActionRegistry.LOAD_MESSAGE.get( LoadMessageAction.class );
-					action.setLoadImages( true );
-					action.setMessageId( Long.parseLong( messageID ) );
-					action.execute();
-				}
-			}
-		} );
+		this.grid.addRecordClickHandler( ActionRegistry.LOAD_MESSAGE.get( LoadMessageAction.class ) );
 	}
 
 	/*

@@ -120,7 +120,7 @@ public interface IMailboxServiceAsync {
 	 * @param mark
 	 * @throws Exception
 	 */
-	public void markMessage( long[] messageIds, MessageFlags flag, boolean mark, AsyncCallback<Void> callback );
+	public void markMessage( long[] messageIds, MessageFlags flag, AsyncCallback<Void> callback );
 
 	/**
 	 * Copy or move messages to a targed mail folder.

@@ -281,8 +281,8 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#retrieveMessages(
 	 * java.lang.String)
 	 */
-	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, String sortField, boolean ascending,
-			String[][] params ) throws Exception {
+	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, String sortField,
+			boolean ascending, String[][] params ) throws Exception {
 
 		if ( folderId != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
@@ -296,8 +296,9 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				Message[] msgs = currentFolder.retrieveMessages( sortField );
 
 				String quickSearchFields = MessageUtils.getParamValue( params, "fields" );
-//				String extendedSearchFields = MessageUtils.getParamValue( params,
-//						GWTMailConstants.EXTENDED_SEARCH_FIELDS );
+				// String extendedSearchFields = MessageUtils.getParamValue(
+				// params,
+				// GWTMailConstants.EXTENDED_SEARCH_FIELDS );
 
 				// all messages with only header data
 
@@ -306,9 +307,10 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 					String quickSearchText = MessageUtils.getParamValue( params, "query" );
 					msgs = MessageUtils.quickFilterMessages( msgs, quickSearchFields, quickSearchText );
 				}
-//				else if ( extendedSearchFields != null ) {
-//					msgs = MessageUtils.filterMessages( currentFolder, msgs, extendedSearchFields, params );
-//				}
+				// else if ( extendedSearchFields != null ) {
+				// msgs = MessageUtils.filterMessages( currentFolder, msgs,
+				// extendedSearchFields, params );
+				// }
 
 				MessageUtils.sortMessages( msgs, sortField, ascending );
 
@@ -448,7 +450,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#markMessage(long[],
 	 * com.cubusmail.gwtui.domain.MessageListFields, boolean)
 	 */
-	public void markMessage( long[] messageIds, MessageFlags flag, boolean mark ) throws Exception {
+	public void markMessage( long[] messageIds, MessageFlags flag ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		if ( messageIds != null && messageIds.length > 0 ) {
@@ -458,13 +460,20 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				IMailFolder currentFolder = mailbox.getCurrentFolder();
 				for (int i = 0; i < messageIds.length; i++) {
 					Message msg = currentFolder.getMessageById( messageIds[i] );
-					if ( flag == MessageFlags.UNREAD ) {
-						MessageUtils.setMessageFlag( msg, Flags.Flag.SEEN, mark );
-					}
-					else if ( flag == MessageFlags.DELETED ) {
-						MessageUtils.setMessageFlag( msg, Flags.Flag.DELETED, mark );
-					}
-					else {
+					switch (flag) {
+					case READ:
+						MessageUtils.setMessageFlag( msg, Flags.Flag.SEEN, true );
+						break;
+					case UNREAD:
+						MessageUtils.setMessageFlag( msg, Flags.Flag.SEEN, false );
+						break;
+					case DELETED:
+						MessageUtils.setMessageFlag( msg, Flags.Flag.DELETED, true );
+						break;
+					case UNDELETED:
+						MessageUtils.setMessageFlag( msg, Flags.Flag.DELETED, false );
+						break;
+					default:
 						throw new IllegalArgumentException( "Unknown flag: " + flag.name() );
 					}
 				}

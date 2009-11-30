@@ -30,7 +30,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * Interface for MailboxService.
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface IMailboxService extends RemoteService {
@@ -121,7 +121,7 @@ public interface IMailboxService extends RemoteService {
 	 * @param mark
 	 * @throws Exception
 	 */
-	public void markMessage( long[] messageIds, MessageFlags flag, boolean mark ) throws Exception;
+	public void markMessage( long[] messageIds, MessageFlags flag ) throws Exception;
 
 	/**
 	 * Copy or move messages to a targed mail folder.
@@ -168,7 +168,7 @@ public interface IMailboxService extends RemoteService {
 	 * 
 	 */
 	public void cancelComposeMessage();
-	
+
 	/**
 	 * Open a draft message.
 	 * 
@@ -177,7 +177,7 @@ public interface IMailboxService extends RemoteService {
 	 * @throws Exception
 	 */
 	public GWTMessage openDraftMessage( long messageId ) throws Exception;
-	
+
 	/**
 	 * Retrieve the current compose message from session.
 	 * 

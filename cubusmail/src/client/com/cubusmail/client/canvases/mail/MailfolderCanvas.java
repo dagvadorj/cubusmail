@@ -146,15 +146,15 @@ public class MailfolderCanvas extends SectionStack implements AsyncCallback<GWTM
 		strip.setOverflow( Overflow.VISIBLE );
 		strip.setBorder( "0px" );
 
-		this.refreshFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.REFRESH_FOLDER.get() );
+		this.refreshFolderButton = UIFactory.createToolbarButton( ActionRegistry.REFRESH_FOLDER.get(), true );
 		strip.addMember( this.refreshFolderButton );
-		this.newFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.NEW_FOLDER.get() );
+		this.newFolderButton = UIFactory.createToolbarButton( ActionRegistry.NEW_FOLDER.get(), true );
 		strip.addMember( this.newFolderButton );
-		this.renameFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.RENAME_FOLDER.get() );
+		this.renameFolderButton = UIFactory.createToolbarButton( ActionRegistry.RENAME_FOLDER.get(), true );
 		strip.addMember( this.renameFolderButton );
-		this.deleteFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.DELETE_FOLDER.get() );
+		this.deleteFolderButton = UIFactory.createToolbarButton( ActionRegistry.DELETE_FOLDER.get(), true );
 		strip.addMember( this.deleteFolderButton );
-		this.emptyFolderButton = UIFactory.createToolbarImageButton( ActionRegistry.EMPTY_FOLDER.get() );
+		this.emptyFolderButton = UIFactory.createToolbarButton( ActionRegistry.EMPTY_FOLDER.get(), true );
 		strip.addMember( this.emptyFolderButton );
 
 		section.setControls( this.refreshFolderButton, this.newFolderButton, this.renameFolderButton,

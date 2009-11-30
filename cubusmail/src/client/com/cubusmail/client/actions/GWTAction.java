@@ -17,21 +17,21 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
-*/
+ */
 
 package com.cubusmail.client.actions;
-
 
 /**
  * Base for all cubusmail actions.
  * 
  * @author schlierf
  */
-public abstract class GWTAction  implements IGWTAction {
+public abstract class GWTAction implements IGWTAction {
 
 	private String text;
 	private String imageName;
 	private String tooltipText;
+
 	// private boolean disabled;
 
 	// private List<Component> componentList = new ArrayList<Component>();
@@ -66,27 +66,27 @@ public abstract class GWTAction  implements IGWTAction {
 		this.tooltipText = tooltipText;
 	}
 
-//	public void registerComponent( Component component ) {
-//
-//		this.componentList.add( component );
-//	}
-//
-//	public void unregisterComponent( Component component ) {
-//
-//		this.componentList.remove( component );
-//	}
+	// public void registerComponent( Component component ) {
+	//
+	// this.componentList.add( component );
+	// }
+	//
+	// public void unregisterComponent( Component component ) {
+	//
+	// this.componentList.remove( component );
+	// }
 
-//	public void setDisabled( boolean disabled ) {
-//
-//		if ( this.disabled != disabled ) {
-//			for ( int i = 0; i < this.componentList.size(); i++ ) {
-//				Component comp = (Component) this.componentList.get( i );
-//				comp.setDisabled( disabled );
-//			}
-//		}
-//
-//		this.disabled = disabled;
-//	}
+	// public void setDisabled( boolean disabled ) {
+	//
+	// if ( this.disabled != disabled ) {
+	// for ( int i = 0; i < this.componentList.size(); i++ ) {
+	// Component comp = (Component) this.componentList.get( i );
+	// comp.setDisabled( disabled );
+	// }
+	// }
+	//
+	// this.disabled = disabled;
+	// }
 
 	/*
 	 * (non-Javadoc)

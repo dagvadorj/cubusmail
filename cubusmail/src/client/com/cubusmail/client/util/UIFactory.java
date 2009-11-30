@@ -73,16 +73,23 @@ public abstract class UIFactory {
 	 * @param action
 	 * @return
 	 */
-	public static Button createToolbarImageButton( final IGWTAction action ) {
+	public static Button createToolbarButton( final IGWTAction action, boolean imageOnly ) {
 
-		Button button = new Button( "" );
+		Button button = new Button();
+		if ( !imageOnly && action.getText() != null ) {
+			button.setTitle( action.getText() );
+			button.setAutoFit( true );
+		}
+		else {
+			button.setTitle( "" );
+			button.setWidth( 22 );
+		}
 		button.setIcon( action.getImageName() );
 		if ( action.getTooltipText() != null ) {
 			button.setTooltip( action.getTooltipText() );
 		}
 		button.setShowDown( true );
 		button.setShowOverCanvas( true );
-		button.setWidth( 22 );
 		button.setBorder( "0px" );
 		button.addClickHandler( new ClickHandler() {
 

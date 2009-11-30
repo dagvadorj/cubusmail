@@ -22,16 +22,20 @@ package com.cubusmail.client.actions.message;
 import com.cubusmail.client.actions.GWTAction;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.GWTMessage;
+import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
+import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 
 /**
  * Action for loading messages from server.
  * 
  * @author Juergen Schlierf
  */
-public class LoadMessageAction extends GWTAction implements AsyncCallback<GWTMessage> {
+public class LoadMessageAction extends GWTAction implements AsyncCallback<GWTMessage>, RecordClickHandler {
 
 	private long messageId;
 	private boolean loadImages;
@@ -49,6 +53,7 @@ public class LoadMessageAction extends GWTAction implements AsyncCallback<GWTMes
 
 	public void onSuccess( GWTMessage result ) {
 
+		GWTSessionManager.get().setCurrentMessage( result );
 		EventBroker.get().fireMessageLoaded( result );
 	};
 
@@ -65,5 +70,23 @@ public class LoadMessageAction extends GWTAction implements AsyncCallback<GWTMes
 	public void setLoadImages( boolean loadImages ) {
 
 		this.loadImages = loadImages;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.smartgwt.client.widgets.grid.events.RecordClickHandler#onRecordClick
+	 * (com.smartgwt.client.widgets.grid.events.RecordClickEvent)
+	 */
+	public void onRecordClick( RecordClickEvent event ) {
+
+		int selected = event.getViewer().getSelection() != null ? event.getViewer().getSelection().length : 0;
+		if ( selected == 1 ) {
+			String messageID = event.getRecord().getAttribute( MessageListFields.ID.name() );
+			setLoadImages( true );
+			setMessageId( Long.parseLong( messageID ) );
+			execute();
+		}
 	}
 }

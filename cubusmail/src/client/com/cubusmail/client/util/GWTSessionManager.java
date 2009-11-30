@@ -27,6 +27,7 @@ import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
+import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 
@@ -43,7 +44,9 @@ public class GWTSessionManager {
 	private GWTMailFolder mailFolder;
 	private GWTMailFolder currentMailFolder;
 	private ContactFolder currentContactFolder;
+	private GWTMessage currentMessage;
 
+	
 	private List<ContactFolder> contactFolderList;
 	private Contact currentContact;
 
@@ -209,5 +212,22 @@ public class GWTSessionManager {
 	public void setCurrentContact( Contact currentContact ) {
 
 		this.currentContact = currentContact;
+	}
+
+	/**
+	 * @param currentMessage
+	 *            The currentMessage to set.
+	 */
+	public void setCurrentMessage( GWTMessage currentMessage ) {
+
+		this.currentMessage = currentMessage;
+	}
+
+	/**
+	 * @return Returns the currentMessage.
+	 */
+	public GWTMessage getCurrentMessage() {
+
+		return this.currentMessage;
 	}
 }
