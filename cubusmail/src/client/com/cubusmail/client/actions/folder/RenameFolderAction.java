@@ -47,8 +47,8 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 
 		super();
 		setText( TextProvider.get().actions_renamefolder_text() );
-		setImageName( ImageProvider.MAIL_FOLDER_RENAME );
-		setTooltipText( TextProvider.get().actions_renamefolder_tooltip() );
+		setIcon( ImageProvider.MAIL_FOLDER_RENAME );
+		setTooltip( TextProvider.get().actions_renamefolder_tooltip() );
 	}
 
 	/*

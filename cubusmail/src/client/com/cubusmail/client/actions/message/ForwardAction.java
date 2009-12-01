@@ -37,8 +37,8 @@ public class ForwardAction extends ReplyAction {
 	public ForwardAction() {
 
 		setText( TextProvider.get().actions_forward_text() );
-		setImageName( ImageProvider.MSG_FORWARD );
-		setTooltipText( TextProvider.get().actions_forward_tooltip() );
+		setIcon( ImageProvider.MSG_FORWARD );
+		setTooltip( TextProvider.get().actions_forward_tooltip() );
 	}
 
 	/*

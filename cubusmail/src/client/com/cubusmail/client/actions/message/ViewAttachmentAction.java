@@ -43,7 +43,7 @@ public class ViewAttachmentAction extends GWTAction {
 
 		super();
 		this.attachment = attachment;
-		setImageName( ImageProvider.FILE_BLANK );
+		setIcon( ImageProvider.FILE_BLANK );
 		setText( TextProvider.get().actions_view_attachment_text() );
 	}
 

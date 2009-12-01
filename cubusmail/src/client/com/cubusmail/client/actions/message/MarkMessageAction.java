@@ -47,8 +47,8 @@ public class MarkMessageAction extends BaseGridAction implements AsyncCallback<V
 		this.markActionType = markActionType;
 
 		setText( this.markActionType.getText() );
-		setTooltipText( this.markActionType.getTooltipText() );
-		setImageName( this.markActionType.getImage() );
+		setTooltip( this.markActionType.getTooltipText() );
+		setIcon( this.markActionType.getImage() );
 	}
 
 	/*

@@ -30,9 +30,9 @@ public interface IGWTAction extends Command {
 
 	public String getText();
 
-	public String getTooltipText();
+	public String getTooltip();
 
-	public String getImageName();
+	public String getIcon();
 
 	// public void registerComponent( Component component );
 	//

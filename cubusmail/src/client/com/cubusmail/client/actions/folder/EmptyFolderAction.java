@@ -47,8 +47,8 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 
 		super();
 		setText( TextProvider.get().actions_emptyfolder_text() );
-		setImageName( ImageProvider.MAIL_FOLDER_EMPTY );
-		setTooltipText( TextProvider.get().actions_emptyfolder_tooltip() );
+		setIcon( ImageProvider.MAIL_FOLDER_EMPTY );
+		setTooltip( TextProvider.get().actions_emptyfolder_tooltip() );
 	}
 
 	/*

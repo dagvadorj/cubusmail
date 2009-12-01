@@ -37,8 +37,8 @@ public class ReplyAllAction extends ReplyAction {
 	public ReplyAllAction() {
 
 		setText( TextProvider.get().actions_replyall_text() );
-		setImageName( ImageProvider.MSG_REPLY_ALL );
-		setTooltipText( TextProvider.get().actions_replyall_tooltip() );
+		setIcon( ImageProvider.MSG_REPLY_ALL );
+		setTooltip( TextProvider.get().actions_replyall_tooltip() );
 	}
 
 	/*

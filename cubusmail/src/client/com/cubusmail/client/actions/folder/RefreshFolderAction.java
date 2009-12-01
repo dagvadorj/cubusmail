@@ -39,8 +39,8 @@ public class RefreshFolderAction extends GWTAction {
 
 		super();
 		setText( TextProvider.get().actions_renamefolder_text() );
-		setImageName( ImageProvider.MAIL_FOLDER_REFRESH );
-		setTooltipText( TextProvider.get().actions_renamefolder_tooltip() );
+		setIcon( ImageProvider.MAIL_FOLDER_REFRESH );
+		setTooltip( TextProvider.get().actions_renamefolder_tooltip() );
 	}
 
 	/*

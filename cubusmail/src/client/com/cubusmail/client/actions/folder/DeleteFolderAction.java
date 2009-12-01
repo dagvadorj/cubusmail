@@ -46,8 +46,8 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 
 		super();
 		setText( TextProvider.get().actions_deletefolder_text() );
-		setImageName( ImageProvider.MAIL_FOLDER_DELETE );
-		setTooltipText( TextProvider.get().actions_deletefolder_tooltip() );
+		setIcon( ImageProvider.MAIL_FOLDER_DELETE );
+		setTooltip( TextProvider.get().actions_deletefolder_tooltip() );
 	}
 
 	/*

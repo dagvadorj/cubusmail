@@ -39,7 +39,7 @@ public class WorkbenchCanvas extends TabSet {
 
 		super();
 
-		setTabBarThickness( 23 );
+		// setTabBarThickness( 23 );
 		setWidth100();
 		setHeight100();
 
@@ -47,6 +47,7 @@ public class WorkbenchCanvas extends TabSet {
 		this.mailCanvas.setBackgroundImage( "[SKIN]/shared/background.gif" );
 		this.mailCanvas.setWidth100();
 		this.mailCanvas.setHeight100();
+		this.mailCanvas.setBorder( "0px" );
 
 		this.mailCanvas.addMember( ToolbarRegistry.MAIL.get() );
 		

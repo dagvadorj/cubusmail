@@ -27,6 +27,7 @@ import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.menu.MenuButton;
 import com.smartgwt.client.widgets.menu.MenuItem;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 import com.smartgwt.client.widgets.tree.TreeNode;
@@ -50,11 +51,11 @@ public abstract class UIFactory {
 		if ( action.getText() != null ) {
 			button.setTitle( action.getText() );
 		}
-		if ( action.getImageName() != null ) {
-			button.setIcon( action.getImageName() );
+		if ( action.getIcon() != null ) {
+			button.setIcon( action.getIcon() );
 		}
-		if ( action.getTooltipText() != null ) {
-			button.setTooltip( action.getTooltipText() );
+		if ( action.getTooltip() != null ) {
+			button.setTooltip( action.getTooltip() );
 		}
 
 		button.addClickHandler( new ClickHandler() {
@@ -83,13 +84,13 @@ public abstract class UIFactory {
 		else {
 			button.setTitle( "" );
 			button.setWidth( 22 );
+			button.setShowDown( true );
+			button.setShowOverCanvas( true );
 		}
-		button.setIcon( action.getImageName() );
-		if ( action.getTooltipText() != null ) {
-			button.setTooltip( action.getTooltipText() );
+		button.setIcon( action.getIcon() );
+		if ( action.getTooltip() != null ) {
+			button.setTooltip( action.getTooltip() );
 		}
-		button.setShowDown( true );
-		button.setShowOverCanvas( true );
 		button.setBorder( "0px" );
 		button.addClickHandler( new ClickHandler() {
 
@@ -98,6 +99,28 @@ public abstract class UIFactory {
 				action.execute();
 			}
 		} );
+		return button;
+	}
+
+	/**
+	 * @param action
+	 * @return
+	 */
+	public static MenuButton createMenuButton( final IGWTAction action ) {
+
+		MenuButton button = new MenuButton( action.getText() );
+		button.setBorder( "0px" );
+		if ( action.getIcon() != null ) {
+			button.setIcon( action.getIcon() );
+		}
+		button.addClickHandler( new ClickHandler() {
+
+			public void onClick( ClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+
 		return button;
 	}
 
@@ -154,8 +177,8 @@ public abstract class UIFactory {
 	public static MenuItem createMenuItem( final IGWTAction action ) {
 
 		MenuItem menuItem = new MenuItem( action.getText() );
-		if ( action.getImageName() != null ) {
-			menuItem.setIcon( action.getImageName() );
+		if ( action.getIcon() != null ) {
+			menuItem.setIcon( action.getIcon() );
 		}
 		menuItem.addClickHandler( new com.smartgwt.client.widgets.menu.events.ClickHandler() {
 

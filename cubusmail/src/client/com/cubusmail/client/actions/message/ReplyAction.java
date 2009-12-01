@@ -42,8 +42,8 @@ public class ReplyAction extends BaseGridAction implements AsyncCallback<GWTMess
 
 		super();
 		setText( TextProvider.get().actions_reply_text() );
-		setImageName( ImageProvider.MSG_REPLY );
-		setTooltipText( TextProvider.get().actions_reply_tooltip() );
+		setIcon( ImageProvider.MSG_REPLY );
+		setTooltip( TextProvider.get().actions_reply_tooltip() );
 	}
 
 	/*

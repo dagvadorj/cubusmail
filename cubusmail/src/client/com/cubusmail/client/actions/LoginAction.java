@@ -52,7 +52,9 @@ public class LoginAction extends GWTAction implements AsyncCallback<GWTMailbox> 
 	 */
 	public void onFailure( Throwable e ) {
 
-		this.actionCallback.execute( false );
+		if ( this.actionCallback != null ) {
+			this.actionCallback.execute( false );
+		}
 
 		if ( e instanceof GWTAuthenticationException ) {
 			SC.warn( TextProvider.get().logindialog_title(), TextProvider.get().exception_login_authentication(), null,

@@ -47,8 +47,8 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 
 		super();
 		setText( TextProvider.get().actions_newfolder_text() );
-		setImageName( ImageProvider.MAIL_FOLDER_NEW );
-		setTooltipText( TextProvider.get().actions_newfolder_tooltip() );
+		setIcon( ImageProvider.MAIL_FOLDER_NEW );
+		setTooltip( TextProvider.get().actions_newfolder_tooltip() );
 	}
 
 	/*

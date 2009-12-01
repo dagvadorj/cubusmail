@@ -38,8 +38,8 @@ public class ComposeMessageAction extends GWTAction implements AsyncCallback<Voi
 
 		super();
 		setText( TextProvider.get().actions_newmessage_text() );
-		setImageName( ImageProvider.MSG_NEW );
-		setTooltipText( TextProvider.get().actions_newmessage_tooltip() );
+		setIcon( ImageProvider.MSG_NEW );
+		setTooltip( TextProvider.get().actions_newmessage_tooltip() );
 	}
 
 	/*

@@ -29,8 +29,8 @@ package com.cubusmail.client.actions;
 public abstract class GWTAction implements IGWTAction {
 
 	private String text;
-	private String imageName;
-	private String tooltipText;
+	private String icon;
+	private String tooltip;
 
 	// private boolean disabled;
 
@@ -46,24 +46,24 @@ public abstract class GWTAction implements IGWTAction {
 		this.text = text;
 	}
 
-	public String getImageName() {
+	public String getIcon() {
 
-		return imageName;
+		return icon;
 	}
 
-	public void setImageName( String imageName ) {
+	public void setIcon( String icon ) {
 
-		this.imageName = imageName;
+		this.icon = icon;
 	}
 
-	public String getTooltipText() {
+	public String getTooltip() {
 
-		return tooltipText;
+		return tooltip;
 	}
 
-	protected void setTooltipText( String tooltipText ) {
+	protected void setTooltip( String tooltip ) {
 
-		this.tooltipText = tooltipText;
+		this.tooltip = tooltip;
 	}
 
 	// public void registerComponent( Component component ) {

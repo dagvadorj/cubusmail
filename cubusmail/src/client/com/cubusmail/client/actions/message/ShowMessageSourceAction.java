@@ -40,8 +40,8 @@ public class ShowMessageSourceAction extends BaseGridAction {
 
 		super();
 		setText( TextProvider.get().actions_showmessagesource_text() );
-		setTooltipText( TextProvider.get().actions_showmessagesource_tooltip() );
-		setImageName( ImageProvider.MSG_SOURCE );
+		setTooltip( TextProvider.get().actions_showmessagesource_tooltip() );
+		setIcon( ImageProvider.MSG_SOURCE );
 	}
 
 	/*

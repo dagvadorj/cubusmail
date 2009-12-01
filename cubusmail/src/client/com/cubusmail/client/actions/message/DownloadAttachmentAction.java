@@ -45,8 +45,8 @@ public class DownloadAttachmentAction extends GWTAction {
 		super();
 		this.attachment = attachment;
 		setText( TextProvider.get().actions_download_attachment_text() );
-		setImageName( ImageProvider.MSG_DOWNLOAD );
-		setTooltipText( TextProvider.get().actions_download_attachment_tooltip() );
+		setIcon( ImageProvider.MSG_DOWNLOAD );
+		setTooltip( TextProvider.get().actions_download_attachment_tooltip() );
 
 	}
 

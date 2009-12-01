@@ -51,8 +51,8 @@ public class DeleteMessagesAction extends BaseGridAction implements AsyncCallbac
 //			getStore().addStoreListener( this.deletionStoreListener );
 //		}
 		setText( TextProvider.get().actions_deletemessage_text() );
-		setImageName( ImageProvider.MSG_DELETE );
-		setTooltipText( TextProvider.get().actions_deletemessage_tooltip() );
+		setIcon( ImageProvider.MSG_DELETE );
+		setTooltip( TextProvider.get().actions_deletemessage_tooltip() );
 	}
 
 	/*

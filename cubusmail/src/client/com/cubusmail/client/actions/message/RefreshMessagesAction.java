@@ -36,8 +36,8 @@ public class RefreshMessagesAction extends GWTAction {
 
 		super();
 		setText( TextProvider.get().actions_refresh_text() );
-		setImageName( ImageProvider.MSG_REFRESH );
-		setTooltipText( TextProvider.get().actions_refresh_tooltip() );
+		setIcon( ImageProvider.MSG_REFRESH );
+		setTooltip( TextProvider.get().actions_refresh_tooltip() );
 	}
 
 	/*

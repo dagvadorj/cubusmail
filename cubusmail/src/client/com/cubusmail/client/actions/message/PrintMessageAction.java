@@ -38,8 +38,8 @@ public class PrintMessageAction extends BaseGridAction {
 
 		super();
 		setText( TextProvider.get().actions_print_message_text() );
-		setTooltipText( TextProvider.get().actions_print_message_tooltip() );
-		setImageName( ImageProvider.PRINTER );
+		setTooltip( TextProvider.get().actions_print_message_tooltip() );
+		setIcon( ImageProvider.PRINTER );
 	}
 
 	@Override
