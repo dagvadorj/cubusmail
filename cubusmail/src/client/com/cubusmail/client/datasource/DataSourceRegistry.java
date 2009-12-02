@@ -30,7 +30,7 @@ import com.smartgwt.client.data.DataSource;
  * @author Juergen Schlierf
  */
 public enum DataSourceRegistry {
-	MESSAGE_LIST;
+	MAIL_FOLDER, MESSAGE_LIST;
 
 	private static Map<DataSourceRegistry, DataSource> DATASOURCE_MAP = new HashMap<DataSourceRegistry, DataSource>();
 
@@ -53,9 +53,10 @@ public enum DataSourceRegistry {
 	private DataSource create() {
 
 		switch (this) {
+		case MAIL_FOLDER:
+			return new MailfolderDataSource();
 		case MESSAGE_LIST:
 			return new MessageListDataSource();
-
 		}
 
 		throw new IllegalArgumentException( "DataSource missing: " + name() );

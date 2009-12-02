@@ -21,7 +21,7 @@
 package com.cubusmail.common.model;
 
 /**
- * Enum of fields of the messages list table.
+ * Enum of fields for the messages list table.
  * 
  * @author Juergen Schlierf
  */
