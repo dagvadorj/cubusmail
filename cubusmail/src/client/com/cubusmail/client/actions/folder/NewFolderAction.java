@@ -23,7 +23,6 @@ package com.cubusmail.client.actions.folder;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTUtil;
-import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
@@ -32,6 +31,7 @@ import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.util.ValueCallback;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * Create a new mail folder.
@@ -86,7 +86,14 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 	private void createFolder( String parentFolderId, String folderName ) {
 
 		// PanelRegistry.LEFT_PANEL.mask();
-		ServiceProvider.getMailboxService().createFolder( parentFolderId, folderName, this );
+		// ServiceProvider.getMailboxService().createFolder( parentFolderId,
+		// folderName, this );
+		// TreeNode newFolder = new TreeNode( folderName );
+		// this.treeData.add( newFolder, getSelectedTreeNode() );
+		this.treeData.loadChildren( getSelectedTreeNode() );
+		// this.tree.fetchData();
+		// this.tree.addData( newFolder );
+		// EventBroker.get().fireFoldersReload();
 	}
 
 	/*
@@ -121,9 +128,10 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 	public void onSuccess( GWTMailFolder result ) {
 
 		EventBroker.get().fireFoldersReload();
-//		if ( getSelectedTreeNode() != null ) {
-//			getSelectedTreeNode().appendChild( UIFactory.createTreeNode( result ) );
-//		}
+		// if ( getSelectedTreeNode() != null ) {
+		// getSelectedTreeNode().appendChild( UIFactory.createTreeNode( result )
+		// );
+		// }
 		// PanelRegistry.LEFT_PANEL.unmask();
 	}
 }

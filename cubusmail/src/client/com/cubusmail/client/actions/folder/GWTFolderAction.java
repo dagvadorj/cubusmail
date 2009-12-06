@@ -22,6 +22,8 @@
 package com.cubusmail.client.actions.folder;
 
 import com.cubusmail.client.actions.GWTAction;
+import com.smartgwt.client.widgets.tree.Tree;
+import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
 import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
@@ -36,12 +38,16 @@ import com.smartgwt.client.widgets.tree.events.NodeContextClickHandler;
 public abstract class GWTFolderAction extends GWTAction {
 
 	private TreeNode selectedTreeNode;
+	protected Tree treeData;
+	protected TreeGrid tree;
 
 	private NodeClickHandler nodeClickHandler = new NodeClickHandler() {
 
 		public void onNodeClick( NodeClickEvent event ) {
 
 			selectedTreeNode = event.getNode();
+			treeData = event.getViewer().getData();
+			tree = event.getViewer();
 		}
 	};
 
@@ -50,6 +56,8 @@ public abstract class GWTFolderAction extends GWTAction {
 		public void onNodeContextClick( NodeContextClickEvent event ) {
 
 			selectedTreeNode = event.getNode();
+			treeData = event.getViewer().getData();
+			tree = event.getViewer();
 		}
 	};
 
