@@ -29,6 +29,7 @@ import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.util.ValueCallback;
 import com.smartgwt.client.widgets.tree.TreeNode;
@@ -88,9 +89,13 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 		// PanelRegistry.LEFT_PANEL.mask();
 		// ServiceProvider.getMailboxService().createFolder( parentFolderId,
 		// folderName, this );
-		// TreeNode newFolder = new TreeNode( folderName );
+		TreeNode newFolder = new TreeNode( folderName );
+		newFolder.setParentID( getSelectedTreeNode().getAttributeAsString( "id" ) );
 		// this.treeData.add( newFolder, getSelectedTreeNode() );
-		this.treeData.loadChildren( getSelectedTreeNode() );
+		// this.treeData.loadChildren( getSelectedTreeNode() );#
+		DSRequest request = new DSRequest();
+		request.setAttribute( "parentMailFolder", getSelectedTreeNode() );
+		this.tree.addData( newFolder, null, request );
 		// this.tree.fetchData();
 		// this.tree.addData( newFolder );
 		// EventBroker.get().fireFoldersReload();

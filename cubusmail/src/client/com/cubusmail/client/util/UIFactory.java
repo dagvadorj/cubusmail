@@ -132,6 +132,7 @@ public abstract class UIFactory {
 
 		TreeNode node = new TreeNode( mailFolder.getName() );
 		node.setAttribute( "icon", getFolderIcon( mailFolder ) );
+		node.setID( mailFolder.getId() );
 		GWTUtil.setUserData( node, mailFolder );
 
 		if ( mailFolder.getSubfolders() != null && mailFolder.getSubfolders().length > 0 ) {

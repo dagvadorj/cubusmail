@@ -19,6 +19,8 @@
  */
 package com.cubusmail.client.datasource;
 
+import java.util.Map;
+
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
@@ -26,10 +28,10 @@ import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.types.DSServerType;
 import com.smartgwt.client.widgets.tree.TreeNode;
@@ -58,6 +60,34 @@ public class MailfolderDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeAdd( final String requestId, final DSRequest request, final DSResponse response ) {
 
+		if ( request.getAttributes() != null ) {
+			for (String att : request.getAttributes()) {
+				GWT.log( att + ": " + request.getAttributeAsString( att ), null );
+			}
+		}
+
+//		JavaScriptObject folder = request.getAttributeAsJavaScriptObject( "parentMailFolder" );
+//		TreeNode node = TreeNode.getOrCreateRef( folder );
+//		TreeNode newNode = TreeNode.getOrCreateRef( request.getData() );
+//		newNode.getName();
+//		response.setData( new TreeNode[] { newNode } );
+//		processResponse( requestId, response );
+
+		ServiceProvider.getMailboxService().retrieveFolderTree( new AsyncCallback<GWTMailFolder[]>() {
+
+			public void onSuccess( GWTMailFolder[] result ) {
+
+				mapResponse( response, result );
+				processResponse( requestId, response );
+			}
+
+			public void onFailure( Throwable caught ) {
+
+				GWTExceptionHandler.handleException( caught );
+				response.setStatus( RPCResponse.STATUS_FAILURE );
+				processResponse( requestId, response );
+			}
+		} );
 	}
 
 	/*

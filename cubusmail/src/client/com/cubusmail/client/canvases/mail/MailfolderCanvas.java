@@ -110,7 +110,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setWidth100();
 		this.tree.setHeight100();
 		this.tree.setAnimateFolders( false );
-		this.tree.setShowSortArrow( SortArrow.CORNER );
+		this.tree.setShowSortArrow( SortArrow.NONE );
 		this.tree.setShowAllRecords( true );
 		this.tree.setLoadDataOnDemand( false );
 		this.tree.setCanSort( false );
