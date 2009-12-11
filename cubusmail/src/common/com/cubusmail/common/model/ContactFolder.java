@@ -35,8 +35,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
-
 /**
  * Contact folder POJO
  * 
@@ -45,7 +43,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "contactfolders")
-public class ContactFolder extends LazyPojo implements Serializable{
+public class ContactFolder implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -71,7 +69,7 @@ public class ContactFolder extends LazyPojo implements Serializable{
 
 		this.folderType = type;
 	}
-	
+
 	/**
 	 * @param contact
 	 */
@@ -84,7 +82,6 @@ public class ContactFolder extends LazyPojo implements Serializable{
 		this.contactList.add( contact );
 	}
 
-
 	/**
 	 * @return Returns the id.
 	 */
@@ -94,7 +91,8 @@ public class ContactFolder extends LazyPojo implements Serializable{
 	}
 
 	/**
-	 * @param id The id to set.
+	 * @param id
+	 *            The id to set.
 	 */
 	public void setId( Long id ) {
 
@@ -110,7 +108,8 @@ public class ContactFolder extends LazyPojo implements Serializable{
 	}
 
 	/**
-	 * @param folderName The folderName to set.
+	 * @param folderName
+	 *            The folderName to set.
 	 */
 	public void setFolderName( String folderName ) {
 
@@ -126,7 +125,8 @@ public class ContactFolder extends LazyPojo implements Serializable{
 	}
 
 	/**
-	 * @param contactList The contactList to set.
+	 * @param contactList
+	 *            The contactList to set.
 	 */
 	public void setContactList( List<Contact> contactList ) {
 
@@ -142,7 +142,8 @@ public class ContactFolder extends LazyPojo implements Serializable{
 	}
 
 	/**
-	 * @param userAccount The userAccount to set.
+	 * @param userAccount
+	 *            The userAccount to set.
 	 */
 	public void setUserAccount( UserAccount userAccount ) {
 
@@ -158,7 +159,8 @@ public class ContactFolder extends LazyPojo implements Serializable{
 	}
 
 	/**
-	 * @param folderType The folderType to set.
+	 * @param folderType
+	 *            The folderType to set.
 	 */
 	public void setFolderType( ContactFolderType folderType ) {
 

@@ -61,17 +61,4 @@
 		<property name="user" value="${cubus.db.user}" />
 		<property name="password" value="${cubus.db.password}" />
 	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<bean id="pojoStore"
-		class="net.sf.hibernate4gwt.core.store.stateless.StatelessPojoStore" />
-
-	<bean id="hibernateBeanManager" class="net.sf.hibernate4gwt.core.HibernateBeanManager">
-		<property name="pojoStore" ref="pojoStore" />
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 </beans>

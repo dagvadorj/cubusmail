@@ -30,8 +30,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
-
 /**
  * Contact address POJO.
  * 
@@ -40,7 +38,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "addresses")
-public class ContactAddress extends LazyPojo implements Serializable {
+public class ContactAddress implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

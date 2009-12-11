@@ -38,8 +38,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
-
 /**
  * UserAccount POJO.
  * 
@@ -48,7 +46,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "users")
-public class UserAccount extends LazyPojo implements Serializable {
+public class UserAccount implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

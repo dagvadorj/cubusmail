@@ -31,8 +31,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
-
 /**
  * Identity POJO.
  * 
@@ -42,7 +40,7 @@ import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
 @Entity
 @Table(name = "identities")
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Identity extends LazyPojo implements Serializable {
+public class Identity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,7 +74,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param id The id to set.
+	 * @param id
+	 *            The id to set.
 	 */
 	public void setId( Long id ) {
 
@@ -92,7 +91,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param displayName The displayName to set.
+	 * @param displayName
+	 *            The displayName to set.
 	 */
 	public void setDisplayName( String displayName ) {
 
@@ -108,7 +108,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param email The email to set.
+	 * @param email
+	 *            The email to set.
 	 */
 	public void setEmail( String email ) {
 
@@ -124,7 +125,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param organisation The organisation to set.
+	 * @param organisation
+	 *            The organisation to set.
 	 */
 	public void setOrganisation( String organisation ) {
 
@@ -140,7 +142,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param replyTo The replyTo to set.
+	 * @param replyTo
+	 *            The replyTo to set.
 	 */
 	public void setReplyTo( String replyTo ) {
 
@@ -156,7 +159,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param bcc The bcc to set.
+	 * @param bcc
+	 *            The bcc to set.
 	 */
 	public void setBcc( String bcc ) {
 
@@ -172,7 +176,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param signature The signature to set.
+	 * @param signature
+	 *            The signature to set.
 	 */
 	public void setSignature( String signature ) {
 
@@ -188,7 +193,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param htmlSignature The htmlSignature to set.
+	 * @param htmlSignature
+	 *            The htmlSignature to set.
 	 */
 	public void setHtmlSignature( boolean htmlSignature ) {
 
@@ -204,7 +210,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param standard The standard to set.
+	 * @param standard
+	 *            The standard to set.
 	 */
 	public void setStandard( boolean standard ) {
 
@@ -220,7 +227,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param userAccount The userAccount to set.
+	 * @param userAccount
+	 *            The userAccount to set.
 	 */
 	public void setUserAccount( UserAccount userAccount ) {
 
@@ -266,7 +274,8 @@ public class Identity extends LazyPojo implements Serializable {
 		if ( id == null ) {
 			if ( other.id != null )
 				return false;
-		} else if ( !id.equals( other.id ) )
+		}
+		else if ( !id.equals( other.id ) )
 			return false;
 		return true;
 	}
@@ -280,7 +289,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param internetAddress The internetAddress to set.
+	 * @param internetAddress
+	 *            The internetAddress to set.
 	 */
 	public void setInternetAddress( String internetAddress ) {
 
@@ -296,7 +306,8 @@ public class Identity extends LazyPojo implements Serializable {
 	}
 
 	/**
-	 * @param escapedInternetAddress The escapedInternetAddress to set.
+	 * @param escapedInternetAddress
+	 *            The escapedInternetAddress to set.
 	 */
 	public void setEscapedInternetAddress( String escapedInternetAddress ) {
 

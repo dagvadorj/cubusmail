@@ -22,15 +22,13 @@ package com.cubusmail.common.model;
 
 import java.io.Serializable;
 
-import net.sf.hibernate4gwt.pojo.java5.LazyPojo;
-
 /**
  * Preferences POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-public class Preferences extends LazyPojo implements Serializable {
+public class Preferences implements Serializable {
 
 	public static final int READING_PANE_BOTTOM = 0;
 	public static final int READING_PANE_RIGHT = 1;
@@ -80,15 +78,13 @@ public class Preferences extends LazyPojo implements Serializable {
 		this.language = language;
 	}
 
-	
 	public int getTimezoneOffset() {
-	
+
 		return timezoneOffset;
 	}
 
-	
 	public void setTimezoneOffset( int timezoneOffset ) {
-	
+
 		this.timezoneOffset = timezoneOffset;
 	}
 

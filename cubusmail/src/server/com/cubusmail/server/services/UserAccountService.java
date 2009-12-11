@@ -33,10 +33,6 @@ import java.util.TimeZone;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
-import javax.servlet.ServletException;
-
-import net.sf.hibernate4gwt.core.HibernateBeanManager;
-import net.sf.hibernate4gwt.gwt.HibernateRemoteService;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -61,13 +57,14 @@ import com.cubusmail.server.util.BeanIds;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * Implementation of UserAccountService.
  * 
  * @author Juergen Schlierf
  */
-public class UserAccountService extends HibernateRemoteService implements IUserAccountService {
+public class UserAccountService extends RemoteServiceServlet implements IUserAccountService {
 
 	private static final long serialVersionUID = 3680152258110434790L;
 
@@ -75,13 +72,6 @@ public class UserAccountService extends HibernateRemoteService implements IUserA
 
 	public UserAccountService() {
 
-	}
-
-	@Override
-	public void init() throws ServletException {
-
-		super.init();
-		setBeanManager( (HibernateBeanManager) BeanFactory.getBean( "hibernateBeanManager" ) );
 	}
 
 	/**
