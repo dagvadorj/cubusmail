@@ -25,9 +25,6 @@ import java.util.Date;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import net.sf.hibernate4gwt.core.HibernateBeanManager;
-import net.sf.hibernate4gwt.gwt.HibernateRemoteService;
-
 import org.apache.log4j.Logger;
 
 import com.cubusmail.common.exceptions.GWTAuthenticationException;
@@ -48,14 +45,14 @@ import com.cubusmail.server.mail.security.MailboxLoginModule;
 import com.cubusmail.server.user.UserAccountDao;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.BeanIds;
-import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * CubusService implementation.
  * 
  * @author Juergen Schlierf
  */
-public class CubusService extends HibernateRemoteService implements ICubusService {
+public class CubusService extends RemoteServiceServlet implements ICubusService {
 
 	private Logger log = Logger.getLogger( getClass().getName() );
 
@@ -63,7 +60,8 @@ public class CubusService extends HibernateRemoteService implements ICubusServic
 
 	public CubusService() {
 
-		setBeanManager( (HibernateBeanManager) BeanFactory.getBean( "hibernateBeanManager" ) );
+		// setBeanManager( (HibernateBeanManager) BeanFactory.getBean(
+		// "hibernateBeanManager" ) );
 	}
 
 	/**
@@ -81,17 +79,17 @@ public class CubusService extends HibernateRemoteService implements ICubusServic
 	 * com.google.gwt.user.server.rpc.RemoteServiceServlet#processCall(java.
 	 * lang.String)
 	 */
-	@Override
-	public String processCall( String payload ) throws SerializationException {
-
-		try {
-			return super.processCall( payload );
-		}
-		catch (SerializationException e) {
-			log.error( e.getMessage(), e );
-			throw e;
-		}
-	}
+	// public String processCall( String payload ) throws SerializationException
+	// {
+	//
+	// try {
+	// return super.processCall( payload );
+	// }
+	// catch (SerializationException e) {
+	// log.error( e.getMessage(), e );
+	// throw e;
+	// }
+	// }
 
 	/*
 	 * (non-Javadoc)
@@ -133,7 +131,7 @@ public class CubusService extends HibernateRemoteService implements ICubusServic
 
 			GWTMailbox gwtMailbox = ConvertUtil.convert( mailbox );
 
-			return gwtMailbox;
+			return gwtMailbox.clone();
 		}
 		catch (LoginException e) {
 			log.error( e.getMessage(), e );
