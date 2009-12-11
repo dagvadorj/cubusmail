@@ -6,37 +6,34 @@
 	<classpathentry kind="src" path="src/client"/>
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/activation.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.4.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.120.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/htmlcleaner2_1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/json.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.5.2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar" sourcepath="C:/projects/cubusmail/frameworks/spring-framework-2.5.5/dist/spring-sources.jar"/>
 	<classpathentry kind="lib" path="lib/el-api.jar"/>
-	<classpathentry kind="lib" path="lib/gwt-gears.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-el.jar"/>
 	<classpathentry kind="lib" path="lib/jasper-jdt.jar"/>
 	<classpathentry kind="lib" path="lib/jasper.jar"/>
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
 	<classpathentry kind="lib" path="lib/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
-	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/json.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/htmlcleaner2_1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-log4j12.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.125.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
