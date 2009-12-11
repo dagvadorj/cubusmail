@@ -22,7 +22,6 @@ package com.cubusmail.common.model;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-
 /**
  * Representing user.
  * 
@@ -91,10 +90,10 @@ public class GWTMailbox implements IGWTFolder, IsSerializable {
 	}
 
 	public GWTMailFolder[] getSubfolders() {
-	
+
 		return getMailFolders();
 	}
-	
+
 	/**
 	 * @param mailFolders
 	 *            The mailFolders to set.
@@ -193,11 +192,27 @@ public class GWTMailbox implements IGWTFolder, IsSerializable {
 
 		return false;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.cubusmail.common.model.IGWTFolder#getName()
 	 */
 	public String getName() {
+
 		return getEmailAddress();
+	}
+
+	public GWTMailbox clone() {
+
+		GWTMailbox clone = new GWTMailbox();
+		clone.emailAddress = this.emailAddress;
+		clone.fullName = this.fullName;
+		clone.loggedIn = this.loggedIn;
+		// GWTMailfolders don't realy need to be cloned
+		clone.mailFolders = this.mailFolders;
+		clone.userAccount = this.userAccount.clone();
+
+		return clone;
 	}
 }
