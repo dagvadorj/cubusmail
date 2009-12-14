@@ -84,7 +84,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 		final int pageSize = (endIndex != -1) ? (endIndex - startIndex) : GWTMailConstants.MESSAGE_LIST_PAGE_SIZE;
 
 		final String folderId = request.getCriteria().getAttribute( GWTMailConstants.PARAM_FOLDER_ID );
-		String sortColumn = request.getSortBy();
+		String sortColumn = null;
 		boolean ascending = true;
 		if ( GWTUtil.hasText( sortColumn ) && sortColumn.charAt( 0 ) == '-' ) {
 			ascending = false;

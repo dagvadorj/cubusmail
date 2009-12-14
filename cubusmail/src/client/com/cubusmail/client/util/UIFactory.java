@@ -25,6 +25,9 @@ import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.HeaderControl;
+import com.smartgwt.client.widgets.ImgButton;
+import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.MenuButton;
@@ -100,6 +103,50 @@ public abstract class UIFactory {
 			}
 		} );
 		return button;
+	}
+
+	/**
+	 * @param action
+	 * @return
+	 */
+	public static ImgButton createImgButton( final IGWTAction action ) {
+
+		ImgButton button = new ImgButton();
+		button.setSrc( action.getIcon() );
+		button.setShowRollOver( false );
+		button.setShowDown( false );
+		button.setShowFocusedAsOver( true );
+		button.setSize( 16 );
+		button.addClickHandler( new ClickHandler() {
+
+			public void onClick( ClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+
+		return button;
+	}
+
+	/**
+	 * @param action
+	 * @return
+	 */
+	public static HeaderControl createHeaderControl( final IGWTAction action ) {
+
+		HeaderIcon icon = new HeaderIcon( action.getIcon() );
+		HeaderControl control = new HeaderControl( icon );
+		control.setShowRollOver( false );
+		control.setShowOverCanvas( true );
+		control.addClickHandler( new ClickHandler() {
+
+			public void onClick( ClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+
+		return control;
 	}
 
 	/**

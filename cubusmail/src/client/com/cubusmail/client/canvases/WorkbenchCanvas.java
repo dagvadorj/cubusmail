@@ -55,6 +55,7 @@ public class WorkbenchCanvas extends TabSet {
 		contentCanvas.setWidth100();
 		contentCanvas.setHeight100();
 	
+		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
 		contentCanvas.addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
 		contentCanvas.addMember( CanvasRegistry.MESSAGE_LIST_CANVAS.get() );
 
