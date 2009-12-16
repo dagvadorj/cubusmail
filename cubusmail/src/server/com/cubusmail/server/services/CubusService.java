@@ -178,7 +178,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 
 		if ( SessionManager.get() != null && SessionManager.get().getMailbox() != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
-			return ConvertUtil.convert( mailbox );
+			return ConvertUtil.convert( mailbox ).clone();
 		}
 		else {
 			return null;

@@ -26,6 +26,7 @@ import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HeaderControl;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -86,7 +87,7 @@ public abstract class UIFactory {
 		}
 		else {
 			button.setTitle( "" );
-			button.setWidth( 22 );
+			button.setWidth( 24 );
 			button.setShowDown( true );
 			button.setShowOverCanvas( true );
 		}
@@ -117,6 +118,29 @@ public abstract class UIFactory {
 		button.setShowDown( false );
 		button.setShowFocusedAsOver( true );
 		button.setSize( 16 );
+		button.addClickHandler( new ClickHandler() {
+
+			public void onClick( ClickEvent event ) {
+
+				action.execute();
+			}
+		} );
+
+		return button;
+	}
+
+	/**
+	 * @param action
+	 * @return
+	 */
+	public static IButton createIButton( final IGWTAction action ) {
+
+		IButton button = new IButton();
+		button.setIcon( action.getIcon() );
+		button.setShowRollOver( false );
+		button.setShowDown( false );
+		button.setShowFocusedAsOver( true );
+		button.setWidth( 22 );
 		button.addClickHandler( new ClickHandler() {
 
 			public void onClick( ClickEvent event ) {

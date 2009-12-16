@@ -29,29 +29,26 @@ import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
-import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
-import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
-import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
 
 /**
  * Panel for mail folder.
@@ -65,11 +62,10 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 	// Toolbar items
 	private IButton refreshFolderButton;
-	private ImgButton newFolderButton;
-	private ImgButton moveFolderButton;
-	private ImgButton renameFolderButton;
-	private ImgButton deleteFolderButton;
-	private ImgButton emptyFolderButton;
+	private IButton newFolderButton;
+	private IButton renameFolderButton;
+	private IButton deleteFolderButton;
+	private IButton emptyFolderButton;
 
 	public MailfolderCanvas() {
 
@@ -122,20 +118,13 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setFields( field );
 
 		// add action handler to the
-		this.tree.addNodeClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).getNodeClickHandler() );
-		this.tree.addNodeContextClickHandler( ActionRegistry.NEW_FOLDER.get( NewFolderAction.class )
-				.getNodeContextClickHandler() );
-		this.tree.addNodeClickHandler( new MailfolderClickHandler() );
-
+		this.tree.addSelectionChangedHandler( new MailfolderSelectionChangedHandler() );
 		this.tree.addDataArrivedHandler( new DataArrivedHandler() {
 
 			public void onDataArrived( DataArrivedEvent event ) {
 
-				currentTreeNode = getInboxTreeNode();
-				GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) GWTUtil.getUserData( currentTreeNode ) );
-				EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getUserData( currentTreeNode ) );
-				EventBroker.get().fireMessagesChanged();
 				tree.getData().openAll();
+				tree.selectRecord( getInboxTreeNode() );
 			}
 		} );
 	}
@@ -145,16 +134,11 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	 */
 	private void createToolbar( SectionStackSection section ) {
 
-		// this.refreshFolderButton = UIFactory.createImgButton(
-		// ActionRegistry.REFRESH_FOLDER.get() );
-		this.refreshFolderButton = new IButton();
-		this.refreshFolderButton.setIcon( ImageProvider.CONTACT_ADD );
-		this.refreshFolderButton.setWidth( 20 );
-		this.refreshFolderButton.setDisabled( true );
-		this.newFolderButton = UIFactory.createImgButton( ActionRegistry.NEW_FOLDER.get() );
-		this.renameFolderButton = UIFactory.createImgButton( ActionRegistry.RENAME_FOLDER.get() );
-		this.deleteFolderButton = UIFactory.createImgButton( ActionRegistry.DELETE_FOLDER.get() );
-		this.emptyFolderButton = UIFactory.createImgButton( ActionRegistry.EMPTY_FOLDER.get() );
+		this.refreshFolderButton = UIFactory.createIButton( ActionRegistry.REFRESH_FOLDER.get() );
+		this.newFolderButton = UIFactory.createIButton( ActionRegistry.NEW_FOLDER.get() );
+		this.renameFolderButton = UIFactory.createIButton( ActionRegistry.RENAME_FOLDER.get() );
+		this.deleteFolderButton = UIFactory.createIButton( ActionRegistry.DELETE_FOLDER.get() );
+		this.emptyFolderButton = UIFactory.createIButton( ActionRegistry.EMPTY_FOLDER.get() );
 
 		section.setControls( this.refreshFolderButton, this.newFolderButton, this.renameFolderButton,
 				this.deleteFolderButton, this.emptyFolderButton );
@@ -228,8 +212,6 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private void changeToolbarButtonStatus( IGWTFolder mailFolder ) {
 
 		this.newFolderButton.setDisabled( mailFolder != null ? !mailFolder.isCreateSubfolderSupported() : true );
-		// this.moveFolderButton.setDisabled( mailFolder != null ?
-		// !mailFolder.isMoveSupported() : true );
 		this.renameFolderButton.setDisabled( mailFolder != null ? !mailFolder.isRenameSupported() : true );
 		this.deleteFolderButton.setDisabled( mailFolder != null ? !mailFolder.isDeleteSupported() : true );
 		this.emptyFolderButton.setDisabled( mailFolder != null ? !mailFolder.isEmptySupported() : true );
@@ -239,20 +221,27 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	 * 
 	 * @author Juergen Schlierf
 	 */
-	private class MailfolderClickHandler implements NodeClickHandler {
+	private class MailfolderSelectionChangedHandler implements SelectionChangedHandler {
 
-		public void onNodeClick( NodeClickEvent event ) {
+		public void onSelectionChanged( SelectionEvent event ) {
 
-			TreeNode selectedNode = event.getNode();
+			TreeNode selectedNode = (TreeNode) event.getRecord();
 			IGWTFolder mailFolder = (IGWTFolder) GWTUtil.getUserData( selectedNode );
 			if ( !selectedNode.equals( currentTreeNode ) ) {
 				currentTreeNode = selectedNode;
+				prepareActions( selectedNode );
 				changeToolbarButtonStatus( mailFolder );
 				if ( mailFolder instanceof GWTMailFolder ) {
 					GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) mailFolder );
 					EventBroker.get().fireFolderSelected( (GWTMailFolder) mailFolder );
 				}
 			}
+		}
+
+		private void prepareActions( TreeNode selectedTreeNode ) {
+
+			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setTree( tree );
 		}
 	}
 }

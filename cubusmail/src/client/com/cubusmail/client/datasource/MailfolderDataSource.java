@@ -19,12 +19,15 @@
  */
 package com.cubusmail.client.datasource;
 
-import java.util.Map;
-
+import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
+import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
+import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.core.client.GWT;
@@ -34,6 +37,7 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.types.DSServerType;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -60,32 +64,34 @@ public class MailfolderDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeAdd( final String requestId, final DSRequest request, final DSResponse response ) {
 
-		if ( request.getAttributes() != null ) {
-			for (String att : request.getAttributes()) {
-				GWT.log( att + ": " + request.getAttributeAsString( att ), null );
-			}
-		}
+		JavaScriptObject jsObject = request.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER );
+		TreeNode parentNode = TreeNode.getOrCreateRef( jsObject );
+		String parentId = parentNode.getAttributeAsString( "id" );
+		TreeNode newFolderNode = TreeNode.getOrCreateRef( request.getData() );
+		String folderName = newFolderNode.getName();
 
-//		JavaScriptObject folder = request.getAttributeAsJavaScriptObject( "parentMailFolder" );
-//		TreeNode node = TreeNode.getOrCreateRef( folder );
-//		TreeNode newNode = TreeNode.getOrCreateRef( request.getData() );
-//		newNode.getName();
-//		response.setData( new TreeNode[] { newNode } );
-//		processResponse( requestId, response );
+		ServiceProvider.getMailboxService().createFolder( parentId, folderName, new AsyncCallback<GWTMailFolder>() {
 
-		ServiceProvider.getMailboxService().retrieveFolderTree( new AsyncCallback<GWTMailFolder[]>() {
+			public void onSuccess( GWTMailFolder result ) {
 
-			public void onSuccess( GWTMailFolder[] result ) {
-
-				mapResponse( response, result );
+				TreeNode newNode = UIFactory.createTreeNode( result );
+				response.setData( new TreeNode[] { newNode } );
 				processResponse( requestId, response );
 			}
 
 			public void onFailure( Throwable caught ) {
 
 				GWTExceptionHandler.handleException( caught );
-				response.setStatus( RPCResponse.STATUS_FAILURE );
-				processResponse( requestId, response );
+				GWTMailFolderException e = (GWTMailFolderException) caught;
+				if ( caught instanceof GWTMailFolderExistException ) {
+					SC.showPrompt( TextProvider.get().common_error(), TextProvider.get()
+							.exception_folder_already_exist( e.getFolderName() ) );
+				}
+				else {
+					SC.showPrompt( TextProvider.get().common_error(), TextProvider.get().exception_folder_create(
+							e.getFolderName() ) );
+				}
+				EventBroker.get().fireFoldersReload();
 			}
 		} );
 	}
@@ -101,13 +107,6 @@ public class MailfolderDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeFetch( final String requestId, final DSRequest request, final DSResponse response ) {
 
-		if ( request.getAttributes() != null ) {
-			for (String att : request.getAttributes()) {
-				GWT.log( att + ": " + request.getAttributeAsString( att ), null );
-			}
-		}
-
-		request.getAttributeAsObject( "originalData" ).getClass();
 		ServiceProvider.getMailboxService().retrieveFolderTree( new AsyncCallback<GWTMailFolder[]>() {
 
 			public void onSuccess( GWTMailFolder[] result ) {

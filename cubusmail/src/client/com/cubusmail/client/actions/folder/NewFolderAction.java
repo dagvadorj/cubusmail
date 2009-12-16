@@ -20,16 +20,14 @@
  */
 package com.cubusmail.client.actions.folder;
 
-import com.cubusmail.client.events.EventBroker;
-import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
-import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.util.ValueCallback;
 import com.smartgwt.client.widgets.tree.TreeNode;
@@ -39,7 +37,7 @@ import com.smartgwt.client.widgets.tree.TreeNode;
  * 
  * @author schlierf
  */
-public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GWTMailFolder> {
+public class NewFolderAction extends GWTFolderAction {
 
 	/**
 	 * 
@@ -67,8 +65,7 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 						if ( GWTUtil.hasText( text ) ) {
 							if ( getSelectedTreeNode() != null ) {
 								if ( GWTUtil.getUserData( getSelectedTreeNode() ) instanceof GWTMailFolder ) {
-									GWTMailFolder folder = (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() );
-									createFolder( folder.getId(), text );
+									createFolder( getSelectedTreeNode(), text );
 								}
 								else {
 									createFolder( null, text );
@@ -84,59 +81,22 @@ public class NewFolderAction extends GWTFolderAction implements AsyncCallback<GW
 	 * @param parentFolderId
 	 * @param folderName
 	 */
-	private void createFolder( String parentFolderId, String folderName ) {
+	private void createFolder( final TreeNode parentFolderNode, String folderName ) {
 
 		// PanelRegistry.LEFT_PANEL.mask();
-		// ServiceProvider.getMailboxService().createFolder( parentFolderId,
-		// folderName, this );
 		TreeNode newFolder = new TreeNode( folderName );
 		newFolder.setParentID( getSelectedTreeNode().getAttributeAsString( "id" ) );
-		// this.treeData.add( newFolder, getSelectedTreeNode() );
-		// this.treeData.loadChildren( getSelectedTreeNode() );#
 		DSRequest request = new DSRequest();
-		request.setAttribute( "parentMailFolder", getSelectedTreeNode() );
-		this.tree.addData( newFolder, null, request );
-		// this.tree.fetchData();
-		// this.tree.addData( newFolder );
-		// EventBroker.get().fireFoldersReload();
-	}
+		request.setAttribute( GWTMailConstants.PARAM_PARENT_FOLDER, getSelectedTreeNode() );
+		this.tree.addData( newFolder, new DSCallback() {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
-	 * )
-	 */
-	public void onFailure( Throwable caught ) {
+			public void execute( DSResponse response, Object rawData, DSRequest request ) {
 
-		GWTExceptionHandler.handleException( caught );
-		GWTMailFolderException e = (GWTMailFolderException) caught;
-		if ( caught instanceof GWTMailFolderExistException ) {
-			SC.showPrompt( TextProvider.get().common_error(), TextProvider.get().exception_folder_already_exist(
-					e.getFolderName() ) );
-		}
-		else {
-			SC.showPrompt( TextProvider.get().common_error(), TextProvider.get().exception_folder_create(
-					e.getFolderName() ) );
-		}
-		EventBroker.get().fireFoldersReload();
-		// PanelRegistry.LEFT_PANEL.unmask();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
-	 */
-	public void onSuccess( GWTMailFolder result ) {
-
-		EventBroker.get().fireFoldersReload();
-		// if ( getSelectedTreeNode() != null ) {
-		// getSelectedTreeNode().appendChild( UIFactory.createTreeNode( result )
-		// );
-		// }
-		// PanelRegistry.LEFT_PANEL.unmask();
+				if ( response.getData() != null && response.getData().length > 0 ) {
+					TreeNode newNode = (TreeNode) response.getData()[0];
+					tree.getData().add( newNode, parentFolderNode );
+				}
+			}
+		}, request );
 	}
 }

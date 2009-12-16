@@ -22,13 +22,8 @@
 package com.cubusmail.client.actions.folder;
 
 import com.cubusmail.client.actions.GWTAction;
-import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeNode;
-import com.smartgwt.client.widgets.tree.events.NodeClickEvent;
-import com.smartgwt.client.widgets.tree.events.NodeClickHandler;
-import com.smartgwt.client.widgets.tree.events.NodeContextClickEvent;
-import com.smartgwt.client.widgets.tree.events.NodeContextClickHandler;
 
 /**
  * base action for all mail folder actions
@@ -38,28 +33,7 @@ import com.smartgwt.client.widgets.tree.events.NodeContextClickHandler;
 public abstract class GWTFolderAction extends GWTAction {
 
 	private TreeNode selectedTreeNode;
-	protected Tree treeData;
 	protected TreeGrid tree;
-
-	private NodeClickHandler nodeClickHandler = new NodeClickHandler() {
-
-		public void onNodeClick( NodeClickEvent event ) {
-
-			selectedTreeNode = event.getNode();
-			treeData = event.getViewer().getData();
-			tree = event.getViewer();
-		}
-	};
-
-	private NodeContextClickHandler nodeContextClickHandler = new NodeContextClickHandler() {
-
-		public void onNodeContextClick( NodeContextClickEvent event ) {
-
-			selectedTreeNode = event.getNode();
-			treeData = event.getViewer().getData();
-			tree = event.getViewer();
-		}
-	};
 
 	/**
 	 * @return Returns the selectedTreeNode.
@@ -78,13 +52,8 @@ public abstract class GWTFolderAction extends GWTAction {
 		this.selectedTreeNode = selectedTreeNode;
 	}
 
-	public NodeClickHandler getNodeClickHandler() {
+	public void setTree( TreeGrid tree ) {
 
-		return nodeClickHandler;
-	}
-
-	public NodeContextClickHandler getNodeContextClickHandler() {
-
-		return nodeContextClickHandler;
+		this.tree = tree;
 	}
 }
