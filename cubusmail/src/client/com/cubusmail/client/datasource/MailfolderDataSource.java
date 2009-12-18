@@ -30,7 +30,6 @@ import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;

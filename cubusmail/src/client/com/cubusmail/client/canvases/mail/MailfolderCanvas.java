@@ -36,7 +36,9 @@ import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
+import com.smartgwt.client.widgets.HeaderControl;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
@@ -63,7 +65,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	// Toolbar items
 	private IButton refreshFolderButton;
 	private IButton newFolderButton;
-	private IButton renameFolderButton;
+	private ImgButton renameFolderButton;
 	private IButton deleteFolderButton;
 	private IButton emptyFolderButton;
 
@@ -136,7 +138,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 		this.refreshFolderButton = UIFactory.createIButton( ActionRegistry.REFRESH_FOLDER.get() );
 		this.newFolderButton = UIFactory.createIButton( ActionRegistry.NEW_FOLDER.get() );
-		this.renameFolderButton = UIFactory.createIButton( ActionRegistry.RENAME_FOLDER.get() );
+		this.renameFolderButton = UIFactory.createImgButton( ActionRegistry.RENAME_FOLDER.get() );
 		this.deleteFolderButton = UIFactory.createIButton( ActionRegistry.DELETE_FOLDER.get() );
 		this.emptyFolderButton = UIFactory.createIButton( ActionRegistry.EMPTY_FOLDER.get() );
 

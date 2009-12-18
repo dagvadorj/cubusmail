@@ -28,7 +28,9 @@ import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HeaderControl;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
+import com.smartgwt.client.widgets.TransferImgButton;
 import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
+import com.smartgwt.client.widgets.TransferImgButton.TransferImg;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.MenuButton;
@@ -114,10 +116,12 @@ public abstract class UIFactory {
 
 		ImgButton button = new ImgButton();
 		button.setSrc( action.getIcon() );
-		button.setShowRollOver( false );
-		button.setShowDown( false );
-		button.setShowFocusedAsOver( true );
-		button.setSize( 16 );
+		button.setShowDisabled( true );
+		button.setShowDisabledIcon( false );
+//		button.setShowRollOverIcon( false );
+//		button.setShowRollOver( true );
+//		button.setShowDown( false );
+		// button.setSize( 16 );
 		button.addClickHandler( new ClickHandler() {
 
 			public void onClick( ClickEvent event ) {
@@ -136,11 +140,10 @@ public abstract class UIFactory {
 	public static IButton createIButton( final IGWTAction action ) {
 
 		IButton button = new IButton();
+		button.setShowDisabledIcon( false );
+		button.setShowRollOverIcon( false );
 		button.setIcon( action.getIcon() );
-		button.setShowRollOver( false );
-		button.setShowDown( false );
-		button.setShowFocusedAsOver( true );
-		button.setWidth( 22 );
+		button.setWidth( 25 );
 		button.addClickHandler( new ClickHandler() {
 
 			public void onClick( ClickEvent event ) {
@@ -160,8 +163,10 @@ public abstract class UIFactory {
 
 		HeaderIcon icon = new HeaderIcon( action.getIcon() );
 		HeaderControl control = new HeaderControl( icon );
-		control.setShowRollOver( false );
-		control.setShowOverCanvas( true );
+		control.setShowDisabledIcon( false );
+		control.setShowRollOverIcon( false );
+		control.setShowDown( true );
+		control.setShowRollOver( true );
 		control.addClickHandler( new ClickHandler() {
 
 			public void onClick( ClickEvent event ) {
