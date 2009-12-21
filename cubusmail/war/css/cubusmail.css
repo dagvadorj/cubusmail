@@ -1,3 +1,12 @@
+.cubusImgButtonDown {
+    background:#BEDDFF url(./images/cssButton/button_Down_stretch.png) repeat-x;
+	border-left:1px solid #b8cfef;
+	border-right:1px solid #b8cfef;
+	border-top:1px solid #87B6EC;
+	border-bottom:1px solid #75AEEC;
+}
+
+
 .messageReadingPaneHeader {
 	background-color:#eeeeee;
 }

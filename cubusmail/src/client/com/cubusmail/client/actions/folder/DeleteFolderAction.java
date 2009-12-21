@@ -27,6 +27,7 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.model.GWTMailFolder;
+import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.BooleanCallback;
@@ -63,7 +64,7 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 					public void execute( Boolean value ) {
 
 						if ( value ) {
-							GWTMailFolder folder = (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() );
+							IGWTFolder folder = GWTUtil.getGwtFolder( getSelectedTreeNode() );
 							if ( folder != null ) {
 								// PanelRegistry.LEFT_PANEL.mask();
 								deleteFolder( folder.getId() );

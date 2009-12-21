@@ -68,7 +68,7 @@ public interface IMailboxServiceAsync {
 	 * @param newName
 	 * @throws Exception
 	 */
-	public void renameFolder( String folderId, String newName, AsyncCallback<String> callback );
+	public void renameFolder( String folderId, String newName, AsyncCallback<GWTMailFolder> callback );
 
 	/**
 	 * Delete a mail folder.

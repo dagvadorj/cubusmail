@@ -20,7 +20,10 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.actions.ActionRegistry;
+import com.cubusmail.client.actions.folder.DeleteFolderAction;
+import com.cubusmail.client.actions.folder.EmptyFolderAction;
 import com.cubusmail.client.actions.folder.NewFolderAction;
+import com.cubusmail.client.actions.folder.RenameFolderAction;
 import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FoldersReloadListener;
@@ -36,13 +39,15 @@ import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
-import com.smartgwt.client.widgets.HeaderControl;
-import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
+import com.smartgwt.client.widgets.grid.events.EditorEnterEvent;
+import com.smartgwt.client.widgets.grid.events.EditorEnterHandler;
+import com.smartgwt.client.widgets.grid.events.EditorExitEvent;
+import com.smartgwt.client.widgets.grid.events.EditorExitHandler;
 import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
 import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.SectionStack;
@@ -63,11 +68,11 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private TreeGrid tree;
 
 	// Toolbar items
-	private IButton refreshFolderButton;
-	private IButton newFolderButton;
+	private ImgButton refreshFolderButton;
+	private ImgButton newFolderButton;
 	private ImgButton renameFolderButton;
-	private IButton deleteFolderButton;
-	private IButton emptyFolderButton;
+	private ImgButton deleteFolderButton;
+	private ImgButton emptyFolderButton;
 
 	public MailfolderCanvas() {
 
@@ -116,6 +121,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setShowHeader( false );
 		this.tree.setAutoFetchData( false );
 		this.tree.setDataSource( DataSourceRegistry.MAIL_FOLDER.get() );
+		this.tree.setCanEdit( true );
 		TreeGridField field = new TreeGridField( "name" );
 		this.tree.setFields( field );
 
@@ -129,6 +135,30 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 				tree.selectRecord( getInboxTreeNode() );
 			}
 		} );
+		this.tree.addEditorEnterHandler( new EditorEnterHandler() {
+
+			@Override
+			public void onEditorEnter( EditorEnterEvent event ) {
+
+				// block unauthorized editing
+				TreeNode node = (TreeNode) event.getRecord();
+				if ( !GWTUtil.getGwtFolder( node ).isRenameSupported() ) {
+					tree.cancelEditing();
+				}
+			}
+		} );
+		this.tree.addEditorExitHandler( new EditorExitHandler() {
+
+			@Override
+			public void onEditorExit( EditorExitEvent event ) {
+
+				if ( !event.isCancelled() ) {
+					ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setNewName(
+							event.getNewValue().toString() );
+					ActionRegistry.RENAME_FOLDER.execute();
+				}
+			}
+		} );
 	}
 
 	/**
@@ -136,11 +166,11 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	 */
 	private void createToolbar( SectionStackSection section ) {
 
-		this.refreshFolderButton = UIFactory.createIButton( ActionRegistry.REFRESH_FOLDER.get() );
-		this.newFolderButton = UIFactory.createIButton( ActionRegistry.NEW_FOLDER.get() );
+		this.refreshFolderButton = UIFactory.createImgButton( ActionRegistry.REFRESH_FOLDER.get() );
+		this.newFolderButton = UIFactory.createImgButton( ActionRegistry.NEW_FOLDER.get() );
 		this.renameFolderButton = UIFactory.createImgButton( ActionRegistry.RENAME_FOLDER.get() );
-		this.deleteFolderButton = UIFactory.createIButton( ActionRegistry.DELETE_FOLDER.get() );
-		this.emptyFolderButton = UIFactory.createIButton( ActionRegistry.EMPTY_FOLDER.get() );
+		this.deleteFolderButton = UIFactory.createImgButton( ActionRegistry.DELETE_FOLDER.get() );
+		this.emptyFolderButton = UIFactory.createImgButton( ActionRegistry.EMPTY_FOLDER.get() );
 
 		section.setControls( this.refreshFolderButton, this.newFolderButton, this.renameFolderButton,
 				this.deleteFolderButton, this.emptyFolderButton );
@@ -169,7 +199,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		if ( this.currentTreeNode != null ) {
 			final TreeNode selectedNode = this.currentTreeNode;
 			ServiceProvider.getMailboxService().getFormattedMessageCount(
-					((GWTMailFolder) GWTUtil.getUserData( selectedNode )).getId(), new AsyncCallback<String>() {
+					((GWTMailFolder) GWTUtil.getGwtFolder( selectedNode )).getId(), new AsyncCallback<String>() {
 
 						public void onFailure( Throwable caught ) {
 
@@ -193,12 +223,12 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		Tree treeData = this.tree.getData();
 		TreeNode[] nodes = treeData.getChildren( treeData.getRoot() );
 		if ( nodes != null && nodes.length > 0 ) {
-			if ( GWTUtil.getUserData( nodes[0] ) instanceof GWTMailbox ) {
+			if ( GWTUtil.getGwtFolder( nodes[0] ) instanceof GWTMailbox ) {
 				nodes = treeData.getChildren( nodes[0] );
 			}
 
 			for (TreeNode node : nodes) {
-				GWTMailFolder folder = (GWTMailFolder) GWTUtil.getUserData( node );
+				GWTMailFolder folder = (GWTMailFolder) GWTUtil.getGwtFolder( node );
 				if ( folder.isInbox() ) {
 					return (TreeNode) node;
 				}
@@ -228,7 +258,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		public void onSelectionChanged( SelectionEvent event ) {
 
 			TreeNode selectedNode = (TreeNode) event.getRecord();
-			IGWTFolder mailFolder = (IGWTFolder) GWTUtil.getUserData( selectedNode );
+			IGWTFolder mailFolder = GWTUtil.getGwtFolder( selectedNode );
 			if ( !selectedNode.equals( currentTreeNode ) ) {
 				currentTreeNode = selectedNode;
 				prepareActions( selectedNode );
@@ -244,6 +274,12 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
 			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setTree( tree );
+			ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setTree( tree );
+			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setTree( tree );
+			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setTree( tree );
 		}
 	}
 }

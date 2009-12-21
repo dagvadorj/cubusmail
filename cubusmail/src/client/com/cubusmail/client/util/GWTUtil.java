@@ -24,6 +24,7 @@ import java.util.Date;
 
 import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
+import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Element;
@@ -45,7 +46,7 @@ public abstract class GWTUtil {
 	public static final String HTML_GREATER_THAN = "&gt;";
 	public static final String HTML_DASH_POINT = "&acute;";
 
-	public static final String NODE_USER_DATA = "userData";
+	public static final String GWT_FOLDER = "gwtFolder";
 
 	private static final DateTimeFormat DATE_FORMAT = DateTimeFormat.getFormat( TextProvider.get()
 			.common_message_date_format() );
@@ -127,17 +128,17 @@ public abstract class GWTUtil {
 	 * @param node
 	 * @return
 	 */
-	public static Object getUserData( TreeNode node ) {
+	public static IGWTFolder getGwtFolder( TreeNode node ) {
 
-		return node.getAttributeAsObject( NODE_USER_DATA );
+		return (IGWTFolder) node.getAttributeAsObject( GWT_FOLDER );
 	}
 
 	/**
 	 * @param node
 	 * @param value
 	 */
-	public static void setUserData( TreeNode node, Object value ) {
+	public static void setGwtFolder( TreeNode node, IGWTFolder value ) {
 
-		node.setAttribute( NODE_USER_DATA, value );
+		node.setAttribute( GWT_FOLDER, value );
 	}
 }

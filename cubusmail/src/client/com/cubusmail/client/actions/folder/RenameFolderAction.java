@@ -25,20 +25,24 @@ import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.util.ValueCallback;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * Rename mail folder.
  * 
  * @author Juergen Schlierf
  */
-public class RenameFolderAction extends GWTFolderAction implements AsyncCallback<String> {
+public class RenameFolderAction extends GWTFolderAction implements AsyncCallback<GWTMailFolder> {
+
+	private String newName;
 
 	/**
 	 * 
@@ -58,28 +62,11 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 	 */
 	public void execute() {
 
-		SC.askforValue( TextProvider.get().actions_rename_contactfolder_text(), TextProvider.get()
-				.actions_renamefolder_question(), new ValueCallback() {
-
-			public void execute( String text ) {
-
-				if ( GWTUtil.hasText( text ) ) {
-					if ( getSelectedTreeNode() != null ) {
-						if ( GWTUtil.getUserData( getSelectedTreeNode() ) instanceof GWTMailFolder ) {
-							GWTMailFolder folder = (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() );
-							renameFolder( folder.getId(), text );
-						}
-					}
-				}
-			}
-		} );
-
-	}
-
-	private void renameFolder( String folderId, String newName ) {
-
-		// PanelRegistry.LEFT_PANEL.mask();
-		ServiceProvider.getMailboxService().renameFolder( folderId, newName, this );
+		if ( getSelectedTreeNode() != null && GWTUtil.hasText( this.newName )
+				&& !this.newName.equals( getSelectedTreeNode().getName() ) ) {
+			ServiceProvider.getMailboxService()
+					.renameFolder( getSelectedTreeNode().getAttribute( "id" ), this.newName, this );
+		}
 	}
 
 	/*
@@ -111,11 +98,19 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 	 * @see
 	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
 	 */
-	public void onSuccess( String result ) {
+	public void onSuccess( GWTMailFolder result ) {
 
-		if ( getSelectedTreeNode() != null ) {
-			getSelectedTreeNode().setTitle( result );
-		}
+		TreeNode renamedNode = getSelectedTreeNode();
+		TreeNode parentNode = TreeNode.getOrCreateRef( renamedNode
+				.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER ) );
+		this.tree.getData().remove( renamedNode );
+		TreeNode newNode = UIFactory.createTreeNode( result );
+		insertSorted( this.tree.getData(), parentNode, newNode );
 		// PanelRegistry.LEFT_PANEL.unmask();
+	}
+
+	public void setNewName( String newName ) {
+
+		this.newName = newName;
 	}
 }

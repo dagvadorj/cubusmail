@@ -20,6 +20,8 @@
 package com.cubusmail.client.util;
 
 import com.cubusmail.client.actions.IGWTAction;
+import com.cubusmail.client.widgets.CubusImgButton;
+import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
@@ -28,9 +30,7 @@ import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HeaderControl;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
-import com.smartgwt.client.widgets.TransferImgButton;
 import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
-import com.smartgwt.client.widgets.TransferImgButton.TransferImg;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.MenuButton;
@@ -114,14 +114,13 @@ public abstract class UIFactory {
 	 */
 	public static ImgButton createImgButton( final IGWTAction action ) {
 
-		ImgButton button = new ImgButton();
+		ImgButton button = new CubusImgButton();
 		button.setSrc( action.getIcon() );
 		button.setShowDisabled( true );
 		button.setShowDisabledIcon( false );
-//		button.setShowRollOverIcon( false );
-//		button.setShowRollOver( true );
-//		button.setShowDown( false );
-		// button.setSize( 16 );
+		button.setShowRollOver( false );
+		button.setShowDown( false );
+		button.setSize( 18 );
 		button.addClickHandler( new ClickHandler() {
 
 			public void onClick( ClickEvent event ) {
@@ -209,12 +208,13 @@ public abstract class UIFactory {
 		TreeNode node = new TreeNode( mailFolder.getName() );
 		node.setAttribute( "icon", getFolderIcon( mailFolder ) );
 		node.setID( mailFolder.getId() );
-		GWTUtil.setUserData( node, mailFolder );
+		GWTUtil.setGwtFolder( node, mailFolder );
 
 		if ( mailFolder.getSubfolders() != null && mailFolder.getSubfolders().length > 0 ) {
 			TreeNode[] nodes = new TreeNode[mailFolder.getSubfolders().length];
 			for (int i = 0; i < mailFolder.getSubfolders().length; i++) {
 				nodes[i] = createTreeNode( mailFolder.getSubfolders()[i] );
+				nodes[i].setAttribute(GWTMailConstants.PARAM_PARENT_FOLDER, node);
 			}
 			node.setChildren( nodes );
 		}

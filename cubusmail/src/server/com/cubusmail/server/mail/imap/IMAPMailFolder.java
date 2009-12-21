@@ -47,7 +47,7 @@ import com.cubusmail.server.mail.util.MessageUtils;
 
 /**
  * Implementation of an imap mail folder.
- *
+ * 
  * @author Juergen Schlierf
  */
 public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
@@ -289,7 +289,7 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 
 	public boolean isRenameSupported() {
 
-		if ( hasRight( Rights.Right.CREATE ) && !isInbox() && !isMailbox() ) {
+		if ( hasRight( Rights.Right.CREATE ) && !isInbox() && !isMailbox() && !isTrash() && !isSent() && !isDraft() ) {
 			return true;
 		}
 		else {

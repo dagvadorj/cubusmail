@@ -69,7 +69,7 @@ public interface IMailboxService extends RemoteService {
 	 * @param newName
 	 * @throws Exception
 	 */
-	public String renameFolder( String folderId, String newName ) throws Exception;
+	public GWTMailFolder renameFolder( String folderId, String newName ) throws Exception;
 
 	/**
 	 * Delete a mail folder.

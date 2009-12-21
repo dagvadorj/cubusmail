@@ -87,7 +87,7 @@ public interface IMailbox extends Serializable {
 	 * @param folder
 	 * @param newName
 	 */
-	public void renameFolder( String folderId, String newName ) throws MailFolderException;
+	public IMailFolder renameFolder( String folderId, String newName ) throws MailFolderException;
 
 	/**
 	 * Move the source folder into to target folder.

@@ -38,9 +38,6 @@ import javax.mail.event.FolderListener;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.sun.mail.imap.IMAPStore;
-import com.sun.mail.imap.Rights.Right;
-
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
@@ -50,6 +47,8 @@ import com.cubusmail.server.mail.exceptions.MailFolderException;
 import com.cubusmail.server.mail.security.MailboxAuthenticator;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.CubusConstants;
+import com.sun.mail.imap.IMAPStore;
+import com.sun.mail.imap.Rights.Right;
 
 /**
  * Implementation of an imap mailbox.
@@ -332,7 +331,7 @@ public class IMAPMailbox implements IMailbox {
 	 * org.grouplite.mail.ui.mail.IMailConnection#renameFolder(org.grouplite
 	 * .mail.ui.mail.IMailFolder, java.lang.String)
 	 */
-	public void renameFolder( String folderId, String folderName ) throws MailFolderException {
+	public IMailFolder renameFolder( String folderId, String folderName ) throws MailFolderException {
 
 		IMailFolder folder = getMailFolderById( folderId );
 		try {
@@ -356,10 +355,11 @@ public class IMAPMailbox implements IMailbox {
 						createMailFolder( newFolder ) );
 			}
 			loadMailFolder();
+			return folder;
 		}
 		catch (MessagingException ex) {
 			throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_RENAME, ex, folder );
-		}
+		}		
 	}
 
 	/*
@@ -439,8 +439,12 @@ public class IMAPMailbox implements IMailbox {
 
 			Folder newFolder = this.store.getFolder( newFolderName );
 			if ( !newFolder.exists() ) {
-				logger.debug( "Createing folder... " + newFolderName );
-				newFolder.create( Folder.HOLDS_MESSAGES );
+				logger.debug( "Creating folder... " + newFolderName );
+				boolean success = newFolder.create( Folder.HOLDS_MESSAGES );
+				if ( !success ) {
+					throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_CREATE, null );
+				}
+				newFolder.setSubscribed( true );
 			}
 			else {
 				throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST, null );
@@ -618,8 +622,7 @@ public class IMAPMailbox implements IMailbox {
 		for (String folderName : topFolderNames) {
 			IMailFolder mailFolder = this.mailFolderMap.get( folderName );
 			this.mailFolderList.add( mailFolder );
-			if ( !SessionManager.get().getPreferences().getInboxFolderName().equals( folderName )
-					&& mailFolder.hasChildren() ) {
+			if ( mailFolder.hasChildren() ) {
 				mailFolder.setSubfolders( getSubfolders( mailFolder ) );
 			}
 		}

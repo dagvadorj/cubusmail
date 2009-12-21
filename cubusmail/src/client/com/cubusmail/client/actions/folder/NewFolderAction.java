@@ -64,7 +64,7 @@ public class NewFolderAction extends GWTFolderAction {
 
 						if ( GWTUtil.hasText( text ) ) {
 							if ( getSelectedTreeNode() != null ) {
-								if ( GWTUtil.getUserData( getSelectedTreeNode() ) instanceof GWTMailFolder ) {
+								if ( GWTUtil.getGwtFolder( getSelectedTreeNode() ) instanceof GWTMailFolder ) {
 									createFolder( getSelectedTreeNode(), text );
 								}
 								else {
@@ -94,7 +94,7 @@ public class NewFolderAction extends GWTFolderAction {
 
 				if ( response.getData() != null && response.getData().length > 0 ) {
 					TreeNode newNode = (TreeNode) response.getData()[0];
-					tree.getData().add( newNode, parentFolderNode );
+					insertSorted( tree.getTree(), parentFolderNode, newNode );
 				}
 			}
 		}, request );

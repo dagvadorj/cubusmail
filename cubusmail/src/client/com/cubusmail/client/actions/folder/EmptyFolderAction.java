@@ -28,6 +28,7 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.model.GWTMailFolder;
+import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.BooleanCallback;
@@ -64,7 +65,7 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 					public void execute( Boolean value ) {
 
 						if ( value ) {
-							GWTMailFolder folder = (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() );
+							IGWTFolder folder = GWTUtil.getGwtFolder( getSelectedTreeNode() );
 							if ( folder != null ) {
 								// PanelRegistry.LEFT_PANEL.mask();
 								emptyFolder( folder.getId() );
@@ -92,8 +93,8 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
 		SC.warn( TextProvider.get().exception_folder_empty( e.getFolderName() ) );
-		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() ) );
-		EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() ) );
+		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+		EventBroker.get().fireFolderSelected( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
 		EventBroker.get().fireMessagesChanged();
 		// PanelRegistry.LEFT_PANEL.unmask();
 	}
@@ -107,8 +108,8 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 	public void onSuccess( Void result ) {
 
 		// PanelRegistry.LEFT_PANEL.unmask();
-		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() ) );
-		EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getUserData( getSelectedTreeNode() ) );
+		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+		EventBroker.get().fireFolderSelected( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
 		EventBroker.get().fireMessagesChanged();
 	}
 }

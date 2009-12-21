@@ -208,16 +208,16 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#renameFoler(java.
 	 * lang.String, java.lang.String)
 	 */
-	public String renameFolder( String folderId, String newName ) throws Exception {
+	public GWTMailFolder renameFolder( String folderId, String newName ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		log.debug( "renaming folder... " + folderId );
 
 		try {
-			mailbox.renameFolder( folderId, newName );
+			IMailFolder folder = mailbox.renameFolder( folderId, newName );
 			log.debug( "...successful" );
 
-			return newName;
+			return ConvertUtil.convert( folder );
 		}
 		catch (MailFolderException e) {
 			log.error( e.getMessage(), e );
