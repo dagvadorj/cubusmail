@@ -20,12 +20,14 @@
  */
 package com.cubusmail.client.actions.folder;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTMailConstants;
@@ -33,6 +35,7 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -42,6 +45,7 @@ import com.smartgwt.client.widgets.tree.TreeNode;
  */
 public class RenameFolderAction extends GWTFolderAction implements AsyncCallback<GWTMailFolder> {
 
+	private TreeNode renamedNode;
 	private String newName;
 
 	/**
@@ -62,10 +66,15 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 	 */
 	public void execute() {
 
-		if ( getSelectedTreeNode() != null && GWTUtil.hasText( this.newName )
-				&& !this.newName.equals( getSelectedTreeNode().getName() ) ) {
-			ServiceProvider.getMailboxService()
-					.renameFolder( getSelectedTreeNode().getAttribute( "id" ), this.newName, this );
+		if ( renamedNode != null ) {
+			if ( !GWTUtil.hasText( newName ) || newName.equals( renamedNode.getName() ) ) {
+				tree.discardAllEdits();
+			}
+			else {
+				this.tree.saveAllEdits();
+				ServiceProvider.getMailboxService().renameFolder( getSelectedTreeNode().getAttribute( "id" ),
+						this.newName, this );
+			}
 		}
 	}
 
@@ -81,12 +90,10 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
 		if ( caught instanceof GWTMailFolderExistException ) {
-			SC.showPrompt( TextProvider.get().common_error(), TextProvider.get().exception_folder_already_exist(
-					e.getFolderName() ) );
+			SC.warn( TextProvider.get().exception_folder_already_exist( e.getFolderName() ) );
 		}
 		else {
-			SC.showPrompt( TextProvider.get().common_error(), TextProvider.get().exception_folder_rename(
-					e.getFolderName() ) );
+			SC.warn( TextProvider.get().exception_folder_rename( e.getFolderName() ) );
 		}
 		EventBroker.get().fireFoldersReload();
 		// PanelRegistry.LEFT_PANEL.unmask();
@@ -100,13 +107,41 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 	 */
 	public void onSuccess( GWTMailFolder result ) {
 
-		TreeNode renamedNode = getSelectedTreeNode();
 		TreeNode parentNode = TreeNode.getOrCreateRef( renamedNode
 				.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER ) );
-		this.tree.getData().remove( renamedNode );
-		TreeNode newNode = UIFactory.createTreeNode( result );
-		insertSorted( this.tree.getData(), parentNode, newNode );
+		this.renamedNode.setID( result.getId() );
+		this.renamedNode.setName( this.newName );
+		moveSorted( this.tree.getData(), parentNode, this.renamedNode );
 		// PanelRegistry.LEFT_PANEL.unmask();
+	}
+
+	public void setRenamedNode( TreeNode renamedNode ) {
+
+		this.renamedNode = renamedNode;
+	}
+
+	/**
+	 * Move tree node in a sorted manner.
+	 * 
+	 * @param parentNode
+	 * @param moveNode
+	 */
+	private void moveSorted( Tree treeData, TreeNode parentNode, TreeNode moveNode ) {
+
+		List<String> names = GWTUtil.getChildrenStringList( treeData, parentNode );
+		if ( names != null && names.size() > 0 ) {
+			int oldPosition = names.indexOf( moveNode.getName() );
+			Collections.sort( names );
+			int newPosition = names.indexOf( moveNode.getName() );
+			if ( newPosition != oldPosition ) {
+				if ( newPosition > oldPosition ) {
+					treeData.move( moveNode, parentNode, newPosition + 1 );
+				}
+				else {
+					treeData.move( moveNode, parentNode, newPosition );
+				}
+			}
+		}
 	}
 
 	public void setNewName( String newName ) {

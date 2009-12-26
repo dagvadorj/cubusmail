@@ -348,18 +348,20 @@ public class IMAPMailbox implements IMailbox {
 			}
 			Folder newFolder = this.store.getFolder( newName );
 			if ( !newFolder.exists() ) {
-				folder.renameTo( newFolder );
+				if ( !folder.renameTo( newFolder ) ) {
+					throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_RENAME, null, folder );
+				}
 			}
 			else {
 				throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST, null,
 						createMailFolder( newFolder ) );
 			}
 			loadMailFolder();
-			return folder;
+			return createMailFolder( newFolder );
 		}
 		catch (MessagingException ex) {
 			throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_RENAME, ex, folder );
-		}		
+		}
 	}
 
 	/*

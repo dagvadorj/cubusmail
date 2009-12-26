@@ -20,7 +20,9 @@
  */
 package com.cubusmail.client.util;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
@@ -28,6 +30,7 @@ import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Element;
+import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -140,5 +143,22 @@ public abstract class GWTUtil {
 	public static void setGwtFolder( TreeNode node, IGWTFolder value ) {
 
 		node.setAttribute( GWT_FOLDER, value );
+	}
+
+	/**
+	 * @param node
+	 * @return
+	 */
+	public static List<String> getChildrenStringList( Tree treeData, TreeNode node ) {
+
+		TreeNode[] children = treeData.getChildren( node );
+		if ( children != null ) {
+			List<String> nodeNames = new ArrayList<String>();
+			for (TreeNode child : children) {
+				nodeNames.add( child.getName() );
+			}
+			return nodeNames;
+		}
+		return null;
 	}
 }

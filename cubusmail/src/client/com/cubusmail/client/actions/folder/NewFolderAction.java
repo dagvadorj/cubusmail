@@ -20,6 +20,9 @@
  */
 package com.cubusmail.client.actions.folder;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
@@ -30,6 +33,7 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.util.ValueCallback;
+import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -98,5 +102,25 @@ public class NewFolderAction extends GWTFolderAction {
 				}
 			}
 		}, request );
+	}
+
+	/**
+	 * Insert tree node in a sorted manner.
+	 * 
+	 * @param parentNode
+	 * @param newNode
+	 */
+	private void insertSorted( Tree treeData, TreeNode parentNode, TreeNode newNode ) {
+
+		List<String> names = GWTUtil.getChildrenStringList( treeData, parentNode );
+		if ( names != null && names.size() > 0 ) {
+			names.add( newNode.getName() );
+			Collections.sort( names );
+			int position = names.indexOf( newNode.getName() );
+			treeData.add( newNode, parentNode, position );
+		}
+		else {
+			treeData.add( parentNode, newNode );
+		}
 	}
 }

@@ -37,11 +37,14 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.EditCompletionEvent;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
+import com.smartgwt.client.widgets.events.DropEvent;
+import com.smartgwt.client.widgets.events.DropHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.EditorEnterEvent;
@@ -66,11 +69,11 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 	private TreeNode currentTreeNode;
 	private TreeGrid tree;
+	private MailfolderEditorExitHandler editorExitHandler;
 
 	// Toolbar items
 	private ImgButton refreshFolderButton;
 	private ImgButton newFolderButton;
-	private ImgButton renameFolderButton;
 	private ImgButton deleteFolderButton;
 	private ImgButton emptyFolderButton;
 
@@ -122,8 +125,12 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setAutoFetchData( false );
 		this.tree.setDataSource( DataSourceRegistry.MAIL_FOLDER.get() );
 		this.tree.setCanEdit( true );
+		this.tree.setConfirmCancelEditing( false );
 		TreeGridField field = new TreeGridField( "name" );
 		this.tree.setFields( field );
+		this.tree.setCanReorderRecords( true );
+		this.tree.setCanAcceptDroppedRecords( true );
+		this.tree.setCanReparentNodes( true );
 
 		// add action handler to the
 		this.tree.addSelectionChangedHandler( new MailfolderSelectionChangedHandler() );
@@ -145,18 +152,17 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 				if ( !GWTUtil.getGwtFolder( node ).isRenameSupported() ) {
 					tree.cancelEditing();
 				}
+				editorExitHandler.setAlreadyDiscarded( false );
 			}
 		} );
-		this.tree.addEditorExitHandler( new EditorExitHandler() {
+		this.editorExitHandler = new MailfolderEditorExitHandler();
+		this.tree.addEditorExitHandler( this.editorExitHandler );
+
+		this.tree.addDropHandler( new DropHandler() {
 
 			@Override
-			public void onEditorExit( EditorExitEvent event ) {
+			public void onDrop( DropEvent event ) {
 
-				if ( !event.isCancelled() ) {
-					ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setNewName(
-							event.getNewValue().toString() );
-					ActionRegistry.RENAME_FOLDER.execute();
-				}
 			}
 		} );
 	}
@@ -168,12 +174,11 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 		this.refreshFolderButton = UIFactory.createImgButton( ActionRegistry.REFRESH_FOLDER.get() );
 		this.newFolderButton = UIFactory.createImgButton( ActionRegistry.NEW_FOLDER.get() );
-		this.renameFolderButton = UIFactory.createImgButton( ActionRegistry.RENAME_FOLDER.get() );
 		this.deleteFolderButton = UIFactory.createImgButton( ActionRegistry.DELETE_FOLDER.get() );
 		this.emptyFolderButton = UIFactory.createImgButton( ActionRegistry.EMPTY_FOLDER.get() );
 
-		section.setControls( this.refreshFolderButton, this.newFolderButton, this.renameFolderButton,
-				this.deleteFolderButton, this.emptyFolderButton );
+		section.setControls( this.refreshFolderButton, this.newFolderButton, this.deleteFolderButton,
+				this.emptyFolderButton );
 	}
 
 	/*
@@ -244,7 +249,6 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private void changeToolbarButtonStatus( IGWTFolder mailFolder ) {
 
 		this.newFolderButton.setDisabled( mailFolder != null ? !mailFolder.isCreateSubfolderSupported() : true );
-		this.renameFolderButton.setDisabled( mailFolder != null ? !mailFolder.isRenameSupported() : true );
 		this.deleteFolderButton.setDisabled( mailFolder != null ? !mailFolder.isDeleteSupported() : true );
 		this.emptyFolderButton.setDisabled( mailFolder != null ? !mailFolder.isEmptySupported() : true );
 	}
@@ -280,6 +284,60 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setTree( tree );
 			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
 			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setTree( tree );
+		}
+	}
+
+	/**
+	 * Exit handler for renaming mail folders.
+	 * 
+	 * @author Juergen Schlierf
+	 */
+	private class MailfolderEditorExitHandler implements EditorExitHandler {
+
+		private boolean alreadyDiscarded = false;
+
+		@Override
+		public void onEditorExit( EditorExitEvent event ) {
+
+			event.isCancelled();
+			event.getEditCompletionEvent();
+			if ( !alreadyDiscarded ) {
+				if ( checkInput( event ) ) {
+					String newName = event.getNewValue() != null ? event.getNewValue().toString() : null;
+					TreeNode renamedNode = (TreeNode) event.getRecord();
+					ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setRenamedNode( renamedNode );
+					ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setNewName( newName );
+					ActionRegistry.RENAME_FOLDER.execute();
+				}
+			}
+		}
+
+		/**
+		 * Is new name empty or the same as before?
+		 * 
+		 * @param event
+		 * @return
+		 */
+		private boolean checkInput( EditorExitEvent event ) {
+
+			// only completion event ENTER is accepted
+			if ( !EditCompletionEvent.ENTER.equals( event.getEditCompletionEvent() ) ) {
+				return false;
+			}
+			String newName = event.getNewValue() != null ? event.getNewValue().toString() : null;
+			String oldName = ((TreeNode) event.getRecord()).getName();
+			if ( !GWTUtil.hasText( newName ) || newName.equalsIgnoreCase( oldName ) ) {
+				this.alreadyDiscarded = true;
+				tree.discardAllEdits();
+				return false;
+			}
+
+			return true;
+		}
+
+		public void setAlreadyDiscarded( boolean alreadyDiscarded ) {
+
+			this.alreadyDiscarded = alreadyDiscarded;
 		}
 	}
 }

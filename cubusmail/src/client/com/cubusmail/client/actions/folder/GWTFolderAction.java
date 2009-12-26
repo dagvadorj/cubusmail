@@ -21,12 +21,7 @@
 
 package com.cubusmail.client.actions.folder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.cubusmail.client.actions.GWTAction;
-import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -60,29 +55,5 @@ public abstract class GWTFolderAction extends GWTAction {
 	public void setTree( TreeGrid tree ) {
 
 		this.tree = tree;
-	}
-
-	/**
-	 * Insert tree node in a sorted manner.
-	 * 
-	 * @param parentNode
-	 * @param newNode
-	 */
-	protected void insertSorted( Tree treeData, TreeNode parentNode, TreeNode newNode ) {
-
-		TreeNode[] children = treeData.getChildren( parentNode );
-		if ( children != null && children.length > 0 ) {
-			List<String> names = new ArrayList<String>();
-			for (TreeNode childNode : children) {
-				names.add( childNode.getName() );
-			}
-			names.add( newNode.getName() );
-			Collections.sort( names );
-			int position = names.indexOf( newNode.getName() );
-			treeData.add( newNode, parentNode, position );
-		}
-		else {
-			treeData.add( parentNode, newNode );
-		}
 	}
 }
