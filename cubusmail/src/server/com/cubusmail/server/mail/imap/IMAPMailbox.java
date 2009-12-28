@@ -283,7 +283,7 @@ public class IMAPMailbox implements IMailbox {
 	 * org.grouplite.mail.ui.mail.IMailConnection#moveFolder(org.grouplite.mail
 	 * .ui.mail.IMailFolder, org.grouplite.mail.ui.mail.IMailFolder)
 	 */
-	public void moveFolder( String sourceFolderId, String targetFolderId ) throws MailFolderException {
+	public IMailFolder moveFolder( String sourceFolderId, String targetFolderId ) throws MailFolderException {
 
 		IMailFolder sourceFolder = null;
 		IMailFolder targetFolder = null;
@@ -317,11 +317,15 @@ public class IMAPMailbox implements IMailbox {
 					throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST, null, sourceFolder );
 				}
 				loadMailFolder();
+
+				return createMailFolder( newFolder );
 			}
 		}
 		catch (MessagingException e) {
 			throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_MOVE, e, sourceFolder );
 		}
+
+		return null;
 	}
 
 	/*

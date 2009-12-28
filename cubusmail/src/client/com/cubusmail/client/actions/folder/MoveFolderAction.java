@@ -1,4 +1,4 @@
-/* RenameFolderAction.java
+/* MoveFolderAction.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -16,7 +16,6 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-   
  */
 package com.cubusmail.client.actions.folder;
 
@@ -27,43 +26,61 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
-import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
+import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
- * Rename mail folder.
+ * Action for moving mail folders
  * 
  * @author Juergen Schlierf
  */
-public class RenameFolderAction extends GWTFolderAction implements AsyncCallback<GWTMailFolder> {
+public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<GWTMailFolder> {
 
-	private TreeNode renamedNode;
-	private String newName;
-
-	/**
-	 * 
-	 */
+	private TreeNode sourceNode;
+	private TreeNode targetNode;
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.cubusmail.gwtui.client.actions.GWTAction#execute()
+	 * @see com.cubusmail.client.actions.GWTAction#execute()
 	 */
+	@Override
 	public void execute() {
 
-		if ( this.renamedNode != null ) {
-			if ( !GWTUtil.hasText( this.newName ) || this.newName.equals( this.renamedNode.getName() ) ) {
-				this.tree.discardAllEdits();
-			}
-			else {
-				this.tree.saveAllEdits();
-				ServiceProvider.getMailboxService().renameFolder( getSelectedTreeNode().getAttribute( "id" ),
-						this.newName, this );
-			}
-		}
+		IGWTFolder sourceFolder = GWTUtil.getGwtFolder( this.sourceNode );
+		IGWTFolder targetFolder = GWTUtil.getGwtFolder( this.targetNode );
+		ServiceProvider.getMailboxService().moveFolder( sourceFolder.getId(), targetFolder.getId(), this );
+	}
+
+	/**
+	 * @param sourceNode
+	 */
+	public void setSourceNode( TreeNode sourceNode ) {
+
+		this.sourceNode = sourceNode;
+	}
+
+	/**
+	 * @param targetNode
+	 */
+	public void setTargetNode( TreeNode targetNode ) {
+
+		this.targetNode = targetNode;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
+	 */
+	public void onSuccess( GWTMailFolder result ) {
+
+		GWTUtil.setGwtFolder( this.sourceNode, result );
+		moveSorted( this.tree.getData(), this.targetNode, this.sourceNode );
 	}
 
 	/*
@@ -81,35 +98,8 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 			SC.warn( TextProvider.get().exception_folder_already_exist( e.getFolderName() ) );
 		}
 		else {
-			SC.warn( TextProvider.get().exception_folder_rename( e.getFolderName() ) );
+			SC.warn( TextProvider.get().exception_folder_move( e.getFolderName() ) );
 		}
 		EventBroker.get().fireFoldersReload();
-		// PanelRegistry.LEFT_PANEL.unmask();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
-	 */
-	public void onSuccess( GWTMailFolder result ) {
-
-		TreeNode parentNode = TreeNode.getOrCreateRef( this.renamedNode
-				.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER ) );
-		this.renamedNode.setID( result.getId() );
-		this.renamedNode.setName( this.newName );
-		moveSorted( this.tree.getData(), parentNode, this.renamedNode );
-		// PanelRegistry.LEFT_PANEL.unmask();
-	}
-
-	public void setRenamedNode( TreeNode renamedNode ) {
-
-		this.renamedNode = renamedNode;
-	}
-
-	public void setNewName( String newName ) {
-
-		this.newName = newName;
 	}
 }

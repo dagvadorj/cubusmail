@@ -625,4 +625,19 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 
 		this.applicationContext = applicationContext;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.cubusmail.server.mail.IMailFolder#getParent()
+	 */
+	public IMailFolder getParent() throws MessagingException {
+
+		Folder parentFolder = this.folder.getParent();
+		if ( parentFolder != null ) {
+			IMAPMailFolder newfolder = new IMAPMailFolder();
+			newfolder.init( parentFolder );
+			return newfolder;
+		}
+
+		return null;
+	}
 }

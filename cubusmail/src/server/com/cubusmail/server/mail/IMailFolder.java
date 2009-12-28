@@ -329,4 +329,10 @@ public interface IMailFolder extends Serializable {
 	 * @throws MessagingException
 	 */
 	public void fetch( Message[] msgs, FetchProfile fp ) throws MessagingException;
+
+	/**
+	 * @return
+	 * @throws MessagingException
+	 */
+	public IMailFolder getParent() throws MessagingException;
 }

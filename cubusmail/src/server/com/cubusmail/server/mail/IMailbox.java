@@ -31,7 +31,7 @@ import com.cubusmail.server.mail.exceptions.MailFolderException;
 
 /**
  * Interface for Mailbox.
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface IMailbox extends Serializable {
@@ -96,7 +96,7 @@ public interface IMailbox extends Serializable {
 	 * @param targetFolder
 	 * @throws MailFolderException
 	 */
-	public void moveFolder( String sourceFolderId, String targetFolderId ) throws MailFolderException;
+	public IMailFolder moveFolder( String sourceFolderId, String targetFolderId ) throws MailFolderException;
 
 	/**
 	 * Delete all messages of a folder.
@@ -211,7 +211,8 @@ public interface IMailbox extends Serializable {
 	public UserAccount getUserAccount();
 
 	/**
-	 * @param userAccount The userAccount to set.
+	 * @param userAccount
+	 *            The userAccount to set.
 	 */
 	public void setUserAccount( UserAccount userAccount );
 }

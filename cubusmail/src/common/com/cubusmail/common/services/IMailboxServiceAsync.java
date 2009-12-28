@@ -59,7 +59,7 @@ public interface IMailboxServiceAsync {
 	 * @param targetFolderId
 	 * @throws Exception
 	 */
-	public void moveFolder( String sourceFolderId, String targetFolderId, AsyncCallback<Void> callback );
+	public void moveFolder( String sourceFolderId, String targetFolderId, AsyncCallback<GWTMailFolder> callback );
 
 	/**
 	 * Rename a mail folder.

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import com.cubusmail.client.actions.folder.DeleteFolderAction;
 import com.cubusmail.client.actions.folder.EmptyFolderAction;
+import com.cubusmail.client.actions.folder.MoveFolderAction;
 import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RefreshFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
@@ -129,6 +130,8 @@ public enum ActionRegistry {
 			return new DeleteFolderAction();
 		case EMPTY_FOLDER:
 			return new EmptyFolderAction();
+		case MOVE_FOLDER:
+			return new MoveFolderAction();
 		}
 
 		throw new IllegalArgumentException( "Action missing: " + name() );

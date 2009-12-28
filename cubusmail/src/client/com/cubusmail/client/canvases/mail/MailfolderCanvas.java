@@ -22,6 +22,7 @@ package com.cubusmail.client.canvases.mail;
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.folder.DeleteFolderAction;
 import com.cubusmail.client.actions.folder.EmptyFolderAction;
+import com.cubusmail.client.actions.folder.MoveFolderAction;
 import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
 import com.cubusmail.client.datasource.DataSourceRegistry;
@@ -43,8 +44,6 @@ import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
-import com.smartgwt.client.widgets.events.DropEvent;
-import com.smartgwt.client.widgets.events.DropHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.EditorEnterEvent;
@@ -59,6 +58,8 @@ import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.smartgwt.client.widgets.tree.TreeNode;
+import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
+import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 
 /**
  * Panel for mail folder.
@@ -144,7 +145,6 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		} );
 		this.tree.addEditorEnterHandler( new EditorEnterHandler() {
 
-			@Override
 			public void onEditorEnter( EditorEnterEvent event ) {
 
 				// block unauthorized editing
@@ -158,13 +158,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.editorExitHandler = new MailfolderEditorExitHandler();
 		this.tree.addEditorExitHandler( this.editorExitHandler );
 
-		this.tree.addDropHandler( new DropHandler() {
-
-			@Override
-			public void onDrop( DropEvent event ) {
-
-			}
-		} );
+		this.tree.addFolderDropHandler( new MailfolderDropHandler() );
 	}
 
 	/**
@@ -284,6 +278,8 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setTree( tree );
 			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
 			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setTree( tree );
+			ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setTree( tree );
 		}
 	}
 
@@ -296,7 +292,6 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 		private boolean alreadyDiscarded = false;
 
-		@Override
 		public void onEditorExit( EditorExitEvent event ) {
 
 			event.isCancelled();
@@ -338,6 +333,36 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		public void setAlreadyDiscarded( boolean alreadyDiscarded ) {
 
 			this.alreadyDiscarded = alreadyDiscarded;
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @author Juergen Schlierf
+	 */
+	private class MailfolderDropHandler implements FolderDropHandler {
+
+		public void onFolderDrop( FolderDropEvent event ) {
+
+			if ( event.getNodes() != null && event.getNodes().length > 0 ) {
+				TreeNode sourceNode = event.getNodes()[0];
+				IGWTFolder sourceFolder = GWTUtil.getGwtFolder( sourceNode );
+				if ( sourceFolder.isMoveSupported() ) {
+					TreeNode targetNode = event.getFolder();
+					IGWTFolder targetFolder = GWTUtil.getGwtFolder( targetNode );
+					if ( !isSame( sourceFolder.getParent(), targetFolder ) ) {
+						ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setSourceNode( sourceNode );
+						ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setTargetNode( targetNode );
+						ActionRegistry.MOVE_FOLDER.execute();
+					}
+				}
+			}
+		}
+
+		private boolean isSame( IGWTFolder folder1, IGWTFolder folder2 ) {
+
+			return folder1.getId().equals( folder2.getId() );
 		}
 	}
 }

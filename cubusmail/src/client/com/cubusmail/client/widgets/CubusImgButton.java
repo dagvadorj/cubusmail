@@ -39,7 +39,6 @@ public class CubusImgButton extends ImgButton {
 		super();
 		addMouseOutHandler( new MouseOutHandler() {
 			
-			@Override
 			public void onMouseOut( MouseOutEvent event ) {
 				setBorder( "" );
 			}

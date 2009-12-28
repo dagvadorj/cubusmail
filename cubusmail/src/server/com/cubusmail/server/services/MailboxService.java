@@ -179,16 +179,17 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#moveFolder(java.lang
 	 * .String, java.lang.String)
 	 */
-	public void moveFolder( String sourceFolderId, String targetFolderId ) throws Exception {
+	public GWTMailFolder moveFolder( String sourceFolderId, String targetFolderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		log.debug( "moving folder... " + sourceFolderId );
 
 		IMailFolder sourceFolder = mailbox.getMailFolderById( sourceFolderId );
 		try {
+			IMailFolder folder = mailbox.moveFolder( sourceFolderId, targetFolderId );
+			log.debug( "...successful" );			
 
-			mailbox.moveFolder( sourceFolderId, targetFolderId );
-			log.debug( "...successful" );
+			return ConvertUtil.convert( folder );
 		}
 		catch (MailFolderException e) {
 			log.error( e.getMessage(), e );
