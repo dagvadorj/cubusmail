@@ -50,26 +50,29 @@ public class LoginAction extends GWTAction implements AsyncCallback<GWTMailbox> 
 	 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.
 	 * Throwable)
 	 */
-	public void onFailure( Throwable e ) {
+	public void onFailure( final Throwable e ) {
 
 		if ( this.actionCallback != null ) {
 			this.actionCallback.execute( false );
 		}
 
+		String text = null;
 		if ( e instanceof GWTAuthenticationException ) {
-			SC.warn( TextProvider.get().logindialog_title(), TextProvider.get().exception_login_authentication(), null,
-					new Dialog() );
+			text = TextProvider.get().exception_login_authentication();
 		}
 		else if ( e instanceof GWTConnectionException ) {
-			SC.warn( TextProvider.get().logindialog_title(), TextProvider.get().exception_login_connection(), null,
-					new Dialog() );
+			text = TextProvider.get().exception_login_connection();
 		}
 		else {
-			SC.warn( TextProvider.get().logindialog_title(), TextProvider.get().exception_login_connection(), null,
-					new Dialog() );
+			text = TextProvider.get().exception_login_connection();
 		}
+		SC.warn( text, new BooleanCallback() {
 
-		GWTExceptionHandler.handleException( e );
+			public void execute( Boolean value ) {
+
+				GWTExceptionHandler.handleException( e );
+			}
+		} );
 	}
 
 	/*

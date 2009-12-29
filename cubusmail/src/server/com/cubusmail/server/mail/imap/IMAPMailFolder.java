@@ -299,7 +299,7 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 
 	public boolean isDeleteSupported() {
 
-		if ( hasRight( Rights.Right.CREATE ) && !isInbox() && !isMailbox() ) {
+		if ( hasRight( Rights.Right.CREATE ) && !isInbox() && !isMailbox() && !isTrash() && !isSent() && !isDraft() ) {
 			return true;
 		}
 		else {
@@ -626,7 +626,9 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.cubusmail.server.mail.IMailFolder#getParent()
 	 */
 	public IMailFolder getParent() throws MessagingException {

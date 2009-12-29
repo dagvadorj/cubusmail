@@ -20,10 +20,8 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.actions.ActionRegistry;
-import com.cubusmail.client.actions.folder.DeleteFolderAction;
-import com.cubusmail.client.actions.folder.EmptyFolderAction;
+import com.cubusmail.client.actions.folder.GWTFolderAction;
 import com.cubusmail.client.actions.folder.MoveFolderAction;
-import com.cubusmail.client.actions.folder.NewFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
 import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.EventBroker;
@@ -33,14 +31,19 @@ import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.DisplayNodeType;
+import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.EditCompletionEvent;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
+import com.smartgwt.client.types.TreeModelType;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
@@ -54,6 +57,9 @@ import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
 import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
+import com.smartgwt.client.widgets.menu.Menu;
+import com.smartgwt.client.widgets.menu.MenuItem;
+import com.smartgwt.client.widgets.menu.MenuItemIfFunction;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeGrid;
 import com.smartgwt.client.widgets.tree.TreeGridField;
@@ -92,6 +98,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		section.setItems( this.tree );
 
 		createToolbar( section );
+		createContextMenu();
 
 		setSections( section );
 
@@ -113,6 +120,8 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private void createTree() {
 
 		this.tree = new TreeGrid();
+		this.tree.setLoadingDataMessage( TextProvider.get().common_mask_text() );
+		this.tree.setDisplayNodeType( DisplayNodeType.NULL );
 		this.tree.setShowRoot( false );
 		this.tree.setSelectionType( SelectionStyle.SINGLE );
 		this.tree.setWidth100();
@@ -131,7 +140,9 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setFields( field );
 		this.tree.setCanReorderRecords( true );
 		this.tree.setCanAcceptDroppedRecords( true );
+		this.tree.setCanDropOnLeaves( true );
 		this.tree.setCanReparentNodes( true );
+		this.tree.setDragDataAction( DragDataAction.MOVE );
 
 		// add action handler to the
 		this.tree.addSelectionChangedHandler( new MailfolderSelectionChangedHandler() );
@@ -139,6 +150,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 			public void onDataArrived( DataArrivedEvent event ) {
 
+				tree.getData().setModelType( TreeModelType.CHILDREN );
 				tree.getData().openAll();
 				tree.selectRecord( getInboxTreeNode() );
 			}
@@ -166,13 +178,55 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	 */
 	private void createToolbar( SectionStackSection section ) {
 
-		this.refreshFolderButton = UIFactory.createImgButton( ActionRegistry.REFRESH_FOLDER.get() );
-		this.newFolderButton = UIFactory.createImgButton( ActionRegistry.NEW_FOLDER.get() );
-		this.deleteFolderButton = UIFactory.createImgButton( ActionRegistry.DELETE_FOLDER.get() );
-		this.emptyFolderButton = UIFactory.createImgButton( ActionRegistry.EMPTY_FOLDER.get() );
+		this.refreshFolderButton = UIFactory.createImgButton( ActionRegistry.REFRESH_FOLDER );
+		this.newFolderButton = UIFactory.createImgButton( ActionRegistry.NEW_FOLDER );
+		this.deleteFolderButton = UIFactory.createImgButton( ActionRegistry.DELETE_FOLDER );
+		this.emptyFolderButton = UIFactory.createImgButton( ActionRegistry.EMPTY_FOLDER );
 
 		section.setControls( this.refreshFolderButton, this.newFolderButton, this.deleteFolderButton,
 				this.emptyFolderButton );
+	}
+
+	/**
+	 * 
+	 */
+	private void createContextMenu() {
+
+		Menu contextMenu = new Menu();
+
+		MenuItem createItem = UIFactory.createMenuItem( ActionRegistry.NEW_FOLDER );
+		createItem.setEnableIfCondition( new MenuItemIfFunction() {
+
+			public boolean execute( Canvas target, Menu menu, MenuItem item ) {
+
+				IGWTFolder folder = GWTUtil.getGwtFolder( (TreeNode) tree.getSelectedRecord() );
+				return folder.isCreateSubfolderSupported();
+			}
+		} );
+
+		MenuItem deleteItem = UIFactory.createMenuItem( ActionRegistry.DELETE_FOLDER );
+		deleteItem.setEnableIfCondition( new MenuItemIfFunction() {
+
+			public boolean execute( Canvas target, Menu menu, MenuItem item ) {
+
+				IGWTFolder folder = GWTUtil.getGwtFolder( (TreeNode) tree.getSelectedRecord() );
+				return folder.isDeleteSupported();
+			}
+		} );
+
+		MenuItem emptyItem = UIFactory.createMenuItem( ActionRegistry.EMPTY_FOLDER );
+		emptyItem.setEnableIfCondition( new MenuItemIfFunction() {
+
+			public boolean execute( Canvas target, Menu menu, MenuItem item ) {
+
+				IGWTFolder folder = GWTUtil.getGwtFolder( (TreeNode) tree.getSelectedRecord() );
+				return folder.isEmptySupported();
+			}
+		} );
+
+		contextMenu.setItems( createItem, deleteItem, emptyItem );
+
+		this.tree.setContextMenu( contextMenu );
 	}
 
 	/*
@@ -270,16 +324,16 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 
 		private void prepareActions( TreeNode selectedTreeNode ) {
 
-			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
-			ActionRegistry.NEW_FOLDER.get( NewFolderAction.class ).setTree( tree );
-			ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
-			ActionRegistry.RENAME_FOLDER.get( RenameFolderAction.class ).setTree( tree );
-			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
-			ActionRegistry.DELETE_FOLDER.get( DeleteFolderAction.class ).setTree( tree );
-			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
-			ActionRegistry.EMPTY_FOLDER.get( EmptyFolderAction.class ).setTree( tree );
-			ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
-			ActionRegistry.MOVE_FOLDER.get( MoveFolderAction.class ).setTree( tree );
+			ActionRegistry.NEW_FOLDER.get( GWTFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.NEW_FOLDER.get( GWTFolderAction.class ).setTree( tree );
+			ActionRegistry.RENAME_FOLDER.get( GWTFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.RENAME_FOLDER.get( GWTFolderAction.class ).setTree( tree );
+			ActionRegistry.DELETE_FOLDER.get( GWTFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.DELETE_FOLDER.get( GWTFolderAction.class ).setTree( tree );
+			ActionRegistry.EMPTY_FOLDER.get( GWTFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.EMPTY_FOLDER.get( GWTFolderAction.class ).setTree( tree );
+			ActionRegistry.MOVE_FOLDER.get( GWTFolderAction.class ).setSelectedTreeNode( selectedTreeNode );
+			ActionRegistry.MOVE_FOLDER.get( GWTFolderAction.class ).setTree( tree );
 		}
 	}
 

@@ -23,6 +23,7 @@ package com.cubusmail.client.actions.folder;
 import java.util.Collections;
 import java.util.List;
 
+import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
@@ -97,8 +98,11 @@ public class NewFolderAction extends GWTFolderAction {
 			public void execute( DSResponse response, Object rawData, DSRequest request ) {
 
 				if ( response.getData() != null && response.getData().length > 0 ) {
-					TreeNode newNode = (TreeNode) response.getData()[0];
-					insertSorted( tree.getTree(), parentFolderNode, newNode );
+					// TreeNode newNode = (TreeNode) response.getData()[0];
+					// insertSorted( tree.getTree(), parentFolderNode, newNode
+					// );
+					EventBroker.get().fireFoldersReload();
+
 				}
 			}
 		}, request );
@@ -110,7 +114,7 @@ public class NewFolderAction extends GWTFolderAction {
 	 * @param parentNode
 	 * @param newNode
 	 */
-	private void insertSorted( Tree treeData, TreeNode parentNode, TreeNode newNode ) {
+	protected void insertSorted( Tree treeData, TreeNode parentNode, TreeNode newNode ) {
 
 		List<String> names = GWTUtil.getChildrenStringList( treeData, parentNode );
 		if ( names != null && names.size() > 0 ) {

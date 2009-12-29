@@ -26,6 +26,7 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
+import com.smartgwt.client.types.ImageStyle;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HeaderControl;
 import com.smartgwt.client.widgets.IButton;
@@ -120,6 +121,7 @@ public abstract class UIFactory {
 		button.setShowDisabledIcon( false );
 		button.setShowRollOver( false );
 		button.setShowDown( false );
+		button.setImageType( ImageStyle.CENTER );
 		button.setSize( 18 );
 		button.addClickHandler( new ClickHandler() {
 
@@ -209,13 +211,19 @@ public abstract class UIFactory {
 		node.setAttribute( "icon", getFolderIcon( mailFolder ) );
 		node.setID( mailFolder.getId() );
 		node.setCanAcceptDrop( true );
+		if ( mailFolder.isMoveSupported() ) {
+			node.setCanDrag( true );
+		}
+		else {
+			node.setCanDrag( false );
+		}
 		GWTUtil.setGwtFolder( node, mailFolder );
 
 		if ( mailFolder.getSubfolders() != null && mailFolder.getSubfolders().length > 0 ) {
 			TreeNode[] nodes = new TreeNode[mailFolder.getSubfolders().length];
 			for (int i = 0; i < mailFolder.getSubfolders().length; i++) {
 				nodes[i] = createTreeNode( mailFolder.getSubfolders()[i] );
-				nodes[i].setAttribute(GWTMailConstants.PARAM_PARENT_FOLDER, node);
+				nodes[i].setAttribute( GWTMailConstants.PARAM_PARENT_FOLDER, node );
 			}
 			node.setChildren( nodes );
 		}

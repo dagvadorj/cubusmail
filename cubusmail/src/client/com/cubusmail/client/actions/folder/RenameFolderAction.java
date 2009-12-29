@@ -27,9 +27,9 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
-import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -77,14 +77,20 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
+		String text = null;
 		if ( caught instanceof GWTMailFolderExistException ) {
-			SC.warn( TextProvider.get().exception_folder_already_exist( e.getFolderName() ) );
+			text = TextProvider.get().exception_folder_already_exist( e.getFolderName() );
 		}
 		else {
-			SC.warn( TextProvider.get().exception_folder_rename( e.getFolderName() ) );
+			text = TextProvider.get().exception_folder_rename( e.getFolderName() );
 		}
-		EventBroker.get().fireFoldersReload();
-		// PanelRegistry.LEFT_PANEL.unmask();
+		SC.warn( text, new BooleanCallback() {
+
+			public void execute( Boolean value ) {
+
+				EventBroker.get().fireFoldersReload();
+			}
+		} );
 	}
 
 	/*
@@ -95,12 +101,7 @@ public class RenameFolderAction extends GWTFolderAction implements AsyncCallback
 	 */
 	public void onSuccess( GWTMailFolder result ) {
 
-		TreeNode parentNode = TreeNode.getOrCreateRef( this.renamedNode
-				.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER ) );
-		this.renamedNode.setID( result.getId() );
-		this.renamedNode.setName( this.newName );
-		moveSorted( this.tree.getData(), parentNode, this.renamedNode );
-		// PanelRegistry.LEFT_PANEL.unmask();
+		EventBroker.get().fireFoldersReload();
 	}
 
 	public void setRenamedNode( TreeNode renamedNode ) {

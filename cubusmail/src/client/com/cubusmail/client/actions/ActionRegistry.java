@@ -45,7 +45,7 @@ import com.cubusmail.client.actions.message.MarkMessageAction.MarkActionType;
  * 
  * @author Juergen Schlierf
  */
-public enum ActionRegistry {
+public enum ActionRegistry implements IGWTAction {
 	// comman actions
 	LOGIN,
 
@@ -143,5 +143,35 @@ public enum ActionRegistry {
 	public void execute() {
 
 		get().execute();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.cubusmail.client.actions.IGWTAction#getIcon()
+	 */
+	public String getIcon() {
+
+		return get().getIcon();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.cubusmail.client.actions.IGWTAction#getText()
+	 */
+	public String getText() {
+
+		return get().getText();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.cubusmail.client.actions.IGWTAction#getTooltip()
+	 */
+	public String getTooltip() {
+
+		return get().getTooltip();
 	}
 }

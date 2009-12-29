@@ -92,10 +92,16 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
-		SC.warn( TextProvider.get().exception_folder_empty( e.getFolderName() ) );
-		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
-		EventBroker.get().fireFolderSelected( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
-		EventBroker.get().fireMessagesChanged();
+		SC.warn( TextProvider.get().exception_folder_empty( e.getFolderName() ), new BooleanCallback() {
+
+			public void execute( Boolean value ) {
+
+				GWTSessionManager.get().setCurrentMailFolder(
+						(GWTMailFolder) GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+				EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+				EventBroker.get().fireMessagesChanged();
+			}
+		} );
 		// PanelRegistry.LEFT_PANEL.unmask();
 	}
 
@@ -108,8 +114,8 @@ public class EmptyFolderAction extends GWTFolderAction implements AsyncCallback<
 	public void onSuccess( Void result ) {
 
 		// PanelRegistry.LEFT_PANEL.unmask();
-		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
-		EventBroker.get().fireFolderSelected( (GWTMailFolder)GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+		GWTSessionManager.get().setCurrentMailFolder( (GWTMailFolder) GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
+		EventBroker.get().fireFolderSelected( (GWTMailFolder) GWTUtil.getGwtFolder( getSelectedTreeNode() ) );
 		EventBroker.get().fireMessagesChanged();
 	}
 }

@@ -159,7 +159,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			newFolder = mailbox.createFolder( parentFolderId, folderName );
 			log.debug( "...successful" );
 
-			return ConvertUtil.convert( newFolder );
+			return ConvertUtil.convert( newFolder, true );
 		}
 		catch (MailFolderException e) {
 			log.error( e.getMessage(), e );
@@ -189,7 +189,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			IMailFolder folder = mailbox.moveFolder( sourceFolderId, targetFolderId );
 			log.debug( "...successful" );			
 
-			return ConvertUtil.convert( folder );
+			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
 			log.error( e.getMessage(), e );
@@ -218,7 +218,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			IMailFolder folder = mailbox.renameFolder( folderId, newName );
 			log.debug( "...successful" );
 
-			return ConvertUtil.convert( folder );
+			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
 			log.error( e.getMessage(), e );

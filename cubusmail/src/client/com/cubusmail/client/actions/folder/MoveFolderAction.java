@@ -29,6 +29,7 @@ import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -79,8 +80,9 @@ public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<G
 	 */
 	public void onSuccess( GWTMailFolder result ) {
 
-		GWTUtil.setGwtFolder( this.sourceNode, result );
-		moveSorted( this.tree.getData(), this.targetNode, this.sourceNode );
+		// GWTUtil.setGwtFolder( this.sourceNode, result );
+		// moveSorted( this.tree.getData(), this.targetNode, this.sourceNode );
+		EventBroker.get().fireFoldersReload();
 	}
 
 	/*
@@ -94,12 +96,19 @@ public class MoveFolderAction extends GWTFolderAction implements AsyncCallback<G
 
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
+		String text = null;
 		if ( caught instanceof GWTMailFolderExistException ) {
-			SC.warn( TextProvider.get().exception_folder_already_exist( e.getFolderName() ) );
+			text = TextProvider.get().exception_folder_already_exist( e.getFolderName() );
 		}
 		else {
-			SC.warn( TextProvider.get().exception_folder_move( e.getFolderName() ) );
+			text = TextProvider.get().exception_folder_move( e.getFolderName() );
 		}
-		EventBroker.get().fireFoldersReload();
+		SC.warn( text, new BooleanCallback() {
+
+			public void execute( Boolean value ) {
+
+				EventBroker.get().fireFoldersReload();
+			}
+		} );
 	}
 }

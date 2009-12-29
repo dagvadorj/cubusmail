@@ -26,7 +26,6 @@ import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
-import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -66,7 +65,6 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 						if ( value ) {
 							IGWTFolder folder = GWTUtil.getGwtFolder( getSelectedTreeNode() );
 							if ( folder != null ) {
-								// PanelRegistry.LEFT_PANEL.mask();
 								deleteFolder( folder.getId() );
 							}
 						}
@@ -76,7 +74,6 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 
 	private void deleteFolder( String folderId ) {
 
-		// PanelRegistry.LEFT_PANEL.mask();
 		ServiceProvider.getMailboxService().deleteFolder( folderId, this );
 	}
 
@@ -91,11 +88,14 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 
 		GWTExceptionHandler.handleException( caught );
 		GWTMailFolderException e = (GWTMailFolderException) caught;
-		// MessageBox.alert( TextProvider.get().common_error(),
-		// TextProvider.get().exception_folder_delete(
-		// e.getFolderName() ) );
-		EventBroker.get().fireFoldersReload();
-		// PanelRegistry.LEFT_PANEL.unmask();
+
+		SC.warn( TextProvider.get().exception_folder_delete( e.getFolderName() ), new BooleanCallback() {
+
+			public void execute( Boolean value ) {
+
+				EventBroker.get().fireFoldersReload();
+			}
+		} );
 	}
 
 	/*
@@ -108,5 +108,6 @@ public class DeleteFolderAction extends GWTFolderAction implements AsyncCallback
 
 		// PanelRegistry.LEFT_PANEL.unmask();
 		// getSelectedTreeNode().remove();
+		this.tree.getData().remove( getSelectedTreeNode() );
 	}
 }

@@ -61,7 +61,7 @@ public class ConvertUtil {
 			GWTMailFolder[] folderArray = new GWTMailFolder[mailFolderList.size()];
 			int index = 0;
 			for (IMailFolder mailFolder : mailFolderList) {
-				folderArray[index++] = convert( mailFolder );
+				folderArray[index++] = convert( mailFolder, true );
 			}
 
 			return folderArray;
@@ -76,7 +76,7 @@ public class ConvertUtil {
 	 * @param mailFolder
 	 * @return
 	 */
-	public static GWTMailFolder convert( IMailFolder mailFolder ) {
+	public static GWTMailFolder convert( IMailFolder mailFolder, boolean completeTree ) {
 
 		GWTMailFolder result = new GWTMailFolder();
 
@@ -93,15 +93,17 @@ public class ConvertUtil {
 		result.setDeleteSupported( mailFolder.isDeleteSupported() );
 		result.setEmptySupported( mailFolder.isEmptySupported() );
 
-		IMailFolder[] subfolders = mailFolder.getSubfolders();
-		if ( subfolders.length > 0 ) {
-			GWTMailFolder[] gwtSubfolders = new GWTMailFolder[subfolders.length];
-			for (int i = 0; i < subfolders.length; i++) {
-				IMailFolder subfolder = mailFolder.getSubfolders()[i];
-				gwtSubfolders[i] = convert( subfolder );
-				gwtSubfolders[i].setParent( result );
+		if ( completeTree ) {
+			IMailFolder[] subfolders = mailFolder.getSubfolders();
+			if ( subfolders.length > 0 ) {
+				GWTMailFolder[] gwtSubfolders = new GWTMailFolder[subfolders.length];
+				for (int i = 0; i < subfolders.length; i++) {
+					IMailFolder subfolder = mailFolder.getSubfolders()[i];
+					gwtSubfolders[i] = convert( subfolder, completeTree );
+					gwtSubfolders[i].setParent( result );
+				}
+				result.setSubfolders( gwtSubfolders );
 			}
-			result.setSubfolders( gwtSubfolders );
 		}
 
 		return result;

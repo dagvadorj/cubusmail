@@ -26,6 +26,7 @@ import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.LogoutListener;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.windows.LoginWindow;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.core.client.EntryPoint;
@@ -35,7 +36,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Dialog;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -119,17 +119,16 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 
 	public void onUncaughtException( Throwable e ) {
 
-		GWT.log( "Unerwartet", e );
+		GWT.log( "Error", e );
 
-		SC.warn( "Unwerwarteter Fehler",
-				"Es ist ein unwerwarteter Fehler aufgetreten. Bitte melden Sie sich neu an: <br><br><pre>"
-						+ e.toString() + "</pre>", new BooleanCallback() {
+		SC.warn( TextProvider.get().common_unexpected_error() + "<br><br><pre>" + e.toString() + "</pre>",
+				new BooleanCallback() {
 
 					public void execute( Boolean value ) {
 
 						EventBroker.get().fireLogut();
 					}
-				}, new Dialog() );
+				} );
 	}
 
 	/*
@@ -144,18 +143,18 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 
 	/**
 	 * For test purposes only.
-	 *
+	 * 
 	 * @author Juergen Schlierf
 	 */
 	private class TestLoginAction extends LoginAction {
 
-		
 		public TestLoginAction() {
+
 			super();
-			setUsername( "schlierf" );
+			setUsername( "schlierf2" );
 			setPassword( "schlierf" );
 		}
-		
+
 		@Override
 		public void onSuccess( GWTMailbox result ) {
 

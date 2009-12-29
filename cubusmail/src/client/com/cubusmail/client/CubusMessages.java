@@ -351,6 +351,7 @@ public interface CubusMessages extends Messages {
 	public String common_half_an_hour();
 	public String common_never();
 	public String common_message_date_format();
+	public String common_unexpected_error();
 
 	// Excpetions
 	public String exception_login_connection();
