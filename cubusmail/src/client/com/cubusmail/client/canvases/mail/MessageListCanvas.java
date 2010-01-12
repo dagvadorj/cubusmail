@@ -62,6 +62,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		super();
 
 		this.sectionStack = new SectionStack();
+		// this.sectionStack.setSectionHeaderClass( "sectionStackSection" );
 
 		this.section = new SectionStackSection();
 		this.section.setCanCollapse( false );
@@ -207,7 +208,8 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	public void onFolderSelected( GWTMailFolder mailFolder ) {
 
-		this.section.setTitle( mailFolder.getName() );
+		// TODO: set the right section style
+		this.sectionStack.setSectionTitle( 0, "&nbsp;&nbsp;" + mailFolder.getName() );
 		Criteria critera = new Criteria( GWTMailConstants.PARAM_FOLDER_ID, mailFolder.getId() );
 		this.grid.fetchData( critera );
 	}

@@ -142,6 +142,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setCanAcceptDroppedRecords( true );
 		this.tree.setCanDropOnLeaves( true );
 		this.tree.setCanReparentNodes( true );
+		this.tree.setCanAcceptDrop( true );
 		this.tree.setDragDataAction( DragDataAction.MOVE );
 
 		// add action handler to the
