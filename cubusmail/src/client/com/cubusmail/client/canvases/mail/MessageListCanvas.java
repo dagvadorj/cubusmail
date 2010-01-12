@@ -26,6 +26,8 @@ import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
+import com.cubusmail.client.toolbars.MailToolbar;
+import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
@@ -186,6 +188,8 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	private void addGridHandlers() {
 
 		this.grid.addRecordClickHandler( ActionRegistry.LOAD_MESSAGE.get( LoadMessageAction.class ) );
+		this.grid.addSelectionChangedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
+		this.grid.addDataArrivedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
 	}
 
 	/*
@@ -196,7 +200,10 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	public void onMessagesReload() {
 
-		this.grid.fetchData();
+		Criteria criteria = new Criteria( GWTMailConstants.PARAM_FOLDER_ID, GWTSessionManager.get()
+				.getCurrentMailFolder().getId() );
+		this.grid.invalidateCache();
+		this.grid.fetchData( criteria );
 	}
 
 	/*
@@ -210,7 +217,8 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 
 		// TODO: set the right section style
 		this.sectionStack.setSectionTitle( 0, "&nbsp;&nbsp;" + mailFolder.getName() );
-		Criteria critera = new Criteria( GWTMailConstants.PARAM_FOLDER_ID, mailFolder.getId() );
-		this.grid.fetchData( critera );
+		Criteria criteria = new Criteria( GWTMailConstants.PARAM_FOLDER_ID, mailFolder.getId() );
+		this.grid.invalidateCache();
+		this.grid.fetchData( criteria );
 	}
 }

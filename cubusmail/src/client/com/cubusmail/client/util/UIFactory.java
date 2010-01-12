@@ -20,6 +20,7 @@
 package com.cubusmail.client.util;
 
 import com.cubusmail.client.actions.IGWTAction;
+import com.cubusmail.client.widgets.CubusButton;
 import com.cubusmail.client.widgets.CubusImgButton;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
@@ -28,10 +29,8 @@ import com.cubusmail.common.model.IGWTFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.types.ImageStyle;
 import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.HeaderControl;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
-import com.smartgwt.client.widgets.HeaderControl.HeaderIcon;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.MenuButton;
@@ -83,7 +82,7 @@ public abstract class UIFactory {
 	 */
 	public static Button createToolbarButton( final IGWTAction action, boolean imageOnly ) {
 
-		Button button = new Button();
+		Button button = new CubusButton();
 		if ( !imageOnly && action.getText() != null ) {
 			button.setTitle( action.getText() );
 			button.setAutoFit( true );
@@ -160,32 +159,10 @@ public abstract class UIFactory {
 	 * @param action
 	 * @return
 	 */
-	public static HeaderControl createHeaderControl( final IGWTAction action ) {
-
-		HeaderIcon icon = new HeaderIcon( action.getIcon() );
-		HeaderControl control = new HeaderControl( icon );
-		control.setShowDisabledIcon( false );
-		control.setShowRollOverIcon( false );
-		control.setShowDown( true );
-		control.setShowRollOver( true );
-		control.addClickHandler( new ClickHandler() {
-
-			public void onClick( ClickEvent event ) {
-
-				action.execute();
-			}
-		} );
-
-		return control;
-	}
-
-	/**
-	 * @param action
-	 * @return
-	 */
 	public static MenuButton createMenuButton( final IGWTAction action ) {
 
 		MenuButton button = new MenuButton( action.getText() );
+		button.setIconOrientation( "" );
 		button.setBorder( "0px" );
 		if ( action.getIcon() != null ) {
 			button.setIcon( action.getIcon() );

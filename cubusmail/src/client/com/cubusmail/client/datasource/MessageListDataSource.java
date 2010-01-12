@@ -45,6 +45,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		super();
 		setServerType( DSServerType.GENERIC );
+		setPreventHTTPCaching( true );
 		for (MessageListFields fieldDef : MessageListFields.values()) {
 			DataSourceField field = new DataSourceIntegerField( fieldDef.name() );
 			if ( MessageListFields.ID.equals( fieldDef ) ) {
@@ -90,6 +91,8 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			ascending = false;
 			sortColumn = sortColumn.substring( 1 );
 		}
+		
+		response.setInvalidateCache( true );
 
 		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
 				new String[2][0], new AsyncCallback<GWTMessageList>() {
@@ -97,6 +100,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 					public void onSuccess( GWTMessageList result ) {
 
 						mapResponse( response, result );
+						response.setStatus( RPCResponse.STATUS_SUCCESS );
 						processResponse( requestId, response );
 					}
 

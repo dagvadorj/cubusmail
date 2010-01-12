@@ -3,15 +3,29 @@ package com.cubusmail.client.toolbars;
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
-import com.cubusmail.common.model.ImageProvider;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.MenuButton;
 import com.smartgwt.client.widgets.menu.MenuItemSeparator;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
 
-public class MailToolbar extends ToolStrip {
+public class MailToolbar extends ToolStrip implements SelectionChangedHandler, DataArrivedHandler {
 
+	private Button replyButton;
+	private Button replyAllButton;
+	private Button forwardButton;
+	private Button deleteButton;
+	private MenuButton markMenuButton;
+	private Button printButton;
+
+	/**
+	 * 
+	 */
 	public MailToolbar() {
 
 		super();
@@ -21,29 +35,66 @@ public class MailToolbar extends ToolStrip {
 
 		addMember( new ToolStripSeparator() );
 
-		MenuButton replyMenuButton = UIFactory.createMenuButton( ActionRegistry.REPLY );
-		Menu replyMenu = new Menu();
-		replyMenu.addItem( UIFactory.createMenuItem( ActionRegistry.REPLY ) );
-		replyMenu.addItem( UIFactory.createMenuItem( ActionRegistry.REPLY_ALL ) );
-		replyMenuButton.setMenu( replyMenu );
-		addMember( replyMenuButton );
-		addMember( UIFactory.createToolbarButton( ActionRegistry.DELETE_MESSAGES, false ) );
+		addMember( this.replyButton = UIFactory.createToolbarButton( ActionRegistry.REPLY, false ) );
+		addMember( this.replyAllButton = UIFactory.createToolbarButton( ActionRegistry.REPLY_ALL, false ) );
+		addMember( this.forwardButton = UIFactory.createToolbarButton( ActionRegistry.FORWARD, false ) );
+		addMember( this.deleteButton = UIFactory.createToolbarButton( ActionRegistry.DELETE_MESSAGES, false ) );
+		addMember( this.printButton = UIFactory.createToolbarButton( ActionRegistry.PRINT_MESSAGE, false ) );
 
-		MenuButton markMenuButton = new MenuButton( TextProvider.get().toolbar_manager_mark() );
-		markMenuButton.setBorder( "0px" );
-		markMenuButton.setIcon( ImageProvider.MSG_MARK );
+		addMember( new ToolStripSeparator() );
+
+		this.markMenuButton = new MenuButton( TextProvider.get().toolbar_manager_mark() );
+		this.markMenuButton.setBorder( "0px" );
+		this.markMenuButton.setHeight( 20 );
 		Menu markMenu = new Menu();
 		markMenu.addItem( UIFactory.createMenuItem( ActionRegistry.MARK_AS_READ ) );
 		markMenu.addItem( UIFactory.createMenuItem( ActionRegistry.MARK_AS_UNREAD ) );
 		markMenu.addItem( new MenuItemSeparator() );
 		markMenu.addItem( UIFactory.createMenuItem( ActionRegistry.MARK_AS_DELETED ) );
 		markMenu.addItem( UIFactory.createMenuItem( ActionRegistry.MARK_AS_UNDELETED ) );
-		markMenuButton.setMenu( markMenu );
-		addMember( markMenuButton );
+		this.markMenuButton.setMenu( markMenu );
+		addMember( this.markMenuButton );
 
-		addMember( new ToolStripSeparator() );
+		setDisabled( true );
+	}
 
-		addMember( UIFactory.createToolbarButton( ActionRegistry.PRINT_MESSAGE, false ) );
-		addMember( UIFactory.createToolbarButton( ActionRegistry.SHOW_MESSAGE_SOURCE, false ) );
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seecom.smartgwt.client.widgets.grid.events.SelectionChangedHandler#
+	 * onSelectionChanged
+	 * (com.smartgwt.client.widgets.grid.events.SelectionEvent)
+	 */
+	public void onSelectionChanged( SelectionEvent event ) {
+
+		setDisabled( !event.getState() );
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.smartgwt.client.widgets.grid.events.DataArrivedHandler#onDataArrived
+	 * (com.smartgwt.client.widgets.grid.events.DataArrivedEvent)
+	 */
+	public void onDataArrived( DataArrivedEvent event ) {
+
+		setDisabled( true );
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.smartgwt.client.widgets.Canvas#setDisabled(boolean)
+	 */
+	@Override
+	public void setDisabled( boolean disabled ) {
+
+		this.replyButton.setDisabled( disabled );
+		this.replyAllButton.setDisabled( disabled );
+		this.forwardButton.setDisabled( disabled );
+		this.deleteButton.setDisabled( disabled );
+		this.markMenuButton.setDisabled( disabled );
+		this.printButton.setDisabled( disabled );
 	}
 }

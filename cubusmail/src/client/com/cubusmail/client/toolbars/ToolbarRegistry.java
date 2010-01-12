@@ -22,6 +22,7 @@ package com.cubusmail.client.toolbars;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
 /**
@@ -48,6 +49,13 @@ public enum ToolbarRegistry {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T extends Canvas> T get( Class<T> type ) {
+
+		// type.cast() is not pssible with GWT
+		return (T) get();
+	}
+	
 	/**
 	 * create actions
 	 */
@@ -58,6 +66,6 @@ public enum ToolbarRegistry {
 			return new MailToolbar();
 		}
 
-		throw new IllegalArgumentException( "ToolStrip missing: " + name() );
+		throw new IllegalArgumentException( "Toolbar missing: " + name() );
 	}
 }

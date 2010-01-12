@@ -40,6 +40,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.DisplayNodeType;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.EditCompletionEvent;
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
@@ -120,6 +121,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private void createTree() {
 
 		this.tree = new TreeGrid();
+		this.tree.setOverflow( Overflow.SCROLL );
 		this.tree.setLoadingDataMessage( TextProvider.get().common_mask_text() );
 		this.tree.setDisplayNodeType( DisplayNodeType.NULL );
 		this.tree.setShowRoot( false );
