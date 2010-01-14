@@ -27,9 +27,11 @@ import java.util.List;
 import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.ContactFolderType;
 import com.cubusmail.common.model.IGWTFolder;
+import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.Element;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -160,5 +162,21 @@ public abstract class GWTUtil {
 			return nodeNames;
 		}
 		return null;
+	}
+
+	/**
+	 * Create a ListGridRecord form string array.
+	 * 
+	 * @param source
+	 * @return
+	 */
+	public static ListGridRecord createListGridRecord( String[] source ) {
+
+		ListGridRecord result = new ListGridRecord();
+		for (MessageListFields fieldDef : MessageListFields.values()) {
+			result.setAttribute( fieldDef.name(), source[fieldDef.ordinal()] );
+		}
+
+		return result;
 	}
 }

@@ -66,7 +66,7 @@ public class CubusImgButton extends ImgButton {
 	public void setDisabled( boolean disabled ) {
 
 		if ( disabled ) {
-			setOpacity( 70 );
+			setOpacity( 50 );
 		}
 		else {
 			setOpacity( 100 );

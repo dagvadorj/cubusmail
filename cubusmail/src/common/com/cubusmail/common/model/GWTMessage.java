@@ -55,6 +55,11 @@ public class GWTMessage implements IsSerializable {
 	private boolean acknowledgement;
 	private GWTAttachment[] attachments = new GWTAttachment[0];
 
+	/**
+	 * Message as table record.
+	 */
+	private String[] messageRecord;
+
 	private Long identityId;
 
 	public GWTMessage() {
@@ -431,5 +436,15 @@ public class GWTMessage implements IsSerializable {
 	public void setTrustImages( boolean trustImages ) {
 
 		this.trustImages = trustImages;
+	}
+
+	public String[] getMessageRecord() {
+
+		return messageRecord;
+	}
+
+	public void setMessageRecord( String[] messageRecord ) {
+
+		this.messageRecord = messageRecord;
 	}
 }

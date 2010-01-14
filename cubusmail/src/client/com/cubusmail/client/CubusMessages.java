@@ -174,6 +174,9 @@ public interface CubusMessages extends Messages {
 	public String views_messages_columnheader_size();
 
 	// message grid
+	public String grid_messages_status();
+	public String grid_messages_attachments();
+	public String grid_messages_priority();
 	public String grid_messages_subject();
 	public String grid_messages_from();
 	public String grid_messages_to();

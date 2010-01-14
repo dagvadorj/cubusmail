@@ -21,13 +21,6 @@
 package com.cubusmail.server.services;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.mail.FetchProfile;
 import javax.mail.Flags;
@@ -37,7 +30,6 @@ import javax.mail.SendFailedException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -52,7 +44,6 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.MessageFlags;
-import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.common.services.IMailboxService;
@@ -69,11 +60,11 @@ import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
 import com.cubusmail.server.user.UserAccountDao;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.BeanIds;
-import com.cubusmail.server.util.CubusConstants;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.sun.mail.imap.IMAPFolder;
 
 /**
  * Servlet for all mailbox services.
@@ -187,7 +178,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 		IMailFolder sourceFolder = mailbox.getMailFolderById( sourceFolderId );
 		try {
 			IMailFolder folder = mailbox.moveFolder( sourceFolderId, targetFolderId );
-			log.debug( "...successful" );			
+			log.debug( "...successful" );
 
 			return ConvertUtil.convert( folder, true );
 		}
@@ -332,44 +323,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 					FetchProfile completeProfile = MessageUtils.createFetchProfile( true, null );
 					currentFolder.fetch( pagedMessages, completeProfile );
 
-					String[][] messageStringArray = new String[pageSize][MessageListFields.values().length];
 					Preferences preferences = SessionManager.get().getPreferences();
 
-					// get date formats for message list date
-					Locale locale = SessionManager.get().getLocale();
-					TimeZone timezone = SessionManager.get().getTimeZone();
-					String datePattern = this.applicationContext.getMessage(
-							CubusConstants.MESSAGELIST_DATE_FORMAT_PATTERN, null, locale );
-					String timePattern = this.applicationContext.getMessage(
-							CubusConstants.MESSAGELIST_TIME_FORMAT_PATTERN, null, locale );
+					String[][] messageStringArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext,
+							preferences, (IMAPFolder) currentFolder.getFolder(), pageSize, pagedMessages );
 
-					NumberFormat sizeFormat = MessageUtils.createSizeFormat( locale );
-
-					DateFormat dateFormat = null;
-					DateFormat timeFormat = null;
-					if ( preferences.isShortTimeFormat() ) {
-						dateFormat = new SimpleDateFormat( datePattern, locale );
-						timeFormat = new SimpleDateFormat( timePattern, locale );
-						timeFormat.setTimeZone( timezone );
-					}
-					else {
-						dateFormat = new SimpleDateFormat( datePattern + " " + timePattern, locale );
-					}
-					dateFormat.setTimeZone( timezone );
-					Date today = Calendar.getInstance( timezone ).getTime();
-
-					for (int i = 0; i < pageSize; i++) {
-						if ( preferences.isShortTimeFormat()
-								&& DateUtils.isSameDay( today, pagedMessages[i].getSentDate() ) ) {
-							// show only time
-							ConvertUtil.convertToStringArray( currentFolder, pagedMessages[i], messageStringArray[i],
-									timeFormat, sizeFormat );
-						}
-						else {
-							ConvertUtil.convertToStringArray( currentFolder, pagedMessages[i], messageStringArray[i],
-									dateFormat, sizeFormat );
-						}
-					}
 					log.debug( "..finish. Time for building Array: " + (System.currentTimeMillis() - time) );
 
 					return new GWTMessageList( messageStringArray, msgs.length );

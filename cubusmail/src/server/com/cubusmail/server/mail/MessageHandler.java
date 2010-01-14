@@ -705,6 +705,11 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 			gwtMsg.setAttachments( attachments );
 		}
 
+		Preferences preferences = SessionManager.get().getPreferences();
+		String[][] messageArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext, preferences,
+				(IMAPFolder) this.message.getFolder(), 1, new Message[] { this.message } );
+		gwtMsg.setMessageRecord( messageArray[0] );
+
 		return gwtMsg;
 	}
 

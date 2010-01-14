@@ -46,6 +46,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 		super();
 		setServerType( DSServerType.GENERIC );
 		setPreventHTTPCaching( true );
+		setCanMultiSort( false );
 		for (MessageListFields fieldDef : MessageListFields.values()) {
 			DataSourceField field = new DataSourceIntegerField( fieldDef.name() );
 			if ( MessageListFields.ID.equals( fieldDef ) ) {
@@ -91,7 +92,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			ascending = false;
 			sortColumn = sortColumn.substring( 1 );
 		}
-		
+
 		response.setInvalidateCache( true );
 
 		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
@@ -150,10 +151,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			ListGridRecord[] records = new ListGridRecord[recordCount];
 			for (int i = 0; i < recordCount; i++) {
 				String[] source = data.getMessages()[i];
-				records[i] = new ListGridRecord();
-				for (MessageListFields fieldDef : MessageListFields.values()) {
-					records[i].setAttribute( fieldDef.name(), source[fieldDef.ordinal()] );
-				}
+				records[i] = GWTUtil.createListGridRecord( source );
 			}
 			response.setData( records );
 			response.setTotalRows( data.getTotalRecords() );

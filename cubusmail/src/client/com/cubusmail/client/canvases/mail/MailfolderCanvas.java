@@ -121,7 +121,7 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 	private void createTree() {
 
 		this.tree = new TreeGrid();
-		this.tree.setOverflow( Overflow.SCROLL );
+		this.tree.setOverflow( Overflow.AUTO );
 		this.tree.setLoadingDataMessage( TextProvider.get().common_mask_text() );
 		this.tree.setDisplayNodeType( DisplayNodeType.NULL );
 		this.tree.setShowRoot( false );
