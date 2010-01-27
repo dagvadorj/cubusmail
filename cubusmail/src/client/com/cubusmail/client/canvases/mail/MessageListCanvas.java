@@ -19,37 +19,23 @@
  */
 package com.cubusmail.client.canvases.mail;
 
-import com.cubusmail.client.actions.ActionRegistry;
-import com.cubusmail.client.actions.message.LoadMessageAction;
 import com.cubusmail.client.canvases.CanvasRegistry;
-import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessageLoadedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
-import com.cubusmail.client.toolbars.MailToolbar;
-import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.GWTSessionManager;
-import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.RecordList;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.grid.events.HeaderClickEvent;
-import com.smartgwt.client.widgets.grid.events.HeaderClickHandler;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -64,7 +50,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 
 	private SectionStack sectionStack;
 	private SectionStackSection section;
-	private ListGrid grid;
+	private MessageListGrid grid;
 	private TextItem searchItem;
 
 	public MessageListCanvas() {
@@ -91,18 +77,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		searchButton.setAutoFit( true );
 		section.setControls( searchCanvas, searchButton );
 
-		this.grid = new ListGrid();
-		this.grid.setSelectionType( SelectionStyle.MULTIPLE );
-		this.grid.setAutoFetchData( false );
-		this.grid.setAlternateRecordStyles( true );
-		this.grid.setWidth100();
-		this.grid.setFields( generateFields() );
-		this.grid.setDataSource( DataSourceRegistry.MESSAGE_LIST.get() );
-		this.grid.setDataPageSize( GWTMailConstants.MESSAGE_LIST_PAGE_SIZE );
-		this.grid.setFastCellUpdates( false );
-		this.grid.setSaveLocally( false );
-		addGridHandlers();
-
+		this.grid = new MessageListGrid();
 		this.section.setItems( this.grid );
 
 		this.sectionStack.setSections( this.section );
@@ -122,105 +97,6 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		EventBroker.get().addMessageLoadedListener( this );
 	}
 
-	/**
-	 * Create the columns fields for the message grid.
-	 * 
-	 * @return
-	 */
-	private ListGridField[] generateFields() {
-
-		ListGridField[] fields = new ListGridField[7];
-
-		// read flag
-		fields[0] = new ListGridField( MessageListFields.FLAG_IMAGE.name(), TextProvider.get().grid_messages_status(),
-				25 );
-		fields[0].setAlign( Alignment.CENTER );
-		fields[0].setType( ListGridFieldType.IMAGE );
-		fields[0].setCanSort( false );
-		fields[0].setCanGroupBy( false );
-		fields[0].setShowGridSummary( false );
-		Button headerButton = new Button();
-		headerButton.setIcon( ImageProvider.MSG_STATUS_READ );
-		fields[0].setHeaderButtonProperties( headerButton );
-		fields[0].setShowDefaultContextMenu( false );
-		fields[0].setFrozen( true );
-		fields[0].setCanFreeze( false );
-
-		// attachment flag
-		fields[1] = new ListGridField( MessageListFields.ATTACHMENT_IMAGE.name(), TextProvider.get()
-				.grid_messages_attachments(), 25 );
-		fields[1].setAlign( Alignment.CENTER );
-		fields[1].setType( ListGridFieldType.IMAGE );
-		fields[1].setCanSort( false );
-		fields[1].setCanGroupBy( false );
-		fields[1].setShowGridSummary( false );
-		headerButton = new Button();
-		headerButton.setIcon( ImageProvider.MSG_ATTACHMENT );
-		fields[1].setHeaderButtonProperties( headerButton );
-		fields[1].setShowDefaultContextMenu( false );
-		fields[1].setFrozen( true );
-		fields[1].setCanFreeze( false );
-
-		// priority flag
-		fields[2] = new ListGridField( MessageListFields.PRIORITY_IMAGE.name(), TextProvider.get()
-				.grid_messages_priority(), 25 );
-		fields[2].setAlign( Alignment.CENTER );
-		fields[2].setType( ListGridFieldType.IMAGE );
-		fields[2].setCanSort( false );
-		fields[2].setCanGroupBy( false );
-		fields[2].setShowGridSummary( false );
-		fields[2].setShowGridSummary( false );
-		headerButton = new Button();
-		headerButton.setIcon( ImageProvider.PRIORITY_HIGH );
-		fields[2].setHeaderButtonProperties( headerButton );
-		fields[2].setShowDefaultContextMenu( false );
-		fields[2].setFrozen( true );
-		fields[2].setCanFreeze( false );
-
-		// subject
-		fields[3] = new ListGridField( MessageListFields.SUBJECT.name(), TextProvider.get().grid_messages_subject(),
-				500 );
-		fields[3].setAlign( Alignment.LEFT );
-		fields[3].setCanGroupBy( false );
-		fields[3].setFrozen( true );
-		fields[3].setCanFreeze( false );
-
-		// from
-		fields[4] = new ListGridField( MessageListFields.FROM.name(), TextProvider.get().grid_messages_from(), 200 );
-		fields[4].setAlign( Alignment.LEFT );
-		fields[4].setCanGroupBy( false );
-		fields[4].setShowGridSummary( false );
-		fields[4].setFrozen( true );
-		fields[4].setCanFreeze( false );
-
-		// send date
-		fields[5] = new ListGridField( MessageListFields.SEND_DATE.name(), TextProvider.get().grid_messages_date(), 120 );
-		fields[5].setAlign( Alignment.LEFT );
-		fields[5].setCanGroupBy( false );
-		fields[5].setShowGridSummary( false );
-		fields[5].setFrozen( true );
-		fields[5].setCanFreeze( false );
-
-		// size
-		fields[6] = new ListGridField( MessageListFields.SIZE.name(), TextProvider.get().grid_messages_size(), 120 );
-		fields[6].setAlign( Alignment.RIGHT );
-		fields[6].setCanGroupBy( false );
-		fields[6].setShowGridSummary( false );
-		fields[6].setFrozen( true );
-		fields[6].setCanFreeze( false );
-
-		return fields;
-	}
-
-	/**
-	 * Add all necessary handlers.
-	 */
-	private void addGridHandlers() {
-
-		this.grid.addRecordClickHandler( ActionRegistry.LOAD_MESSAGE.get( LoadMessageAction.class ) );
-		this.grid.addSelectionChangedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
-		this.grid.addDataArrivedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
-	}
 
 	/*
 	 * (non-Javadoc)

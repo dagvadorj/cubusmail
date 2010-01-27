@@ -176,6 +176,7 @@ public abstract class GWTUtil {
 		for (MessageListFields fieldDef : MessageListFields.values()) {
 			result.setAttribute( fieldDef.name(), source[fieldDef.ordinal()] );
 		}
+		// result.setAttribute( MessageListFields.ATTACHMENT_IMAGE, MessageListFields.ATTACHMENT_IMAGE );
 
 		return result;
 	}
