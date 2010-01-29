@@ -58,7 +58,7 @@ public class GWTMessage implements IsSerializable {
 	/**
 	 * Message as table record.
 	 */
-	private String[] messageRecord;
+	private GWTMessageRecord messageRecord;
 
 	private Long identityId;
 
@@ -438,12 +438,12 @@ public class GWTMessage implements IsSerializable {
 		this.trustImages = trustImages;
 	}
 
-	public String[] getMessageRecord() {
+	public GWTMessageRecord getMessageRecord() {
 
 		return messageRecord;
 	}
 
-	public void setMessageRecord( String[] messageRecord ) {
+	public void setMessageRecord( GWTMessageRecord messageRecord ) {
 
 		this.messageRecord = messageRecord;
 	}

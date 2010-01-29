@@ -23,18 +23,18 @@ package com.cubusmail.common.model;
 import java.io.Serializable;
 
 /**
- * client side message list representation.
+ * Client side message list representation.
  * 
  * @author Juergen Schlierf
  */
 public class GWTMessageList implements Serializable {
-	
+
 	private static final long serialVersionUID = 6500380978051814583L;
 
-	private String[][] messages;
+	private GWTMessageRecord[] messages;
 	private int totalRecords;
 
-	public GWTMessageList( String[][] messages, int totalRecords ) {
+	public GWTMessageList( GWTMessageRecord[] messages, int totalRecords ) {
 
 		this.messages = messages;
 		this.totalRecords = totalRecords;
@@ -44,21 +44,16 @@ public class GWTMessageList implements Serializable {
 
 	}
 
-	
-	/**
-	 * @return Returns the messages.
-	 */
-	public String[][] getMessages() {
-	
-		return this.messages;
+	public GWTMessageRecord[] getMessages() {
+
+		return messages;
 	}
 
-	
 	/**
 	 * @return Returns the totalRecords.
 	 */
 	public int getTotalRecords() {
-	
+
 		return this.totalRecords;
 	}
 }

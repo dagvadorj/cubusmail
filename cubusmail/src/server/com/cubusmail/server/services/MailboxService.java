@@ -43,6 +43,7 @@ import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
+import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageFlags;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
@@ -325,7 +326,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 
 					Preferences preferences = SessionManager.get().getPreferences();
 
-					String[][] messageStringArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext,
+					GWTMessageRecord[] messageStringArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext,
 							preferences, (IMAPFolder) currentFolder.getFolder(), pageSize, pagedMessages );
 
 					log.debug( "..finish. Time for building Array: " + (System.currentTimeMillis() - time) );

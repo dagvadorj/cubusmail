@@ -37,7 +37,6 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Message.RecipientType;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.util.HtmlUtils;
@@ -46,8 +45,9 @@ import com.cubusmail.common.model.GWTAddress;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
+import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.ImageProvider;
-import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.model.MessageFlags;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
@@ -147,10 +147,10 @@ public class ConvertUtil {
 	 * @return
 	 * @throws MessagingException
 	 */
-	public static String[][] convertMessagesToStringArray( ApplicationContext context, Preferences preferences,
+	public static GWTMessageRecord[] convertMessagesToStringArray( ApplicationContext context, Preferences preferences,
 			IMAPFolder currentFolder, int pageSize, Message msgs[] ) throws MessagingException {
 
-		String[][] result = new String[pageSize][MessageListFields.values().length];
+		GWTMessageRecord[] result = new GWTMessageRecord[pageSize];
 
 		// get date formats for message list date
 		Locale locale = SessionManager.get().getLocale();
@@ -174,6 +174,7 @@ public class ConvertUtil {
 		Date today = Calendar.getInstance( timezone ).getTime();
 
 		for (int i = 0; i < pageSize; i++) {
+			result[i] = new GWTMessageRecord();
 			if ( preferences.isShortTimeFormat() && DateUtils.isSameDay( today, msgs[i].getSentDate() ) ) {
 				// show only time
 				convertToStringArray( currentFolder, msgs[i], result[i], timeFormat, sizeFormat );
@@ -192,78 +193,41 @@ public class ConvertUtil {
 	 * @param result
 	 * @throws MessagingException
 	 */
-	private static void convertToStringArray( IMAPFolder folder, Message msg, String[] result, DateFormat dateFormat,
-			NumberFormat decimalFormat ) throws MessagingException {
+	private static void convertToStringArray( IMAPFolder folder, Message msg, GWTMessageRecord result,
+			DateFormat dateFormat, NumberFormat decimalFormat ) throws MessagingException {
 
-		result[MessageListFields.ID.ordinal()] = Long.toString( folder.getUID( msg ) );
+		result.setId( Long.toString( folder.getUID( msg ) ) );
 		try {
-			result[MessageListFields.ATTACHMENT_IMAGE.ordinal()] = MessageUtils.hasAttachments( msg ) ? ImageProvider.MSG_ATTACHMENT
-					: null;
+			result.setAttachmentImage( MessageUtils.hasAttachments( msg ) ? ImageProvider.MSG_ATTACHMENT : null );
 		}
 		catch (IOException e) {
 			// do nothing
 		}
-		result[MessageListFields.FLAG_IMAGE.ordinal()] = getFlagImage( msg );
-		result[MessageListFields.PRIORITY_IMAGE.ordinal()] = getPriorityImage( msg );
-		if ( !StringUtils.isEmpty( msg.getSubject() ) ) {
-			result[MessageListFields.SUBJECT.ordinal()] = getPreformattedString( msg, msg.getSubject() );
-		}
-		result[MessageListFields.FROM.ordinal()] = getPreformattedString( msg, MessageUtils.getMailAdressString( msg
-				.getFrom(), AddressStringType.PERSONAL ) );
-		result[MessageListFields.TO.ordinal()] = getPreformattedString( msg, MessageUtils.getMailAdressString( msg
-				.getRecipients( RecipientType.TO ), AddressStringType.PERSONAL ) );
-		if ( msg.getSentDate() != null ) {
-			result[MessageListFields.SEND_DATE.ordinal()] = getPreformattedString( msg, dateFormat.format( msg
-					.getSentDate() ) );
-		}
-		result[MessageListFields.SIZE.ordinal()] = getPreformattedString( msg, MessageUtils.formatPartSize(
-				MessageUtils.calculateAttachmentSize( msg.getSize() ), decimalFormat ) );
-	}
-
-	/**
-	 * @param msg
-	 * @return
-	 * @throws MessagingException
-	 */
-	private static String getFlagImage( Message msg ) throws MessagingException {
-
 		if ( msg.isSet( Flags.Flag.DELETED ) ) {
-			return ImageProvider.MSG_STATUS_DELETED;
+			result.addFlag( MessageFlags.DELETED );
 		}
-		else if ( !msg.isSet( Flags.Flag.SEEN ) ) {
-			return ImageProvider.MSG_STATUS_UNREAD;
+		if ( !msg.isSet( Flags.Flag.SEEN ) ) {
+			result.addFlag( MessageFlags.UNREAD );
 		}
-		else if ( msg.isSet( Flags.Flag.ANSWERED ) ) {
-			return ImageProvider.MSG_STATUS_ANSWERED;
+		if ( msg.isSet( Flags.Flag.ANSWERED ) ) {
+			result.addFlag( MessageFlags.ANSWERED );
 		}
-		else if ( msg.isSet( Flags.Flag.DRAFT ) ) {
-			return ImageProvider.MSG_STATUS_DRAFT;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Format all values corresponding to message flags.
-	 * 
-	 * @param msg
-	 * @param value
-	 * @return
-	 * @throws MessagingException
-	 */
-	private static String getPreformattedString( Message msg, String value ) throws MessagingException {
-
-		if ( !StringUtils.isEmpty( value ) ) {
-			value = HtmlUtils.htmlEscape( value );
-			if ( msg.isSet( Flags.Flag.DELETED ) ) {
-				return "<strike>" + value + "</strike>";
-			}
-			else if ( !msg.isSet( Flags.Flag.SEEN ) ) {
-				return "<b>" + value + "</b>";
-			}
+		if ( msg.isSet( Flags.Flag.DRAFT ) ) {
+			result.addFlag( MessageFlags.DRAFT );
 		}
 
-		return value;
+		result.setProrityImage( getPriorityImage( msg ) );
+		result.setSubject( HtmlUtils.htmlEscape( msg.getSubject() ) );
+
+		result.setFrom( HtmlUtils.htmlEscape( MessageUtils.getMailAdressString( msg.getFrom(),
+				AddressStringType.PERSONAL ) ) );
+		result.setTo( HtmlUtils.htmlEscape( MessageUtils.getMailAdressString( msg.getRecipients( RecipientType.TO ),
+				AddressStringType.PERSONAL ) ) );
+		if ( msg.getSentDate() != null ) {
+			result.setSendDateString( HtmlUtils.htmlEscape( dateFormat.format( msg.getSentDate() ) ) );
+		}
+		result.setSizeString( HtmlUtils.htmlEscape( MessageUtils.formatPartSize( MessageUtils
+				.calculateAttachmentSize( msg.getSize() ), decimalFormat ) ) );
 	}
 
 	/**

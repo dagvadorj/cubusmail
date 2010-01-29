@@ -54,11 +54,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import com.sun.mail.imap.IMAPFolder;
-
 import com.cubusmail.common.model.GWTAddress;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMessage;
+import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
@@ -69,6 +68,7 @@ import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
 import com.cubusmail.server.services.ConvertUtil;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.CubusConstants;
+import com.sun.mail.imap.IMAPFolder;
 
 /**
  * Wraps the java mail message and includes some mail operations.
@@ -706,7 +706,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 		}
 
 		Preferences preferences = SessionManager.get().getPreferences();
-		String[][] messageArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext, preferences,
+		GWTMessageRecord[] messageArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext, preferences,
 				(IMAPFolder) this.message.getFolder(), 1, new Message[] { this.message } );
 		gwtMsg.setMessageRecord( messageArray[0] );
 

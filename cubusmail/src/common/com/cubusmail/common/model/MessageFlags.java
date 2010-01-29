@@ -20,10 +20,10 @@
 package com.cubusmail.common.model;
 
 /**
- * Message flags corresponding to the JavaMail flags.
+ * Message flags similar to the JavaMail flags.
  * 
  * @author Juergen Schlierf
  */
 public enum MessageFlags {
-	READ, UNREAD, DELETED, UNDELETED, DRAFT;
+	READ, UNREAD, DELETED, UNDELETED, DRAFT, NOT_DRAFT, ANSWERED, UNANSWERED;
 }
