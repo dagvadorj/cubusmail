@@ -45,9 +45,9 @@ import com.cubusmail.common.model.GWTAddress;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.ImageProvider;
-import com.cubusmail.common.model.MessageFlags;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
@@ -203,18 +203,12 @@ public class ConvertUtil {
 		catch (IOException e) {
 			// do nothing
 		}
-		if ( msg.isSet( Flags.Flag.DELETED ) ) {
-			result.addFlag( MessageFlags.DELETED );
-		}
-		if ( !msg.isSet( Flags.Flag.SEEN ) ) {
-			result.addFlag( MessageFlags.UNREAD );
-		}
-		if ( msg.isSet( Flags.Flag.ANSWERED ) ) {
-			result.addFlag( MessageFlags.ANSWERED );
-		}
-		if ( msg.isSet( Flags.Flag.DRAFT ) ) {
-			result.addFlag( MessageFlags.DRAFT );
-		}
+		GWTMessageFlags flags = new GWTMessageFlags();
+		flags.setDeleted( msg.isSet( Flags.Flag.DELETED ) );
+		flags.setUnread( !msg.isSet( Flags.Flag.SEEN ) );
+		flags.setAnswered( msg.isSet( Flags.Flag.ANSWERED ) );
+		flags.setDraft( msg.isSet( Flags.Flag.DRAFT ) );
+		result.setFlags( flags );
 
 		result.setProrityImage( getPriorityImage( msg ) );
 		result.setSubject( HtmlUtils.htmlEscape( msg.getSubject() ) );

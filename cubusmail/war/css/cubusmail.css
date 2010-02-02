@@ -1,3 +1,9 @@
+.deletedMessageRecord {
+	text-decoration: line-through;
+	font-weight: bold;
+}
+
+
 .cubusImgButtonDown {
     background:#BEDDFF url(./images/cssButton/button_Down_stretch.png) repeat-x;
 	border-left:1px solid #b8cfef;
@@ -84,13 +90,4 @@
 
 .contactfolder-icon {
 	background-image: url( ../icons/contact/folder_user.png ) !important;
-}
-
-.x-grid3-cell-inner {
-	height: 16px;
-	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	text-overflow: ellipsis;
-	padding:0px 0px 0 0!important;
-	white-space: nowrap;
 }

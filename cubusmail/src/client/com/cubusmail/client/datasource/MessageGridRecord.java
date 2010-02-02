@@ -19,12 +19,13 @@
  */
 package com.cubusmail.client.datasource;
 
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageListFields;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
- * List Grid Record implementation für message records with some convenience
+ * List Grid Record implementation for message records with some convenience
  * methods.
  * 
  * @author Juergen Schlierf
@@ -32,6 +33,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public class MessageGridRecord extends ListGridRecord {
 
 	public MessageGridRecord( GWTMessageRecord source ) {
+
 		super();
 		setGWTMessageRecord( source );
 	}
@@ -39,5 +41,20 @@ public class MessageGridRecord extends ListGridRecord {
 	public void setGWTMessageRecord( GWTMessageRecord source ) {
 
 		setAttribute( MessageListFields.ID.name(), source.getId() );
+		if ( source.getFlags() != null ) {
+			setAttribute( MessageListFields.FLAGS.name(), source.getFlags() );
+		}
+		setAttribute( MessageListFields.PRIORITY_IMAGE.name(), source.getProrityImage() );
+		setAttribute( MessageListFields.ATTACHMENT_IMAGE.name(), source.getAttachmentImage() );
+		setAttribute( MessageListFields.SUBJECT.name(), source.getSubject() );
+		setAttribute( MessageListFields.FROM.name(), source.getFrom() );
+		setAttribute( MessageListFields.TO.name(), source.getTo() );
+		setAttribute( MessageListFields.SEND_DATE.name(), source.getSendDateString() );
+		setAttribute( MessageListFields.SIZE.name(), source.getSizeString() );
+	}
+
+	public GWTMessageFlags getFlags() {
+
+		return (GWTMessageFlags) getAttributeAsObject( MessageListFields.FLAGS.name() );
 	}
 }

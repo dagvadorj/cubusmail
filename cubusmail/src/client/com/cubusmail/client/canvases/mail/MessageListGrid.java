@@ -26,6 +26,7 @@ import com.cubusmail.client.toolbars.MailToolbar;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
 import com.smartgwt.client.types.Alignment;
@@ -44,6 +45,11 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
  * @author Juergen Schlierf
  */
 public class MessageListGrid extends ListGrid {
+
+	private final static String HTML_IMG_UNREAD = Canvas.imgHTML( ImageProvider.MSG_STATUS_UNREAD );
+	private final static String HTML_IMG_ANSWERED = Canvas.imgHTML( ImageProvider.MSG_STATUS_ANSWERED );
+	private final static String HTML_IMG_DELETED = Canvas.imgHTML( ImageProvider.MSG_STATUS_DELETED );
+	private final static String HTML_IMG_DRAFT = Canvas.imgHTML( ImageProvider.MSG_STATUS_DRAFT );
 
 	public MessageListGrid() {
 
@@ -70,8 +76,7 @@ public class MessageListGrid extends ListGrid {
 		ListGridField[] fields = new ListGridField[7];
 
 		// read flag
-		fields[0] = new ListGridField( MessageListFields.FLAG_IMAGE.name(), TextProvider.get().grid_messages_status(),
-				25 );
+		fields[0] = new ListGridField( MessageListFields.FLAGS.name(), TextProvider.get().grid_messages_status(), 25 );
 		fields[0].setAlign( Alignment.CENTER );
 		fields[0].setType( ListGridFieldType.IMAGE );
 		fields[0].setCanSort( false );
@@ -83,14 +88,7 @@ public class MessageListGrid extends ListGrid {
 		fields[0].setShowDefaultContextMenu( false );
 		fields[0].setFrozen( true );
 		fields[0].setCanFreeze( false );
-		
-//		fields[0].setCellFormatter( new CellFormatter() {
-//
-//			public String format( Object value, ListGridRecord record, int rowNum, int colNum ) {
-//
-//				return Canvas.imgHTML( ImageProvider.CONTACT_ADD );
-//			}
-//		} );
+		fields[0].setCellFormatter( new FlagCellFormatter() );
 
 		// attachment flag
 		fields[1] = new ListGridField( MessageListFields.ATTACHMENT_IMAGE.name(), TextProvider.get()
@@ -167,4 +165,46 @@ public class MessageListGrid extends ListGrid {
 		addSelectionChangedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
 		addDataArrivedHandler( ToolbarRegistry.MAIL.get( MailToolbar.class ) );
 	}
+
+	/**
+	 * CellFormater for mail flags.
+	 * 
+	 * @author Juergen Schlierf
+	 */
+	private class FlagCellFormatter implements CellFormatter {
+
+		public String format( Object value, ListGridRecord record, int rowNum, int colNum ) {
+
+			if ( value != null ) {
+				GWTMessageFlags flags = (GWTMessageFlags) value;
+				if ( flags.isDeleted() ) {
+					return HTML_IMG_DELETED;
+				}
+				else if ( flags.isAnswered() ) {
+					return HTML_IMG_ANSWERED;
+				}
+				else if ( flags.isDraft() ) {
+					return HTML_IMG_DRAFT;
+				}
+				else if ( flags.isUnread() ) {
+					return HTML_IMG_UNREAD;
+				}
+			}
+//			if ( rowNum == 1 ) {
+//				record.setCustomStyle( customStyle )( "text-decoration: line-through;" );
+//			}
+			
+	
+
+			return null;
+		}
+	}
+
+	// private class CommonCellFormatter implements CellFormatter {
+	//
+	// public String format( Object value, ListGridRecord record, int rowNum,
+	// int colNum ) {
+	//
+	// }
+	// }
 }

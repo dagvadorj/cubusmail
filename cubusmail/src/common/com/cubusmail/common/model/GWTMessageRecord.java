@@ -20,8 +20,6 @@
 package com.cubusmail.common.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * POJO für message record representing a message in a grid.
@@ -37,7 +35,7 @@ public class GWTMessageRecord implements Serializable {
 	 * Flags can change on client side. So the flag images are rendered on
 	 * client.
 	 */
-	private List<MessageFlags> flags;
+	private GWTMessageFlags flags;
 	private String attachmentImage;
 	private String prorityImage;
 	private String subject;
@@ -45,24 +43,6 @@ public class GWTMessageRecord implements Serializable {
 	private String to;
 	private String sendDateString;
 	private String sizeString;
-
-	public void addFlag( MessageFlags flag ) {
-
-		if ( this.flags == null ) {
-			this.flags = new ArrayList<MessageFlags>();
-		}
-		this.flags.add( flag );
-	}
-
-	public List<MessageFlags> getFlags() {
-
-		return flags;
-	}
-
-	public void setFlags( List<MessageFlags> flags ) {
-
-		this.flags = flags;
-	}
 
 	public String getSubject() {
 
@@ -142,5 +122,15 @@ public class GWTMessageRecord implements Serializable {
 	public String getProrityImage() {
 
 		return prorityImage;
+	}
+
+	public GWTMessageFlags getFlags() {
+
+		return flags;
+	}
+
+	public void setFlags( GWTMessageFlags flags ) {
+
+		this.flags = flags;
 	}
 }

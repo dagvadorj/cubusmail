@@ -26,7 +26,7 @@ import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.ImageProvider;
-import com.cubusmail.common.model.MessageFlags;
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -102,23 +102,23 @@ public class MarkMessageAction extends BaseGridAction implements AsyncCallback<V
 	 */
 	public static enum MarkActionType {
 		READ(TextProvider.get().actions_markread_text(), TextProvider.get().actions_markread_tooltip(),
-				ImageProvider.MSG_STATUS_READ, MessageFlags.READ, true),
+				ImageProvider.MSG_STATUS_READ, GWTMessageFlags.READ, true),
 
 		UNREAD(TextProvider.get().actions_markunread_text(), TextProvider.get().actions_markunread_tooltip(),
-				ImageProvider.MSG_STATUS_UNREAD, MessageFlags.UNREAD, false),
+				ImageProvider.MSG_STATUS_UNREAD, GWTMessageFlags.UNREAD, false),
 
 		DELETED(TextProvider.get().actions_markdeleted_text(), TextProvider.get().actions_markdeleted_tooltip(),
-				ImageProvider.MSG_STATUS_DELETED, MessageFlags.DELETED, true),
+				ImageProvider.MSG_STATUS_DELETED, GWTMessageFlags.DELETED, true),
 
 		UNDELETED(TextProvider.get().actions_markundeleted_text(), TextProvider.get().actions_markundeleted_tooltip(),
-				ImageProvider.MSG_STATUS_READ, MessageFlags.UNDELETED, false);
+				ImageProvider.MSG_STATUS_READ, GWTMessageFlags.UNDELETED, false);
 
 		private String text;
 		private String tooltipText;
 		private String image;
-		private MessageFlags flag;
+		private int flag;
 
-		MarkActionType( String text, String tooptipText, String image, MessageFlags flag, boolean mark ) {
+		MarkActionType( String text, String tooptipText, String image, int flag, boolean mark ) {
 
 			this.text = text;
 			this.tooltipText = tooptipText;
@@ -150,7 +150,7 @@ public class MarkMessageAction extends BaseGridAction implements AsyncCallback<V
 			return this.image;
 		}
 
-		public MessageFlags getFlag() {
+		public int getFlag() {
 
 			return flag;
 		}

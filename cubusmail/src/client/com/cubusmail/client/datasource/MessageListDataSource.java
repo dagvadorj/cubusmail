@@ -149,7 +149,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		if ( data != null && data.getMessages().length > 0 ) {
 			int recordCount = data.getMessages().length;
-			ListGridRecord[] records = new ListGridRecord[recordCount];
+			MessageGridRecord[] records = new MessageGridRecord[recordCount];
 			for (int i = 0; i < recordCount; i++) {
 				GWTMessageRecord source = data.getMessages()[i];
 				records[i] = new MessageGridRecord( source );

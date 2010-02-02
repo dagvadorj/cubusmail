@@ -44,7 +44,7 @@ import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.GWTMessageRecord;
-import com.cubusmail.common.model.MessageFlags;
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.common.services.IMailboxService;
@@ -410,7 +410,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#markMessage(long[],
 	 * com.cubusmail.gwtui.domain.MessageListFields, boolean)
 	 */
-	public void markMessage( long[] messageIds, MessageFlags flag ) throws Exception {
+	public void markMessage( long[] messageIds, int flag ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		if ( messageIds != null && messageIds.length > 0 ) {
@@ -421,20 +421,20 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				for (int i = 0; i < messageIds.length; i++) {
 					Message msg = currentFolder.getMessageById( messageIds[i] );
 					switch (flag) {
-					case READ:
+					case GWTMessageFlags.READ:
 						MessageUtils.setMessageFlag( msg, Flags.Flag.SEEN, true );
 						break;
-					case UNREAD:
+					case GWTMessageFlags.UNREAD:
 						MessageUtils.setMessageFlag( msg, Flags.Flag.SEEN, false );
 						break;
-					case DELETED:
+					case GWTMessageFlags.DELETED:
 						MessageUtils.setMessageFlag( msg, Flags.Flag.DELETED, true );
 						break;
-					case UNDELETED:
+					case GWTMessageFlags.UNDELETED:
 						MessageUtils.setMessageFlag( msg, Flags.Flag.DELETED, false );
 						break;
 					default:
-						throw new IllegalArgumentException( "Unknown flag: " + flag.name() );
+						throw new IllegalArgumentException( "Unknown flag: " + flag );
 					}
 				}
 				log.debug( "...successful" );
