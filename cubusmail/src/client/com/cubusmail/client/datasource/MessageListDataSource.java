@@ -24,6 +24,7 @@ import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessageList;
+import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
@@ -150,8 +151,8 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			int recordCount = data.getMessages().length;
 			ListGridRecord[] records = new ListGridRecord[recordCount];
 			for (int i = 0; i < recordCount; i++) {
-				String[] source = data.getMessages()[i];
-				records[i] = GWTUtil.createListGridRecord( source );
+				GWTMessageRecord source = data.getMessages()[i];
+				records[i] = new MessageGridRecord( source );
 			}
 			response.setData( records );
 			response.setTotalRows( data.getTotalRecords() );

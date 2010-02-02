@@ -20,6 +20,7 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
+import com.cubusmail.client.datasource.MessageGridRecord;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessageLoadedListener;
@@ -28,6 +29,7 @@ import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
+import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
 import com.smartgwt.client.data.Criteria;
@@ -35,7 +37,6 @@ import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -139,15 +140,13 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 
 		RecordList list = this.grid.getRecordList();
 		if ( list != null && list.getLength() > 0 ) {
-			ListGridRecord record = (ListGridRecord) list.find( MessageListFields.ID.name(), String.valueOf( message
+			MessageGridRecord record = (MessageGridRecord) list.find( MessageListFields.ID.name(), String.valueOf( message
 					.getId() ) );
 			if ( record != null ) {
-				String source[] = message.getMessageRecord();
+				GWTMessageRecord source = message.getMessageRecord();
 				int index = this.grid.getRecordIndex( record );
 				if ( index > -1 ) {
-					for (MessageListFields fieldDef : MessageListFields.values()) {
-						record.setAttribute( fieldDef.name(), source[fieldDef.ordinal()] );
-					}
+					record.setGWTMessageRecord( source );
 					this.grid.refreshRow( index );
 					// this.grid.redraw();
 				}
