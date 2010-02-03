@@ -20,6 +20,7 @@
 package com.cubusmail.client.datasource;
 
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.GWTMailConstants;
@@ -30,10 +31,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.SortSpecifier;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.types.DSServerType;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.types.SortDirection;
 
 /**
  * Data source for all messages.
@@ -86,12 +88,14 @@ public class MessageListDataSource extends GwtRpcDataSource {
 		final int endIndex = (request.getEndRow() == null) ? -1 : request.getEndRow();
 		final int pageSize = (endIndex != -1) ? (endIndex - startIndex) : GWTMailConstants.MESSAGE_LIST_PAGE_SIZE;
 
-		final String folderId = request.getCriteria().getAttribute( GWTMailConstants.PARAM_FOLDER_ID );
-		String sortColumn = null;
+		final String folderId = GWTSessionManager.get().getCurrentMailFolder().getId();
 		boolean ascending = true;
-		if ( GWTUtil.hasText( sortColumn ) && sortColumn.charAt( 0 ) == '-' ) {
-			ascending = false;
-			sortColumn = sortColumn.substring( 1 );
+		String sortColumn = null;
+
+		if ( request.getSortBy() != null && request.getSortBy().length > 0 ) {
+			SortSpecifier sortSpec = request.getSortBy()[0];
+			sortColumn = sortSpec.getField();
+			ascending = SortDirection.ASCENDING == sortSpec.getSortDirection();
 		}
 
 		response.setInvalidateCache( true );

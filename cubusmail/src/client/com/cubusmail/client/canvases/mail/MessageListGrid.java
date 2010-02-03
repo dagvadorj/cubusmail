@@ -113,7 +113,6 @@ public class MessageListGrid extends ListGrid {
 		fields[2].setCanSort( false );
 		fields[2].setCanGroupBy( false );
 		fields[2].setShowGridSummary( false );
-		fields[2].setShowGridSummary( false );
 		headerButton = new Button();
 		headerButton.setIcon( ImageProvider.PRIORITY_HIGH );
 		fields[2].setHeaderButtonProperties( headerButton );
@@ -190,21 +189,8 @@ public class MessageListGrid extends ListGrid {
 					return HTML_IMG_UNREAD;
 				}
 			}
-//			if ( rowNum == 1 ) {
-//				record.setCustomStyle( customStyle )( "text-decoration: line-through;" );
-//			}
-			
-	
 
 			return null;
 		}
 	}
-
-	// private class CommonCellFormatter implements CellFormatter {
-	//
-	// public String format( Object value, ListGridRecord record, int rowNum,
-	// int colNum ) {
-	//
-	// }
-	// }
 }
