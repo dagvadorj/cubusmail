@@ -97,7 +97,6 @@ public class MessageListGrid extends ListGrid {
 		fields[1].setType( ListGridFieldType.IMAGE );
 		fields[1].setCanSort( false );
 		fields[1].setCanGroupBy( false );
-		fields[1].setShowGridSummary( false );
 		headerButton = new Button();
 		headerButton.setIcon( ImageProvider.MSG_ATTACHMENT );
 		fields[1].setHeaderButtonProperties( headerButton );
@@ -109,7 +108,7 @@ public class MessageListGrid extends ListGrid {
 		fields[2] = new ListGridField( MessageListFields.PRIORITY_IMAGE.name(), TextProvider.get()
 				.grid_messages_priority(), 25 );
 		fields[2].setAlign( Alignment.CENTER );
-		fields[2].setType( ListGridFieldType.IMAGE );
+		fields[2].setType( ListGridFieldType.IMAGEFILE );
 		fields[2].setCanSort( false );
 		fields[2].setCanGroupBy( false );
 		fields[2].setShowGridSummary( false );
@@ -138,19 +137,23 @@ public class MessageListGrid extends ListGrid {
 
 		// send date
 		fields[5] = new ListGridField( MessageListFields.SEND_DATE.name(), TextProvider.get().grid_messages_date(), 120 );
+		fields[1].setType( ListGridFieldType.DATE );
 		fields[5].setAlign( Alignment.LEFT );
 		fields[5].setCanGroupBy( false );
 		fields[5].setShowGridSummary( false );
 		fields[5].setFrozen( true );
 		fields[5].setCanFreeze( false );
+		fields[5].setCellFormatter( new SendDateCellFormatter() );
 
 		// size
 		fields[6] = new ListGridField( MessageListFields.SIZE.name(), TextProvider.get().grid_messages_size(), 120 );
+		fields[1].setType( ListGridFieldType.INTEGER );
 		fields[6].setAlign( Alignment.RIGHT );
 		fields[6].setCanGroupBy( false );
 		fields[6].setShowGridSummary( false );
 		fields[6].setFrozen( true );
 		fields[6].setCanFreeze( false );
+		fields[6].setCellFormatter( new SizeCellFormatter() );
 
 		return fields;
 	}
@@ -191,6 +194,32 @@ public class MessageListGrid extends ListGrid {
 			}
 
 			return null;
+		}
+	}
+
+	/**
+	 * CellFormatter for send date.
+	 * 
+	 * @author Juergen Schlierf
+	 */
+	private class SendDateCellFormatter implements CellFormatter {
+
+		public String format( Object value, ListGridRecord record, int rowNum, int colNum ) {
+
+			return record.getAttributeAsString( MessageListFields.SEND_DATE_STRING.name() );
+		}
+	}
+
+	/**
+	 * CellFormatter for message size.
+	 * 
+	 * @author Juergen Schlierf
+	 */
+	private class SizeCellFormatter implements CellFormatter {
+
+		public String format( Object value, ListGridRecord record, int rowNum, int colNum ) {
+
+			return record.getAttributeAsString( MessageListFields.SIZE_STRING.name() );
 		}
 	}
 }

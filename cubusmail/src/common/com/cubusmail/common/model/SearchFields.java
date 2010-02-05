@@ -21,10 +21,10 @@
 package com.cubusmail.common.model;
 
 /**
- * Enum of search fields.
+ * Enum of search fields for filtering email messages.
  * 
  * @author Juergen Schlierf
  */
 public enum SearchFields {
-	FROM, TO, CC, SUBJECT, CONTENT, DATE_FROM, DATE_TO
+	FROM, TO, CC, SUBJECT, CONTENT, DATE_FROM, DATE_TO, ALL
 }

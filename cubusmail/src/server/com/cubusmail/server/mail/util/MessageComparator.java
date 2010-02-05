@@ -97,15 +97,6 @@ public class MessageComparator implements Comparator<Message> {
 				result = Integer.valueOf( size1 ).compareTo( Integer.valueOf( size2 ) );
 
 			}
-			// not sortable by attachments
-			// else if ( MessageListFields.ATTACHMENT_FLAG.name().equals(
-			// this.field ) ) {
-			// Boolean attach1 = Boolean.valueOf( MessageUtils.hasAttachments(
-			// msg1 ) );
-			// Boolean attach2 = Boolean.valueOf( MessageUtils.hasAttachments(
-			// msg2 ) );
-			// result = attach1.compareTo( attach2 );
-			// }
 		}
 		catch (MessagingException e) {
 			log.warn( e.getMessage(), e );

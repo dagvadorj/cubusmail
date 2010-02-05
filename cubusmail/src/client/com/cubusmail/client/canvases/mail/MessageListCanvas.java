@@ -26,6 +26,7 @@ import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessageLoadedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
 import com.cubusmail.client.util.GWTSessionManager;
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
@@ -154,10 +155,21 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	private void loadMessages() {
 
-		Criteria criteria = new Criteria( GWTMailConstants.PARAM_FOLDER_ID, GWTSessionManager.get()
-				.getCurrentMailFolder().getId() );
+		String filterText = (String) this.searchItem.getValue();
+		Criteria criteria = null;
+		if ( GWTUtil.hasText( filterText ) ) {
+			criteria = new Criteria();
+			criteria.addCriteria( GWTMailConstants.PARAM_FILTER_TEXT, filterText );
+		}
+
 		this.grid.invalidateCache();
-		this.grid.fetchData( criteria );
+
+		if ( criteria != null ) {
+			this.grid.fetchData( criteria );
+		}
+		else {
+			this.grid.fetchData();
+		}
 	}
 
 	/**

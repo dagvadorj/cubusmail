@@ -284,6 +284,10 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 
 			try {
 				IMailFolder currentFolder = mailbox.getMailFolderById( folderId );
+				if ( currentFolder == null ) {
+					mailbox.reloadFolder();
+					currentFolder = mailbox.getMailFolderById( folderId );
+				}
 				mailbox.setCurrentFolder( currentFolder );
 
 				Message[] msgs = currentFolder.retrieveMessages( sortField );
@@ -326,8 +330,9 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 
 					Preferences preferences = SessionManager.get().getPreferences();
 
-					GWTMessageRecord[] messageStringArray = ConvertUtil.convertMessagesToStringArray( this.applicationContext,
-							preferences, (IMAPFolder) currentFolder.getFolder(), pageSize, pagedMessages );
+					GWTMessageRecord[] messageStringArray = ConvertUtil.convertMessagesToStringArray(
+							this.applicationContext, preferences, (IMAPFolder) currentFolder.getFolder(), pageSize,
+							pagedMessages );
 
 					log.debug( "..finish. Time for building Array: " + (System.currentTimeMillis() - time) );
 

@@ -219,9 +219,12 @@ public class ConvertUtil {
 				AddressStringType.PERSONAL ) ) );
 		if ( msg.getSentDate() != null ) {
 			result.setSendDateString( HtmlUtils.htmlEscape( dateFormat.format( msg.getSentDate() ) ) );
+			result.setSendDate( msg.getSentDate() );
 		}
-		result.setSizeString( HtmlUtils.htmlEscape( MessageUtils.formatPartSize( MessageUtils
-				.calculateAttachmentSize( msg.getSize() ), decimalFormat ) ) );
+
+		int msgSize = MessageUtils.calculateAttachmentSize( msg.getSize() );
+		result.setSizeString( HtmlUtils.htmlEscape( MessageUtils.formatPartSize( msgSize, decimalFormat ) ) );
+		result.setSize( msgSize );
 	}
 
 	/**

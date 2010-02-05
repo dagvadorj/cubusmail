@@ -21,7 +21,6 @@ package com.cubusmail.client.datasource;
 
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
-import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessageList;

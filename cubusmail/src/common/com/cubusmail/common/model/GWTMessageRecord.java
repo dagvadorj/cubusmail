@@ -20,6 +20,7 @@
 package com.cubusmail.common.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * POJO für message record representing a message in a grid.
@@ -41,7 +42,9 @@ public class GWTMessageRecord implements Serializable {
 	private String subject;
 	private String from;
 	private String to;
+	private Date sendDate;
 	private String sendDateString;
+	private int size;
 	private String sizeString;
 
 	public String getSubject() {
@@ -132,5 +135,25 @@ public class GWTMessageRecord implements Serializable {
 	public void setFlags( GWTMessageFlags flags ) {
 
 		this.flags = flags;
+	}
+
+	public Date getSendDate() {
+
+		return sendDate;
+	}
+
+	public void setSendDate( Date sendDate ) {
+
+		this.sendDate = sendDate;
+	}
+
+	public int getSize() {
+
+		return size;
+	}
+
+	public void setSize( int size ) {
+
+		this.size = size;
 	}
 }

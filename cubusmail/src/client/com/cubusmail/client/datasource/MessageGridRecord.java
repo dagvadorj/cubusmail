@@ -49,8 +49,10 @@ public class MessageGridRecord extends ListGridRecord {
 		setAttribute( MessageListFields.SUBJECT.name(), source.getSubject() );
 		setAttribute( MessageListFields.FROM.name(), source.getFrom() );
 		setAttribute( MessageListFields.TO.name(), source.getTo() );
-		setAttribute( MessageListFields.SEND_DATE.name(), source.getSendDateString() );
-		setAttribute( MessageListFields.SIZE.name(), source.getSizeString() );
+		setAttribute( MessageListFields.SEND_DATE.name(), source.getSendDate() );
+		setAttribute( MessageListFields.SIZE.name(), source.getSize() );
+		setAttribute( MessageListFields.SEND_DATE_STRING.name(), source.getSendDateString() );
+		setAttribute( MessageListFields.SIZE_STRING.name(), source.getSizeString() );
 	}
 
 	public GWTMessageFlags getFlags() {
