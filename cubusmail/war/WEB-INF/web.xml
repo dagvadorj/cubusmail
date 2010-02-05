@@ -45,17 +45,6 @@
 		<url-pattern>/cubusmail/userAccountService.rpc</url-pattern>
 	</servlet-mapping>
 
-<!-- 
-	<servlet>
-	  <servlet-name>jUnitHostImpl</servlet-name>
-	  <servlet-class>com.google.gwt.junit.server.JUnitHostImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	  <servlet-name>jUnitHostImpl</servlet-name>
-	  <url-pattern>/cubusmail/junithost</url-pattern>
-	</servlet-mapping>
- -->
- 
 	<servlet>
 		<servlet-name>showMessageSource</servlet-name>
 		<servlet-class>
