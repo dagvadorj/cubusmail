@@ -42,9 +42,10 @@ import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
+import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.GWTMessageRecord;
-import com.cubusmail.common.model.GWTMessageFlags;
+import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.common.services.IMailboxService;
@@ -274,8 +275,8 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 * com.cubusmail.gwtui.client.services.IMailboxService#retrieveMessages(
 	 * java.lang.String)
 	 */
-	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, String sortField,
-			boolean ascending, String[][] params ) throws Exception {
+	public GWTMessageList retrieveMessages( String folderId, int start, int pageSize, MessageListFields sortField,
+			boolean ascending, MessageListFields[] searchFields, String[] searchValues ) throws Exception {
 
 		if ( folderId != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
@@ -290,31 +291,9 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				}
 				mailbox.setCurrentFolder( currentFolder );
 
-				Message[] msgs = currentFolder.retrieveMessages( sortField );
-
-				String quickSearchFields = MessageUtils.getParamValue( params, "fields" );
-				// String extendedSearchFields = MessageUtils.getParamValue(
-				// params,
-				// GWTMailConstants.EXTENDED_SEARCH_FIELDS );
-
-				// all messages with only header data
-
-				// quick search params
-				if ( quickSearchFields != null ) {
-					String quickSearchText = MessageUtils.getParamValue( params, "query" );
-					msgs = MessageUtils.quickFilterMessages( msgs, quickSearchFields, quickSearchText );
-				}
-				// else if ( extendedSearchFields != null ) {
-				// msgs = MessageUtils.filterMessages( currentFolder, msgs,
-				// extendedSearchFields, params );
-				// }
-
-				MessageUtils.sortMessages( msgs, sortField, ascending );
+				Message[] msgs = currentFolder.retrieveMessages( sortField, ascending, searchFields, searchValues );
 
 				if ( msgs != null && msgs.length > 0 ) {
-					log.debug( "Building Array objects..." );
-					long time = System.currentTimeMillis();
-
 					int total_count = msgs.length;
 					start = Math.min( total_count - 1, start == -1 ? 0 : start );
 					pageSize = pageSize == -1 ? account.getPreferences().getPageCount() : pageSize;
@@ -333,8 +312,6 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 					GWTMessageRecord[] messageStringArray = ConvertUtil.convertMessagesToStringArray(
 							this.applicationContext, preferences, (IMAPFolder) currentFolder.getFolder(), pageSize,
 							pagedMessages );
-
-					log.debug( "..finish. Time for building Array: " + (System.currentTimeMillis() - time) );
 
 					return new GWTMessageList( messageStringArray, msgs.length );
 				}

@@ -89,18 +89,18 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		final String folderId = GWTSessionManager.get().getCurrentMailFolder().getId();
 		boolean ascending = true;
-		String sortColumn = null;
+		MessageListFields sortColumn = null;
 
 		if ( request.getSortBy() != null && request.getSortBy().length > 0 ) {
 			SortSpecifier sortSpec = request.getSortBy()[0];
-			sortColumn = sortSpec.getField();
+			sortColumn = MessageListFields.valueOf( sortSpec.getField() );
 			ascending = SortDirection.ASCENDING == sortSpec.getSortDirection();
 		}
 
 		response.setInvalidateCache( true );
 
 		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
-				new String[2][0], new AsyncCallback<GWTMessageList>() {
+				null, null, new AsyncCallback<GWTMessageList>() {
 
 					public void onSuccess( GWTMessageList result ) {
 

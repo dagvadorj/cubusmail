@@ -24,12 +24,12 @@ import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
-import com.cubusmail.common.model.GWTMessageFlags;
+import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Interface for MailboxService.
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface IMailboxServiceAsync {
@@ -93,8 +93,8 @@ public interface IMailboxServiceAsync {
 	 * @return
 	 * @throws Exception
 	 */
-	public void retrieveMessages( String folderId, int start, int limit, String sortColumn, boolean ascending, String[][] params,
-			AsyncCallback<GWTMessageList> callback );
+	public void retrieveMessages( String folderId, int start, int limit, MessageListFields sortColumn, boolean ascending,
+			MessageListFields[] searchFields, String[] searchValues, AsyncCallback<GWTMessageList> callback );
 
 	/**
 	 * Retrieve a single message including message content.

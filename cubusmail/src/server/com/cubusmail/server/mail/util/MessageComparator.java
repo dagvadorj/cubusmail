@@ -40,10 +40,10 @@ public class MessageComparator implements Comparator<Message> {
 
 	private static Logger log = Logger.getLogger( MessageComparator.class.getName() );
 
-	private String field;
+	private MessageListFields field;
 	private boolean ascending;
 
-	public MessageComparator( String field, boolean ascending ) {
+	public MessageComparator( MessageListFields field, boolean ascending ) {
 
 		this.field = field;
 		this.ascending = ascending;
@@ -63,7 +63,7 @@ public class MessageComparator implements Comparator<Message> {
 		}
 
 		try {
-			if ( MessageListFields.SUBJECT.name().equals( this.field ) ) {
+			if ( MessageListFields.SUBJECT == this.field ) {
 				if ( msg1.getSubject() != null && msg2.getSubject() != null ) {
 					result = msg1.getSubject().compareToIgnoreCase( msg2.getSubject() );
 				}
@@ -71,7 +71,7 @@ public class MessageComparator implements Comparator<Message> {
 					result = -1;
 				}
 			}
-			else if ( MessageListFields.FROM.name().equals( this.field ) ) {
+			else if ( MessageListFields.FROM == this.field ) {
 				String fromString1 = MessageUtils.getMailAdressString( msg1.getFrom(), AddressStringType.PERSONAL );
 				String fromString2 = MessageUtils.getMailAdressString( msg2.getFrom(), AddressStringType.PERSONAL );
 				if ( fromString1 != null && fromString2 != null ) {
@@ -81,7 +81,7 @@ public class MessageComparator implements Comparator<Message> {
 					result = -1;
 				}
 			}
-			else if ( MessageListFields.SEND_DATE.name().equals( this.field ) ) {
+			else if ( MessageListFields.SEND_DATE == this.field ) {
 				Date date1 = msg1.getSentDate();
 				Date date2 = msg2.getSentDate();
 				if ( date1 != null && date2 != null ) {
@@ -91,7 +91,7 @@ public class MessageComparator implements Comparator<Message> {
 					result = -1;
 				}
 			}
-			else if ( MessageListFields.SIZE.name().equals( this.field ) ) {
+			else if ( MessageListFields.SIZE == this.field ) {
 				int size1 = msg1.getSize();
 				int size2 = msg2.getSize();
 				result = Integer.valueOf( size1 ).compareTo( Integer.valueOf( size2 ) );

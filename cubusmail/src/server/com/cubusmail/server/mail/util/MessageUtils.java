@@ -44,19 +44,20 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimePart;
 import javax.mail.internet.MimeUtility;
+import javax.mail.internet.MimeMessage.RecipientType;
+import javax.mail.search.AndTerm;
 import javax.mail.search.BodyTerm;
+import javax.mail.search.FromStringTerm;
+import javax.mail.search.RecipientStringTerm;
+import javax.mail.search.SearchTerm;
+import javax.mail.search.SubjectTerm;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 
-import com.sun.mail.imap.IMAPFolder;
-
 import com.cubusmail.common.model.MessageListFields;
-import com.cubusmail.common.model.SearchFields;
-import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.util.CubusConstants;
+import com.sun.mail.imap.IMAPFolder;
 
 /**
  * Util class for general message functions.
@@ -452,177 +453,65 @@ public class MessageUtils {
 	 * @param fieldName
 	 * @param ascending
 	 */
-	public static void sortMessages( Message[] msgs, String fieldName, boolean ascending ) {
+	public static void sortMessages( Message[] msgs, MessageListFields sortField, boolean ascending ) {
 
 		if ( msgs != null && msgs.length > 0 ) {
-			if ( !StringUtils.isEmpty( fieldName ) ) {
-				Arrays.sort( msgs, new MessageComparator( fieldName, ascending ) );
+			Arrays.sort( msgs, new MessageComparator( sortField, ascending ) );
+		}
+	}
+
+	/**
+	 * Create a search term for filtering messages.
+	 * 
+	 * @param searchFields
+	 * @param searchValues
+	 * @return
+	 */
+	public static SearchTerm createSearchTerm( MessageListFields[] searchFields, String[] searchValues ) {
+
+		SearchTerm[] terms = new SearchTerm[searchFields.length];
+		for (int i = 0; i < searchFields.length; i++) {
+			terms[i] = createSearchTerm( searchFields[i], searchValues );
+		}
+
+		if ( searchFields.length > 1 ) {
+			return new AndTerm( terms );
+		}
+		else {
+			return terms[0];
+		}
+	}
+
+	private static SearchTerm createSearchTerm( MessageListFields searchField, String[] searchValues ) {
+
+		SearchTerm[] terms = new SearchTerm[searchValues.length];
+		for (int i = 0; i < searchValues.length; i++) {
+			if ( searchField == MessageListFields.SUBJECT ) {
+				terms[i] = new SubjectTerm( searchValues[i] );
+			}
+			else if ( searchField == MessageListFields.FROM ) {
+				terms[i] = new FromStringTerm( searchValues[i] );
+			}
+			else if ( searchField == MessageListFields.TO ) {
+				terms[i] = new RecipientStringTerm( RecipientType.TO, searchValues[i] );
+			}
+			else if ( searchField == MessageListFields.CC ) {
+				terms[i] = new RecipientStringTerm( RecipientType.CC, searchValues[i] );
+			}
+			else if ( searchField == MessageListFields.CONTENT ) {
+				terms[i] = new BodyTerm( searchValues[i] );
 			}
 			else {
-				// reverse order
-				ArrayUtils.reverse( msgs );
+				throw new IllegalArgumentException( "Search field now allowed: " + searchField.name() );
 			}
 		}
-	}
 
-	/**
-	 * Filter the messages.
-	 * 
-	 * @param msgs
-	 * @param searchFields
-	 * @param searchText
-	 * @return
-	 */
-	public static Message[] quickFilterMessages( Message[] msgs, String searchFields, String searchText ) {
-
-		if ( !StringUtils.isEmpty( searchFields ) && !StringUtils.isEmpty( searchText ) ) {
-			searchFields = StringUtils.remove( searchFields, '[' );
-			searchFields = StringUtils.remove( searchFields, ']' );
-			searchFields = StringUtils.remove( searchFields, '\"' );
-			String[] fields = StringUtils.split( searchFields, ',' );
-			List<Message> filteredMsgs = new ArrayList<Message>();
-
-			Date searchDate = null;
-			try {
-				searchDate = DateUtils.parseDate( searchText, new String[] { "dd.MM.yyyy" } );
-			}
-			catch (Exception e) {
-				// do nothing
-			}
-
-			try {
-				for (Message message : msgs) {
-					boolean contains = false;
-					for (String searchField : fields) {
-						if ( MessageListFields.SUBJECT.name().equals( searchField ) ) {
-							String subject = message.getSubject();
-							contains = StringUtils.containsIgnoreCase( subject, searchText );
-						}
-						else if ( MessageListFields.FROM.name().equals( searchField ) ) {
-							String from = MessageUtils.getMailAdressString( message.getFrom(),
-									AddressStringType.COMPLETE );
-							contains = StringUtils.containsIgnoreCase( from, searchText ) || contains;
-						}
-						else if ( searchDate != null && MessageListFields.SEND_DATE.name().equals( searchField ) ) {
-							Date sendDate = message.getSentDate();
-							contains = (sendDate != null && DateUtils.isSameDay( searchDate, sendDate )) || contains;
-						}
-					}
-					if ( contains ) {
-						filteredMsgs.add( message );
-					}
-				}
-			}
-			catch (MessagingException ex) {
-				log.warn( ex.getMessage(), ex );
-			}
-
-			return filteredMsgs.toArray( new Message[0] );
+		if ( searchValues.length > 1 ) {
+			return new AndTerm( terms );
 		}
-
-		return msgs;
-	}
-
-	/**
-	 * @param mailFolder
-	 * @param msgs
-	 * @param extendedSearchFields
-	 * @param params
-	 * @return
-	 */
-	public static Message[] filterMessages( IMailFolder mailFolder, Message[] msgs, String extendedSearchFields,
-			String[][] params ) {
-
-		if ( !StringUtils.isEmpty( extendedSearchFields ) ) {
-			String[] fields = StringUtils.split( extendedSearchFields, ',' );
-
-			List<Message> filteredMsgs = new ArrayList<Message>();
-			String fromValue = getParamValue( params, SearchFields.FROM.name() );
-			String toValue = getParamValue( params, SearchFields.TO.name() );
-			String ccValue = getParamValue( params, SearchFields.CC.name() );
-			String subjectValue = getParamValue( params, SearchFields.SUBJECT.name() );
-			String contentValue = getParamValue( params, SearchFields.CONTENT.name() );
-			String dateFromValue = getParamValue( params, SearchFields.DATE_FROM.name() );
-			String dateToValue = getParamValue( params, SearchFields.DATE_TO.name() );
-
-			try {
-				// Body search
-				if ( StringUtils.contains( extendedSearchFields, SearchFields.CONTENT.name() ) ) {
-					BodyTerm term = new BodyTerm( contentValue );
-					msgs = mailFolder.search( term, msgs );
-					if ( msgs == null ) {
-						msgs = new Message[0];
-					}
-				}
-
-				for (Message message : msgs) {
-					boolean contains = true;
-					for (String searchField : fields) {
-						if ( SearchFields.FROM.name().equals( searchField ) ) {
-							String from = MessageUtils.getMailAdressString( message.getFrom(),
-									AddressStringType.COMPLETE );
-							contains = StringUtils.containsIgnoreCase( from, fromValue );
-						}
-						if ( contains && SearchFields.TO.name().equals( searchField ) ) {
-							String to = MessageUtils.getMailAdressString( message
-									.getRecipients( Message.RecipientType.TO ), AddressStringType.COMPLETE );
-							if ( !StringUtils.isEmpty( to ) ) {
-								contains = StringUtils.containsIgnoreCase( to, toValue );
-							}
-							else {
-								contains = false;
-							}
-						}
-						if ( contains && SearchFields.CC.name().equals( searchField ) ) {
-							String cc = MessageUtils.getMailAdressString( message
-									.getRecipients( Message.RecipientType.CC ), AddressStringType.COMPLETE );
-							if ( !StringUtils.isEmpty( cc ) ) {
-								contains = StringUtils.containsIgnoreCase( cc, ccValue );
-							}
-							else {
-								contains = false;
-							}
-						}
-						if ( contains && SearchFields.SUBJECT.name().equals( searchField ) ) {
-							if ( !StringUtils.isEmpty( message.getSubject() ) ) {
-								contains = StringUtils.containsIgnoreCase( message.getSubject(), subjectValue );
-							}
-							else {
-								contains = false;
-							}
-						}
-						if ( contains && SearchFields.DATE_FROM.name().equals( searchField ) ) {
-							Date dateFrom = new Date( Long.parseLong( dateFromValue ) );
-							if ( message.getSentDate() != null ) {
-								contains = !message.getSentDate().before( dateFrom );
-							}
-							else {
-								contains = false;
-							}
-						}
-						if ( contains && SearchFields.DATE_TO.name().equals( searchField ) ) {
-							Date dateTo = new Date( Long.parseLong( dateToValue ) );
-							if ( message.getSentDate() != null ) {
-								contains = !message.getSentDate().after( dateTo );
-							}
-							else {
-								contains = false;
-							}
-						}
-					}
-					if ( contains ) {
-						filteredMsgs.add( message );
-					}
-				}
-			}
-			catch (MessagingException ex) {
-				log.warn( ex.getMessage() );
-			}
-
-			return filteredMsgs.toArray( new Message[0] );
+		else {
+			return terms[0];
 		}
-
-		return msgs;
 	}
 
 	/**
@@ -630,7 +519,7 @@ public class MessageUtils {
 	 * @param sortfield
 	 * @return
 	 */
-	public static FetchProfile createFetchProfile( boolean complete, String sortfield ) {
+	public static FetchProfile createFetchProfile( boolean complete, MessageListFields sortfield ) {
 
 		FetchProfile fp = new FetchProfile();
 		if ( complete ) {
@@ -643,42 +532,15 @@ public class MessageUtils {
 		}
 		else {
 			if ( sortfield != null ) {
-				// if ( MessageListFields.ATTACHMENT_FLAG.name().equals(
-				// sortfield ) ) {
-				// fp.add( FetchProfile.Item.CONTENT_INFO );
-				// }
-
-				if ( MessageListFields.SUBJECT.name().equals( sortfield )
-						|| MessageListFields.FROM.name().equals( sortfield )
-						|| MessageListFields.TO.name().equals( sortfield )
-						|| MessageListFields.SEND_DATE.name().equals( sortfield ) ) {
+				if ( MessageListFields.SUBJECT == sortfield || MessageListFields.FROM == sortfield
+						|| MessageListFields.TO == sortfield || MessageListFields.SEND_DATE == sortfield ) {
 					fp.add( FetchProfile.Item.ENVELOPE );
 				}
-				else if ( MessageListFields.SIZE.name().equals( sortfield ) ) {
+				else if ( MessageListFields.SIZE == sortfield ) {
 					fp.add( IMAPFolder.FetchProfileItem.SIZE );
 				}
 			}
 		}
 		return fp;
-	}
-
-	/**
-	 * @param params
-	 * @param paramName
-	 * @return
-	 */
-	public static String getParamValue( String[][] params, String paramName ) {
-
-		String result = null;
-
-		if ( params != null ) {
-			for (int i = 0; i < params.length; i++) {
-				if ( params[i] != null && params[i].length == 2 && paramName.equals( params[i][0] ) ) {
-					return params[i][1];
-				}
-			}
-		}
-
-		return result;
 	}
 }

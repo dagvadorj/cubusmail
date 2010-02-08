@@ -41,6 +41,7 @@ import com.sun.mail.imap.ACL;
 import com.sun.mail.imap.IMAPFolder;
 import com.sun.mail.imap.Rights;
 
+import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
@@ -133,7 +134,8 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 	 * 
 	 * @see org.grouplite.mail.ui.mail.IMailFolder#getMessages()
 	 */
-	public Message[] retrieveMessages( String sortfield ) {
+	public Message[] retrieveMessages( MessageListFields sortField, boolean ascending, MessageListFields[] searchFields,
+			String[] searchValues ) {
 
 		Message[] msgs = EMPTY_MESSAGE_ARRAY;
 		if ( this.folder != null ) {
@@ -149,13 +151,22 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 						.debug( "Millis for getting " + msgs.length + " messages: "
 								+ (System.currentTimeMillis() - time) );
 				time = System.currentTimeMillis();
-				FetchProfile fp = MessageUtils.createFetchProfile( false, sortfield );
+				FetchProfile fp = MessageUtils.createFetchProfile( false, sortField );
 
 				logger.debug( "Start fetching messages..." );
 				folder.fetch( msgs, fp );
 				logger.debug( "Millis for fetching " + msgs.length + " Messages: "
 						+ (System.currentTimeMillis() - time) );
 
+				if ( searchFields != null && searchFields.length > 0 && searchValues != null && searchValues.length > 0 ) {
+					logger.debug( "Start filtering messages..." );
+					SearchTerm term = MessageUtils.createSearchTerm( searchFields, searchValues );
+					msgs = folder.search( term );
+					logger.debug( "Millis for filtering " + msgs.length + " Messages: "
+							+ (System.currentTimeMillis() - time) );
+				}
+
+				MessageUtils.sortMessages( msgs, sortField, ascending );
 			}
 			catch (MessagingException e) {
 				logger.error( e.getMessage(), e );

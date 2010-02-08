@@ -383,7 +383,7 @@ public class IMAPMailbox implements IMailbox {
 			}
 
 			if ( folder.getMessageCount() > 0 ) {
-				Message[] msgs = folder.retrieveMessages( null );
+				Message[] msgs = folder.retrieveMessages( null, true, null, null );
 				for (int i = 0; i < folder.getMessageCount(); i++) {
 					msgs[i].setFlag( Flags.Flag.DELETED, true );
 				}

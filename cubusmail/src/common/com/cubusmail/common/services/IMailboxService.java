@@ -25,7 +25,7 @@ import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageList;
-import com.cubusmail.common.model.GWTMessageFlags;
+import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
@@ -94,8 +94,8 @@ public interface IMailboxService extends RemoteService {
 	 * @return
 	 * @throws Exception
 	 */
-	public GWTMessageList retrieveMessages( String folderId, int start, int limit, String sort, boolean ascending,
-			String[][] params ) throws Exception;
+	public GWTMessageList retrieveMessages( String folderId, int start, int limit, MessageListFields sortField, boolean ascending,
+			MessageListFields[] searchFields, String[] searchValues ) throws Exception;
 
 	/**
 	 * Retrieve a single message including message content.

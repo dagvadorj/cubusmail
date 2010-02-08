@@ -1,6 +1,6 @@
-/* MessageListFields.java
+/* SearchForm.java
 
-   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
+   Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -16,16 +16,33 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-   
  */
-package com.cubusmail.common.model;
+package com.cubusmail.client.canvases.mail;
+
+import com.cubusmail.client.util.TextProvider;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
- * Enum of fields for the messages list table.
+ * Quick search form for messages
  * 
  * @author Juergen Schlierf
  */
-public enum MessageListFields {
+public class SearchForm extends DynamicForm {
 
-	ID, FLAGS, PRIORITY_IMAGE, ATTACHMENT_IMAGE, SUBJECT, FROM, TO, CC, BCC, SEND_DATE, SEND_DATE_STRING, SIZE, SIZE_STRING, CONTENT
+	private TextItem searchItem;
+
+	public SearchForm() {
+
+		super();
+
+		this.searchItem = new TextItem();
+		this.searchItem.setTitle( TextProvider.get().grid_messages_search() );
+		this.searchItem.setTooltip( TextProvider.get().grid_messages_search_tooltip() );
+		this.searchItem.setWidth( 200 );
+
+		setItems( this.searchItem );
+	}
+	
+	
 }

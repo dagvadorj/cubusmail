@@ -6,7 +6,7 @@
 <stringAttribute key="com.google.gwt.eclipse.core.STYLE" value="OBFUSCATED"/>
 <stringAttribute key="com.google.gwt.eclipse.core.WEB_MODE" value="false"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/cubusmail/test/com/cubusmail/common/services/CubusServiceTest.java"/>
+<listEntry value="/cubusmail/test/com/cubusmail/common/services/MailboxServiceTest.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -16,7 +16,7 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gwt.eclipse.core.moduleClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.cubusmail.common.services.CubusServiceTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.cubusmail.common.services.MailboxServiceTest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="cubusmail"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss2048k -Xmx1024M -Dcubus.config=C:\projects\cubusmail\projects\cubusmail\etc\cubus.properties"/>
 </launchConfiguration>

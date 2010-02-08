@@ -7,4 +7,15 @@
 
 	<source path="client"/>
 	<source path="common"/>
+	
+  
+	<servlet class="com.cubusmail.server.services.CubusService" path="/cubusService.rpc"/>
+	<servlet class="com.cubusmail.server.services.MailboxService" path="/mailboxService.rpc"/>
+	<servlet class="com.cubusmail.server.services.UserAccountService" path="/userAccountService.rpc"/>
+
+	<servlet class="com.cubusmail.server.services.ShowMessageSourceServlet" path="/showMessageSource.rpc"/>
+	<servlet class="com.cubusmail.server.services.AttachmentUploadServlet" path="/attachmentUpload.rpc"/>
+	<servlet class="com.cubusmail.server.services.RetrieveAttachmentServlet" path="/retrieveAttachment.rpc"/>
+	<servlet class="com.cubusmail.server.services.RetrieveImageServlet" path="/retrieveImage.rpc"/>
+	
 </module>

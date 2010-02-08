@@ -23,6 +23,7 @@
 	
 	<!-- Specify the app entry point class. -->  
 	<entry-point class="com.cubusmail.client.Cubusmail"/>
+	
     <extend-property name="locale" values="de"/>
     <extend-property name="locale" values="en_UK"/>
   	

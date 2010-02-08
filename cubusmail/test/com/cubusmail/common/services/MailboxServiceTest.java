@@ -1,4 +1,4 @@
-/* CubusServiceTest.java
+/* MailboxServiceTest.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -23,16 +23,17 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.GWTMessageRecord;
+import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * TODO: documentation
+ * Unittests for mailbox service.
  * 
  * @author Juergen Schlierf
  */
-public class CubusServiceTest extends GWTTestCase {
+public class MailboxServiceTest extends GWTTestCase {
 
 	/*
 	 * (non-Javadoc)
@@ -45,6 +46,9 @@ public class CubusServiceTest extends GWTTestCase {
 		return "com.cubusmail.CubusmailUnitTests";
 	}
 
+	/**
+	 * 
+	 */
 	public void testLogin() {
 
 		ServiceProvider.getCubusService().login( "schlierf", "schlierf", new AsyncCallback<GWTMailbox>() {
@@ -67,10 +71,14 @@ public class CubusServiceTest extends GWTTestCase {
 		GWT.log( "Ready", null );
 	}
 
-	
+	/**
+	 * 
+	 */
 	private void retrieveMessages() {
 
-		ServiceProvider.getMailboxService().retrieveMessages( "INBOX", 0, 100, null, true, new String[2][0],
+		MessageListFields[] fields = new MessageListFields[] { MessageListFields.FROM };
+		String[] values = new String[] {};
+		ServiceProvider.getMailboxService().retrieveMessages( "INBOX", 0, 100, null, true, fields, values,
 				new AsyncCallback<GWTMessageList>() {
 
 					public void onSuccess( GWTMessageList result ) {
@@ -79,7 +87,7 @@ public class CubusServiceTest extends GWTTestCase {
 						assertNotNull( result.getMessages() );
 
 						for (GWTMessageRecord record : result.getMessages()) {
-							GWT.log( record.getSubject(), null );
+							GWT.log( record.getId() + " : " + record.getFrom() + " : " + record.getSubject(), null );
 						}
 
 						finishTest();

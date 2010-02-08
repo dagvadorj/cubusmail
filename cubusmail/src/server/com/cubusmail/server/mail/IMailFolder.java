@@ -30,11 +30,12 @@ import javax.mail.MessagingException;
 import javax.mail.event.MessageChangedListener;
 import javax.mail.search.SearchTerm;
 
+import com.cubusmail.common.model.MessageListFields;
 import com.sun.mail.imap.Rights;
 
 /**
  * Interface for a mail folder.
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface IMailFolder extends Serializable {
@@ -67,7 +68,8 @@ public interface IMailFolder extends Serializable {
 	 * 
 	 * @return
 	 */
-	public Message[] retrieveMessages( String sortfield );
+	public Message[] retrieveMessages( MessageListFields sortfield, boolean ascending, MessageListFields[] searchFields,
+			String[] searchValues );
 
 	/**
 	 * Number of unread messages.
