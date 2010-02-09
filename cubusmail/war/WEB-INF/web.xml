@@ -6,7 +6,7 @@
 	<display-name>Cubusmail</display-name>
 
 	<welcome-file-list>
-		<welcome-file>cubusmail.jsp</welcome-file>
+		<welcome-file>startCubusmail</welcome-file>
 	</welcome-file-list>
 
 	<session-config>
@@ -83,6 +83,16 @@
 	<servlet-mapping>
 	  <servlet-name>retrieveImage</servlet-name>
 	  <url-pattern>/cubusmail/retrieveImage.rpc</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>startCubusmail</servlet-name>
+		<servlet-class>
+			com.cubusmail.server.services.CubusmailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>startCubusmail</servlet-name>
+	  <url-pattern>/cubusmail.html</url-pattern>
 	</servlet-mapping>
 
 	<filter>

@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (1)"/>
 	<classpathentry kind="src" path="src/server"/>
 	<classpathentry kind="src" path="src/common"/>
 	<classpathentry kind="src" path="src/client"/>
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/el-api.jar"/>
-	<classpathentry kind="lib" path="lib/jasper-el.jar"/>
-	<classpathentry kind="lib" path="lib/jasper-jdt.jar"/>
-	<classpathentry kind="lib" path="lib/jasper.jar"/>
-	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
@@ -36,5 +30,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (2)"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
