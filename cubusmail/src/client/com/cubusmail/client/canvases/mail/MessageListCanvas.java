@@ -20,7 +20,7 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
-import com.cubusmail.client.canvases.mail.SearchForm.SearchHandler;
+import com.cubusmail.client.canvases.mail.MessageSearchForm.SearchHandler;
 import com.cubusmail.client.datasource.MessageGridRecord;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
@@ -50,7 +50,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	private SectionStack sectionStack;
 	private SectionStackSection section;
 	private MessageListGrid grid;
-	private SearchForm searchForm;
+	private MessageSearchForm searchForm;
 
 	public MessageListCanvas() {
 
@@ -65,7 +65,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		this.section.setResizeable( true );
 		this.section.setShowHeader( true );
 
-		this.searchForm = new SearchForm();
+		this.searchForm = new MessageSearchForm();
 		this.searchForm.addSearchHandler( new SearchHandler() {
 
 			public void onSearch( MessageListFields[] fields, String[] values ) {

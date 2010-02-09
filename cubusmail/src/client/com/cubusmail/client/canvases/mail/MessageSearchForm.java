@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ArrayUtils;
+
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.event.shared.EventHandler;
@@ -45,11 +48,11 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
  * 
  * @author Juergen Schlierf
  */
-public class SearchForm extends DynamicForm {
+public class MessageSearchForm extends DynamicForm {
 
-	private static final int DIALOG_WIDTH = 170;
+	private static final int DIALOG_WIDTH = 130;
 
-	private static final int DIALOG_HEIGHT = 150;
+	private static final int DIALOG_HEIGHT = 200;
 
 	private TextItem searchItem;
 
@@ -57,14 +60,17 @@ public class SearchForm extends DynamicForm {
 
 	private FieldsDialog fieldsDialog;
 
-	public SearchForm() {
+	private MessageListFields[] searchFields = new MessageListFields[] { MessageListFields.FROM, MessageListFields.TO,
+			MessageListFields.CC, MessageListFields.SUBJECT };
+
+	public MessageSearchForm() {
 
 		super();
 
 		this.searchItem = new TextItem();
 		this.searchItem.setTitle( TextProvider.get().grid_messages_search() );
 		this.searchItem.setTooltip( TextProvider.get().grid_messages_search_tooltip() );
-		this.searchItem.setWidth( 200 );
+		this.searchItem.setWidth( 250 );
 
 		final PickerIcon searchIcon = new PickerIcon( PickerIcon.SEARCH );
 		final PickerIcon clearIcon = new PickerIcon( PickerIcon.CLEAR );
@@ -84,6 +90,7 @@ public class SearchForm extends DynamicForm {
 						fieldsDialog = new FieldsDialog();
 					}
 					Rectangle iconRect = searchItem.getIconPageRect( event.getIcon() );
+					fieldsDialog.setFields( searchFields );
 					fieldsDialog.show();
 					fieldsDialog.moveTo( iconRect.getLeft() - DIALOG_WIDTH, iconRect.getTop() );
 				}
@@ -139,11 +146,10 @@ public class SearchForm extends DynamicForm {
 		public FieldsDialog() {
 
 			super();
-			setAutoCenter( true );
 			setIsModal( true );
 			setShowHeader( false );
 			setShowEdges( true );
-			setEdgeSize( 10 );
+			setEdgeSize( 2 );
 			setWidth( DIALOG_WIDTH );
 			setHeight( DIALOG_HEIGHT );
 
@@ -153,7 +159,10 @@ public class SearchForm extends DynamicForm {
 			setBodyDefaults( bodyDefaults );
 
 			DynamicForm fieldForm = new DynamicForm();
-			fieldForm.setTitleWidth( 40 );
+			fieldForm.setTitleWidth( 20 );
+			fieldForm.setWidth( DIALOG_WIDTH - 12 );
+			fieldForm.setHeight( DIALOG_HEIGHT - 25 );
+			fieldForm.setBorder( "2px" );
 
 			this.checkBoxFrom = new CheckboxItem( MessageListFields.FROM.name(), TextProvider.get()
 					.extended_search_panel_from() );
@@ -172,6 +181,7 @@ public class SearchForm extends DynamicForm {
 
 				public void onClick( com.smartgwt.client.widgets.form.fields.events.ClickEvent event ) {
 
+					searchFields = getFields();
 					hide();
 				}
 			} );
@@ -180,6 +190,43 @@ public class SearchForm extends DynamicForm {
 					this.checkBoxContent, searchButton );
 
 			addItem( fieldForm );
+		}
+
+		/**
+		 * @param searchFields
+		 */
+		public void setFields( MessageListFields[] searchFields ) {
+
+			this.checkBoxFrom.setValue( GWTUtil.indexOf( searchFields, MessageListFields.FROM ) >= 0 );
+			this.checkBoxTo.setValue( GWTUtil.indexOf( searchFields, MessageListFields.TO ) >= 0 );
+			this.checkBoxCc.setValue( GWTUtil.indexOf( searchFields, MessageListFields.CC ) >= 0 );
+			this.checkBoxSubject.setValue( GWTUtil.indexOf( searchFields, MessageListFields.SUBJECT ) >= 0 );
+			this.checkBoxContent.setValue( GWTUtil.indexOf( searchFields, MessageListFields.CONTENT ) >= 0 );
+		}
+
+		/**
+		 * @return
+		 */
+		public MessageListFields[] getFields() {
+
+			List<MessageListFields> fields = new ArrayList<MessageListFields>();
+			if ( this.checkBoxFrom.getValueAsBoolean() ) {
+				fields.add( MessageListFields.FROM );
+			}
+			if ( this.checkBoxTo.getValueAsBoolean() ) {
+				fields.add( MessageListFields.TO );
+			}
+			if ( this.checkBoxCc.getValueAsBoolean() ) {
+				fields.add( MessageListFields.CC );
+			}
+			if ( this.checkBoxSubject.getValueAsBoolean() ) {
+				fields.add( MessageListFields.SUBJECT );
+			}
+			if ( this.checkBoxContent.getValueAsBoolean() ) {
+				fields.add( MessageListFields.CONTENT );
+			}
+
+			return (MessageListFields[]) fields.toArray( new MessageListFields[0] );
 		}
 	}
 

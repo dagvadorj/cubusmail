@@ -85,6 +85,30 @@ public abstract class GWTUtil {
 	}
 
 	/**
+	 * @param array
+	 * @param objectToFind
+	 * @return
+	 */
+	public static int indexOf( Object[] array, Object objectToFind ) {
+
+		if ( array == null )
+			return -1;
+		if ( objectToFind == null ) {
+			for (int i = 0; i < array.length; i++)
+				if ( array[i] == null )
+					return i;
+
+		}
+		else {
+			for (int i = 0; i < array.length; i++)
+				if ( objectToFind.equals( array[i] ) )
+					return i;
+
+		}
+		return -1;
+	}
+
+	/**
 	 * Disables the browsers default context menu for the specified element.
 	 * 
 	 * @param elem

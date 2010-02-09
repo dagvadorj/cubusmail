@@ -51,7 +51,7 @@ public class MailboxServiceTest extends GWTTestCase {
 	 */
 	public void testLogin() {
 
-		ServiceProvider.getCubusService().login( "schlierf", "schlierf", new AsyncCallback<GWTMailbox>() {
+		ServiceProvider.getCubusService().login( "schlierf@macpro.com", "schlierf", new AsyncCallback<GWTMailbox>() {
 
 			public void onSuccess( GWTMailbox result ) {
 
