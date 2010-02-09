@@ -20,6 +20,7 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
+import com.cubusmail.client.canvases.mail.SearchForm.SearchHandler;
 import com.cubusmail.client.datasource.MessageGridRecord;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.FolderSelectedListener;
@@ -34,14 +35,6 @@ import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageListFields;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.RecordList;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.FormItemIcon;
-import com.smartgwt.client.widgets.form.fields.PickerIcon;
-import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
-import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
-import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -57,7 +50,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	private SectionStack sectionStack;
 	private SectionStackSection section;
 	private MessageListGrid grid;
-	private TextItem searchItem;
+	private SearchForm searchForm;
 
 	public MessageListCanvas() {
 
@@ -72,37 +65,14 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		this.section.setResizeable( true );
 		this.section.setShowHeader( true );
 
-		this.searchItem = new TextItem();
-		this.searchItem.setTitle( "Search" );
-		this.searchItem.setWidth( 200 );
-		DynamicForm searchForm = new DynamicForm();
-		searchForm.setItems( this.searchItem );
+		this.searchForm = new SearchForm();
+		this.searchForm.addSearchHandler( new SearchHandler() {
 
-		final PickerIcon searchIcon = new PickerIcon( PickerIcon.SEARCH );
-		final PickerIcon clearIcon = new PickerIcon( PickerIcon.CLEAR );
-		this.searchItem.setIcons( searchIcon, clearIcon );
-		this.searchItem.addIconClickHandler( new IconClickHandler() {
+			public void onSearch( MessageListFields[] fields, String[] values ) {
 
-			public void onIconClick( IconClickEvent event ) {
-
-				FormItemIcon icon = event.getIcon();
-				if ( icon.getSrc().equals( clearIcon.getSrc() ) ) {
-					resetFilter();
-				}
-				loadMessages();
 			}
 		} );
-		this.searchItem.addKeyPressHandler( new KeyPressHandler() {
-
-			public void onKeyPress( KeyPressEvent event ) {
-
-				if ( "enter".equalsIgnoreCase( event.getKeyName() ) ) {
-					loadMessages();
-				}
-			}
-		} );
-
-		section.setControls( searchForm );
+		section.setControls( this.searchForm );
 
 		this.grid = new MessageListGrid();
 		this.section.setItems( this.grid );
@@ -132,7 +102,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	public void onMessagesReload() {
 
-		resetFilter();
+		this.searchForm.resetFilter();
 		loadMessages();
 	}
 
@@ -145,7 +115,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	public void onFolderSelected( GWTMailFolder mailFolder ) {
 
-		resetFilter();
+		this.searchForm.resetFilter();
 		this.sectionStack.setSectionTitle( 0, "&nbsp;&nbsp;" + mailFolder.getName() );
 		loadMessages();
 	}
@@ -155,7 +125,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	private void loadMessages() {
 
-		String filterText = (String) this.searchItem.getValue();
+		String filterText = null;
 		Criteria criteria = null;
 		if ( GWTUtil.hasText( filterText ) ) {
 			criteria = new Criteria();
@@ -175,10 +145,6 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	/**
 	 * 
 	 */
-	private void resetFilter() {
-
-		this.searchItem.clearValue();
-	}
 
 	/*
 	 * (non-Javadoc)
