@@ -8,7 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/spring-test.jar"/>
-	<classpathentry kind="lib" path="lib/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/javassist-3.9.0.GA.jar"/>
@@ -29,7 +28,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/smartgwt.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (2)"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (1)"/>
+	<classpathentry exported="true" kind="lib" path="lib/smartgwt.965.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

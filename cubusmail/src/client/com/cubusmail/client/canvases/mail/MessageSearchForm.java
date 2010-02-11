@@ -24,16 +24,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.MessageListFields;
 import com.google.gwt.event.shared.EventHandler;
 import com.smartgwt.client.core.Rectangle;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Dialog;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.MouseOutEvent;
+import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.PickerIcon;
@@ -42,6 +46,7 @@ import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Quick search form for messages.
@@ -50,9 +55,9 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
  */
 public class MessageSearchForm extends DynamicForm {
 
-	private static final int DIALOG_WIDTH = 130;
+	private static final int DIALOG_WIDTH = 100;
 
-	private static final int DIALOG_HEIGHT = 200;
+	private static final int DIALOG_HEIGHT = 180;
 
 	private TextItem searchItem;
 
@@ -62,6 +67,7 @@ public class MessageSearchForm extends DynamicForm {
 
 	private MessageListFields[] searchFields = new MessageListFields[] { MessageListFields.FROM, MessageListFields.TO,
 			MessageListFields.CC, MessageListFields.SUBJECT };
+	private String[] searchValues;
 
 	public MessageSearchForm() {
 
@@ -83,7 +89,7 @@ public class MessageSearchForm extends DynamicForm {
 				FormItemIcon icon = event.getIcon();
 				if ( icon.getSrc().equals( clearIcon.getSrc() ) ) {
 					resetFilter();
-					fireEvent();
+					fireSearchEvent();
 				}
 				else if ( icon.getSrc().equals( filedsIcon.getSrc() ) ) {
 					if ( fieldsDialog == null ) {
@@ -92,10 +98,10 @@ public class MessageSearchForm extends DynamicForm {
 					Rectangle iconRect = searchItem.getIconPageRect( event.getIcon() );
 					fieldsDialog.setFields( searchFields );
 					fieldsDialog.show();
-					fieldsDialog.moveTo( iconRect.getLeft() - DIALOG_WIDTH, iconRect.getTop() );
+					fieldsDialog.moveTo( iconRect.getLeft() - DIALOG_WIDTH + 20, iconRect.getTop() );
 				}
 				else {
-					fireEvent();
+					fireSearchEvent();
 				}
 			}
 		} );
@@ -104,7 +110,7 @@ public class MessageSearchForm extends DynamicForm {
 			public void onKeyPress( KeyPressEvent event ) {
 
 				if ( "enter".equalsIgnoreCase( event.getKeyName() ) ) {
-					fireEvent();
+					fireSearchEvent();
 				}
 			}
 		} );
@@ -112,8 +118,23 @@ public class MessageSearchForm extends DynamicForm {
 		setItems( this.searchItem );
 	}
 
-	private void fireEvent() {
+	/**
+	 * 
+	 */
+	private void fireSearchEvent() {
 
+		if ( this.searchHandlerList != null ) {
+			String searchValue = (String) this.searchItem.getValue();
+			if ( GWTUtil.hasText( searchValue ) ) {
+				this.searchValues = searchValue.split( " " );
+			}
+			else {
+				this.searchValues = null;
+			}
+			for (SearchHandler handler : this.searchHandlerList) {
+				handler.onSearch( this.searchFields, this.searchValues );
+			}
+		}
 	}
 
 	public void addSearchHandler( SearchHandler handler ) {
@@ -127,6 +148,17 @@ public class MessageSearchForm extends DynamicForm {
 	public void resetFilter() {
 
 		this.searchItem.clearValue();
+		this.searchValues = null;
+	}
+
+	public MessageListFields[] getSearchFields() {
+
+		return searchFields;
+	}
+
+	public String[] getSearchValues() {
+
+		return searchValues;
 	}
 
 	/**
@@ -135,7 +167,7 @@ public class MessageSearchForm extends DynamicForm {
 	 * 
 	 * @author Juergen Schlierf
 	 */
-	private class FieldsDialog extends Dialog {
+	public class FieldsDialog extends Dialog {
 
 		private CheckboxItem checkBoxFrom = null;
 		private CheckboxItem checkBoxTo = null;
@@ -152,17 +184,22 @@ public class MessageSearchForm extends DynamicForm {
 			setEdgeSize( 2 );
 			setWidth( DIALOG_WIDTH );
 			setHeight( DIALOG_HEIGHT );
+			setAlign( Alignment.LEFT );
 
 			Map<String, Integer> bodyDefaults = new HashMap<String, Integer>();
-			bodyDefaults.put( "layoutLeftMargin", 10 );
-			bodyDefaults.put( "layoutTopMargin", 15 );
+			bodyDefaults.put( "layoutLeftMargin", 2 );
+			bodyDefaults.put( "layoutTopMargin", 20 );
+			bodyDefaults.put( "layoutButtonMargin", 2 );
 			setBodyDefaults( bodyDefaults );
 
+			VLayout layout = new VLayout();
+			layout.setOverflow( Overflow.HIDDEN );
+			layout.setHeight100();
+			layout.setWidth100();
+
 			DynamicForm fieldForm = new DynamicForm();
-			fieldForm.setTitleWidth( 20 );
-			fieldForm.setWidth( DIALOG_WIDTH - 12 );
-			fieldForm.setHeight( DIALOG_HEIGHT - 25 );
-			fieldForm.setBorder( "2px" );
+			fieldForm.setTitleWidth( 5 );
+			fieldForm.setAutoHeight();
 
 			this.checkBoxFrom = new CheckboxItem( MessageListFields.FROM.name(), TextProvider.get()
 					.extended_search_panel_from() );
@@ -175,21 +212,41 @@ public class MessageSearchForm extends DynamicForm {
 			this.checkBoxContent = new CheckboxItem( MessageListFields.CONTENT.name(), TextProvider.get()
 					.extended_search_panel_body() );
 
-			final ButtonItem searchButton = new ButtonItem( TextProvider.get().extended_search_panel_search() );
+			final IButton searchButton = new IButton( TextProvider.get().extended_search_panel_search() );
 			searchButton.setAutoFit( true );
-			searchButton.addClickHandler( new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+			searchButton.setAlign( Alignment.CENTER );
+			searchButton.addClickHandler( new ClickHandler() {
 
-				public void onClick( com.smartgwt.client.widgets.form.fields.events.ClickEvent event ) {
+				public void onClick( ClickEvent event ) {
 
 					searchFields = getFields();
 					hide();
+					fireSearchEvent();
 				}
 			} );
 
 			fieldForm.setItems( this.checkBoxFrom, this.checkBoxTo, this.checkBoxCc, this.checkBoxSubject,
-					this.checkBoxContent, searchButton );
+					this.checkBoxContent );
 
-			addItem( fieldForm );
+			layout.setMembers( fieldForm, searchButton );
+			setMembers( layout );
+
+			addMouseOutHandler( new MouseOutHandler() {
+
+				public void onMouseOut( MouseOutEvent event ) {
+
+					FieldsDialog dialog = (FieldsDialog) event.getSource();
+
+					// Workaround because the mouse out handler doesn't work
+					// correctly
+					if ( (event.getX() < dialog.getAbsoluteLeft() || event.getX() > (dialog.getAbsoluteLeft()
+							+ dialog.getWidth() - 5))
+							|| (event.getY() < dialog.getAbsoluteTop() || event.getY() > (dialog.getAbsoluteTop()
+									+ dialog.getHeight() - 10)) ) {
+						hide();
+					}
+				}
+			} );
 		}
 
 		/**

@@ -27,13 +27,12 @@ import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessageLoadedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
 import com.cubusmail.client.util.GWTSessionManager;
-import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageListFields;
-import com.smartgwt.client.data.Criteria;
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.RecordList;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
@@ -57,7 +56,6 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		super();
 
 		this.sectionStack = new SectionStack();
-		// this.sectionStack.setSectionHeaderClass( "sectionStackSection" );
 
 		this.section = new SectionStackSection();
 		this.section.setCanCollapse( false );
@@ -70,6 +68,7 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 
 			public void onSearch( MessageListFields[] fields, String[] values ) {
 
+				loadMessages();
 			}
 		} );
 		section.setControls( this.searchForm );
@@ -125,26 +124,23 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 	 */
 	private void loadMessages() {
 
-		String filterText = null;
-		Criteria criteria = null;
-		if ( GWTUtil.hasText( filterText ) ) {
-			criteria = new Criteria();
-			criteria.addCriteria( GWTMailConstants.PARAM_FILTER_TEXT, filterText );
+		// I use DSRequest because the Criteria class doesn't support Enums
+		DSRequest request = null;
+		if ( this.searchForm.getSearchValues() != null ) {
+			request = new DSRequest();
+			request.setAttribute( GWTMailConstants.PARAM_SEARCH_FIELDS, this.searchForm.getSearchFields() );
+			request.setAttribute( GWTMailConstants.PARAM_SEARCH_VALUES, this.searchForm.getSearchValues() );
 		}
 
 		this.grid.invalidateCache();
 
-		if ( criteria != null ) {
-			this.grid.fetchData( criteria );
+		if ( request != null ) {
+			this.grid.fetchData( null, null, request );
 		}
 		else {
 			this.grid.fetchData();
 		}
 	}
-
-	/**
-	 * 
-	 */
 
 	/*
 	 * (non-Javadoc)

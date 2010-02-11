@@ -48,6 +48,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.search.AndTerm;
 import javax.mail.search.BodyTerm;
 import javax.mail.search.FromStringTerm;
+import javax.mail.search.OrTerm;
 import javax.mail.search.RecipientStringTerm;
 import javax.mail.search.SearchTerm;
 import javax.mail.search.SubjectTerm;
@@ -475,7 +476,7 @@ public class MessageUtils {
 		}
 
 		if ( searchFields.length > 1 ) {
-			return new AndTerm( terms );
+			return new OrTerm( terms );
 		}
 		else {
 			return terms[0];

@@ -51,7 +51,7 @@ public class MailboxServiceTest extends GWTTestCase {
 	 */
 	public void testLogin() {
 
-		ServiceProvider.getCubusService().login( "schlierf@macpro.com", "schlierf", new AsyncCallback<GWTMailbox>() {
+		ServiceProvider.getCubusService().login( "schlierf", "schlierf", new AsyncCallback<GWTMailbox>() {
 
 			public void onSuccess( GWTMailbox result ) {
 
@@ -76,8 +76,8 @@ public class MailboxServiceTest extends GWTTestCase {
 	 */
 	private void retrieveMessages() {
 
-		MessageListFields[] fields = new MessageListFields[] { MessageListFields.FROM };
-		String[] values = new String[] {};
+		MessageListFields[] fields = new MessageListFields[] { MessageListFields.CONTENT };
+		String[] values = new String[] { "wissen", "wie" };
 		ServiceProvider.getMailboxService().retrieveMessages( "INBOX", 0, 100, null, true, fields, values,
 				new AsyncCallback<GWTMessageList>() {
 

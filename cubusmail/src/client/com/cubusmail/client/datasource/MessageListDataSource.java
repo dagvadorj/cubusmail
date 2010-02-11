@@ -97,10 +97,12 @@ public class MessageListDataSource extends GwtRpcDataSource {
 			ascending = SortDirection.ASCENDING == sortSpec.getSortDirection();
 		}
 
-		response.setInvalidateCache( true );
+		MessageListFields[] searchFields = (MessageListFields[]) request
+				.getAttributeAsObject( GWTMailConstants.PARAM_SEARCH_FIELDS );
+		String[] searchValues = request.getAttributeAsStringArray( GWTMailConstants.PARAM_SEARCH_VALUES );
 
 		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
-				null, null, new AsyncCallback<GWTMessageList>() {
+				searchFields, searchValues, new AsyncCallback<GWTMessageList>() {
 
 					public void onSuccess( GWTMessageList result ) {
 
