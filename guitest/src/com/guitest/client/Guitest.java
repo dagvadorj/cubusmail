@@ -7,9 +7,12 @@ import com.cubusmail.common.model.GWTAddress;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMessage;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.TileLayoutPolicy;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.layout.HStack;
 import com.smartgwt.client.widgets.tile.TileLayout;
 
 /**
@@ -19,17 +22,19 @@ public class Guitest implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	// public void onModuleLoad() {
-	// RootPanel.getBodyElement().removeChild(
-	// RootPanel.get("loadingWrapper").getElement());
-	//
-	// // MessageSearchForm form = new MessageSearchForm();
-	// // form.draw();
-	//
-	// // testMessageReadingPaneHeader();
-	// testTileLayoutWithButtons();
-	// }
 	public void onModuleLoad() {
+		RootPanel.getBodyElement().removeChild(
+				RootPanel.get("loadingWrapper").getElement());
+
+		// MessageSearchForm form = new MessageSearchForm();
+		// form.draw();
+
+		// testMessageReadingPaneHeader();
+		// testTileLayoutWithButtons();
+		testTileLayoutWidthAttachments();
+	}
+
+	private void testTileLayoutWithButtons() {
 		TileLayout tile = new TileLayout();
 		tile.setSize("100%", "100%");
 		tile.setLayoutPolicy(TileLayoutPolicy.FLOW);
@@ -55,28 +60,22 @@ public class Guitest implements EntryPoint {
 		tile.draw();
 	}
 
-	private void testTileLayoutWithButtons() {
+	private void testTileLayoutWidthAttachments() {
 		TileLayout tile = new TileLayout();
 		tile.setSize("100%", "100%");
-		tile.setLayoutPolicy(TileLayoutPolicy.FLOW);
-		tile.setOverflow(Overflow.VISIBLE);
+		tile.setLayoutPolicy(TileLayoutPolicy.FIT);
+		// tile.setOverflow(Overflow.VISIBLE);
 		tile.setAutoWrapLines(true);
 		tile.setShowEdges(true);
-		tile.setTileHeight(25);
+		tile.setTileHeight(20);
+		tile.setTileHMargin(20);
+		tile.setTileVMargin(5);
 
-		Button button = new Button("askldjfa_faaskdfjksadfsfa.txt");
-		button.setOverflow(Overflow.VISIBLE);
-		button.setAutoWidth();
-		tile.addTile(button);
-
-		button = new Button("as.png");
-		button.setAutoWidth();
-		button.setOverflow(Overflow.VISIBLE);
-		tile.addTile(button);
-
-		button = new Button("afa_fasfa.txt");
-		button.setOverflow(Overflow.VISIBLE);
-		tile.addTile(button);
+		tile.addTile(new AttachmentTest("aaaaaaaaaaaaa.txt"));
+		tile.addTile(new AttachmentTest("bbb.txt"));
+		tile.addTile(new AttachmentTest("adfasdfasdfas_afasdfasdf.txt"));
+		tile.addTile(new AttachmentTest("fffffffff.txt"));
+		tile.addTile(new AttachmentTest("d.txt"));
 
 		tile.draw();
 	}
@@ -128,5 +127,20 @@ public class Guitest implements EntryPoint {
 		message.setAttachments(attachments);
 
 		return message;
+	}
+
+	private class AttachmentTest extends HStack {
+		public AttachmentTest(String name) {
+			super();
+
+			Label label = new Label(name);
+			label.setIcon("attach.png");
+			// label.setOverflow(Overflow.VISIBLE);
+			// label.setAutoFit(true);
+			setMembers(label);
+			// setAutoWidth();
+
+			// setOverflow(Overflow.VISIBLE);
+		}
 	}
 }
