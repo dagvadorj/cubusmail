@@ -19,18 +19,20 @@
  */
 package com.cubusmail.client.canvases.mail;
 
-import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.client.widgets.AttachmentWidget;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.smartgwt.client.types.Orientation;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.types.TileLayoutPolicy;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.layout.FlowLayout;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tile.TileLayout;
 
 /**
  * Header for message reading pane.
@@ -46,19 +48,19 @@ public class MessageReadingPaneHeader extends VLayout {
 	private EmailAddressLine replyTo;
 	private HLayout dateLine;
 	private Label date;
-	private FlowPanel attachmentLine;
+	private FlowLayout attachmentLine;
 
 	public MessageReadingPaneHeader() {
 
 		super();
 		setStyleName( "messageReadingPaneHeader" );
-		setWidth100();
+		// setWidth100();
 		setAutoHeight();
 		setPadding( 4 );
 		setOverflow( Overflow.VISIBLE );
 
 		this.subject = new Label( "" );
-		this.subject.setWidth100();
+		this.subject.setWrap( true );
 		this.subject.setAutoHeight();
 		this.subject.setStyleName( "message-subject" );
 
@@ -79,11 +81,22 @@ public class MessageReadingPaneHeader extends VLayout {
 		dateLabel.setAutoHeight();
 		this.dateLine.setMembers( dateLabel, this.date );
 
-		this.attachmentLine = new FlowPanel();
-		this.attachmentLine.setWidth( "100%" );
+		this.attachmentLine = new FlowLayout();
+		// this.attachmentLine.setTileHMargin( 5 );
+		this.attachmentLine.setOrientation( Orientation.HORIZONTAL );
+		this.attachmentLine.setWidth100();
+		this.attachmentLine.setAutoHeight();
+		this.attachmentLine.setVisible( true );
+		this.attachmentLine.setOverflow( Overflow.VISIBLE );
+		this.attachmentLine.setExpandMargins( false );
+		this.attachmentLine.setAnimateTileChange( false );
+		this.attachmentLine.setTileHeight( 20 );
+		this.attachmentLine.setAutoWrapLines( true );
+		this.attachmentLine.setShowEdges( true );
+		// DOM.setStyleAttribute( this.attachmentLine.getElement(), "border",
+		// "1px solid #00f" );
 
-		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine );
-		addMember( this.attachmentLine );
+		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine, this.attachmentLine );
 	}
 
 	/**
@@ -91,7 +104,7 @@ public class MessageReadingPaneHeader extends VLayout {
 	 */
 	public void setMessage( GWTMessage message ) {
 
-		this.attachmentLine.clear();
+		// this.attachmentLine.clear();
 		this.subject.setContents( "" );
 
 		if ( GWTUtil.hasText( message.getSubject() ) ) {
@@ -126,16 +139,23 @@ public class MessageReadingPaneHeader extends VLayout {
 			this.replyTo.setVisible( false );
 		}
 		if ( message.getDate() != null ) {
-			this.date.setContents( GWTUtil.formatDate( message.getDate(), GWTSessionManager.get().getPreferences()
-					.getTimezoneOffset() ) );
+			// this.date.setContents( GWTUtil.formatDate( message.getDate(),
+			// GWTSessionManager.get().getPreferences()
+			// .getTimezoneOffset() ) );
+			this.date.setContents( message.getDate().toGMTString() );
 			this.dateLine.setVisible( true );
 		}
 		else {
 			this.dateLine.setVisible( false );
 		}
 		if ( !GWTUtil.isEmpty( message.getAttachments() ) ) {
-			for (GWTAttachment attachment : message.getAttachments()) {				
-				this.attachmentLine.add( new AttachmentWidget( attachment ) );
+			IButton[] buttons = new IButton[message.getAttachments().length];
+			for (int i = 0; i < message.getAttachments().length; i++) {
+				GWTAttachment attachment = message.getAttachments()[i];
+				buttons[i] = new IButton( attachment.getFileName() );
+				buttons[i].setOverflow( Overflow.VISIBLE );
+				this.attachmentLine.addTile( buttons[i] );
+				this.attachmentLine.layoutTiles();
 			}
 			this.attachmentLine.setVisible( true );
 		}
@@ -143,6 +163,6 @@ public class MessageReadingPaneHeader extends VLayout {
 			this.attachmentLine.setVisible( false );
 		}
 
-		this.reflow();
 	}
+
 }

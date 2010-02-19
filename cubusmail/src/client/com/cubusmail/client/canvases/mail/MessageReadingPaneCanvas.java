@@ -39,7 +39,9 @@ public class MessageReadingPaneCanvas extends VLayout implements MessageLoadedLi
 	public MessageReadingPaneCanvas() {
 
 		super();
-
+		
+		setOverflow( Overflow.AUTO );
+		
 		this.header = new MessageReadingPaneHeader();
 		this.content = new HTMLPane();
 		this.content.setWidth100();
