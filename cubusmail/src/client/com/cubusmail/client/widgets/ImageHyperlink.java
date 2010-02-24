@@ -47,12 +47,20 @@ public class ImageHyperlink extends Hyperlink {
 		this( img, "" );
 	}
 
-	public ImageHyperlink( Image img, String targetHistoryToken ) {
+	public ImageHyperlink( Image img, String text ) {
+
+		this( img, text, "" );
+	}
+
+	public ImageHyperlink( Image img, String text, String targetHistoryToken ) {
 
 		super();
+		setText( text );
 		setStyleName( "gwt-Hyperlink" );
+		// DOM.setStyleAttribute( getElement(), "whiteSpace", "nowrap" );
 		if ( img != null ) {
 			DOM.insertChild( getElement(), img.getElement(), 0 );
+			DOM.setStyleAttribute( img.getElement(), "verticalAlign", "middle" );
 			img.unsinkEvents( Event.ONCLICK | Event.MOUSEEVENTS );
 		}
 		setTargetHistoryToken( targetHistoryToken );

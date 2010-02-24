@@ -2,6 +2,7 @@ package com.guitest.client;
 
 import java.util.Date;
 
+import com.cubusmail.client.canvases.mail.EmailAddressLine;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneHeader;
 import com.cubusmail.client.widgets.ImageHyperlink;
 import com.cubusmail.common.model.GWTAddress;
@@ -10,20 +11,18 @@ import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.TileLayoutPolicy;
-import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
 import com.smartgwt.client.widgets.events.MouseDownEvent;
 import com.smartgwt.client.widgets.events.MouseDownHandler;
-import com.smartgwt.client.widgets.events.ResizedEvent;
-import com.smartgwt.client.widgets.events.ResizedHandler;
+import com.smartgwt.client.widgets.events.MouseOutEvent;
+import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.events.RightMouseDownEvent;
 import com.smartgwt.client.widgets.events.RightMouseDownHandler;
 import com.smartgwt.client.widgets.layout.HStack;
@@ -46,61 +45,44 @@ public class Guitest implements EntryPoint {
 		// MessageSearchForm form = new MessageSearchForm();
 		// form.draw();
 
-		// testMessageReadingPaneHeader();
+		testMessageReadingPaneHeader();
 		// testTileLayoutWithButtons();
 		// testTileLayoutWidthAttachments();
-		testFlowPanel2();
+		// testFlowPanel2();
+		// testEmailAddressLine();
 	}
 
-	private void testFlowPanel() {
+	private void testEmailAddressLine() {
 		VLayout layout = new VLayout();
 		layout.setSize("100%", "100%");
 		layout.setShowEdges(true);
-		layout.setOverflow(Overflow.HIDDEN);
+		layout.setOverflow(Overflow.CLIP_H);
 
-		final FlowPanel flow = new FlowPanel();
-		flow.setHeight("100");
-		DOM.setStyleAttribute(flow.getElement(), "border", "1px solid #00f");
-		DOM.setStyleAttribute(flow.getElement(), "whiteSpace", "wrap");
-		final WidgetCanvas widgetConvas = new WidgetCanvas(flow);
-		widgetConvas.setWidth100();
-		widgetConvas.setHeight100();
-		widgetConvas.setOverflow(Overflow.AUTO);
+		EmailAddressLine line = new EmailAddressLine("From:");
+		line.setShowEdges(true);
+		line.setVisible(true);
 
-		Button button = new Button("kajfkasldjfkasl");
-		button.setStyleName("gwt-Hyperlink");
-		flow.add(new Hyperlink("akdfasklfjd", "#"));
-		button = new Button("kajfkas");
-		button.setStyleName("gwt-Hyperlink");
-		flow.add(new Hyperlink("aaaaaaaaaaaaaaaaa", "#"));
-		button = new Button("bbbbbbbbbbbbbbbb");
-		button.setStyleName("gwt-Hyperlink");
-		flow.add(new Hyperlink("oooooooo", "#"));
-
-		widgetConvas.addResizedHandler(new ResizedHandler() {
-
-			public void onResized(ResizedEvent event) {
-
-			}
-		});
-
-		layout.setMembers(widgetConvas);
-
+		layout.setMembers(line);
 		layout.draw();
+
+		line.setAddresses(createAddresses());
 	}
 
 	private void testFlowPanel2() {
 		final Menu contextMenu = new Menu();
 		MenuItem item = new MenuItem("Test 1");
 		contextMenu.setItems(item);
+		contextMenu.setCanSelectParentItems(true);
+		contextMenu.setAutoDraw(true);
 
 		VLayout layout = new VLayout();
 		layout.setSize("100%", "100%");
 		layout.setShowEdges(true);
-		layout.setOverflow(Overflow.HIDDEN);
+		layout.setOverflow(Overflow.VISIBLE);
+		contextMenu.setParentElement(layout);
+		// layout.setContextMenu(contextMenu);
 
 		FlowPanel flowPanel = new FlowPanel();
-		flowPanel.ensureDebugId("cwFlowPanel");
 
 		// Add some content to the panel
 		for (int i = 0; i < 30; i++) {
@@ -114,49 +96,36 @@ public class Guitest implements EntryPoint {
 
 				public void onMouseDown(MouseDownEvent event) {
 					GWT.log(event.getX() + "", null);
-					contextMenu.showContextMenu();
+					contextMenu.setLeft(event.getX());
+					contextMenu.setTop(event.getY());
+					contextMenu.setVisibility(Visibility.VISIBLE);
+					contextMenu.draw();
 				}
 			});
 			checkbox.addRightButtonHandler(new RightMouseDownHandler() {
 
 				public void onRightMouseDown(RightMouseDownEvent event) {
 					GWT.log(event.getX() + "", null);
+					contextMenu.setLeft(event.getX());
+					contextMenu.setTop(event.getY());
+					contextMenu.setVisibility(Visibility.VISIBLE);
+					contextMenu.draw();
 				}
 			});
 			flowPanel.add(checkbox);
 		}
 
 		final WidgetCanvas widgetConvas = new WidgetCanvas(flowPanel);
+		contextMenu.addMouseOutHandler(new MouseOutHandler() {
+
+			public void onMouseOut(MouseOutEvent event) {
+				if (contextMenu.isVisible()) {
+					contextMenu.hide();
+				}
+			}
+		});
 		layout.setMembers(widgetConvas);
 		layout.draw();
-	}
-
-	private void testTileLayoutWithButtons() {
-		TileLayout tile = new TileLayout();
-		tile.setSize("100%", "100%");
-		tile.setLayoutPolicy(TileLayoutPolicy.FLOW);
-		tile.setOverflow(Overflow.VISIBLE);
-		tile.setAutoWrapLines(true);
-		tile.setShowEdges(true);
-		tile.setTileHeight(25);
-		// tile.setTileWidth(130);
-		tile.setCanDragResize(true);
-
-		Button button = new Button("askldjfa_faaskdfjksadfsfa.txt");
-		button.setOverflow(Overflow.VISIBLE);
-		button.setAutoWidth();
-		tile.addTile(button);
-
-		button = new Button("as.png");
-		button.setAutoWidth();
-		button.setOverflow(Overflow.VISIBLE);
-		tile.addTile(button);
-
-		button = new Button("afa_fasfa.txt");
-		button.setOverflow(Overflow.VISIBLE);
-		tile.addTile(button);
-
-		tile.draw();
 	}
 
 	private void testTileLayoutWidthAttachments() {
@@ -186,25 +155,33 @@ public class Guitest implements EntryPoint {
 		header.setMessage(getTestMessage());
 	}
 
+	private GWTAddress[] createAddresses() {
+		int COUNT = 10;
+		GWTAddress[] addresses = new GWTAddress[COUNT];
+
+		for (int i = 0; i < COUNT; i++) {
+			addresses[i] = new GWTAddress();
+			addresses[i].setName("Hans Meier" + i);
+			addresses[i].setEmail("hans" + i + "@meier.de");
+			addresses[i].setInternetAddress("Hans Meier" + i + " <hans" + i
+					+ "@meier.de>");
+		}
+
+		return addresses;
+	}
+
 	private GWTMessage getTestMessage() {
 		GWTMessage message = new GWTMessage();
 		message.setSubject("Test Betreff");
 
-		GWTAddress from = new GWTAddress();
-		from.setName("Hans Meier");
-		from.setEmail("hans@meier.de");
-		from.setInternetAddress("Hans Meier <hans@meier.de>");
-		message.setFromArray(new GWTAddress[] { from });
+		message.setFromArray(createAddresses());
 
-		GWTAddress to = new GWTAddress();
-		to.setName("Hans Moser");
-		to.setEmail("hans@moser.de");
-		to.setInternetAddress("Hans Moser <hans@moser.de>");
-		message.setToArray(new GWTAddress[] { to });
+		message.setToArray(createAddresses());
+		message.setCcArray(createAddresses());
 
 		message.setDate(new Date());
 
-		GWTAttachment[] attachments = new GWTAttachment[3];
+		GWTAttachment[] attachments = new GWTAttachment[5];
 		attachments[0] = new GWTAttachment();
 		attachments[0].setFileName("askldjfa_faaskdfjksadfsfa.txt");
 		attachments[0].setIndex(0);
@@ -223,6 +200,18 @@ public class Guitest implements EntryPoint {
 		attachments[2].setMessageId(1234);
 		attachments[2].setSize(23453);
 		attachments[2].setSizeText("343 kb");
+		attachments[3] = new GWTAttachment();
+		attachments[3].setFileName("asdfasdfasd sdafsd.pdf");
+		attachments[3].setIndex(0);
+		attachments[3].setMessageId(1234);
+		attachments[3].setSize(23453);
+		attachments[3].setSizeText("343 kb");
+		attachments[4] = new GWTAttachment();
+		attachments[4].setFileName("cccccccccccccc.pdf");
+		attachments[4].setIndex(0);
+		attachments[4].setMessageId(1234);
+		attachments[4].setSize(23453);
+		attachments[4].setSizeText("343 kb");
 		message.setAttachments(attachments);
 
 		return message;

@@ -41,5 +41,5 @@ public interface GWTMailConstants {
 
 	public final static int MESSAGE_LIST_PAGE_SIZE = 100;
 
-	public final static int MESSAGE_READING_PANE_LABEL_WIDTH = 80;
+	public final static int MESSAGE_READING_PANE_LABEL_WIDTH = 60;
 }

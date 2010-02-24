@@ -21,31 +21,23 @@
 package com.cubusmail.client.widgets;
 
 import com.cubusmail.common.model.GWTAddress;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hyperlink;
 
 /**
  * Hyperlink for email addresses.
  * 
  * @author Juergen Schlierf
  */
-public class EmailAddressLink extends Composite {
+public class EmailAddressLink extends Hyperlink {
 
 //	private Menu contextMenu;
 
-	public EmailAddressLink( GWTAddress address, boolean withSeparator ) {
+	public EmailAddressLink( GWTAddress address) {
 
 		super();
-
-		FlowPanel panel = new FlowPanel();
-		initWidget( panel );
-		DOM.setStyleAttribute( panel.getElement(), "whiteSpace", "nowrap" );
-		DOM.setStyleAttribute( getElement(), "whiteSpace", "nowrap" );
-
-		ImageHyperlink link = new ImageHyperlink();
-		link.setText( address.getInternetAddress() );
+	    setStyleName("emailAddressLink");
+		setText( address.getInternetAddress() );
+		setTargetHistoryToken( "#" );
 
 //		AddContactFromEmailAddressAction addContactAction = new AddContactFromEmailAddressAction();
 //		addContactAction.setAddress( address );
@@ -67,9 +59,5 @@ public class EmailAddressLink extends Composite {
 //		link.addLeftButtonListener( listener );
 //		link.addRightButtonListener( listener );
 
-		panel.add( link );
-		if ( withSeparator ) {
-			panel.add( new HTML( ",&nbsp;&nbsp;" ) );
-		}
 	}
 }

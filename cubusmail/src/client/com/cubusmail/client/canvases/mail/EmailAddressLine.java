@@ -22,7 +22,9 @@ package com.cubusmail.client.canvases.mail;
 import com.cubusmail.client.widgets.EmailAddressLink;
 import com.cubusmail.common.model.GWTAddress;
 import com.cubusmail.common.model.GWTMailConstants;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 
@@ -67,15 +69,21 @@ public class EmailAddressLine extends HLayout {
 		if ( addresses != null ) {
 
 			for (int i = 0; i < addresses.length; i++) {
-				boolean withSeparator = false;
+				this.emailAddresses.add( new EmailAddressLink( addresses[i] ) );
 				if ( i < (addresses.length - 1) ) {
-					withSeparator = true;
+					this.emailAddresses.add( new Separator() );
 				}
-				EmailAddressLink link = new EmailAddressLink( addresses[i], withSeparator );
-				link.getElement().getStyle().setProperty( "display", "inline" );
-				this.emailAddresses.add( link );
 			}
 		}
+	}
 
+	private class Separator extends HTML {
+
+		public Separator() {
+
+			// include whitespace for wrapping
+			setHTML( ", " );
+			DOM.setStyleAttribute( getElement(), "rightPadding", "15px" );
+		}
 	}
 }

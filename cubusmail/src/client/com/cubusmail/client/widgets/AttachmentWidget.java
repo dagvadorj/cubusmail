@@ -63,8 +63,7 @@ public class AttachmentWidget extends Composite {
 
 		FlowPanel panel = new FlowPanel();
 		initWidget( panel );
-		DOM.setStyleAttribute( panel.getElement(), "whiteSpace", "nowrap" );
-		DOM.setStyleAttribute( getElement(), "whiteSpace", "nowrap" );
+		setStyleName( "attachmentWidget" );
 
 		ImageHyperlink link = new ImageHyperlink( new Image( GWT.getHostPageBaseURL() + ImageProvider.IMAGE_PREFIX
 				+ ImageProvider.MSG_ATTACHMENT ) );
@@ -93,7 +92,7 @@ public class AttachmentWidget extends Composite {
 				+ ImageProvider.IMAGE_PREFIX + ImageProvider.MSG_DOWNLOAD ) );
 		downloadLink.addLeftButtonHandler( new DownloadLeftButtonListener() );
 		panel.add( downloadLink );
-		panel.add( new HTML( "&nbsp;&nbsp;&nbsp;" ) );
+		panel.add( new HTML( "&nbsp;&nbsp;&nbsp; " ) );
 
 		this.downloadAttachmentAction = new DownloadAttachmentAction( attachment );
 		this.viewAttachmentAction = new ViewAttachmentAction( attachment );
@@ -104,7 +103,6 @@ public class AttachmentWidget extends Composite {
 		this.viewItem = UIFactory.createMenuItem( this.viewAttachmentAction );
 		this.contextMenu.setItems( this.viewItem, this.downloadItem );
 
-		getElement().getStyle().setProperty( "display", "inline" );
 	}
 
 	private class MainLinkLeftButtonListener implements MouseDownHandler {

@@ -21,6 +21,18 @@
 	font: bold 14px arial, tahoma, sans-serif;
 }
 
+.attachmentWidget {
+	display: inline;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.emailAddressLink {
+	display: inline;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
 .gwt-HTML {
 	display: inline;
 }
@@ -28,6 +40,7 @@
 .gwt-Hyperlink {
 	display: inline;
 	vertical-align: middle;
+	white-space: nowrap;
 }
 
 .gwt-TextArea {
