@@ -5,7 +5,7 @@ import java.util.Date;
 import com.cubusmail.client.canvases.mail.EmailAddressLine;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneHeader;
 import com.cubusmail.client.widgets.ImageHyperlink;
-import com.cubusmail.common.model.GWTAddress;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.ImageProvider;
@@ -155,12 +155,12 @@ public class Guitest implements EntryPoint {
 		header.setMessage(getTestMessage());
 	}
 
-	private GWTAddress[] createAddresses() {
+	private GWTEmailAddress[] createAddresses() {
 		int COUNT = 10;
-		GWTAddress[] addresses = new GWTAddress[COUNT];
+		GWTEmailAddress[] addresses = new GWTEmailAddress[COUNT];
 
 		for (int i = 0; i < COUNT; i++) {
-			addresses[i] = new GWTAddress();
+			addresses[i] = new GWTEmailAddress();
 			addresses[i].setName("Hans Meier" + i);
 			addresses[i].setEmail("hans" + i + "@meier.de");
 			addresses[i].setInternetAddress("Hans Meier" + i + " <hans" + i

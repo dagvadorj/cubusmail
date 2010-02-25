@@ -27,7 +27,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * 
  * @author Juergen Schlierf
  */
-public class GWTAddress implements IsSerializable {
+public class GWTEmailAddress implements IsSerializable {
 
 	private String name;
 	private String email;

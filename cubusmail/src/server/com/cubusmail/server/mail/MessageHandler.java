@@ -54,7 +54,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import com.cubusmail.common.model.GWTAddress;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageRecord;
@@ -343,7 +343,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 	 * @return
 	 * @throws MessagingException
 	 */
-	public GWTAddress[] getReplyToArray() throws MessagingException {
+	public GWTEmailAddress[] getReplyToArray() throws MessagingException {
 
 		Address[] addressArray = (Address[]) this.message.getReplyTo();
 		if ( addressArray != null && addressArray.length > 0 ) {

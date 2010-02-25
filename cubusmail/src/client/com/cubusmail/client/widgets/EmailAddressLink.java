@@ -20,44 +20,57 @@
  */
 package com.cubusmail.client.widgets;
 
-import com.cubusmail.common.model.GWTAddress;
-import com.google.gwt.user.client.ui.Hyperlink;
+import com.cubusmail.client.actions.ActionRegistry;
+import com.cubusmail.client.actions.contact.AddContactFromEmailAddressAction;
+import com.cubusmail.client.actions.contact.ComposeMessageForEmailAddressAction;
+import com.cubusmail.client.util.GWTUtil;
+import com.cubusmail.common.model.GWTEmailAddress;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.user.client.ui.Anchor;
+import com.smartgwt.client.types.Visibility;
+import com.smartgwt.client.widgets.menu.Menu;
 
 /**
  * Hyperlink for email addresses.
  * 
  * @author Juergen Schlierf
  */
-public class EmailAddressLink extends Hyperlink {
+public class EmailAddressLink extends Anchor {
 
-//	private Menu contextMenu;
+	private Menu contextMenu;
+	private GWTEmailAddress emailAddress;
 
-	public EmailAddressLink( GWTAddress address) {
+	public EmailAddressLink( GWTEmailAddress address ) {
 
 		super();
-	    setStyleName("emailAddressLink");
+		setStyleName( "emailAddressLink" );
 		setText( address.getInternetAddress() );
-		setTargetHistoryToken( "#" );
+		setHref( "#" );
 
-//		AddContactFromEmailAddressAction addContactAction = new AddContactFromEmailAddressAction();
-//		addContactAction.setAddress( address );
-//		NewMessageToEmailAddressAction newMessageAction = new NewMessageToEmailAddressAction();
-//		newMessageAction.setAddress( address );
-//
-//		this.contextMenu = new Menu();
-//		this.contextMenu.addItem( UIFactory.createMenuItem( addContactAction ) );
-//		this.contextMenu.addItem( UIFactory.createMenuItem( newMessageAction ) );
-//
-//		MouseListenerAdapter listener = new MouseListenerAdapter() {
-//
-//			@Override
-//			public void onMouseDown( Widget sender, int x, int y ) {
-//
-//				contextMenu.showAt( sender.getAbsoluteLeft() + x + 10, sender.getAbsoluteTop() + y );
-//			}
-//		};
-//		link.addLeftButtonListener( listener );
-//		link.addRightButtonListener( listener );
+		this.emailAddress = address;
+		GWTUtil.disableContextMenu( getElement() );
 
+		addMouseDownHandler( new MouseDownHandler() {
+
+			public void onMouseDown( MouseDownEvent event ) {
+
+				ActionRegistry.ADD_CONTACT_FROM_EMAILADDRESS.get( AddContactFromEmailAddressAction.class ).setAddress(
+						emailAddress );
+				ActionRegistry.COMPOSE_MESSAGE_FOR_EMAIL.get( ComposeMessageForEmailAddressAction.class ).setAddress(
+						emailAddress );
+				if ( contextMenu != null ) {
+					contextMenu.setLeft( event.getClientX() - 10 );
+					contextMenu.setTop( event.getClientY() - 10 );
+					contextMenu.setVisibility( Visibility.VISIBLE );
+					contextMenu.draw();
+				}
+			}
+		} );
+	}
+
+	public void setContextMenu( Menu contextMenu ) {
+
+		this.contextMenu = contextMenu;
 	}
 }

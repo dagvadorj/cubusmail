@@ -20,17 +20,18 @@
  */
 package com.cubusmail.client.widgets;
 
+import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.message.DownloadAttachmentAction;
 import com.cubusmail.client.actions.message.ViewAttachmentAction;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.widgets.events.MouseDownEvent;
 import com.smartgwt.client.widgets.events.MouseDownHandler;
 import com.smartgwt.client.widgets.events.RightMouseDownEvent;
@@ -47,35 +48,28 @@ public class AttachmentWidget extends Composite {
 
 	private Menu contextMenu;
 
-	private DownloadAttachmentAction downloadAttachmentAction;
-	private ViewAttachmentAction viewAttachmentAction;
-
 	// Context menu items
 	private MenuItem downloadItem;
 	private MenuItem viewItem;
 
-	/**
-	 * @param title
-	 */
+	private GWTAttachment attachment;
+
 	public AttachmentWidget( GWTAttachment attachment ) {
 
 		super();
+		this.attachment = attachment;
 
 		FlowPanel panel = new FlowPanel();
 		initWidget( panel );
 		setStyleName( "attachmentWidget" );
 
-		ImageHyperlink link = new ImageHyperlink( new Image( GWT.getHostPageBaseURL() + ImageProvider.IMAGE_PREFIX
-				+ ImageProvider.MSG_ATTACHMENT ) );
-		link.addLeftButtonHandler( new MainLinkLeftButtonListener() );
-		link.addRightButtonHandler( new MainLinkRightButtonListener() );
-		panel.add( link );
+		ShowContextMenuHandler menuHandler = new ShowContextMenuHandler();
 
-		ImageHyperlink link2 = new ImageHyperlink();
-		link2.setText( attachment.getFileName() );
-		link2.addLeftButtonHandler( new MainLinkLeftButtonListener() );
-		link2.addRightButtonHandler( new MainLinkRightButtonListener() );
-		panel.add( link2 );
+		ImageHyperlink link = new ImageHyperlink( new Image( GWT.getHostPageBaseURL() + ImageProvider.IMAGE_PREFIX
+				+ ImageProvider.MSG_ATTACHMENT ), attachment.getFileName() );
+		link.addLeftButtonHandler( menuHandler );
+		link.addRightButtonHandler( menuHandler );
+		panel.add( link );
 
 		panel.add( new HTML( "&nbsp;(" + attachment.getSizeText() + ")&nbsp;" ) );
 		// if ( attachment.isPreview() ) {
@@ -94,34 +88,38 @@ public class AttachmentWidget extends Composite {
 		panel.add( downloadLink );
 		panel.add( new HTML( "&nbsp;&nbsp;&nbsp; " ) );
 
-		this.downloadAttachmentAction = new DownloadAttachmentAction( attachment );
-		this.viewAttachmentAction = new ViewAttachmentAction( attachment );
-
-		this.contextMenu = new Menu();
-		this.contextMenu.setWidth( 100 );
-		this.downloadItem = UIFactory.createMenuItem( this.downloadAttachmentAction );
-		this.viewItem = UIFactory.createMenuItem( this.viewAttachmentAction );
-		this.contextMenu.setItems( this.viewItem, this.downloadItem );
+		// this.contextMenu = new Menu();
+		// this.contextMenu.setWidth( 100 );
+		// this.downloadItem = UIFactory.createMenuItem(
+		// this.downloadAttachmentAction );
+		// this.viewItem = UIFactory.createMenuItem( this.viewAttachmentAction
+		// );
+		// this.contextMenu.setItems( this.viewItem, this.downloadItem );
 
 	}
 
-	private class MainLinkLeftButtonListener implements MouseDownHandler {
+	private class ShowContextMenuHandler implements MouseDownHandler, RightMouseDownHandler {
 
 		public void onMouseDown( MouseDownEvent event ) {
 
-			contextMenu.showContextMenu();
-			event.cancel();
-			// viewAttachmentAction.execute();
+			showContextMenu( event.getX(), event.getY() );
 		}
-	}
-
-	private class MainLinkRightButtonListener implements RightMouseDownHandler {
 
 		public void onRightMouseDown( RightMouseDownEvent event ) {
 
-			contextMenu.showContextMenu();
-			// contextMenu.showAt( event..getAbsoluteLeft() + x + 10,
-			// sender.getAbsoluteTop() + y );
+			showContextMenu( event.getX(), event.getY() );
+		}
+
+		private void showContextMenu( int x, int y ) {
+
+			ActionRegistry.DOWNLOAD_ATTACHMENT.get( DownloadAttachmentAction.class ).setAttachment( attachment );
+			ActionRegistry.VIEW_ATTACHMENT.get( DownloadAttachmentAction.class ).setAttachment( attachment );
+			if ( contextMenu != null ) {
+				contextMenu.setLeft( x );
+				contextMenu.setTop( y );
+				contextMenu.setVisibility( Visibility.VISIBLE );
+				contextMenu.draw();
+			}
 		}
 	}
 
@@ -129,7 +127,12 @@ public class AttachmentWidget extends Composite {
 
 		public void onMouseDown( MouseDownEvent event ) {
 
-			downloadAttachmentAction.execute();
+			// downloadAttachmentAction.execute();
 		}
+	}
+
+	public void setContextMenu( Menu contextMenu ) {
+
+		this.contextMenu = contextMenu;
 	}
 }

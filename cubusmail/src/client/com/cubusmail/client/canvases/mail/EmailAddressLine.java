@@ -20,13 +20,14 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.widgets.EmailAddressLink;
-import com.cubusmail.common.model.GWTAddress;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.menu.Menu;
 
 /**
  * Address line for message reading pane header.
@@ -37,6 +38,7 @@ public class EmailAddressLine extends HLayout {
 
 	private Label label;
 	private FlowPanel emailAddresses;
+	private Menu contextMenu;
 
 	/**
 	 * 
@@ -62,14 +64,18 @@ public class EmailAddressLine extends HLayout {
 	/**
 	 * @param addresses
 	 */
-	public void setAddresses( GWTAddress[] addresses ) {
+	public void setAddresses( GWTEmailAddress[] addresses ) {
 
 		this.emailAddresses.clear();
 
 		if ( addresses != null ) {
 
 			for (int i = 0; i < addresses.length; i++) {
-				this.emailAddresses.add( new EmailAddressLink( addresses[i] ) );
+				EmailAddressLink link = new EmailAddressLink( addresses[i] );
+				this.emailAddresses.add( link );
+				if ( this.contextMenu != null ) {
+					link.setContextMenu( this.contextMenu );
+				}
 				if ( i < (addresses.length - 1) ) {
 					this.emailAddresses.add( new Separator() );
 				}
@@ -85,5 +91,11 @@ public class EmailAddressLine extends HLayout {
 			setHTML( ", " );
 			DOM.setStyleAttribute( getElement(), "rightPadding", "15px" );
 		}
+	}
+
+	@Override
+	public void setContextMenu( Menu contextMenu ) {
+
+		this.contextMenu = contextMenu;
 	}
 }

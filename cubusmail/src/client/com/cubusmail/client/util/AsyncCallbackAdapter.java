@@ -1,4 +1,4 @@
-/* GWTMailConstants.java
+/* AsyncCallbackAdapter.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -18,28 +18,37 @@
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
    
  */
-package com.cubusmail.common.model;
+package com.cubusmail.client.util;
+
+import com.cubusmail.client.exceptions.GWTExceptionHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * Global constants.
+ * Default implementation for AsyncCallback interface.
  * 
  * @author Juergen Schlierf
  */
-public interface GWTMailConstants {
+public class AsyncCallbackAdapter<T> implements AsyncCallback<T> {
 
-	public final static int PRIORITY_NONE = 0;
-	public final static int PRIORITY_VERY_HIGH = 1;
-	public final static int PRIORITY_HIGH = 2;
-	public final static int PRIORITY_NORMAL = 3;
-	public final static int PRIORITY_LOW = 4;
-	public final static int PRIORITY_VERY_LOW = 5;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable
+	 * )
+	 */
+	public void onFailure( Throwable caught ) {
 
-	public final static String PARAM_FOLDER_ID = "folderId";
-	public final static String PARAM_PARENT_FOLDER = "parentFolder";
-	public final static String PARAM_SEARCH_FIELDS = "PARAM_SEARCH_FIELDS";
-	public final static String PARAM_SEARCH_VALUES = "PARAM_SEARCH_VALUES";
+		GWTExceptionHandler.handleException( caught );
+	}
 
-	public final static int MESSAGE_LIST_PAGE_SIZE = 100;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.rpc.AsyncCallback#onSuccess(java.lang.Object)
+	 */
+	public void onSuccess( T result ) {
 
-	public final static int MESSAGE_READING_PANE_LABEL_WIDTH = 50;
+	}
 }

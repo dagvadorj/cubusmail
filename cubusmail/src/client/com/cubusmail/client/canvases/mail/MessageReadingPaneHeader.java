@@ -19,10 +19,11 @@
  */
 package com.cubusmail.client.canvases.mail;
 
+import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.client.widgets.AttachmentWidget;
-import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
 import com.google.gwt.user.client.DOM;
@@ -31,8 +32,15 @@ import com.google.gwt.user.client.ui.HTML;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
+import com.smartgwt.client.widgets.events.DrawEvent;
+import com.smartgwt.client.widgets.events.DrawHandler;
+import com.smartgwt.client.widgets.events.MouseOutEvent;
+import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.menu.Menu;
+import com.smartgwt.client.widgets.menu.events.ItemClickEvent;
+import com.smartgwt.client.widgets.menu.events.ItemClickHandler;
 
 /**
  * Header for message reading pane.
@@ -48,7 +56,7 @@ public class MessageReadingPaneHeader extends VLayout {
 	private EmailAddressLine replyTo;
 	private HLayout dateLine;
 	private Label date;
-	private FlowPanel attachmentLine;
+	private AttachmentLine attachmentLine;
 
 	public MessageReadingPaneHeader() {
 
@@ -82,17 +90,26 @@ public class MessageReadingPaneHeader extends VLayout {
 		dateLabel.setAutoHeight();
 		this.dateLine.setMembers( dateLabel, this.date );
 
-		this.attachmentLine = new FlowPanel();
-		this.attachmentLine.setWidth( "100%" );
-		this.attachmentLine.setHeight( "100%" );
+		this.attachmentLine = new AttachmentLine();
 
 		WidgetCanvas widgetCanvas = new WidgetCanvas( this.attachmentLine );
 		widgetCanvas.setWidth100();
 		widgetCanvas.setAutoHeight();
 		widgetCanvas.setOverflow( Overflow.CLIP_H );
 
-		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine );
-		addMember( widgetCanvas );
+		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine, widgetCanvas );
+
+		addDrawHandler( new DrawHandler() {
+
+			public void onDraw( DrawEvent event ) {
+
+				EmailContextMenu emailContextMenu = new EmailContextMenu();
+				emailContextMenu.setParentElement( (VLayout) event.getSource() );
+				from.setContextMenu( emailContextMenu );
+				to.setContextMenu( emailContextMenu );
+				cc.setContextMenu( emailContextMenu );
+			}
+		} );
 	}
 
 	/**
@@ -142,13 +159,7 @@ public class MessageReadingPaneHeader extends VLayout {
 			this.dateLine.setVisible( false );
 		}
 		if ( !GWTUtil.isEmpty( message.getAttachments() ) ) {
-			this.attachmentLine.clear();
-			for (int i = 0; i < message.getAttachments().length; i++) {
-				this.attachmentLine.add( new AttachmentWidget( message.getAttachments()[i] ) );
-				if ( i < (message.getAttachments().length - 1) ) {
-					this.attachmentLine.add( new AttachmentSeparator() );
-				}
-			}
+			this.attachmentLine.setAttachments( message.getAttachments() );
 			this.attachmentLine.setVisible( true );
 		}
 		else {
@@ -158,13 +169,32 @@ public class MessageReadingPaneHeader extends VLayout {
 		this.reflow();
 	}
 
-	private class AttachmentSeparator extends HTML {
 
-		public AttachmentSeparator() {
+	private class EmailContextMenu extends Menu {
 
-			// include whitespace for wrapping
-			setHTML( " " );
-			DOM.setStyleAttribute( getElement(), "rightPadding", "15px" );
+		public EmailContextMenu() {
+
+			super();
+			addItem( UIFactory.createMenuItem( ActionRegistry.ADD_CONTACT_FROM_EMAILADDRESS ) );
+			addItem( UIFactory.createMenuItem( ActionRegistry.COMPOSE_MESSAGE_FOR_EMAIL ) );
+
+			addItemClickHandler( new ItemClickHandler() {
+
+				public void onItemClick( ItemClickEvent event ) {
+
+					hide();
+				}
+			} );
+
+			addMouseOutHandler( new MouseOutHandler() {
+
+				public void onMouseOut( MouseOutEvent event ) {
+
+					if ( isVisible() ) {
+						hide();
+					}
+				}
+			} );
 		}
 	}
 }

@@ -40,14 +40,14 @@ public class GWTMessage implements IsSerializable {
 	private boolean trustImages;
 	private String subject;
 	private String from;
-	private GWTAddress[] fromArray;
+	private GWTEmailAddress[] fromArray;
 	private String to;
-	private GWTAddress[] toArray;
+	private GWTEmailAddress[] toArray;
 	private String cc;
-	private GWTAddress[] ccArray;
+	private GWTEmailAddress[] ccArray;
 	private String bcc;
 	private String replyTo;
-	private GWTAddress[] replyToArray;
+	private GWTEmailAddress[] replyToArray;
 	private String messageText;
 	private int priority;
 	private Date date;
@@ -388,42 +388,42 @@ public class GWTMessage implements IsSerializable {
 		this.priority = priority;
 	}
 
-	public GWTAddress[] getFromArray() {
+	public GWTEmailAddress[] getFromArray() {
 
 		return this.fromArray;
 	}
 
-	public void setFromArray( GWTAddress[] fromArray ) {
+	public void setFromArray( GWTEmailAddress[] fromArray ) {
 
 		this.fromArray = fromArray;
 	}
 
-	public GWTAddress[] getToArray() {
+	public GWTEmailAddress[] getToArray() {
 
 		return this.toArray;
 	}
 
-	public void setToArray( GWTAddress[] toArray ) {
+	public void setToArray( GWTEmailAddress[] toArray ) {
 
 		this.toArray = toArray;
 	}
 
-	public GWTAddress[] getCcArray() {
+	public GWTEmailAddress[] getCcArray() {
 
 		return this.ccArray;
 	}
 
-	public void setCcArray( GWTAddress[] ccArray ) {
+	public void setCcArray( GWTEmailAddress[] ccArray ) {
 
 		this.ccArray = ccArray;
 	}
 
-	public GWTAddress[] getReplyToArray() {
+	public GWTEmailAddress[] getReplyToArray() {
 
 		return this.replyToArray;
 	}
 
-	public void setReplyToArray( GWTAddress[] replyToArray ) {
+	public void setReplyToArray( GWTEmailAddress[] replyToArray ) {
 
 		this.replyToArray = replyToArray;
 	}

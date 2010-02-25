@@ -40,10 +40,9 @@ public class DownloadAttachmentAction extends GWTAction {
 	/**
 	 * @param messageStore
 	 */
-	public DownloadAttachmentAction( GWTAttachment attachment ) {
+	public DownloadAttachmentAction() {
 
 		super();
-		this.attachment = attachment;
 		setText( TextProvider.get().actions_download_attachment_text() );
 		setIcon( ImageProvider.MSG_DOWNLOAD );
 		setTooltip( TextProvider.get().actions_download_attachment_tooltip() );
@@ -64,5 +63,10 @@ public class DownloadAttachmentAction extends GWTAction {
 		Frame frame = new Frame( url );
 		frame.setVisible( false );
 		RootPanel.get().add( frame );
+	}
+
+	public void setAttachment( GWTAttachment attachment ) {
+
+		this.attachment = attachment;
 	}
 }

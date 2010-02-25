@@ -39,10 +39,9 @@ public class ViewAttachmentAction extends GWTAction {
 	/**
 	 * 
 	 */
-	public ViewAttachmentAction( GWTAttachment attachment ) {
+	public ViewAttachmentAction() {
 
 		super();
-		this.attachment = attachment;
 		setIcon( ImageProvider.FILE_BLANK );
 		setText( TextProvider.get().actions_view_attachment_text() );
 	}
@@ -55,5 +54,10 @@ public class ViewAttachmentAction extends GWTAction {
 		String url = ServiceProvider.getRetrieveAttachmentServletUrl( messageId, index );
 		url += "&view=1";
 		Window.open( url, "Download", "" );
+	}
+
+	public void setAttachment( GWTAttachment attachment ) {
+
+		this.attachment = attachment;
 	}
 }

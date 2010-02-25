@@ -41,7 +41,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.util.HtmlUtils;
 
-import com.cubusmail.common.model.GWTAddress;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
@@ -251,12 +251,12 @@ public class ConvertUtil {
 	 * @param addresses
 	 * @return
 	 */
-	public static GWTAddress[] convertAddress( Address[] addresses ) throws MessagingException {
+	public static GWTEmailAddress[] convertAddress( Address[] addresses ) throws MessagingException {
 
 		if ( addresses != null ) {
-			GWTAddress[] gwtAdresses = new GWTAddress[addresses.length];
+			GWTEmailAddress[] gwtAdresses = new GWTEmailAddress[addresses.length];
 			for (int i = 0; i < addresses.length; i++) {
-				GWTAddress gwtAddress = new GWTAddress();
+				GWTEmailAddress gwtAddress = new GWTEmailAddress();
 				gwtAddress.setInternetAddress( MessageUtils.getMailAdressString( addresses[i],
 						AddressStringType.COMPLETE ) );
 				gwtAddress.setName( MessageUtils.getMailAdressString( addresses[i], AddressStringType.PERSONAL_ONLY ) );

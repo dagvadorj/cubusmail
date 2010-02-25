@@ -22,6 +22,8 @@ package com.cubusmail.client.actions;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cubusmail.client.actions.contact.AddContactFromEmailAddressAction;
+import com.cubusmail.client.actions.contact.ComposeMessageForEmailAddressAction;
 import com.cubusmail.client.actions.folder.DeleteFolderAction;
 import com.cubusmail.client.actions.folder.EmptyFolderAction;
 import com.cubusmail.client.actions.folder.MoveFolderAction;
@@ -30,6 +32,7 @@ import com.cubusmail.client.actions.folder.RefreshFolderAction;
 import com.cubusmail.client.actions.folder.RenameFolderAction;
 import com.cubusmail.client.actions.message.ComposeMessageAction;
 import com.cubusmail.client.actions.message.DeleteMessagesAction;
+import com.cubusmail.client.actions.message.DownloadAttachmentAction;
 import com.cubusmail.client.actions.message.ForwardAction;
 import com.cubusmail.client.actions.message.LoadMessageAction;
 import com.cubusmail.client.actions.message.MarkMessageAction;
@@ -38,6 +41,7 @@ import com.cubusmail.client.actions.message.RefreshMessagesAction;
 import com.cubusmail.client.actions.message.ReplyAction;
 import com.cubusmail.client.actions.message.ReplyAllAction;
 import com.cubusmail.client.actions.message.ShowMessageSourceAction;
+import com.cubusmail.client.actions.message.ViewAttachmentAction;
 import com.cubusmail.client.actions.message.MarkMessageAction.MarkActionType;
 
 /**
@@ -50,10 +54,13 @@ public enum ActionRegistry implements IGWTAction {
 	LOGIN,
 
 	// message actions
-	REFRESH_MESSAGES, COMPOSE_MESSAGE, REPLY, REPLY_ALL, FORWARD, COPY_MESSAGES, MOVE_MESSAGES, DELETE_MESSAGES, DELETE_WINDOW_MESSAGE, MARK_AS_READ, MARK_AS_UNREAD, MARK_AS_UNDELETED, SHOW_MESSAGE_SOURCE, PRINT_MESSAGE, LOAD_MESSAGE, MARK_AS_DELETED,
+	REFRESH_MESSAGES, COMPOSE_MESSAGE, REPLY, REPLY_ALL, FORWARD, COPY_MESSAGES, MOVE_MESSAGES, DELETE_MESSAGES, DELETE_WINDOW_MESSAGE, MARK_AS_READ, MARK_AS_UNREAD, MARK_AS_UNDELETED, SHOW_MESSAGE_SOURCE, PRINT_MESSAGE, LOAD_MESSAGE, MARK_AS_DELETED, DOWNLOAD_ATTACHMENT, VIEW_ATTACHMENT,
 
 	// mail folder actions
-	REFRESH_FOLDER, NEW_FOLDER, MOVE_FOLDER, RENAME_FOLDER, DELETE_FOLDER, EMPTY_FOLDER;
+	REFRESH_FOLDER, NEW_FOLDER, MOVE_FOLDER, RENAME_FOLDER, DELETE_FOLDER, EMPTY_FOLDER,
+
+	// contact actions
+	ADD_CONTACT_FROM_EMAILADDRESS, COMPOSE_MESSAGE_FOR_EMAIL;
 
 	private static Map<ActionRegistry, IGWTAction> ACTION_MAP = new HashMap<ActionRegistry, IGWTAction>();
 
@@ -119,7 +126,12 @@ public enum ActionRegistry implements IGWTAction {
 			return new ShowMessageSourceAction();
 		case PRINT_MESSAGE:
 			return new PrintMessageAction();
+		case DOWNLOAD_ATTACHMENT:
+			return new DownloadAttachmentAction();
+		case VIEW_ATTACHMENT:
+			return new ViewAttachmentAction();
 
+			// mail folder
 		case REFRESH_FOLDER:
 			return new RefreshFolderAction();
 		case NEW_FOLDER:
@@ -132,6 +144,12 @@ public enum ActionRegistry implements IGWTAction {
 			return new EmptyFolderAction();
 		case MOVE_FOLDER:
 			return new MoveFolderAction();
+
+			// contact
+		case ADD_CONTACT_FROM_EMAILADDRESS:
+			return new AddContactFromEmailAddressAction();
+		case COMPOSE_MESSAGE_FOR_EMAIL:
+			return new ComposeMessageForEmailAddressAction();
 		}
 
 		throw new IllegalArgumentException( "Action missing: " + name() );
