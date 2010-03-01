@@ -23,9 +23,11 @@ import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.client.widgets.AttachmentWidget;
 import com.cubusmail.common.model.GWTAttachment;
+import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ResizeComposite;
 import com.smartgwt.client.widgets.events.MouseOutEvent;
 import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.menu.Menu;
@@ -75,8 +77,8 @@ public class AttachmentLine extends FlowPanel {
 		public AttachmentContextMenu() {
 
 			super();
-			addItem( UIFactory.createMenuItem( ActionRegistry.ADD_CONTACT_FROM_EMAILADDRESS ) );
-			addItem( UIFactory.createMenuItem( ActionRegistry.COMPOSE_MESSAGE_FOR_EMAIL ) );
+			addItem( UIFactory.createMenuItem( ActionRegistry.DOWNLOAD_ATTACHMENT ) );
+			addItem( UIFactory.createMenuItem( ActionRegistry.VIEW_ATTACHMENT) );
 
 			addItemClickHandler( new ItemClickHandler() {
 

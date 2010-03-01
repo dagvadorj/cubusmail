@@ -19,6 +19,8 @@
  */
 package com.cubusmail.client.canvases.mail;
 
+import org.apache.tools.ant.taskdefs.FixCRLF.AddAsisRemove;
+
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.message.LoadMessageAction;
 import com.cubusmail.client.datasource.DataSourceRegistry;
@@ -29,11 +31,13 @@ import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.events.BrowserEvent;
 import com.smartgwt.client.widgets.events.DrawEvent;
 import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.events.ResizedEvent;
@@ -86,10 +90,13 @@ public class MessageListGrid extends ListGrid {
 
 			public void onResized( ResizedEvent event ) {
 
-				resizeFields();
+				// resizeFields();
+
 			}
 		} );
+
 	}
+
 
 	/**
 	 * Create the columns fields for the message grid.

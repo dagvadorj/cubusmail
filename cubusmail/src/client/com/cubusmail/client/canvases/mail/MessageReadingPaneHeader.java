@@ -23,12 +23,16 @@ import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
-import com.cubusmail.client.widgets.AttachmentWidget;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.HasResizeHandlers;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
@@ -47,7 +51,7 @@ import com.smartgwt.client.widgets.menu.events.ItemClickHandler;
  * 
  * @author Juergen Schlierf
  */
-public class MessageReadingPaneHeader extends VLayout {
+public class MessageReadingPaneHeader extends VLayout implements HasResizeHandlers, HasHandlers {
 
 	private Label subject;
 	private EmailAddressLine from;
@@ -64,7 +68,7 @@ public class MessageReadingPaneHeader extends VLayout {
 		setStyleName( "messageReadingPaneHeader" );
 		setWidth100();
 		setPadding( 4 );
-		setOverflow( Overflow.CLIP_H );
+		setOverflow( Overflow.VISIBLE );
 		setShowEdges( true );
 
 		this.subject = new Label( "" );
@@ -103,11 +107,23 @@ public class MessageReadingPaneHeader extends VLayout {
 
 			public void onDraw( DrawEvent event ) {
 
+				GWT.log( "Draw", null );
+				layoutChildren( "test" );
+				parentResized();
 				EmailContextMenu emailContextMenu = new EmailContextMenu();
 				emailContextMenu.setParentElement( (VLayout) event.getSource() );
 				from.setContextMenu( emailContextMenu );
 				to.setContextMenu( emailContextMenu );
 				cc.setContextMenu( emailContextMenu );
+			}
+		} );
+
+		Window.addResizeHandler( new ResizeHandler() {
+
+			@Override
+			public void onResize( ResizeEvent event ) {
+
+				GWT.log( event.toDebugString() );
 			}
 		} );
 	}
@@ -163,12 +179,30 @@ public class MessageReadingPaneHeader extends VLayout {
 			this.attachmentLine.setVisible( true );
 		}
 		else {
+			this.attachmentLine.clear();
+			this.attachmentLine.setHeight( "0px" );
 			this.attachmentLine.setVisible( false );
 		}
 
-		this.reflow();
+		this.reflowNow();
+
+		int height = this.subject.getOffsetHeight() + this.from.getOffsetHeight() + this.to.getOffsetHeight()
+				+ this.cc.getOffsetHeight() + this.date.getOffsetHeight() + attachmentLine.getOffsetHeight();
+		setHeight( height + 20 );
 	}
 
+	@Override
+	public HandlerRegistration addResizeHandler( ResizeHandler handler ) {
+
+		return Window.addResizeHandler( handler );
+	}
+
+	@Override
+	protected void onDraw() {
+
+		GWT.log( "Draw", null );
+		super.onDraw();
+	}
 
 	private class EmailContextMenu extends Menu {
 

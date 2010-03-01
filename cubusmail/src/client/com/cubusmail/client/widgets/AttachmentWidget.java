@@ -23,7 +23,6 @@ package com.cubusmail.client.widgets;
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.message.DownloadAttachmentAction;
 import com.cubusmail.client.actions.message.ViewAttachmentAction;
-import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.GWT;
@@ -37,7 +36,6 @@ import com.smartgwt.client.widgets.events.MouseDownHandler;
 import com.smartgwt.client.widgets.events.RightMouseDownEvent;
 import com.smartgwt.client.widgets.events.RightMouseDownHandler;
 import com.smartgwt.client.widgets.menu.Menu;
-import com.smartgwt.client.widgets.menu.MenuItem;
 
 /**
  * Panel for mail attachments.
@@ -47,11 +45,6 @@ import com.smartgwt.client.widgets.menu.MenuItem;
 public class AttachmentWidget extends Composite {
 
 	private Menu contextMenu;
-
-	// Context menu items
-	private MenuItem downloadItem;
-	private MenuItem viewItem;
-
 	private GWTAttachment attachment;
 
 	public AttachmentWidget( GWTAttachment attachment ) {
@@ -87,15 +80,6 @@ public class AttachmentWidget extends Composite {
 		downloadLink.addLeftButtonHandler( new DownloadLeftButtonListener() );
 		panel.add( downloadLink );
 		panel.add( new HTML( "&nbsp;&nbsp;&nbsp; " ) );
-
-		// this.contextMenu = new Menu();
-		// this.contextMenu.setWidth( 100 );
-		// this.downloadItem = UIFactory.createMenuItem(
-		// this.downloadAttachmentAction );
-		// this.viewItem = UIFactory.createMenuItem( this.viewAttachmentAction
-		// );
-		// this.contextMenu.setItems( this.viewItem, this.downloadItem );
-
 	}
 
 	private class ShowContextMenuHandler implements MouseDownHandler, RightMouseDownHandler {
@@ -113,7 +97,7 @@ public class AttachmentWidget extends Composite {
 		private void showContextMenu( int x, int y ) {
 
 			ActionRegistry.DOWNLOAD_ATTACHMENT.get( DownloadAttachmentAction.class ).setAttachment( attachment );
-			ActionRegistry.VIEW_ATTACHMENT.get( DownloadAttachmentAction.class ).setAttachment( attachment );
+			ActionRegistry.VIEW_ATTACHMENT.get( ViewAttachmentAction.class ).setAttachment( attachment );
 			if ( contextMenu != null ) {
 				contextMenu.setLeft( x );
 				contextMenu.setTop( y );
