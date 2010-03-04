@@ -26,13 +26,9 @@ import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.HasResizeHandlers;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
@@ -51,7 +47,7 @@ import com.smartgwt.client.widgets.menu.events.ItemClickHandler;
  * 
  * @author Juergen Schlierf
  */
-public class MessageReadingPaneHeader extends VLayout implements HasResizeHandlers, HasHandlers {
+public class MessageReadingPaneHeader extends VLayout {
 
 	private Label subject;
 	private EmailAddressLine from;
@@ -120,7 +116,6 @@ public class MessageReadingPaneHeader extends VLayout implements HasResizeHandle
 
 		Window.addResizeHandler( new ResizeHandler() {
 
-			@Override
 			public void onResize( ResizeEvent event ) {
 
 				GWT.log( event.toDebugString() );
@@ -189,12 +184,6 @@ public class MessageReadingPaneHeader extends VLayout implements HasResizeHandle
 		int height = this.subject.getOffsetHeight() + this.from.getOffsetHeight() + this.to.getOffsetHeight()
 				+ this.cc.getOffsetHeight() + this.date.getOffsetHeight() + attachmentLine.getOffsetHeight();
 		setHeight( height + 20 );
-	}
-
-	@Override
-	public HandlerRegistration addResizeHandler( ResizeHandler handler ) {
-
-		return Window.addResizeHandler( handler );
 	}
 
 	@Override
