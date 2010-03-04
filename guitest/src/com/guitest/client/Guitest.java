@@ -2,6 +2,7 @@ package com.guitest.client;
 
 import java.util.Date;
 
+import com.cubusmail.client.canvases.mail.ComposeMessageCanvas;
 import com.cubusmail.client.canvases.mail.EmailAddressLine;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneHeader;
 import com.cubusmail.client.widgets.ImageHyperlink;
@@ -45,11 +46,18 @@ public class Guitest implements EntryPoint {
 		// MessageSearchForm form = new MessageSearchForm();
 		// form.draw();
 
-		testMessageReadingPaneHeader();
+		// testMessageReadingPaneHeader();
 		// testTileLayoutWithButtons();
 		// testTileLayoutWidthAttachments();
 		// testFlowPanel2();
 		// testEmailAddressLine();
+		testComposeMessageCanvas();
+	}
+
+	private void testComposeMessageCanvas() {
+		ComposeMessageCanvas compose = new ComposeMessageCanvas();
+
+		compose.draw();
 	}
 
 	private void testEmailAddressLine() {
