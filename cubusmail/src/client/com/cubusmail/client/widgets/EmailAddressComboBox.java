@@ -30,7 +30,7 @@ public class EmailAddressComboBox extends ComboBoxItem {
 
 	public EmailAddressComboBox( String name, String title ) {
 
-		super( name, title );
+		super( name, "" );
 		setShowPickerIcon( false );
 	}
 }
