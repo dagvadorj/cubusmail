@@ -20,57 +20,46 @@
 package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.client.widgets.EmailAddressComboBox;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.RichTextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
- * Compose canvas für email messages.
+ * Compose canvas for email messages.
  * 
  * @author Juergen Schlierf
  */
 public class ComposeMessageCanvas extends VLayout {
 
-	private EmailAddressComboBox toInput;
-	private EmailAddressComboBox ccInput;
-	private EmailAddressComboBox bccInput;
+	private EmailAddressInputLine toInput;
+	private EmailAddressInputLine ccInput;
+	private EmailAddressInputLine bccInput;
+
+	private RichTextItem messageText;
 
 	public ComposeMessageCanvas() {
 
 		super();
-		setShowEdges( true );
+		setShowEdges( false );
 		setWidth100();
 		setHeight100();
 		setOverflow( Overflow.HIDDEN );
 
-		DynamicForm form = createForm();
-		setMembers( form );
-	}
+		this.toInput = new EmailAddressInputLine( "to", TextProvider.get().window_compose_message_label_to() );
+		this.ccInput = new EmailAddressInputLine( "cc", TextProvider.get().window_compose_message_label_cc() );
+		this.bccInput = new EmailAddressInputLine( "bcc", TextProvider.get().window_compose_message_label_bcc() );
 
-	private DynamicForm createForm() {
-
+		this.messageText = new RichTextItem( "messageText" );
+		this.messageText.setWidth( 800 );
+		
 		DynamicForm form = new DynamicForm();
-		form.setTitleWidth( 0 );
 		form.setWidth100();
 		form.setHeight100();
+		form.setOverflow( Overflow.VISIBLE );
+		form.setItems( this.messageText );
 		form.setShowEdges( true );
-		form.setOverflow( Overflow.HIDDEN );
 
-		// this.toInput = new EmailAddressComboBox( "to",
-		// TextProvider.get().window_compose_message_label_to() );
-		// this.ccInput = new EmailAddressComboBox( "cc",
-		// TextProvider.get().window_compose_message_label_cc() );
-		// this.bccInput = new EmailAddressComboBox( "bcc",
-		// TextProvider.get().window_compose_message_label_bcc() );
-
-		ButtonItem toButton = new ButtonItem( "to", TextProvider.get().window_compose_message_label_to() );
-		ButtonItem ccButton = new ButtonItem( "cc", TextProvider.get().window_compose_message_label_cc() );
-		ButtonItem bccButton = new ButtonItem( "bcc", TextProvider.get().window_compose_message_label_bcc() );
-
-		form.setItems( toButton, ccButton, bccButton );
-
-		return form;
+		setMembers( this.toInput, this.ccInput, this.bccInput, form );
 	}
 }

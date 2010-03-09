@@ -151,7 +151,7 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 		public TestLoginAction() {
 
 			super();
-			setUsername( "schlierf" );
+			setUsername( "schlierf@macpro.com" );
 			setPassword( "schlierf" );
 		}
 

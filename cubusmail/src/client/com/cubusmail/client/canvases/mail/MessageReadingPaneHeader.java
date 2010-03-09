@@ -71,7 +71,7 @@ public class MessageReadingPaneHeader extends VLayout {
 		this.subject.setWidth100();
 		this.subject.setAutoHeight();
 		this.subject.setStyleName( "message-subject" );
-		this.subject.setOverflow( Overflow.CLIP_H );
+		this.subject.setOverflow( Overflow.VISIBLE );
 
 		this.from = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_from() );
 		this.to = new EmailAddressLine( TextProvider.get().message_reading_pane_panel_to() );
