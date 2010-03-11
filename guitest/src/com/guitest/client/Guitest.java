@@ -6,8 +6,8 @@ import com.cubusmail.client.canvases.mail.ComposeMessageCanvas;
 import com.cubusmail.client.canvases.mail.EmailAddressLine;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneHeader;
 import com.cubusmail.client.widgets.ImageHyperlink;
-import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTAttachment;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.EntryPoint;
@@ -239,5 +239,4 @@ public class Guitest implements EntryPoint {
 			// setOverflow(Overflow.VISIBLE);
 		}
 	}
-
 }

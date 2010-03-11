@@ -26,9 +26,6 @@ import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.GWTMailConstants;
 import com.cubusmail.common.model.GWTMessage;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.user.client.Window;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
@@ -95,7 +92,7 @@ public class MessageReadingPaneHeader extends VLayout {
 		WidgetCanvas widgetCanvas = new WidgetCanvas( this.attachmentLine );
 		widgetCanvas.setWidth100();
 		widgetCanvas.setAutoHeight();
-		widgetCanvas.setOverflow( Overflow.CLIP_H );
+		widgetCanvas.setOverflow( Overflow.VISIBLE );
 
 		setMembers( this.subject, this.from, this.to, this.cc, this.replyTo, this.dateLine, widgetCanvas );
 
@@ -111,14 +108,6 @@ public class MessageReadingPaneHeader extends VLayout {
 				from.setContextMenu( emailContextMenu );
 				to.setContextMenu( emailContextMenu );
 				cc.setContextMenu( emailContextMenu );
-			}
-		} );
-
-		Window.addResizeHandler( new ResizeHandler() {
-
-			public void onResize( ResizeEvent event ) {
-
-				GWT.log( event.toDebugString() );
 			}
 		} );
 	}
@@ -181,9 +170,9 @@ public class MessageReadingPaneHeader extends VLayout {
 
 		this.reflowNow();
 
-		int height = this.subject.getOffsetHeight() + this.from.getOffsetHeight() + this.to.getOffsetHeight()
-				+ this.cc.getOffsetHeight() + this.date.getOffsetHeight() + attachmentLine.getOffsetHeight();
-		setHeight( height + 20 );
+//		int height = this.subject.getOffsetHeight() + this.from.getOffsetHeight() + this.to.getOffsetHeight()
+//				+ this.cc.getOffsetHeight() + this.date.getOffsetHeight() + attachmentLine.getOffsetHeight();
+//		setHeight( height + 20 );
 	}
 
 	@Override

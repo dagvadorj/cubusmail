@@ -22,6 +22,7 @@ package com.cubusmail.client.canvases.mail;
 import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.actions.message.LoadMessageAction;
 import com.cubusmail.client.datasource.DataSourceRegistry;
+import com.cubusmail.client.events.DelayedResizeHandlerProxy;
 import com.cubusmail.client.toolbars.MailToolbar;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.TextProvider;
@@ -34,8 +35,6 @@ import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.events.ResizedEvent;
 import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.grid.CellFormatter;
@@ -74,25 +73,15 @@ public class MessageListGrid extends ListGrid {
 		addGridHandlers();
 		setCanReorderFields( false );
 
-		addDrawHandler( new DrawHandler() {
-
-			public void onDraw( DrawEvent event ) {
-
-				resizeFields();
-			}
-		} );
-
-		addResizedHandler( new ResizedHandler() {
+		addResizedHandler( DelayedResizeHandlerProxy.get( new ResizedHandler() {
 
 			public void onResized( ResizedEvent event ) {
 
-				// resizeFields();
-
+				resizeFields();
 			}
-		} );
+		} ) );
 
 	}
-
 
 	/**
 	 * Create the columns fields for the message grid.

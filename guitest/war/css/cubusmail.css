@@ -3,18 +3,17 @@
 	font-weight: bold;
 }
 
-
 .cubusImgButtonDown {
-    background:#BEDDFF url(./images/cssButton/button_Down_stretch.png) repeat-x;
-	border-left:1px solid #b8cfef;
-	border-right:1px solid #b8cfef;
-	border-top:1px solid #87B6EC;
-	border-bottom:1px solid #75AEEC;
+	background: #BEDDFF url(./images/cssButton/button_Down_stretch.png)
+		repeat-x;
+	border-left: 1px solid #b8cfef;
+	border-right: 1px solid #b8cfef;
+	border-top: 1px solid #87B6EC;
+	border-bottom: 1px solid #75AEEC;
 }
 
-
 .messageReadingPaneHeader {
-	background-color:#eeeeee;
+	background-color: #eeeeee;
 }
 
 .message-subject {
@@ -44,7 +43,7 @@
 }
 
 .gwt-TextArea {
-	font-family: monospace; 
+	font-family: monospace;
 	font-size: 10pt;
 }
 
@@ -78,10 +77,10 @@
 .message-header {
 	font: bold 11px arial, tahoma, sans-serif;
 }
+
 .message-subject {
 	font: bold 14px arial, tahoma, sans-serif;
 }
-
 
 .messagelist-mailfolder-name {
 	font: bold 14px tahoma, arial, helvetica;
@@ -103,4 +102,32 @@
 
 .contactfolder-icon {
 	background-image: url( ../icons/contact/folder_user.png ) !important;
+}
+
+.gwt-SuggestBoxCanvas {
+	width: 200px;
+	height: 20px;
+	background: #ffffff;
+	border: none;
+}
+
+.gwt-SuggestBox {
+	font-family: Verdana, sans-serif;
+	font-size: 8pt;
+	font-weight: 400;
+	font-style: normal;
+	color: #333333;
+	line-height: 15px;
+	vertical-align: baseline;
+	background: #FFFFFF url(./images/attach.png) repeat-x scroll 0 0;
+	width: 200px;
+	height: 20px;
+	border: 1px solid #9CB0CE;
+	padding: 2px;
+}
+
+.gwt-SuggestBoxPopup {
+	margin-left: 3px;
+	z-index: 1000000;
+	background: #ffffff;
 }

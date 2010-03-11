@@ -19,10 +19,12 @@
  */
 package com.cubusmail.client.canvases.mail;
 
+import com.cubusmail.client.events.DelayedResizeHandlerProxy;
 import com.cubusmail.client.util.TextProvider;
 import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.RichTextItem;
+import com.smartgwt.client.widgets.RichTextEditor;
+import com.smartgwt.client.widgets.events.ResizedEvent;
+import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -36,7 +38,7 @@ public class ComposeMessageCanvas extends VLayout {
 	private EmailAddressInputLine ccInput;
 	private EmailAddressInputLine bccInput;
 
-	private RichTextItem messageText;
+	private RichTextEditor richtTextEditor;
 
 	public ComposeMessageCanvas() {
 
@@ -50,16 +52,26 @@ public class ComposeMessageCanvas extends VLayout {
 		this.ccInput = new EmailAddressInputLine( "cc", TextProvider.get().window_compose_message_label_cc() );
 		this.bccInput = new EmailAddressInputLine( "bcc", TextProvider.get().window_compose_message_label_bcc() );
 
-		this.messageText = new RichTextItem( "messageText" );
-		this.messageText.setWidth( 800 );
-		
-		DynamicForm form = new DynamicForm();
-		form.setWidth100();
-		form.setHeight100();
-		form.setOverflow( Overflow.VISIBLE );
-		form.setItems( this.messageText );
-		form.setShowEdges( true );
+		this.richtTextEditor = new RichTextEditor();
+		this.richtTextEditor.setWidth100();
+		this.richtTextEditor.setHeight100();
+		this.richtTextEditor.setOverflow( Overflow.VISIBLE );
+		this.richtTextEditor.setShowEdges( true );
 
-		setMembers( this.toInput, this.ccInput, this.bccInput, form );
+		setMembers( this.toInput, this.ccInput, this.bccInput, this.richtTextEditor );
+
+		addResizedHandler( DelayedResizeHandlerProxy.get( new ResizedHandler() {
+
+			public void onResized( ResizedEvent event ) {
+
+				resizeFields();
+			}
+		} ) );
+	}
+
+	private void resizeFields() {
+		this.toInput.resize();
+		this.ccInput.resize();
+		this.bccInput.resize();
 	}
 }

@@ -44,7 +44,7 @@ public class AttachmentLine extends FlowPanel {
 	public AttachmentLine() {
 
 		super();
-		this.contextMenu = new AttachmentContextMenu();
+		this.contextMenu = new AttachmentContextMenu();		
 	}
 
 	public void setAttachments( GWTAttachment[] attachments ) {
@@ -70,6 +70,7 @@ public class AttachmentLine extends FlowPanel {
 		}
 	}
 
+	
 	private class AttachmentContextMenu extends Menu {
 
 		public AttachmentContextMenu() {
