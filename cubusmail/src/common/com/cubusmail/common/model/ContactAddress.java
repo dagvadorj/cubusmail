@@ -22,26 +22,18 @@ package com.cubusmail.common.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 /**
  * Contact address POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "addresses")
+//@Entity
+//@Table(name = "addresses")
 public class ContactAddress implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String street;
@@ -51,8 +43,8 @@ public class ContactAddress implements Serializable {
 	private String state;
 	private String country;
 
-	@OneToOne
-	@JoinColumn(name = "contact_fk", nullable = false)
+//	@OneToOne
+//	@JoinColumn(name = "contact_fk", nullable = false)
 	private Contact contact;
 
 	/**

@@ -22,28 +22,19 @@ package com.cubusmail.common.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 /**
  * Identity POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "identities")
+//@Entity
+//@Table(name = "identities")
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Identity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String displayName;
@@ -55,14 +46,14 @@ public class Identity implements Serializable {
 	private boolean htmlSignature;
 	private boolean standard;
 
-	@Transient
+//	@Transient
 	private String internetAddress;
 
-	@Transient
+//	@Transient
 	private String escapedInternetAddress;
 
-	@ManyToOne
-	@JoinColumn(name = "users_fk")
+//	@ManyToOne
+//	@JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
 	/**

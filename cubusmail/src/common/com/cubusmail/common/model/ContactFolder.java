@@ -24,40 +24,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 /**
  * Contact folder POJO
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "contactfolders")
+//@Entity
+//@Table(name = "contactfolders")
 public class ContactFolder implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String folderName;
 
 	private ContactFolderType folderType;
 
-	@OneToMany(mappedBy = "contactFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@OneToMany(mappedBy = "contactFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Contact> contactList;
 
-	@ManyToOne
-	@JoinColumn(name = "users_fk")
+//	@ManyToOne
+//	@JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
 	public ContactFolder() {

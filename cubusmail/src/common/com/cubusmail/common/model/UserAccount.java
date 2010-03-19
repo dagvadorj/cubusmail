@@ -25,53 +25,40 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 /**
  * UserAccount POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 public class UserAccount implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "username", nullable = false, unique = true)
+//	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	@Column(name = "created")
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Column(name = "created")
+//	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
-	@Column(name = "lastLogin")
+//	@Column(name = "lastLogin")
 	private Date lastLogin;
 
-	@Transient
+//	@Transient
 	private Preferences preferences;
 
-	@Column(name = "preferences", length = 10000)
+//	@Column(name = "preferences", length = 10000)
 	private String preferencesJson;
 
-	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Identity> identities;
 
-	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ContactFolder> contactFolders;
 
 	/**

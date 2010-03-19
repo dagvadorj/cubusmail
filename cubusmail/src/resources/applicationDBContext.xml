@@ -11,48 +11,17 @@
 
 	<context:property-placeholder location="file:${cubus.config}" />
 
-	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-		<property name="sessionFactory" ref="sessionFactory" />
-		<!-- property name="cacheQueries" value="true" /-->
-	</bean>
-
+	
 	<!-- Hibernate configuration -->
-	<bean id="userAccountDao" class="com.cubusmail.server.user.UserAccountDao"
+	<bean id="userAccountDao" class="com.cubusmail.server.user.UserAccountIBatisDao"
 		scope="singleton">
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
+		<property name="dataSource" ref="dataSource"/>
+		<property name="sqlMapClient" ref="userAccountSqlMap"/>		
 	</bean>
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="annotatedClasses">
-			<list>
-				<value>com.cubusmail.common.model.UserAccount
-				</value>
-				<value>com.cubusmail.common.model.Identity
-				</value>
-				<value>com.cubusmail.common.model.ContactFolder
-				</value>
-				<value>com.cubusmail.common.model.Contact
-				</value>
-				<value>com.cubusmail.common.model.ContactAddress
-				</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect
-				</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.jdbc.batch_size">0</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.cache.use_second_level_cache">false</prop>
-				<prop key="hibernate.cache.use_query_cache">false</prop>
-			</props>
-		</property>
+	<bean id="userAccountSqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="SqlMapConfig.xml"/>
 	</bean>
-
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">

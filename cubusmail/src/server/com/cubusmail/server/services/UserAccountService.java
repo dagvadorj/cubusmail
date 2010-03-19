@@ -51,7 +51,7 @@ import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
-import com.cubusmail.server.user.UserAccountDao;
+import com.cubusmail.server.user.IUserAccountDao;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.BeanIds;
 import com.google.gwt.user.client.rpc.SerializationException;
@@ -77,9 +77,9 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	/**
 	 * @return
 	 */
-	private UserAccountDao getUserAccountDao() {
+	private IUserAccountDao getUserAccountDao() {
 
-		return (UserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
+		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
 	}
 
 	/*

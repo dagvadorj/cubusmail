@@ -42,7 +42,7 @@ import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.exceptions.IErrorCodes;
 import com.cubusmail.server.mail.security.MailboxCallbackHandler;
 import com.cubusmail.server.mail.security.MailboxLoginModule;
-import com.cubusmail.server.user.UserAccountDao;
+import com.cubusmail.server.user.IUserAccountDao;
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.BeanIds;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -67,9 +67,9 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 	/**
 	 * @return
 	 */
-	private UserAccountDao getUserAccountDao() {
+	private IUserAccountDao getUserAccountDao() {
 
-		return (UserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
+		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
 	}
 
 	/*

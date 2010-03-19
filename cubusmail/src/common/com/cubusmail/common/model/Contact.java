@@ -22,29 +22,18 @@ package com.cubusmail.common.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 /**
  * Contact POJO.
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "contacts")
+//@Entity
+//@Table(name = "contacts")
 public class Contact implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	// personal
@@ -55,7 +44,7 @@ public class Contact implements Serializable {
 	private String company;
 	private String position;
 
-	@Transient
+//	@Transient
 	private String displayName;
 
 	// internet
@@ -73,10 +62,10 @@ public class Contact implements Serializable {
 	private String businessFax;
 
 	// addresses
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "contact")
+	// @OneToOne(cascade = CascadeType.ALL, mappedBy = "contact")
 	private ContactAddress privateAddress;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "contact")
+	// @OneToOne(cascade = CascadeType.ALL, mappedBy = "contact")
 	private ContactAddress businessAddress;
 
 	// custom fields
@@ -87,8 +76,8 @@ public class Contact implements Serializable {
 
 	private String notice;
 
-	@ManyToOne
-	@JoinColumn(name = "contactfolders_fk")
+//	@ManyToOne
+//	@JoinColumn(name = "contactfolders_fk")
 	private ContactFolder contactFolder;
 
 	/**
