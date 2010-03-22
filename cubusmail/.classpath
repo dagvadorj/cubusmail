@@ -19,7 +19,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.125.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/smartgwt.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/gwt-2.0.2"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/ibatis-2.3.4.726.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/ibatis-2.3.4.726.jar" sourcepath="C:/projects/cubusmail/frameworks/ibatis/src/ibatis-src.zip"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

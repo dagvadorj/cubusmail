@@ -19,6 +19,13 @@
  */
 package com.cubusmail.server.user;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import junit.framework.Assert;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -27,13 +34,18 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cubusmail.common.model.UserAccount;
+import com.ibatis.common.jdbc.ScriptRunner;
+import com.ibatis.common.resources.Resources;
+
 /**
  * Unittests for UserAccountDao
  * 
  * @author Juergen Schlierf
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml", "classpath*:applicationDBContext.xml" })
+@ContextConfiguration(locations = { "classpath*:applicationContext.xml", "classpath*:com/cubusmail/testDBContext.xml",
+		"classpath*:com/cubusmail/testUserAcountContext.xml" })
 public class UserAccountDaoTest implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
@@ -50,9 +62,41 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
+	@Before
+	public void initDB() {
+
+		UserAccountIBatisDao userAccountDao = (UserAccountIBatisDao) this.applicationContext.getBean( "userAccountDao" );
+		try {
+			Connection con = userAccountDao.getDataSource().getConnection();
+			ScriptRunner runner = new ScriptRunner( con, true, true );
+			runner.runScript( Resources.getResourceAsReader( "sql/creation_h2.sql" ) );
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			Assert.fail( e.getMessage() );
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail( e.getMessage() );
+		}
+	}
+
 	@Test
 	public void testGetUserAccountByUsername() {
-		IUserAccountDao userAccount = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
-		
+
+		IUserAccountDao userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
+		UserAccount userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
+
+		if ( userAccount == null ) {
+			UserAccount testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
+			Long id = userAccountDao.saveUserAccount( testUserAccount );
+
+			Assert.assertTrue( id > 0 );
+
+			userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
+		}
+
+		Assert.assertNotNull( userAccount );
 	}
 }

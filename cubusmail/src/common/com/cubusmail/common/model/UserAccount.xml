@@ -26,15 +26,23 @@
 		A simpler select example without the result map. Note the aliases to
 		match the properties of the target result class.
 	-->
-	<select id="selectUserAccountById" parameterClass="int"
+	<select id="selectUserAccountById" parameterClass="long"
 		resultClass="UserAccount">
-		select
-		ACC_ID as id,
-		ACC_FIRST_NAME as firstName,
-		ACC_LAST_NAME as lastName,
-		ACC_EMAIL as emailAddress
-		from USERS
-		where ACC_ID = #id#
-  </select>
+		select * from USERS where ACC_ID = #id#
+  	</select>
+
+	<insert id="insertAccount" parameterClass="UserAccount">
+		<selectKey resultClass="long" keyProperty="id">
+			SELECT CUBUSMAIL_SEQ.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into USERS (
+		ID,
+		USERNAME,
+		CREATED,
+		LASTLOGIN,
+		PREFERENCES)
+		values
+		(#id#, #username#, #created#, #lastLogin#, #preferencesJson#)
+	</insert>
 
 </sqlMap>
