@@ -19,20 +19,15 @@
  */
 package com.cubusmail.server.user;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
-import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.cubusmail.common.model.Contact;
 import com.cubusmail.common.model.ContactFolder;
 import com.cubusmail.common.model.Identity;
-import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
 
 /**
@@ -42,7 +37,7 @@ import com.cubusmail.common.model.UserAccount;
  */
 class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccountDao {
 
-	private Logger logger = Logger.getLogger( this.getClass() );
+	// private Logger log = Logger.getLogger( this.getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -125,25 +120,17 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.cubusmail.server.user.IUserAccountDao#getUserAccountById(java.lang
-	 * .Integer)
-	 */
-	public UserAccount getUserAccountById( Integer id ) {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * com.cubusmail.server.user.IUserAccountDao#getUserAccountByUsername(java
 	 * .lang.String)
 	 */
 	public UserAccount getUserAccountByUsername( String username ) {
 
-		// TODO Auto-generated method stub
+		try {
+			return (UserAccount) getSqlMapClientTemplate().queryForObject( "selectUserAccountByUsername", username );
+		}
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
+		}
 		return null;
 	}
 
@@ -248,62 +235,11 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	public Long saveUserAccount( UserAccount account ) {
 
 		try {
-			account.setPreferencesJson( preferences2json( account.getPreferences() ) );
 			return (Long) getSqlMapClientTemplate().insert( "insertAccount", account );
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );
 		}
 		return null;
-	}
-
-	/**
-	 * @param preferencesJson
-	 * @param preferences
-	 */
-	private void json2Preferences( String preferencesJson, Preferences preferences ) {
-
-		try {
-			JSONObject object = new JSONObject( preferencesJson );
-			Field[] fields = Preferences.class.getFields();
-			if ( fields != null ) {
-				for (Field field : fields) {
-					Object value = object.has( field.getName() ) ? object.get( field.getName() ) : null;
-					if ( value != null ) {
-						if ( value instanceof Integer ) {
-							field.setInt( preferences, ((Integer) value).intValue() );
-						}
-						else if ( value instanceof Boolean ) {
-							field.setBoolean( preferences, ((Boolean) value).booleanValue() );
-						}
-						else if ( value instanceof String ) {
-							field.set( preferences, value );
-						}
-					}
-				}
-			}
-		}
-		catch (JSONException e) {
-			logger.error( e.getMessage(), e );
-		}
-		catch (NumberFormatException e) {
-			logger.error( e.getMessage(), e );
-		}
-		catch (IllegalArgumentException e) {
-			logger.error( e.getMessage(), e );
-		}
-		catch (IllegalAccessException e) {
-			logger.error( e.getMessage(), e );
-		}
-	}
-
-	/**
-	 * @param preferences
-	 * @return
-	 */
-	private String preferences2json( Preferences preferences ) {
-
-		JSONObject jsonObject = new JSONObject( preferences );
-		return jsonObject.toString();
 	}
 }

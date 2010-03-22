@@ -36,17 +36,11 @@ import com.cubusmail.common.model.UserAccount;
  */
 public interface IUserAccountDao {
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	public abstract UserAccount getUserAccountById( Integer id );
 
 	/**
 	 * @param name
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public abstract UserAccount getUserAccountByUsername( String username );
 
 	/**
@@ -88,7 +82,6 @@ public interface IUserAccountDao {
 	 * @param folder
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public abstract List<Contact> retrieveContactList( ContactFolder folder );
 
 	/**
@@ -96,7 +89,6 @@ public interface IUserAccountDao {
 	 * @param searchString
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public abstract List<Contact> retrieveRecipients( UserAccount account, String searchString );
 
 	/**
@@ -126,7 +118,6 @@ public interface IUserAccountDao {
 	 * @param id
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public abstract Contact getContactByEmail( ContactFolder folder, String email );
 
 	/**

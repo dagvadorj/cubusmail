@@ -8,6 +8,7 @@
 
 	<!-- Use type aliases to avoid typing the full classname every time. -->
 	<typeAlias alias="UserAccount" type="com.cubusmail.common.model.UserAccount" />
+	
 
 	<!--
 		Result maps describe the mapping between the columns returned from a
@@ -19,16 +20,16 @@
 		<result property="username" column="USERNAME" />
 		<result property="created" column="CREATED" />
 		<result property="lastLogin" column="LASTLOGIN" />
-		<result property="preferencesJson" column="PREFERENCES" />
+		<result property="preferences" column="PREFERENCES" />
 	</resultMap>
 
 	<!--
 		A simpler select example without the result map. Note the aliases to
 		match the properties of the target result class.
 	-->
-	<select id="selectUserAccountById" parameterClass="long"
+	<select id="selectUserAccountByUsername" parameterClass="String"
 		resultClass="UserAccount">
-		select * from USERS where ACC_ID = #id#
+		select ID, USERNAME, CREATED, LASTLOGIN, PREFERENCES from USERS where USERNAME like #username#
   	</select>
 
 	<insert id="insertAccount" parameterClass="UserAccount">
@@ -42,7 +43,7 @@
 		LASTLOGIN,
 		PREFERENCES)
 		values
-		(#id#, #username#, #created#, #lastLogin#, #preferencesJson#)
+		(#id#, #username#, #created#, #lastLogin#, #preferences#)
 	</insert>
 
 </sqlMap>

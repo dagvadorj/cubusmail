@@ -5,11 +5,14 @@
     "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
+
+	<typeHandler javaType="com.cubusmail.common.model.Preferences"
+		 callback="com.cubusmail.server.user.PreferencesTypeHandler"/>
 		
 	<!--
 		List the SQL Map XML files. They can be loaded from the classpath, as
 		they are here (com.domain.data...)
 	-->
 	<sqlMap resource="com/cubusmail/common/model/UserAccount.xml" />
-
+		 
 </sqlMapConfig>

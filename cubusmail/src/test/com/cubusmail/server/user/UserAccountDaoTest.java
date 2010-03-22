@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -65,12 +67,11 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 	@Before
 	public void initDB() {
 
-		UserAccountIBatisDao userAccountDao = (UserAccountIBatisDao) this.applicationContext.getBean( "userAccountDao" );
 		try {
-			Connection con = userAccountDao.getDataSource().getConnection();
+			Connection con = getConnection();
 			ScriptRunner runner = new ScriptRunner( con, true, true );
 			runner.runScript( Resources.getResourceAsReader( "sql/creation_h2.sql" ) );
-			
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -98,5 +99,10 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		}
 
 		Assert.assertNotNull( userAccount );
+	}
+
+	private Connection getConnection() throws BeansException, SQLException {
+
+		return ((DataSource) this.applicationContext.getBean( "dataSource" )).getConnection();
 	}
 }
