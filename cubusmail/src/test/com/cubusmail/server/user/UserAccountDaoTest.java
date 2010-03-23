@@ -84,21 +84,27 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 	}
 
 	@Test
-	public void testGetUserAccountByUsername() {
+	public void testCreateUpdateUserAccount() {
 
 		IUserAccountDao userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
+
+		UserAccount testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
+		Long id = userAccountDao.saveUserAccount( testUserAccount );
+
+		Assert.assertTrue( id > 0 );
+
 		UserAccount userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
-
-		if ( userAccount == null ) {
-			UserAccount testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
-			Long id = userAccountDao.saveUserAccount( testUserAccount );
-
-			Assert.assertTrue( id > 0 );
-
-			userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
-		}
-
 		Assert.assertNotNull( userAccount );
+
+		userAccount.getPreferences().setTheme( "Testtheme" );
+		userAccountDao.saveUserAccount( userAccount );
+
+		UserAccount userAccount2 = userAccountDao.getUserAccountByUsername( "testuser" );
+		Assert.assertEquals( "Testtheme", userAccount2.getPreferences().getTheme() );
+	}
+
+	public void testUserAccountWithIdentities() {
+
 	}
 
 	private Connection getConnection() throws BeansException, SQLException {

@@ -65,6 +65,10 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 
 	}
 
+	public void saveIdentities( UserAccount account ) {
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,35 +86,9 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.cubusmail.server.user.IUserAccountDao#getContactByEmail(com.cubusmail
-	 * .common.model.ContactFolder, java.lang.String)
-	 */
-	public Contact getContactByEmail( ContactFolder folder, String email ) {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * com.cubusmail.server.user.IUserAccountDao#getContactById(java.lang.Long)
 	 */
 	public Contact getContactById( Long id ) {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cubusmail.server.user.IUserAccountDao#getRecipientContactFolder(com
-	 * .cubusmail.common.model.UserAccount)
-	 */
-	public ContactFolder getRecipientContactFolder( UserAccount account ) {
 
 		// TODO Auto-generated method stub
 		return null;
@@ -235,7 +213,13 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	public Long saveUserAccount( UserAccount account ) {
 
 		try {
-			return (Long) getSqlMapClientTemplate().insert( "insertAccount", account );
+			if ( account.getId() == null ) {
+				return (Long) getSqlMapClientTemplate().insert( "insertUserAccount", account );
+			}
+			else {
+				getSqlMapClientTemplate().update( "updateUserAccount", account );
+				return account.getId();
+			}
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );

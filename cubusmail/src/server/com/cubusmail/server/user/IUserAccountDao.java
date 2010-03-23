@@ -58,15 +58,7 @@ public interface IUserAccountDao {
 	 * @param account
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public abstract List<ContactFolder> retrieveContactFolders( UserAccount account );
-
-	/**
-	 * @param account
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public abstract ContactFolder getRecipientContactFolder( UserAccount account );
 
 	/**
 	 * @param folder
@@ -114,11 +106,6 @@ public interface IUserAccountDao {
 	 */
 	public abstract Contact getContactById( Long id );
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	public abstract Contact getContactByEmail( ContactFolder folder, String email );
 
 	/**
 	 * @param addresses

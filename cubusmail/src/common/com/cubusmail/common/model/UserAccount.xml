@@ -32,18 +32,26 @@
 		select ID, USERNAME, CREATED, LASTLOGIN, PREFERENCES from USERS where USERNAME like #username#
   	</select>
 
-	<insert id="insertAccount" parameterClass="UserAccount">
+	<insert id="insertUserAccount" parameterClass="UserAccount">
 		<selectKey resultClass="long" keyProperty="id">
 			SELECT CUBUSMAIL_SEQ.NEXTVAL AS ID FROM DUAL
 		</selectKey>
 		insert into USERS (
-		ID,
-		USERNAME,
-		CREATED,
-		LASTLOGIN,
-		PREFERENCES)
+			ID,
+			USERNAME,
+			CREATED,
+			LASTLOGIN,
+			PREFERENCES)
 		values
-		(#id#, #username#, #created#, #lastLogin#, #preferences#)
+			(#id#, #username#, #created#, #lastLogin#, #preferences#)
+	</insert>
+
+	<insert id="updateUserAccount" parameterClass="UserAccount">
+		update USERS set 
+			LASTLOGIN = #lastLogin#,
+			PREFERENCES = #preferences#
+		where
+			ID = #id#
 	</insert>
 
 </sqlMap>

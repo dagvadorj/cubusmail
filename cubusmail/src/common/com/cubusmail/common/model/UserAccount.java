@@ -52,8 +52,6 @@ public class UserAccount implements Serializable {
 //	@Transient
 	private Preferences preferences;
 
-//	@Column(name = "preferences", length = 10000)
-	private String preferencesJson;
 
 //	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Identity> identities;
@@ -123,16 +121,6 @@ public class UserAccount implements Serializable {
 	public void setLastLogin( Date lastLogin ) {
 
 		this.lastLogin = lastLogin;
-	}
-
-	public String getPreferencesJson() {
-
-		return this.preferencesJson;
-	}
-
-	public void setPreferencesJson( String xml ) {
-
-		this.preferencesJson = xml;
 	}
 
 	/**

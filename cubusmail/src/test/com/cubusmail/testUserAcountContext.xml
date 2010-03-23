@@ -13,9 +13,9 @@
 
 
 	<bean id="testUserAccount" class="com.cubusmail.common.model.UserAccount" scope="prototype">
-		<property name="id" value="123"/>
 		<property name="username" value="testuser" />
-		<property name="preferences" ref="testPreferences"/>
+		<property name="preferences" ref="testPreferences"/>		
+		<property name="identities" ref="testIdentities"/>
 	</bean>
 
 	<bean id="testPreferences" class="com.cubusmail.common.model.Preferences"
@@ -37,4 +37,23 @@
 		<property name="emptyTrashAfterLogout" value="false" />
 		<property name="readingPane" value="0" />
 	</bean>
+	
+	<util:list id="testIdentities">
+		<bean class="com.cubusmail.common.model.Identity">
+			<property name="standard" value="true"/>
+			<property name="displayName" value="Testname"/>
+			<property name="email" value="test@test.de"/>
+			<property name="organisation" value="Testorganization"/>
+			<property name="replyTo" value="reply@to.de"/>
+			<property name="signature" value="Good bye"/>
+		</bean>
+		<bean class="com.cubusmail.common.model.Identity">
+			<property name="standard" value="false"/>
+			<property name="displayName" value="Testname2"/>
+			<property name="email" value="test2@test.de"/>
+			<property name="organisation" value="Testorganization2"/>
+			<property name="replyTo" value="reply2@to.de"/>
+			<property name="signature" value="Good bye"/>
+		</bean>
+	</util:list>
 </beans>
