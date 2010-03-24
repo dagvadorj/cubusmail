@@ -176,6 +176,7 @@ public class UserAccount implements Serializable {
 			this.identities = new ArrayList<Identity>();
 		}
 		identity.setUserAccount( this );
+		identity.setUserAccountId( this.id );
 		this.identities.add( identity );
 	}
 

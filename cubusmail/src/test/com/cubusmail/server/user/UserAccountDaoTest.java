@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -64,7 +64,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
-	@Before
+	@BeforeClass
 	public void initDB() {
 
 		try {
@@ -103,8 +103,13 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		Assert.assertEquals( "Testtheme", userAccount2.getPreferences().getTheme() );
 	}
 
+	@Test
 	public void testUserAccountWithIdentities() {
-
+		IUserAccountDao userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
+		UserAccount testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
+		
+		userAccountDao.saveUserAccount( testUserAccount );
+		userAccountDao.saveIdentities( testUserAccount );
 	}
 
 	private Connection getConnection() throws BeansException, SQLException {

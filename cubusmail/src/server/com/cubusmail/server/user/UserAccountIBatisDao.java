@@ -65,8 +65,26 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.server.user.IUserAccountDao#saveIdentities(com.cubusmail
+	 * .common.model.UserAccount)
+	 */
 	public void saveIdentities( UserAccount account ) {
 
+		if ( account != null && account.getIdentities() != null ) {
+			for (Identity identity : account.getIdentities()) {
+				if ( identity.getId() == null ) {
+					Long id = (Long) getSqlMapClientTemplate().insert( "insertIdentity", identity );
+					identity.setId( id );
+				}
+				else {
+					getSqlMapClientTemplate().update( "insertIdentity", identity );
+				}
+			}
+		}
 	}
 
 	/*
@@ -101,10 +119,21 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#getUserAccountByUsername(java
 	 * .lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	public UserAccount getUserAccountByUsername( String username ) {
 
 		try {
-			return (UserAccount) getSqlMapClientTemplate().queryForObject( "selectUserAccountByUsername", username );
+			UserAccount account = (UserAccount) getSqlMapClientTemplate().queryForObject(
+					"selectUserAccountByUsername", username );
+			if ( account != null ) {
+				List<Identity> identities = (List<Identity>) getSqlMapClientTemplate().queryForList( "selectIdentities",
+						account.getId() );
+				if ( identities != null ) {
+					account.setIdentities( identities );
+				}
+			}
+
+			return account;
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );
@@ -214,7 +243,9 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 
 		try {
 			if ( account.getId() == null ) {
-				return (Long) getSqlMapClientTemplate().insert( "insertUserAccount", account );
+				Long id = (Long) getSqlMapClientTemplate().insert( "insertUserAccount", account );
+				account.setId( id );
+				return id;
 			}
 			else {
 				getSqlMapClientTemplate().update( "updateUserAccount", account );

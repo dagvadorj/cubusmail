@@ -28,32 +28,34 @@ import java.io.Serializable;
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-//@Entity
-//@Table(name = "identities")
+// @Entity
+// @Table(name = "identities")
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Identity implements Serializable {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String displayName;
 	private String email;
-	private String organisation;
+	private String organization;
 	private String replyTo;
 	private String bcc;
 	private String signature;
 	private boolean htmlSignature;
 	private boolean standard;
 
-//	@Transient
+	private Long userAccountId;
+
+	// @Transient
 	private String internetAddress;
 
-//	@Transient
+	// @Transient
 	private String escapedInternetAddress;
 
-//	@ManyToOne
-//	@JoinColumn(name = "users_fk")
+	// @ManyToOne
+	// @JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
 	/**
@@ -105,23 +107,6 @@ public class Identity implements Serializable {
 	public void setEmail( String email ) {
 
 		this.email = email;
-	}
-
-	/**
-	 * @return Returns the organisation.
-	 */
-	public String getOrganisation() {
-
-		return this.organisation;
-	}
-
-	/**
-	 * @param organisation
-	 *            The organisation to set.
-	 */
-	public void setOrganisation( String organisation ) {
-
-		this.organisation = organisation;
 	}
 
 	/**
@@ -239,7 +224,7 @@ public class Identity implements Serializable {
 		cloned.email = this.email;
 		cloned.htmlSignature = this.htmlSignature;
 		cloned.id = this.id;
-		cloned.organisation = this.organisation;
+		cloned.organization = this.organization;
 		cloned.replyTo = this.replyTo;
 		cloned.signature = this.signature;
 		cloned.standard = this.standard;
@@ -303,5 +288,25 @@ public class Identity implements Serializable {
 	public void setEscapedInternetAddress( String escapedInternetAddress ) {
 
 		this.escapedInternetAddress = escapedInternetAddress;
+	}
+
+	public Long getUserAccountId() {
+
+		return userAccountId;
+	}
+
+	public void setUserAccountId( Long userAccountId ) {
+
+		this.userAccountId = userAccountId;
+	}
+
+	public String getOrganization() {
+
+		return organization;
+	}
+
+	public void setOrganization( String organization ) {
+
+		this.organization = organization;
 	}
 }

@@ -50,6 +50,12 @@ public interface IUserAccountDao {
 	public abstract Long saveUserAccount( UserAccount account );
 
 	/**
+	 * 
+	 * @param account
+	 */
+	public void saveIdentities( UserAccount account );
+	
+	/**
 	 * @param identities
 	 */
 	public abstract void deleteIdentities( List<Identity> identities );

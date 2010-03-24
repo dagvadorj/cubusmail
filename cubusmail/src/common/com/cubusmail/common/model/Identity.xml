@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Identity">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<typeAlias alias="Identity" type="com.cubusmail.common.model.Identity" />	
+
+	<!--
+		Result maps describe the mapping between the columns returned from a
+		query, and the class properties. A result map isn't necessary if the
+		columns (or aliases) match to the properties exactly.
+	-->
+	<resultMap id="IdentityResult" class="Identity">
+		<result property="id" column="ID" />
+		<result property="displayName" column="DISPLAYNAME" />
+		<result property="email" column="EMAIL" />
+		<result property="organization" column="ORGANIZATION" />
+		<result property="replyTo" column="REPLY_TO" />
+		<result property="bcc" column="BCC" />
+		<result property="signature" column="SIGNATURE" />
+		<result property="htmlSignature" column="HTML_SIGNATURE" />
+		<result property="standard" column="STANDARD" />
+		<result property="userAccountId" column="USER_ACCOUNT_ID" />
+	</resultMap>
+
+	<!--
+		A simpler select example without the result map. Note the aliases to
+		match the properties of the target result class.
+	-->
+	<select id="selectIdentities" parameterClass="long"
+		resultClass="Identity">
+		select * from IDENTITIES where USER_ACCOUNT_ID = #id#
+  	</select>
+
+	<insert id="insertIdentity" parameterClass="Identity">
+		<selectKey resultClass="long" keyProperty="id">
+			SELECT CUBUSMAIL_SEQ.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into IDENTITIES (
+			ID,
+			DISPLAYNAME,
+			EMAIL,
+			ORGANIZATION,
+			REPLY_TO,
+			BCC,
+			SIGNATURE,
+			HTML_SIGNATURE,
+			STANDARD,
+			USER_ACCOUNT_ID)
+		values
+			(#id#, #displayName#, #email#, #organization#, #replyTo#, 
+				#bcc#, #signature#, #htmlSignature#, #standard#, #userAccountId#)
+	</insert>
+
+	<insert id="updateIdentity" parameterClass="Identity">
+		update IDENTITIES set 
+			DISPLAYNAME = #displayName#,
+			EMAIL = #email#,
+			ORGANIZATION = #organization#,
+			REPLY_TO = #replyTo#,
+			BCC = #bcc#,
+			SIGNATURE = #signature#,
+			HTML_SIGNATURE = #htmlSignature#,
+			STANDARD = #standard#
+		where
+			ID = #id#
+	</insert>
+
+</sqlMap>

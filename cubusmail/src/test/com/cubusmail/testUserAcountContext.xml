@@ -43,7 +43,7 @@
 			<property name="standard" value="true"/>
 			<property name="displayName" value="Testname"/>
 			<property name="email" value="test@test.de"/>
-			<property name="organisation" value="Testorganization"/>
+			<property name="organization" value="Testorganization"/>
 			<property name="replyTo" value="reply@to.de"/>
 			<property name="signature" value="Good bye"/>
 		</bean>
@@ -51,7 +51,7 @@
 			<property name="standard" value="false"/>
 			<property name="displayName" value="Testname2"/>
 			<property name="email" value="test2@test.de"/>
-			<property name="organisation" value="Testorganization2"/>
+			<property name="organization" value="Testorganization2"/>
 			<property name="replyTo" value="reply2@to.de"/>
 			<property name="signature" value="Good bye"/>
 		</bean>

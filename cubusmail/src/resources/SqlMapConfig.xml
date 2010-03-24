@@ -14,5 +14,6 @@
 		they are here (com.domain.data...)
 	-->
 	<sqlMap resource="com/cubusmail/common/model/UserAccount.xml" />
+	<sqlMap resource="com/cubusmail/common/model/Identity.xml" />
 		 
 </sqlMapConfig>
