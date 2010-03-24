@@ -23,16 +23,15 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
 import junit.framework.Assert;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -64,14 +63,13 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 
-	@BeforeClass
+	@Before
 	public void initDB() {
 
 		try {
 			Connection con = getConnection();
 			ScriptRunner runner = new ScriptRunner( con, true, true );
 			runner.runScript( Resources.getResourceAsReader( "sql/creation_h2.sql" ) );
-
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -105,15 +103,23 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 
 	@Test
 	public void testUserAccountWithIdentities() {
+
 		IUserAccountDao userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
 		UserAccount testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
-		
+
 		userAccountDao.saveUserAccount( testUserAccount );
 		userAccountDao.saveIdentities( testUserAccount );
+
+		UserAccount userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
+		Assert.assertNotNull( userAccount.getIdentities() );
+		Assert.assertTrue( "identities not loaded!", userAccount.getIdentities().size() >= 4 );
 	}
 
 	private Connection getConnection() throws BeansException, SQLException {
 
-		return ((DataSource) this.applicationContext.getBean( "dataSource" )).getConnection();
+		SingleConnectionDataSource dataSource = (SingleConnectionDataSource) this.applicationContext
+				.getBean( "dataSource" );
+		dataSource.resetConnection();
+		return dataSource.getConnection();
 	}
 }

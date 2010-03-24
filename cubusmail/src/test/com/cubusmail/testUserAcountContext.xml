@@ -53,7 +53,23 @@
 			<property name="email" value="test2@test.de"/>
 			<property name="organization" value="Testorganization2"/>
 			<property name="replyTo" value="reply2@to.de"/>
-			<property name="signature" value="Good bye"/>
+			<property name="signature" value="Good bye2"/>
+		</bean>
+		<bean class="com.cubusmail.common.model.Identity">
+			<property name="standard" value="false"/>
+			<property name="displayName" value="Testname3"/>
+			<property name="email" value="test3@test.de"/>
+			<property name="organization" value="Testorganization3"/>
+			<property name="replyTo" value="reply3@to.de"/>
+			<property name="signature" value="Good bye3"/>
+		</bean>
+		<bean class="com.cubusmail.common.model.Identity">
+			<property name="standard" value="false"/>
+			<property name="displayName" value="Testname4"/>
+			<property name="email" value="test4@test.de"/>
+			<property name="organization" value="Testorganization4"/>
+			<property name="replyTo" value="reply4@to.de"/>
+			<property name="signature" value="Good bye4"/>
 		</bean>
 	</util:list>
 </beans>

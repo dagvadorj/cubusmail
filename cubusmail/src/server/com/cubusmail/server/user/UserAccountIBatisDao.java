@@ -74,16 +74,24 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 */
 	public void saveIdentities( UserAccount account ) {
 
-		if ( account != null && account.getIdentities() != null ) {
-			for (Identity identity : account.getIdentities()) {
-				if ( identity.getId() == null ) {
-					Long id = (Long) getSqlMapClientTemplate().insert( "insertIdentity", identity );
-					identity.setId( id );
-				}
-				else {
-					getSqlMapClientTemplate().update( "insertIdentity", identity );
+		try {
+			if ( account != null && account.getIdentities() != null ) {
+				for (Identity identity : account.getIdentities()) {
+					if ( identity.getUserAccountId() == null ) {
+						identity.setUserAccountId( account.getId() );
+					}
+					if ( identity.getId() == null ) {
+						Long id = (Long) getSqlMapClientTemplate().insert( "insertIdentity", identity );
+						identity.setId( id );
+					}
+					else {
+						getSqlMapClientTemplate().update( "insertIdentity", identity );
+					}
 				}
 			}
+		}
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
 		}
 	}
 
@@ -126,8 +134,8 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 			UserAccount account = (UserAccount) getSqlMapClientTemplate().queryForObject(
 					"selectUserAccountByUsername", username );
 			if ( account != null ) {
-				List<Identity> identities = (List<Identity>) getSqlMapClientTemplate().queryForList( "selectIdentities",
-						account.getId() );
+				List<Identity> identities = (List<Identity>) getSqlMapClientTemplate().queryForList(
+						"selectIdentities", account.getId() );
 				if ( identities != null ) {
 					account.setIdentities( identities );
 				}
