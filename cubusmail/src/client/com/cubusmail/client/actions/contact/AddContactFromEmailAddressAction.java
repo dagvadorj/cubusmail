@@ -29,7 +29,7 @@ import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.core.client.GWT;
@@ -61,10 +61,10 @@ public class AddContactFromEmailAddressAction extends GWTAction implements Async
 
 		if ( GWTSessionManager.get().getStandardContactFolder() == null ) {
 			ServiceProvider.getUserAccountService().retrieveContactFolders(
-					new AsyncCallbackAdapter<List<ContactFolder>>() {
+					new AsyncCallbackAdapter<List<AddressFolder>>() {
 
 						@Override
-						public void onSuccess( List<ContactFolder> result ) {
+						public void onSuccess( List<AddressFolder> result ) {
 
 							GWTSessionManager.get().setContactFolderList( result );
 							saveAddress();

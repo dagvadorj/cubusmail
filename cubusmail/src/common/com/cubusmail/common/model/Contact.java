@@ -78,7 +78,7 @@ public class Contact implements Serializable {
 
 //	@ManyToOne
 //	@JoinColumn(name = "contactfolders_fk")
-	private ContactFolder contactFolder;
+	private AddressFolder contactFolder;
 
 	/**
 	 * @return Returns the id.
@@ -491,7 +491,7 @@ public class Contact implements Serializable {
 	/**
 	 * @return Returns the contactFolder.
 	 */
-	public ContactFolder getContactFolder() {
+	public AddressFolder getContactFolder() {
 
 		return this.contactFolder;
 	}
@@ -500,7 +500,7 @@ public class Contact implements Serializable {
 	 * @param contactFolder
 	 *            The contactFolder to set.
 	 */
-	public void setContactFolder( ContactFolder contactFolder ) {
+	public void setContactFolder( AddressFolder contactFolder ) {
 
 		this.contactFolder = contactFolder;
 	}

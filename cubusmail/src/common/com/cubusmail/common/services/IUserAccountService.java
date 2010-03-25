@@ -25,7 +25,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.RemoteService;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
 
 /**
@@ -50,29 +50,29 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @return
 	 */
-	public List<ContactFolder> retrieveContactFolders();
+	public List<AddressFolder> retrieveContactFolders();
 
 	/**
 	 * @param folder
 	 */
-	public ContactFolder createContactFolder( String folderName );
+	public AddressFolder createContactFolder( String folderName );
 
 	/**
 	 * @param folder
 	 */
-	public void saveContactFolder( ContactFolder folder );
+	public void saveContactFolder( AddressFolder folder );
 
 	/**
 	 * @param folder
 	 */
-	public void deleteContactFolder( ContactFolder folder );
+	public void deleteContactFolder( AddressFolder folder );
 
 	/**
 	 * Retrieve the contacts especially for the grid.
 	 * 
 	 * @return
 	 */
-	public String[][] retrieveContactArray( ContactFolder folder, String sortField, String sortDirection );
+	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection );
 
 	/**
 	 * @param contact
@@ -88,7 +88,7 @@ public interface IUserAccountService extends RemoteService {
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public void moveContacts( Long[] contactIds, ContactFolder targetFolder );
+	public void moveContacts( Long[] contactIds, AddressFolder targetFolder );
 	
 	/**
 	 * @param id

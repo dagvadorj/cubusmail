@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.Preferences;
@@ -228,7 +228,7 @@ public class EventBroker {
 		this.contactFolderSelectedListenerList.remove( listener );
 	}
 
-	public void fireContactFolderSelected( ContactFolder contactFolder ) {
+	public void fireContactFolderSelected( AddressFolder contactFolder ) {
 
 		for (int i = 0; i < this.contactFolderSelectedListenerList.size(); i++) {
 			ContactFolderSelectedListener listener = this.contactFolderSelectedListenerList.get( i );

@@ -69,7 +69,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		try {
 			Connection con = getConnection();
 			ScriptRunner runner = new ScriptRunner( con, true, true );
-			runner.runScript( Resources.getResourceAsReader( "sql/creation_h2.sql" ) );
+			runner.runScript( Resources.getResourceAsReader( "sql/createdb_h2.sql" ) );
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

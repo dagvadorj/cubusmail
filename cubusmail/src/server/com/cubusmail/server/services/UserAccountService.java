@@ -42,7 +42,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.exceptions.GWTInvalidSessionException;
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.ContactListFields;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
@@ -154,7 +154,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * @seecom.cubusmail.gwtui.client.services.IUserAccountService#
 	 * retrieveContactFolders()
 	 */
-	public List<ContactFolder> retrieveContactFolders() {
+	public List<AddressFolder> retrieveContactFolders() {
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		return getUserAccountDao().retrieveContactFolders( account );
@@ -167,9 +167,9 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#createContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public ContactFolder createContactFolder( String folderName ) {
+	public AddressFolder createContactFolder( String folderName ) {
 
-		ContactFolder folder = new ContactFolder();
+		AddressFolder folder = new AddressFolder();
 		folder.setFolderName( folderName );
 
 		UserAccount account = SessionManager.get().getUserAccount();
@@ -186,7 +186,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#saveContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public void saveContactFolder( ContactFolder folder ) {
+	public void saveContactFolder( AddressFolder folder ) {
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
@@ -200,7 +200,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#deleteContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public void deleteContactFolder( ContactFolder folder ) {
+	public void deleteContactFolder( AddressFolder folder ) {
 
 		getUserAccountDao().deleteContactFolder( folder );
 	}
@@ -213,7 +213,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * ()
 	 */
 	@SuppressWarnings("unchecked")
-	public String[][] retrieveContactArray( ContactFolder folder, String sortField, String sortDirection ) {
+	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection ) {
 
 		List<Contact> contactList = getUserAccountDao().retrieveContactList( folder );
 
@@ -346,7 +346,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#moveContacts(
 	 * java.lang.Long[], com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public void moveContacts( Long[] contactIds, ContactFolder targetFolder ) {
+	public void moveContacts( Long[] contactIds, AddressFolder targetFolder ) {
 
 		getUserAccountDao().moveContacts( contactIds, targetFolder );
 	}

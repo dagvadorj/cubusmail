@@ -25,7 +25,7 @@ import java.util.List;
 import javax.mail.internet.InternetAddress;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
 
@@ -64,23 +64,23 @@ public interface IUserAccountDao {
 	 * @param account
 	 * @return
 	 */
-	public abstract List<ContactFolder> retrieveContactFolders( UserAccount account );
+	public abstract List<AddressFolder> retrieveContactFolders( UserAccount account );
 
 	/**
 	 * @param folder
 	 */
-	public abstract Long saveContactFolder( ContactFolder folder );
+	public abstract Long saveContactFolder( AddressFolder folder );
 
 	/**
 	 * @param folder
 	 */
-	public abstract void deleteContactFolder( ContactFolder folder );
+	public abstract void deleteContactFolder( AddressFolder folder );
 
 	/**
 	 * @param folder
 	 * @return
 	 */
-	public abstract List<Contact> retrieveContactList( ContactFolder folder );
+	public abstract List<Contact> retrieveContactList( AddressFolder folder );
 
 	/**
 	 * @param account
@@ -104,7 +104,7 @@ public interface IUserAccountDao {
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public abstract void moveContacts( Long[] contactIds, ContactFolder targetFolder );
+	public abstract void moveContacts( Long[] contactIds, AddressFolder targetFolder );
 
 	/**
 	 * @param id

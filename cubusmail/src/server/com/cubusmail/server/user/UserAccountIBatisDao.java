@@ -26,7 +26,7 @@ import javax.mail.internet.InternetAddress;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
 
@@ -46,7 +46,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#deleteContactFolder(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public void deleteContactFolder( ContactFolder folder ) {
+	public void deleteContactFolder( AddressFolder folder ) {
 
 		// TODO Auto-generated method stub
 
@@ -156,7 +156,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#moveContacts(java.lang.Long[],
 	 * com.cubusmail.common.model.ContactFolder)
 	 */
-	public void moveContacts( Long[] contactIds, ContactFolder targetFolder ) {
+	public void moveContacts( Long[] contactIds, AddressFolder targetFolder ) {
 
 		// TODO Auto-generated method stub
 
@@ -169,7 +169,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactFolders(com.
 	 * cubusmail.common.model.UserAccount)
 	 */
-	public List<ContactFolder> retrieveContactFolders( UserAccount account ) {
+	public List<AddressFolder> retrieveContactFolders( UserAccount account ) {
 
 		// TODO Auto-generated method stub
 		return null;
@@ -182,7 +182,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactList(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public List<Contact> retrieveContactList( ContactFolder folder ) {
+	public List<Contact> retrieveContactList( AddressFolder folder ) {
 
 		// TODO Auto-generated method stub
 		return null;
@@ -221,7 +221,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#saveContactFolder(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public Long saveContactFolder( ContactFolder folder ) {
+	public Long saveContactFolder( AddressFolder folder ) {
 
 		// TODO Auto-generated method stub
 		return null;

@@ -25,12 +25,12 @@ package com.cubusmail.common.model;
  * 
  * @author Juergen Schlierf
  */
-public enum ContactFolderType {
+public enum AddressFolderType {
 	STANDARD(0), RECIPIENTS(1), USER(2);
 
 	private int type;
 
-	private ContactFolderType( int type ) {
+	private AddressFolderType( int type ) {
 
 		this.type = type;
 	}

@@ -16,10 +16,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/htmlcleaner2_1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.125.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/smartgwt.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ibatis-2.3.4.726.jar" sourcepath="/Sources/ibatis-src.zip"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.132.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

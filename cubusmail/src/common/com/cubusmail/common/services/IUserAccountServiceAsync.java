@@ -25,7 +25,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
 
 /**
@@ -50,29 +50,29 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @return
 	 */
-	public void retrieveContactFolders( AsyncCallback<List<ContactFolder>> callback );
+	public void retrieveContactFolders( AsyncCallback<List<AddressFolder>> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void createContactFolder( String folderName, AsyncCallback<ContactFolder> callback );
+	public void createContactFolder( String folderName, AsyncCallback<AddressFolder> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void saveContactFolder( ContactFolder folder, AsyncCallback<Void> callback );
+	public void saveContactFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void deleteContactFolder( ContactFolder folder, AsyncCallback<Void> callback );
+	public void deleteContactFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * Retrieve the contacts especially for the grid.
 	 * 
 	 * @return
 	 */
-	public void retrieveContactArray( ContactFolder folder, String sortField, String sortDirection,
+	public void retrieveContactArray( AddressFolder folder, String sortField, String sortDirection,
 			AsyncCallback<String[][]> callback );
 
 	/**
@@ -89,7 +89,7 @@ public interface IUserAccountServiceAsync {
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public void moveContacts( Long[] contactIds, ContactFolder targetFolder, AsyncCallback<Void> callback );
+	public void moveContacts( Long[] contactIds, AddressFolder targetFolder, AsyncCallback<Void> callback );
 
 	/**
 	 * @param id

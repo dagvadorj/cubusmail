@@ -57,7 +57,7 @@ public class UserAccount implements Serializable {
 	private List<Identity> identities;
 
 //	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<ContactFolder> contactFolders;
+	private List<AddressFolder> contactFolders;
 
 	/**
 	 * @return Returns the id.
@@ -208,7 +208,7 @@ public class UserAccount implements Serializable {
 	/**
 	 * @return Returns the contactFolders.
 	 */
-	public List<ContactFolder> getContactFolders() {
+	public List<AddressFolder> getContactFolders() {
 
 		return this.contactFolders;
 	}
@@ -216,15 +216,15 @@ public class UserAccount implements Serializable {
 	/**
 	 * @param contactFolders The contactFolders to set.
 	 */
-	public void setContactFolders( List<ContactFolder> contactFolders ) {
+	public void setContactFolders( List<AddressFolder> contactFolders ) {
 
 		this.contactFolders = contactFolders;
 	}
 
-	public void addContactFolder( ContactFolder folder ) {
+	public void addContactFolder( AddressFolder folder ) {
 
 		if ( this.contactFolders == null ) {
-			this.contactFolders = new ArrayList<ContactFolder>();
+			this.contactFolders = new ArrayList<AddressFolder>();
 		}
 		folder.setUserAccount( this );
 		this.contactFolders.add( folder );

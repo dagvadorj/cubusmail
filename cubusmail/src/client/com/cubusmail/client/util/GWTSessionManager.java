@@ -23,8 +23,8 @@ package com.cubusmail.client.util;
 import java.util.List;
 
 import com.cubusmail.common.model.Contact;
-import com.cubusmail.common.model.ContactFolder;
-import com.cubusmail.common.model.ContactFolderType;
+import com.cubusmail.common.model.AddressFolder;
+import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.GWTMessage;
@@ -43,11 +43,11 @@ public class GWTSessionManager {
 	private GWTMailbox mailbox;
 	private GWTMailFolder mailFolder;
 	private GWTMailFolder currentMailFolder;
-	private ContactFolder currentContactFolder;
+	private AddressFolder currentContactFolder;
 	private GWTMessage currentMessage;
 
 	
-	private List<ContactFolder> contactFolderList;
+	private List<AddressFolder> contactFolderList;
 	private Contact currentContact;
 
 	/**
@@ -154,7 +154,7 @@ public class GWTSessionManager {
 	/**
 	 * @return Returns the currentContactFolder.
 	 */
-	public ContactFolder getCurrentContactFolder() {
+	public AddressFolder getCurrentContactFolder() {
 
 		return this.currentContactFolder;
 	}
@@ -163,7 +163,7 @@ public class GWTSessionManager {
 	 * @param currentContactFolder
 	 *            The currentContactFolder to set.
 	 */
-	public void setCurrentContactFolder( ContactFolder currentContactFolder ) {
+	public void setCurrentContactFolder( AddressFolder currentContactFolder ) {
 
 		this.currentContactFolder = currentContactFolder;
 	}
@@ -171,16 +171,16 @@ public class GWTSessionManager {
 	/**
 	 * @return Returns the contactFolderList.
 	 */
-	public List<ContactFolder> getContactFolderList() {
+	public List<AddressFolder> getContactFolderList() {
 
 		return this.contactFolderList;
 	}
 
-	public ContactFolder getStandardContactFolder() {
+	public AddressFolder getStandardContactFolder() {
 
 		if ( getContactFolderList() != null ) {
-			for (ContactFolder folder : getContactFolderList()) {
-				if ( ContactFolderType.STANDARD == folder.getFolderType() ) {
+			for (AddressFolder folder : getContactFolderList()) {
+				if ( AddressFolderType.STANDARD == folder.getFolderType() ) {
 					return folder;
 				}
 			}
@@ -192,7 +192,7 @@ public class GWTSessionManager {
 	 * @param contactFolderList
 	 *            The contactFolderList to set.
 	 */
-	public void setContactFolderList( List<ContactFolder> contactFolderList ) {
+	public void setContactFolderList( List<AddressFolder> contactFolderList ) {
 
 		this.contactFolderList = contactFolderList;
 	}

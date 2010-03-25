@@ -31,8 +31,8 @@ import com.cubusmail.common.exceptions.GWTAuthenticationException;
 import com.cubusmail.common.exceptions.GWTConnectionException;
 import com.cubusmail.common.exceptions.GWTLoginException;
 import com.cubusmail.common.exceptions.GWTLogoutException;
-import com.cubusmail.common.model.ContactFolder;
-import com.cubusmail.common.model.ContactFolderType;
+import com.cubusmail.common.model.AddressFolder;
+import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
@@ -202,12 +202,12 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 		Identity defaultIdentity = createDefaultIdentity( mailbox );
 		account.addIdentity( defaultIdentity );
 
-		ContactFolder folder = new ContactFolder( ContactFolderType.STANDARD );
+		AddressFolder folder = new AddressFolder( AddressFolderType.STANDARD );
 		folder.setFolderName( "Standard" );
 		folder.setUserAccount( account );
 		account.addContactFolder( folder );
 
-		folder = new ContactFolder( ContactFolderType.RECIPIENTS );
+		folder = new AddressFolder( AddressFolderType.RECIPIENTS );
 		folder.setFolderName( "Recipients" );
 		folder.setUserAccount( account );
 		account.addContactFolder( folder );

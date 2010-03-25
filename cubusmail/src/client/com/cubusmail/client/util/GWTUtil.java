@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.cubusmail.common.model.ContactFolder;
-import com.cubusmail.common.model.ContactFolderType;
+import com.cubusmail.common.model.AddressFolder;
+import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.IGWTFolder;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.TimeZone;
@@ -122,9 +122,9 @@ public abstract class GWTUtil {
 	 * @param folder
 	 * @return
 	 */
-	public static String getTranslatedFolderName( ContactFolder folder ) {
+	public static String getTranslatedFolderName( AddressFolder folder ) {
 
-		if ( ContactFolderType.RECIPIENTS.equals( folder.getFolderType() ) ) {
+		if ( AddressFolderType.RECIPIENTS.equals( folder.getFolderType() ) ) {
 			return TextProvider.get().contact_folder_panel_recipients();
 		}
 

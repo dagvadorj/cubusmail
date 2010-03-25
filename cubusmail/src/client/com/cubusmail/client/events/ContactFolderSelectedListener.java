@@ -20,7 +20,7 @@
  */
 package com.cubusmail.client.events;
 
-import com.cubusmail.common.model.ContactFolder;
+import com.cubusmail.common.model.AddressFolder;
 
 
 /**
@@ -35,5 +35,5 @@ public interface ContactFolderSelectedListener {
 	 * 
 	 * @param folderId
 	 */
-	public void onFolderSelected( ContactFolder contactFolder );
+	public void onFolderSelected( AddressFolder contactFolder );
 }

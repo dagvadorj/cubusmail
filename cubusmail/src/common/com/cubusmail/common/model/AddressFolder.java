@@ -32,7 +32,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 //@Entity
 //@Table(name = "contactfolders")
-public class ContactFolder implements Serializable {
+public class AddressFolder implements Serializable {
 
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,7 +40,7 @@ public class ContactFolder implements Serializable {
 
 	private String folderName;
 
-	private ContactFolderType folderType;
+	private AddressFolderType folderType;
 
 //	@OneToMany(mappedBy = "contactFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Contact> contactList;
@@ -49,12 +49,12 @@ public class ContactFolder implements Serializable {
 //	@JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
-	public ContactFolder() {
+	public AddressFolder() {
 
-		this( ContactFolderType.USER );
+		this( AddressFolderType.USER );
 	}
 
-	public ContactFolder( ContactFolderType type ) {
+	public AddressFolder( AddressFolderType type ) {
 
 		this.folderType = type;
 	}
@@ -142,7 +142,7 @@ public class ContactFolder implements Serializable {
 	/**
 	 * @return Returns the folderType.
 	 */
-	public ContactFolderType getFolderType() {
+	public AddressFolderType getFolderType() {
 
 		return this.folderType;
 	}
@@ -151,7 +151,7 @@ public class ContactFolder implements Serializable {
 	 * @param folderType
 	 *            The folderType to set.
 	 */
-	public void setFolderType( ContactFolderType folderType ) {
+	public void setFolderType( AddressFolderType folderType ) {
 
 		this.folderType = folderType;
 	}
