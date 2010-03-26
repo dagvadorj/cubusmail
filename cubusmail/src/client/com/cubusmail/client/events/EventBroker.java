@@ -23,7 +23,7 @@ package com.cubusmail.client.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
@@ -246,7 +246,7 @@ public class EventBroker {
 		this.contactLoadedListenerList.remove( listener );
 	}
 
-	public void fireContactLoaded( Contact contact ) {
+	public void fireContactLoaded( Address contact ) {
 
 		for (int i = 0; i < this.contactLoadedListenerList.size(); i++) {
 			ContactLoadedListener listener = this.contactLoadedListenerList.get( i );
@@ -300,7 +300,7 @@ public class EventBroker {
 		this.contactSelectedListenerList.remove( listener );
 	}
 
-	public void fireContactSelected( Contact contact ) {
+	public void fireContactSelected( Address contact ) {
 
 		for (int i = 0; i < this.contactSelectedListenerList.size(); i++) {
 			ContactSelectedListener listener = this.contactSelectedListenerList.get( i );

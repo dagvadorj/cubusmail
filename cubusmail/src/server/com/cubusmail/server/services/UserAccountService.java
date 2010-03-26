@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.exceptions.GWTInvalidSessionException;
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.ContactListFields;
 import com.cubusmail.common.model.Identity;
@@ -215,7 +215,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	@SuppressWarnings("unchecked")
 	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection ) {
 
-		List<Contact> contactList = getUserAccountDao().retrieveContactList( folder );
+		List<Address> contactList = getUserAccountDao().retrieveContactList( folder );
 
 		if ( contactList != null && contactList.size() > 0 ) {
 			if ( !StringUtils.isEmpty( sortField ) ) {
@@ -270,7 +270,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 		String[] addressStrings = parsePreviousAndLastAddress( addressLine );
 
 		String searchString = addressStrings[1];
-		List<Contact> contacts = getUserAccountDao().retrieveRecipients( account, searchString );
+		List<Address> contacts = getUserAccountDao().retrieveRecipients( account, searchString );
 
 		if ( contacts != null ) {
 			String[][] array = new String[contacts.size()][2];
@@ -358,7 +358,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#saveContact(com
 	 * .cubusmail.gwtui.domain.Contact)
 	 */
-	public void saveContact( Contact contact ) {
+	public void saveContact( Address contact ) {
 
 		getUserAccountDao().saveContact( contact );
 	}
@@ -370,7 +370,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#retrieveContact
 	 * (java.lang.Long)
 	 */
-	public Contact retrieveContact( Long id ) {
+	public Address retrieveContact( Long id ) {
 
 		return getUserAccountDao().getContactById( id );
 	}

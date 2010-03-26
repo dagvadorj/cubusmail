@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
@@ -80,20 +80,20 @@ public interface IUserAccountDao {
 	 * @param folder
 	 * @return
 	 */
-	public abstract List<Contact> retrieveContactList( AddressFolder folder );
+	public abstract List<Address> retrieveContactList( AddressFolder folder );
 
 	/**
 	 * @param account
 	 * @param searchString
 	 * @return
 	 */
-	public abstract List<Contact> retrieveRecipients( UserAccount account, String searchString );
+	public abstract List<Address> retrieveRecipients( UserAccount account, String searchString );
 
 	/**
 	 * @param contact
 	 * @return
 	 */
-	public abstract Long saveContact( Contact contact );
+	public abstract Long saveContact( Address contact );
 
 	/**
 	 * @param ids
@@ -110,7 +110,7 @@ public interface IUserAccountDao {
 	 * @param id
 	 * @return
 	 */
-	public abstract Contact getContactById( Long id );
+	public abstract Address getContactById( Long id );
 
 
 	/**

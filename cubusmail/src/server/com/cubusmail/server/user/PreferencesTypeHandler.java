@@ -22,7 +22,8 @@ package com.cubusmail.server.user;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  */
 public class PreferencesTypeHandler implements TypeHandlerCallback {
 
-	private Logger log = Logger.getLogger( this.getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)

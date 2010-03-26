@@ -113,6 +113,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		UserAccount userAccount = userAccountDao.getUserAccountByUsername( "testuser" );
 		Assert.assertNotNull( userAccount.getIdentities() );
 		Assert.assertTrue( "identities not loaded!", userAccount.getIdentities().size() >= 4 );
+		Assert.assertEquals( userAccount, userAccount.getIdentities().get( 0 ).getUserAccount() );
 	}
 
 	private Connection getConnection() throws BeansException, SQLException {

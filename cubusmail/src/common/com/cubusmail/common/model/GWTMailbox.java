@@ -211,7 +211,7 @@ public class GWTMailbox implements IGWTFolder, IsSerializable {
 		clone.loggedIn = this.loggedIn;
 		// GWTMailfolders don't realy need to be cloned
 		clone.mailFolders = this.mailFolders;
-		clone.userAccount = this.userAccount.clone();
+		clone.userAccount = this.userAccount;
 
 		return clone;
 	}

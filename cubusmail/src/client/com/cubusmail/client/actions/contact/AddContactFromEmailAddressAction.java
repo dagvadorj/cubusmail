@@ -28,7 +28,7 @@ import com.cubusmail.client.util.AsyncCallbackAdapter;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.ImageProvider;
@@ -81,8 +81,8 @@ public class AddContactFromEmailAddressAction extends GWTAction implements Async
 	 */
 	private void saveAddress() {
 
-		Contact contact = GWT.create( Contact.class );
-		contact.setContactFolder( GWTSessionManager.get().getStandardContactFolder() );
+		Address contact = GWT.create( Address.class );
+		contact.setAddressFolder( GWTSessionManager.get().getStandardContactFolder() );
 		contact.setEmail( this.address.getEmail() );
 		contact.setLastName( this.address.getName() );
 

@@ -22,7 +22,7 @@ package com.cubusmail.client.util;
 
 import java.util.List;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.GWTMailFolder;
@@ -48,7 +48,7 @@ public class GWTSessionManager {
 
 	
 	private List<AddressFolder> contactFolderList;
-	private Contact currentContact;
+	private Address currentContact;
 
 	/**
 	 * 
@@ -200,7 +200,7 @@ public class GWTSessionManager {
 	/**
 	 * @return Returns the currentContact.
 	 */
-	public Contact getCurrentContact() {
+	public Address getCurrentContact() {
 
 		return this.currentContact;
 	}
@@ -209,7 +209,7 @@ public class GWTSessionManager {
 	 * @param currentContact
 	 *            The currentContact to set.
 	 */
-	public void setCurrentContact( Contact currentContact ) {
+	public void setCurrentContact( Address currentContact ) {
 
 		this.currentContact = currentContact;
 	}

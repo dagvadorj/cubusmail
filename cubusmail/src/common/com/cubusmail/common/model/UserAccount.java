@@ -31,32 +31,33 @@ import java.util.List;
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-//@Entity
-//@Table(name = "users")
+// @Entity
+// @Table(name = "users")
 public class UserAccount implements Serializable {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-//	@Column(name = "username", nullable = false, unique = true)
+	// @Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-//	@Column(name = "created")
-//	@Temporal(TemporalType.TIMESTAMP)
+	// @Column(name = "created")
+	// @Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
-//	@Column(name = "lastLogin")
+	// @Column(name = "lastLogin")
 	private Date lastLogin;
 
-//	@Transient
+	// @Transient
 	private Preferences preferences;
 
-
-//	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	// @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch =
+	// FetchType.EAGER)
 	private List<Identity> identities;
 
-//	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch =
+	// FetchType.LAZY)
 	private List<AddressFolder> contactFolders;
 
 	/**
@@ -68,7 +69,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param id The id to set.
+	 * @param id
+	 *            The id to set.
 	 */
 	public void setId( Long id ) {
 
@@ -84,7 +86,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param username The username to set.
+	 * @param username
+	 *            The username to set.
 	 */
 	public void setUsername( String username ) {
 
@@ -100,7 +103,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param created The created to set.
+	 * @param created
+	 *            The created to set.
 	 */
 	public void setCreated( Date created ) {
 
@@ -116,7 +120,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param lastLogin The lastLogin to set.
+	 * @param lastLogin
+	 *            The lastLogin to set.
 	 */
 	public void setLastLogin( Date lastLogin ) {
 
@@ -132,7 +137,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param preferences The preferences to set.
+	 * @param preferences
+	 *            The preferences to set.
 	 */
 	public void setPreferences( Preferences preferences ) {
 
@@ -152,7 +158,7 @@ public class UserAccount implements Serializable {
 	 */
 	public Identity getStandardIdentity() {
 
-		for ( Identity identity : this.identities ) {
+		for (Identity identity : this.identities) {
 			if ( identity.isStandard() ) {
 				return identity;
 			}
@@ -163,9 +169,16 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param identities The identities to set.
+	 * @param identities
+	 *            The identities to set.
 	 */
 	public void setIdentities( List<Identity> identities ) {
+
+		if ( identities != null ) {
+			for (Identity identity : identities) {
+				identity.setUserAccount( this );
+			}
+		}
 
 		this.identities = identities;
 	}
@@ -176,7 +189,6 @@ public class UserAccount implements Serializable {
 			this.identities = new ArrayList<Identity>();
 		}
 		identity.setUserAccount( this );
-		identity.setUserAccountId( this.id );
 		this.identities.add( identity );
 	}
 
@@ -196,7 +208,7 @@ public class UserAccount implements Serializable {
 	 */
 	public Identity getIdentityById( Long id ) {
 
-		for ( Identity identity : this.identities ) {
+		for (Identity identity : this.identities) {
 			if ( id.equals( identity.getId() ) ) {
 				return identity;
 			}
@@ -214,7 +226,8 @@ public class UserAccount implements Serializable {
 	}
 
 	/**
-	 * @param contactFolders The contactFolders to set.
+	 * @param contactFolders
+	 *            The contactFolders to set.
 	 */
 	public void setContactFolders( List<AddressFolder> contactFolders ) {
 
@@ -228,27 +241,5 @@ public class UserAccount implements Serializable {
 		}
 		folder.setUserAccount( this );
 		this.contactFolders.add( folder );
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	public UserAccount clone() {
-
-		UserAccount clone = new UserAccount();
-		clone.created = this.created;
-		clone.id = this.id;
-		if ( this.identities != null ) {
-			for ( Identity identity : this.identities ) {
-				clone.addIdentity( identity.clone() );
-			}
-		}
-		clone.lastLogin = this.lastLogin;
-		clone.preferences = this.preferences.clone();
-		clone.username = this.username;
-
-		return clone;
 	}
 }

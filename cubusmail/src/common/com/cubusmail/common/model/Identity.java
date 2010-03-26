@@ -28,13 +28,8 @@ import java.io.Serializable;
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-// @Entity
-// @Table(name = "identities")
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Identity implements Serializable {
 
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String displayName;
@@ -46,16 +41,10 @@ public class Identity implements Serializable {
 	private boolean htmlSignature;
 	private boolean standard;
 
-	private Long userAccountId;
-
-	// @Transient
 	private String internetAddress;
 
-	// @Transient
 	private String escapedInternetAddress;
 
-	// @ManyToOne
-	// @JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
 	/**
@@ -212,27 +201,6 @@ public class Identity implements Serializable {
 	}
 
 	/*
-	 * GWT doesn't support native cloning.
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	public Identity clone() {
-
-		Identity cloned = new Identity();
-		cloned.bcc = this.bcc;
-		cloned.displayName = this.displayName;
-		cloned.email = this.email;
-		cloned.htmlSignature = this.htmlSignature;
-		cloned.id = this.id;
-		cloned.organization = this.organization;
-		cloned.replyTo = this.replyTo;
-		cloned.signature = this.signature;
-		cloned.standard = this.standard;
-
-		return cloned;
-	}
-
-	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -288,16 +256,6 @@ public class Identity implements Serializable {
 	public void setEscapedInternetAddress( String escapedInternetAddress ) {
 
 		this.escapedInternetAddress = escapedInternetAddress;
-	}
-
-	public Long getUserAccountId() {
-
-		return userAccountId;
-	}
-
-	public void setUserAccountId( Long userAccountId ) {
-
-		this.userAccountId = userAccountId;
 	}
 
 	public String getOrganization() {

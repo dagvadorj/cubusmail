@@ -25,28 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contact folder POJO
+ * Address folder POJO
  * 
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-//@Entity
-//@Table(name = "contactfolders")
 public class AddressFolder implements Serializable {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String folderName;
 
 	private AddressFolderType folderType;
 
-//	@OneToMany(mappedBy = "contactFolder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Contact> contactList;
+	private List<Address> addressList;
 
-//	@ManyToOne
-//	@JoinColumn(name = "users_fk")
 	private UserAccount userAccount;
 
 	public AddressFolder() {
@@ -60,15 +53,15 @@ public class AddressFolder implements Serializable {
 	}
 
 	/**
-	 * @param contact
+	 * @param address
 	 */
-	public void addContact( Contact contact ) {
+	public void addAddress( Address address ) {
 
-		if ( this.contactList == null ) {
-			this.contactList = new ArrayList<Contact>();
+		if ( this.addressList == null ) {
+			this.addressList = new ArrayList<Address>();
 		}
-		contact.setContactFolder( this );
-		this.contactList.add( contact );
+		address.setAddressFolder( this );
+		this.addressList.add( address );
 	}
 
 	/**
@@ -108,18 +101,18 @@ public class AddressFolder implements Serializable {
 	/**
 	 * @return Returns the contactList.
 	 */
-	public List<Contact> getContactList() {
+	public List<Address> getAddressList() {
 
-		return this.contactList;
+		return this.addressList;
 	}
 
 	/**
-	 * @param contactList
+	 * @param addressList
 	 *            The contactList to set.
 	 */
-	public void setContactList( List<Contact> contactList ) {
+	public void setAddressList( List<Address> addressList ) {
 
-		this.contactList = contactList;
+		this.addressList = addressList;
 	}
 
 	/**

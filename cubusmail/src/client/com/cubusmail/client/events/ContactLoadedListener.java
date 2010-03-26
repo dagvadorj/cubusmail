@@ -20,7 +20,7 @@
  */
 package com.cubusmail.client.events;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 
 /**
  * Listener for load contacts.
@@ -32,5 +32,5 @@ public interface ContactLoadedListener {
 	/**
 	 * @param contact
 	 */
-	public void onContactLoaded( Contact contact );
+	public void onContactLoaded( Address contact );
 }

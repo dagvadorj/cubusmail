@@ -24,7 +24,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
 
@@ -78,7 +78,7 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @param contact
 	 */
-	public void saveContact( Contact contact, AsyncCallback<Void> callback );
+	public void saveContact( Address contact, AsyncCallback<Void> callback );
 
 	/**
 	 * @param contacts
@@ -95,7 +95,7 @@ public interface IUserAccountServiceAsync {
 	 * @param id
 	 * @return
 	 */
-	public void retrieveContact( Long id, AsyncCallback<Contact> callback );
+	public void retrieveContact( Long id, AsyncCallback<Address> callback );
 
 	/**
 	 * @return

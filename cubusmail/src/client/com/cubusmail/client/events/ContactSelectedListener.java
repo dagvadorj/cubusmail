@@ -20,7 +20,7 @@
  */
 package com.cubusmail.client.events;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 
 /**
  * Listener for selected contacts.
@@ -34,5 +34,5 @@ public interface ContactSelectedListener {
 	 * 
 	 * @param messageId
 	 */
-	public void onContactSelected( Contact contact );
+	public void onContactSelected( Address contact );
 }

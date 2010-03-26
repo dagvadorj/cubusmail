@@ -24,7 +24,6 @@
 		<result property="signature" column="SIGNATURE" />
 		<result property="htmlSignature" column="HTML_SIGNATURE" />
 		<result property="standard" column="STANDARD" />
-		<result property="userAccountId" column="USER_ACCOUNT_ID" />
 	</resultMap>
 
 	<!--
@@ -53,7 +52,7 @@
 			USER_ACCOUNT_ID)
 		values
 			(#id#, #displayName#, #email#, #organization#, #replyTo#, 
-				#bcc#, #signature#, #htmlSignature#, #standard#, #userAccountId#)
+				#bcc#, #signature#, #htmlSignature#, #standard#, #userAccount.id#)
 	</insert>
 
 	<insert id="updateIdentity" parameterClass="Identity">

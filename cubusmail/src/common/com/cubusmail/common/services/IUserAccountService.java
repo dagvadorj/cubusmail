@@ -24,7 +24,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 
-import com.cubusmail.common.model.Contact;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
 
@@ -77,7 +77,7 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @param contact
 	 */
-	public void saveContact( Contact contact );
+	public void saveContact( Address contact );
 
 	/**
 	 * @param contacts
@@ -94,7 +94,7 @@ public interface IUserAccountService extends RemoteService {
 	 * @param id
 	 * @return
 	 */
-	public Contact retrieveContact( Long id );
+	public Address retrieveContact( Long id );
 
 	/**
 	 * @return
