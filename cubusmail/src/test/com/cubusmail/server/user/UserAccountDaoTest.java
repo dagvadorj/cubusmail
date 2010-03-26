@@ -45,8 +45,9 @@ import com.ibatis.common.resources.Resources;
  * @author Juergen Schlierf
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml", "classpath*:com/cubusmail/testDBContext.xml",
-		"classpath*:com/cubusmail/testUserAcountContext.xml" })
+@ContextConfiguration(locations = { "classpath*:applicationContext.xml",
+		"classpath*:com/cubusmail/server/user/testDBContext.xml",
+		"classpath*:com/cubusmail/server/user/testUserAcountContext.xml" })
 public class UserAccountDaoTest implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;

@@ -10,7 +10,7 @@
 		<config>src/resources/applicationContext.xml</config>
 		<config>src/resources/applicationDBContext.xml</config>
 		<config>src/resources/applicationMailContext.xml</config>
-		<config>src/test/com/cubusmail/testUserAcountContext.xml</config>
+		<config>src/test/com/cubusmail/server/user/testUserAcountContext.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
