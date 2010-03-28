@@ -180,7 +180,7 @@ public class GWTSessionManager {
 
 		if ( getContactFolderList() != null ) {
 			for (AddressFolder folder : getContactFolderList()) {
-				if ( AddressFolderType.STANDARD == folder.getFolderType() ) {
+				if ( AddressFolderType.STANDARD == folder.getType() ) {
 					return folder;
 				}
 			}

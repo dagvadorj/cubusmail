@@ -34,7 +34,8 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.MailboxFactory;
@@ -47,7 +48,7 @@ import com.cubusmail.server.mail.exceptions.IErrorCodes;
  */
 public class MailboxLoginModule implements LoginModule {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	// initial state
 	private Subject subject;
@@ -116,15 +117,15 @@ public class MailboxLoginModule implements LoginModule {
 			this.mailboxPrincipal = new MailboxPrincipal( username, mailbox );
 			this.succeeded = true;
 		}
-		catch ( IOException ioe ) {
+		catch (IOException ioe) {
 			log.error( ioe.getMessage(), ioe );
 			throw new LoginException( ioe.toString() );
 		}
-		catch ( UnsupportedCallbackException uce ) {
+		catch (UnsupportedCallbackException uce) {
 			log.error( uce.getMessage(), uce );
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
 		}
-		catch ( MessagingException e ) {
+		catch (MessagingException e) {
 			log.error( e.getMessage(), e );
 			mapMessagingException( e );
 		}
@@ -142,9 +143,11 @@ public class MailboxLoginModule implements LoginModule {
 
 		if ( e instanceof AuthenticationFailedException ) {
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
-		} else if ( e.getCause() != null && e.getCause() instanceof java.net.ConnectException ) {
+		}
+		else if ( e.getCause() != null && e.getCause() instanceof java.net.ConnectException ) {
 			throw new LoginException( IErrorCodes.EXCEPTION_CONNECT );
-		} else {
+		}
+		else {
 			throw new LoginException( IErrorCodes.EXCEPTION_GENERAL );
 		}
 	}
@@ -162,7 +165,8 @@ public class MailboxLoginModule implements LoginModule {
 			}
 			this.commitSucceeded = true;
 			return this.commitSucceeded;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -188,7 +192,7 @@ public class MailboxLoginModule implements LoginModule {
 		try {
 			SecurityUtils.getMailboxPrincipal( this.subject ).getMailbox().logout();
 		}
-		catch ( MessagingException e ) {
+		catch (MessagingException e) {
 			// nothing to do
 			log.warn( e.getMessage() );
 		}

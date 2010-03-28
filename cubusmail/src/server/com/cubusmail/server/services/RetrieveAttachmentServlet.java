@@ -34,7 +34,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -49,7 +50,7 @@ import com.cubusmail.server.mail.util.MessageUtils;
  */
 public class RetrieveAttachmentServlet extends HttpServlet {
 
-	private Logger logger = Logger.getLogger( this.getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/**
 	 * 
@@ -126,7 +127,7 @@ public class RetrieveAttachmentServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 	}
 }

@@ -30,7 +30,8 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Encrypt und decrypt and passwords for mailboxes. 
@@ -39,7 +40,7 @@ import org.apache.log4j.Logger;
  */
 public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private String algorithm;
 

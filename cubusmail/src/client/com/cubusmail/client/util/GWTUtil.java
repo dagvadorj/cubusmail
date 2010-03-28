@@ -124,11 +124,11 @@ public abstract class GWTUtil {
 	 */
 	public static String getTranslatedFolderName( AddressFolder folder ) {
 
-		if ( AddressFolderType.RECIPIENTS.equals( folder.getFolderType() ) ) {
+		if ( AddressFolderType.RECIPIENTS.equals( folder.getType() ) ) {
 			return TextProvider.get().contact_folder_panel_recipients();
 		}
 
-		return folder.getFolderName();
+		return folder.getName();
 	}
 
 	/**

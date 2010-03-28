@@ -37,7 +37,8 @@ import javax.mail.internet.InternetAddress;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.exceptions.GWTInvalidSessionException;
@@ -68,7 +69,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 
 	private static final long serialVersionUID = 3680152258110434790L;
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	public UserAccountService() {
 
@@ -170,7 +171,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	public AddressFolder createContactFolder( String folderName ) {
 
 		AddressFolder folder = new AddressFolder();
-		folder.setFolderName( folderName );
+		folder.setName( folderName );
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );

@@ -36,7 +36,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
@@ -54,7 +55,7 @@ import com.cubusmail.server.util.CubusConstants;
  */
 public class MessageTextUtil {
 
-	private static Logger log = Logger.getLogger( MessageTextUtil.class.getName() );
+	private static final Log log = LogFactory.getLog( MessageTextUtil.class.getName() );
 
 	private static final CleanerProperties CLEANER_PROPERTIES = new CleanerProperties();
 	static {

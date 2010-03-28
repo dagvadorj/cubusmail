@@ -32,19 +32,19 @@ import javax.mail.event.MessageChangedListener;
 import javax.mail.search.SearchTerm;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import com.sun.mail.imap.ACL;
-import com.sun.mail.imap.IMAPFolder;
-import com.sun.mail.imap.Rights;
 
 import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
+import com.sun.mail.imap.ACL;
+import com.sun.mail.imap.IMAPFolder;
+import com.sun.mail.imap.Rights;
 
 /**
  * Implementation of an imap mail folder.
@@ -57,7 +57,7 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 
 	private final static String ATTRIBUTE_HAS_CHILDREN = "\\HasChildren";
 
-	private Logger logger = Logger.getLogger( this.getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private IMAPFolder folder;
 
@@ -145,31 +145,31 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 				}
 
 				long time = System.currentTimeMillis();
-				logger.debug( "Start getting messages..." );
+				log.debug( "Start getting messages..." );
 				msgs = folder.getMessages();
-				logger
+				log
 						.debug( "Millis for getting " + msgs.length + " messages: "
 								+ (System.currentTimeMillis() - time) );
 				time = System.currentTimeMillis();
 				FetchProfile fp = MessageUtils.createFetchProfile( false, sortField );
 
-				logger.debug( "Start fetching messages..." );
+				log.debug( "Start fetching messages..." );
 				folder.fetch( msgs, fp );
-				logger.debug( "Millis for fetching " + msgs.length + " Messages: "
+				log.debug( "Millis for fetching " + msgs.length + " Messages: "
 						+ (System.currentTimeMillis() - time) );
 
 				if ( searchFields != null && searchFields.length > 0 && searchValues != null && searchValues.length > 0 ) {
-					logger.debug( "Start filtering messages..." );
+					log.debug( "Start filtering messages..." );
 					SearchTerm term = MessageUtils.createSearchTerm( searchFields, searchValues );
 					msgs = folder.search( term );
-					logger.debug( "Millis for filtering " + msgs.length + " Messages: "
+					log.debug( "Millis for filtering " + msgs.length + " Messages: "
 							+ (System.currentTimeMillis() - time) );
 				}
 
 				MessageUtils.sortMessages( msgs, sortField, ascending );
 			}
 			catch (MessagingException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 		}
 
@@ -187,7 +187,7 @@ public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
 			return this.folder.getUnreadMessageCount();
 		}
 		catch (MessagingException ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 			return 0;
 		}
 	}

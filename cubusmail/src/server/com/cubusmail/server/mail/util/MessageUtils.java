@@ -54,7 +54,8 @@ import javax.mail.search.SearchTerm;
 import javax.mail.search.SubjectTerm;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.server.util.CubusConstants;
@@ -66,6 +67,8 @@ import com.sun.mail.imap.IMAPFolder;
  * @author Juergen Schlierf
  */
 public class MessageUtils {
+
+	private static final Log log = LogFactory.getLog( MessageUtils.class.getName() );
 
 	/**
 	 * Type of address string
@@ -87,8 +90,6 @@ public class MessageUtils {
 	};
 
 	public static final int BUFSIZE = 8192; // 8K
-
-	private static Logger log = Logger.getLogger( MessageUtils.class.getName() );
 
 	/**
 	 * @param part

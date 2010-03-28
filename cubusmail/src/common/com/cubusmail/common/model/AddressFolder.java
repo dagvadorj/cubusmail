@@ -34,9 +34,9 @@ public class AddressFolder implements Serializable {
 
 	private Long id;
 
-	private String folderName;
+	private String name;
 
-	private AddressFolderType folderType;
+	private AddressFolderType type;
 
 	private List<Address> addressList;
 
@@ -49,7 +49,7 @@ public class AddressFolder implements Serializable {
 
 	public AddressFolder( AddressFolderType type ) {
 
-		this.folderType = type;
+		this.type = type;
 	}
 
 	/**
@@ -84,18 +84,18 @@ public class AddressFolder implements Serializable {
 	/**
 	 * @return Returns the folderName.
 	 */
-	public String getFolderName() {
+	public String getName() {
 
-		return this.folderName;
+		return this.name;
 	}
 
 	/**
 	 * @param folderName
 	 *            The folderName to set.
 	 */
-	public void setFolderName( String folderName ) {
+	public void setName( String folderName ) {
 
-		this.folderName = folderName;
+		this.name = folderName;
 	}
 
 	/**
@@ -135,17 +135,17 @@ public class AddressFolder implements Serializable {
 	/**
 	 * @return Returns the folderType.
 	 */
-	public AddressFolderType getFolderType() {
+	public AddressFolderType getType() {
 
-		return this.folderType;
+		return this.type;
 	}
 
 	/**
 	 * @param folderType
 	 *            The folderType to set.
 	 */
-	public void setFolderType( AddressFolderType folderType ) {
+	public void setType( AddressFolderType folderType ) {
 
-		this.folderType = folderType;
+		this.type = folderType;
 	}
 }

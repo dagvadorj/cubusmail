@@ -25,7 +25,8 @@ import java.util.Date;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.common.exceptions.GWTAuthenticationException;
 import com.cubusmail.common.exceptions.GWTConnectionException;
@@ -54,7 +55,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class CubusService extends RemoteServiceServlet implements ICubusService {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private static final long serialVersionUID = -3660151485467438601L;
 
@@ -203,12 +204,12 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 		account.addIdentity( defaultIdentity );
 
 		AddressFolder folder = new AddressFolder( AddressFolderType.STANDARD );
-		folder.setFolderName( "Standard" );
+		folder.setName( "Standard" );
 		folder.setUserAccount( account );
 		account.addContactFolder( folder );
 
 		folder = new AddressFolder( AddressFolderType.RECIPIENTS );
-		folder.setFolderName( "Recipients" );
+		folder.setName( "Recipients" );
 		folder.setUserAccount( account );
 		account.addContactFolder( folder );
 

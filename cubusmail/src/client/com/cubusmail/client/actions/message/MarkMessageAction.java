@@ -25,8 +25,8 @@ import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.GWTMessageFlags;
+import com.cubusmail.common.model.ImageProvider;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**

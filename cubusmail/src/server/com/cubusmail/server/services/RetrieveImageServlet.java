@@ -44,15 +44,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
  * Retrieve a thumbnail of an image.
@@ -66,7 +66,7 @@ public class RetrieveImageServlet extends HttpServlet {
 	/**
 	 * Comment for <code>serialVersionUID</code>
 	 */
-	private Logger logger = Logger.getLogger( this.getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -130,7 +130,7 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 	}
 
@@ -186,13 +186,13 @@ public class RetrieveImageServlet extends HttpServlet {
 			encoder.encode( thumbImage );
 		}
 		catch (IOException ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 		catch (InterruptedException ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 		finally {
-			logger.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
+			log.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
 		}
 	}
 
@@ -219,10 +219,10 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 
 		return null;

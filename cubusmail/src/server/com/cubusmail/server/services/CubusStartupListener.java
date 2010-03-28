@@ -25,7 +25,8 @@ import java.net.URL;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -39,7 +40,7 @@ import com.cubusmail.server.util.CubusConstants;
  */
 public class CubusStartupListener implements ServletContextListener {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)

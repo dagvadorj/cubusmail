@@ -26,7 +26,8 @@ import java.util.Date;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.common.model.MessageListFields;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
@@ -38,7 +39,7 @@ import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
  */
 public class MessageComparator implements Comparator<Message> {
 
-	private static Logger log = Logger.getLogger( MessageComparator.class.getName() );
+	private static final Log log = LogFactory.getLog( MessageComparator.class.getName() );
 
 	private MessageListFields field;
 	private boolean ascending;

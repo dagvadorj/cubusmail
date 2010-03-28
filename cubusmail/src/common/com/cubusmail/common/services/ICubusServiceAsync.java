@@ -20,9 +20,8 @@
  */
 package com.cubusmail.common.services;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import com.cubusmail.common.model.GWTMailbox;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * Interface for CubusService.

@@ -100,9 +100,6 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * List)
 	 */
 	public void deleteIdentities( List<Identity> identities ) {
-
-		// TODO Auto-generated method stub
-
 	}
 
 	/*

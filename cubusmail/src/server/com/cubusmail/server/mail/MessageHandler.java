@@ -47,15 +47,16 @@ import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTAttachment;
+import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.Identity;
@@ -77,7 +78,7 @@ import com.sun.mail.imap.IMAPFolder;
  */
 public class MessageHandler implements Serializable, ApplicationContextAware {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private static final String[] PREVIEW_EXTENSIONS = new String[] { "jpg", "gif", "png" };
 

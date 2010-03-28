@@ -22,11 +22,10 @@ package com.cubusmail.common.services;
 
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.RemoteService;
-
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
+import com.google.gwt.user.client.rpc.RemoteService;
 
 /**
  * Interface for UserAccountService.

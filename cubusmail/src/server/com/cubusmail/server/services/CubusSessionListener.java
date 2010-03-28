@@ -23,7 +23,8 @@ package com.cubusmail.server.services;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
@@ -35,7 +36,7 @@ import com.cubusmail.server.mail.SessionManager;
  */
 public class CubusSessionListener implements HttpSessionListener {
 
-	private Logger log = Logger.getLogger( getClass().getName() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
