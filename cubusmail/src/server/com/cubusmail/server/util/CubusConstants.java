@@ -19,17 +19,12 @@
  */
 package com.cubusmail.server.util;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import org.apache.log4j.PropertyConfigurator;
-
 /**
  * Globale constants for cubusmail application.
  * 
  * @author Juergen Schlierf
  */
-public abstract class CubusConstants {
+public interface CubusConstants {
 
 	public static final String APPLICATION_NAME = "Cubusmail";
 	public static final String CUBUS_CONFIG_PROPERTY = "cubus.config";
@@ -53,24 +48,8 @@ public abstract class CubusConstants {
 
 	public static final double MESSAGE_SIZE_FACTOR = 0.74;
 
-	public static final String LOG4J_PROPERTIES = "log4j.properties";
-	
 	// charsetts
 	public static final String DEFAULT_CHARSET = "ISO-8859-1";
 	public static final String US_ASCII = "us-ascii";
-	
 
-	static {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		Properties log4jProperties = new Properties();
-
-		try {
-			log4jProperties.load( classLoader.getResourceAsStream( LOG4J_PROPERTIES ) );
-		}
-		catch ( IOException e ) {
-			e.printStackTrace();
-		}
-
-		PropertyConfigurator.configure( log4jProperties );
-	}
 }
