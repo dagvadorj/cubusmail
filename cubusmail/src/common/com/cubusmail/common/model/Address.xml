@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Address">
+
+	<!-- Use type aliases to avoid typing the full classname every time. -->
+	<typeAlias alias="Address" type="com.cubusmail.common.model.Address" />
+
+	<!--
+		Result maps describe the mapping between the columns returned from a
+		query, and the class properties. A result map isn't necessary if the
+		columns (or aliases) match to the properties exactly.
+	-->
+	<resultMap id="AddressResult" class="Address">
+		<result property="id" column="ID" />
+		<result property="firstName" column="FIRSTNAME" />
+		<result property="middleName" column="MIDDLENAME" />
+		<result property="lastName" column="LASTNAME" />
+		<result property="title" column="TITLE" />
+		<result property="birthDate" column="BIRTHDATE" />
+		<result property="company" column="COMPANY" />
+		<result property="position" column="POSITION" />
+		<result property="department" column="DEPARTMENT" />
+		<result property="email" column="EMAIL" />
+		<result property="email2" column="EMAIL2" />
+		<result property="email3" column="EMAIL3" />
+		<result property="email4" column="EMAIL4" />
+		<result property="email5" column="EMAIL5" />
+		<result property="im" column="IM" />
+		<result property="url" column="URL" />
+		<result property="privatePhone" column="PRIVATEPHONE" />
+		<result property="workPhone" column="WORKPHONE" />
+		<result property="privateMobile" column="PRIVATEMOBILE" />
+		<result property="workMobile" column="WORKMOBILE" />
+		<result property="privateFax" column="PRIVATEFAX" />
+		<result property="workFax" column="WORKFAX" />
+		<result property="pager" column="PAGER" />
+		<result property="privateStreet" column="PRIVATESTREET" />
+		<result property="privateZipcode" column="PRIVATEZIPCODE" />
+		<result property="privateCity" column="PRIVATECITY" />
+		<result property="privateState" column="PRIVATESTATE" />
+		<result property="privateCountry" column="PRIVATECOUNTRY" />
+		<result property="workStreet" column="WORKSTREET" />
+		<result property="workZipcode" column="WORKZIPCODE" />
+		<result property="workCity" column="WORKCITY" />
+		<result property="workState" column="WORKSTATE" />
+		<result property="workCountry" column="WORKCOUNTRY" />
+		<result property="notes" column="NOTES" />
+	</resultMap>
+
+	<!--
+		A simpler select example without the result map. Note the aliases to
+		match the properties of the target result class.
+	-->
+	<select id="selectAddresses" parameterClass="long" 
+		resultClass="Address" resultMap="AddressResult">
+		select * from ADDRESSES where USER_ACCOUNT_ID = #id#
+  	</select>
+
+	<insert id="insertAddress" parameterClass="Address">
+		<selectKey resultClass="long" keyProperty="id">
+			SELECT CUBUSMAIL_SEQ.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into ADDRESSES (
+			ID,
+			DISPLAYNAME,
+			EMAIL,
+			ORGANIZATION,
+			REPLY_TO,
+			BCC,
+			SIGNATURE,
+			HTML_SIGNATURE,
+			STANDARD,
+			USER_ACCOUNT_ID)
+		values
+			(#id#, #displayName#, #email#, #organization#, #replyTo#,
+			#bcc#, #signature#, #htmlSignature#, #standard#, #userAccount.id#)
+	</insert>
+
+	<insert id="updateAddress" parameterClass="Address">
+		update IDENTITIES set
+			DISPLAYNAME = #displayName#,
+			EMAIL = #email#,
+			ORGANIZATION = #organization#,
+			REPLY_TO = #replyTo#,
+			BCC = #bcc#,
+			SIGNATURE = #signature#,
+			HTML_SIGNATURE = #htmlSignature#,
+			STANDARD = #standard#
+		where
+			ID = #id#
+	</insert>
+
+	<delete id="deleteIdentities">
+		delete from IDENTITIES where ID IN (
+			<iterate conjunction=",">#[]#</iterate>
+		)
+	</delete>
+</sqlMap>

@@ -44,7 +44,7 @@ import org.springframework.web.util.HtmlUtils;
 import com.cubusmail.common.exceptions.GWTInvalidSessionException;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.ContactListFields;
+import com.cubusmail.common.model.AddressListFields;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.common.services.IUserAccountService;
@@ -222,13 +222,13 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 			if ( !StringUtils.isEmpty( sortField ) ) {
 				boolean ascending = "ASC".equals( sortDirection );
 				String fieldName = null;
-				if ( sortField.equals( ContactListFields.DISPLAY_NAME.name() ) ) {
+				if ( sortField.equals( AddressListFields.DISPLAY_NAME.name() ) ) {
 					fieldName = "displayName";
 				}
-				else if ( sortField.equals( ContactListFields.EMAIL.name() ) ) {
+				else if ( sortField.equals( AddressListFields.EMAIL.name() ) ) {
 					fieldName = "email";
 				}
-				else if ( sortField.equals( ContactListFields.COMPANY.name() ) ) {
+				else if ( sortField.equals( AddressListFields.COMPANY.name() ) ) {
 					fieldName = "company";
 				}
 				Comparator comparator = null;
@@ -241,13 +241,13 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 				Collections.sort( contactList, comparator );
 			}
 
-			String[][] array = new String[contactList.size()][ContactListFields.values().length];
+			String[][] array = new String[contactList.size()][AddressListFields.values().length];
 			for (int i = 0; i < contactList.size(); i++) {
-				array[i][ContactListFields.ID.ordinal()] = Long.toString( contactList.get( i ).getId() );
-				array[i][ContactListFields.DISPLAY_NAME.ordinal()] = contactList.get( i ).getDisplayName();
-				array[i][ContactListFields.EMAIL.ordinal()] = contactList.get( i ).getEmail();
-				array[i][ContactListFields.COMPANY.ordinal()] = contactList.get( i ).getCompany();
-				array[i][ContactListFields.INTERNET_ADDRESS.ordinal()] = MessageUtils.toInternetAddress( contactList
+				array[i][AddressListFields.ID.ordinal()] = Long.toString( contactList.get( i ).getId() );
+				array[i][AddressListFields.DISPLAY_NAME.ordinal()] = contactList.get( i ).getDisplayName();
+				array[i][AddressListFields.EMAIL.ordinal()] = contactList.get( i ).getEmail();
+				array[i][AddressListFields.COMPANY.ordinal()] = contactList.get( i ).getCompany();
+				array[i][AddressListFields.INTERNET_ADDRESS.ordinal()] = MessageUtils.toInternetAddress( contactList
 						.get( i ).getEmail(), contactList.get( i ).getDisplayName() );
 			}
 

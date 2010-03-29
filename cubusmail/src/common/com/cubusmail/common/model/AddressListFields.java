@@ -1,4 +1,4 @@
-/* ContactListFields.java
+/* AddressListFields.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -25,7 +25,7 @@ package com.cubusmail.common.model;
  * 
  * @author Juergen Schlierf
  */
-public enum ContactListFields {
+public enum AddressListFields {
 
 	ID, DISPLAY_NAME, EMAIL, COMPANY, INTERNET_ADDRESS
 }

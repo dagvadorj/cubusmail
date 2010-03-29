@@ -53,6 +53,7 @@ import com.ibatis.common.resources.Resources;
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml",
 		"classpath*:com/cubusmail/server/user/testDBContext.xml",
 		"classpath*:com/cubusmail/server/user/testUserAcountContext.xml" })
+@SuppressWarnings("unchecked")
 public class UserAccountDaoTest implements ApplicationContextAware {
 
 	private final Log logger = LogFactory.getLog( getClass() );
