@@ -37,7 +37,7 @@ public class GWTExceptionHandler {
 	public static void handleException( Throwable e ) {
 
 		GWT.log( e.getMessage(), e );
-		// Log.error( e.getMessage(), e );
+		// logger.error( e.getMessage(), e );
 		if ( e instanceof GWTInvalidSessionException ) {
 			SC.warn( TextProvider.get().exception_invalid_session(), new BooleanCallback() {
 

@@ -38,7 +38,7 @@
 		<property name="readingPane" value="0" />
 	</bean>
 	
-	<util:list id="testIdentities">
+	<util:list id="testIdentities" scope="prototype">
 		<bean class="com.cubusmail.common.model.Identity">
 			<property name="standard" value="true"/>
 			<property name="displayName" value="Testname"/>
@@ -72,4 +72,20 @@
 			<property name="signature" value="Good bye4"/>
 		</bean>
 	</util:list>
+	
+	
+	<util:list id="testAddressFolders" scope="prototype">
+		<bean class="com.cubusmail.common.model.AddressFolder">
+			<property name="name" value="Addressfolder 1"/>
+			<property name="typeValue" value="0" />
+		</bean>
+		<bean class="com.cubusmail.common.model.AddressFolder">
+			<property name="name" value="Addressfolder 2"/>
+			<property name="typeValue" value="0" />
+		</bean>
+		<bean class="com.cubusmail.common.model.AddressFolder">
+			<property name="name" value="Addressfolder 3"/>
+			<property name="typeValue" value="0" />
+		</bean>
+	</util:list>	
 </beans>

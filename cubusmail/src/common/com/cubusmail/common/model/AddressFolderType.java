@@ -42,4 +42,15 @@ public enum AddressFolderType {
 
 		return this.type;
 	}
+
+	public static final AddressFolderType valueOf( int typeValue ) {
+
+		for (AddressFolderType folderType : values()) {
+			if ( folderType.getType() == typeValue ) {
+				return folderType;
+			}
+		}
+
+		return null;
+	}
 }

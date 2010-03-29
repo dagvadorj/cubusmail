@@ -69,7 +69,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 
 	private static final long serialVersionUID = 3680152258110434790L;
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	public UserAccountService() {
 
@@ -98,7 +98,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 				return super.processCall( payload );
 			}
 			catch (SerializationException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw e;
 			}
 		}
@@ -126,9 +126,9 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 				account.removeIdentity( identity );
 			}
 		}
-		if ( identitiesToDelete.size() > 0 ) {
-			getUserAccountDao().deleteIdentities( identitiesToDelete );
-		}
+//		if ( identitiesToDelete.size() > 0 ) {
+//			getUserAccountDao().deleteIdentities( identitiesToDelete );
+//		}
 		getUserAccountDao().saveUserAccount( account );
 		SessionManager.get().setUserAccount( account );
 
@@ -158,7 +158,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	public List<AddressFolder> retrieveContactFolders() {
 
 		UserAccount account = SessionManager.get().getUserAccount();
-		return getUserAccountDao().retrieveContactFolders( account );
+		return getUserAccountDao().retrieveAddressFolders( account );
 	}
 
 	/*
@@ -175,7 +175,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
-		getUserAccountDao().saveContactFolder( folder );
+		getUserAccountDao().saveAddressFolder( folder );
 
 		return folder;
 	}
@@ -191,7 +191,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
-		getUserAccountDao().saveContactFolder( folder );
+		getUserAccountDao().saveAddressFolder( folder );
 	}
 
 	/*
@@ -203,7 +203,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 */
 	public void deleteContactFolder( AddressFolder folder ) {
 
-		getUserAccountDao().deleteContactFolder( folder );
+		// getUserAccountDao().deleteAddressFolders( folder );
 	}
 
 	/*
@@ -322,7 +322,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 		}
 		catch (MessagingException e) {
 			// should never happen
-			log.error( e.getMessage() );
+			logger.error( e.getMessage() );
 		}
 
 		return result;

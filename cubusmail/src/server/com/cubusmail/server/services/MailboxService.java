@@ -76,7 +76,7 @@ import com.sun.mail.imap.IMAPFolder;
  */
 public class MailboxService extends RemoteServiceServlet implements IMailboxService {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	private static final long serialVersionUID = 6489103982844626238L;
 
@@ -101,7 +101,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				return super.processCall( payload );
 			}
 			catch (SerializationException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw e;
 			}
 		}
@@ -126,12 +126,12 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			mailbox.reloadFolder();
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		GWTMailFolder[] result = ConvertUtil.convert( mailbox.getMailFolderList() );
 
-		log.debug( "Time for retrieveFolderTree(): " + (System.currentTimeMillis() - millis) + "ms" );
+		logger.debug( "Time for retrieveFolderTree(): " + (System.currentTimeMillis() - millis) + "ms" );
 
 		return result;
 	}
@@ -146,17 +146,17 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMailFolder createFolder( String parentFolderId, String folderName ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "creating folder... " + folderName );
+		logger.debug( "creating folder... " + folderName );
 
 		IMailFolder newFolder;
 		try {
 			newFolder = mailbox.createFolder( parentFolderId, folderName );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 
 			return ConvertUtil.convert( newFolder, true );
 		}
 		catch (MailFolderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, folderName );
 			}
@@ -176,17 +176,17 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMailFolder moveFolder( String sourceFolderId, String targetFolderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "moving folder... " + sourceFolderId );
+		logger.debug( "moving folder... " + sourceFolderId );
 
 		IMailFolder sourceFolder = mailbox.getMailFolderById( sourceFolderId );
 		try {
 			IMailFolder folder = mailbox.moveFolder( sourceFolderId, targetFolderId );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 
 			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, sourceFolder.getName() );
 			}
@@ -206,16 +206,16 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMailFolder renameFolder( String folderId, String newName ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "renaming folder... " + folderId );
+		logger.debug( "renaming folder... " + folderId );
 
 		try {
 			IMailFolder folder = mailbox.renameFolder( folderId, newName );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 
 			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, e.getFolder().getName() );
 			}
@@ -235,14 +235,14 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public void deleteFolder( String folderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "deleting folder " + folderId );
+		logger.debug( "deleting folder " + folderId );
 
 		try {
 			mailbox.deleteFolder( folderId );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 		}
 		catch (MailFolderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMailFolderException( null, e.getFolder().getName() );
 		}
 	}
@@ -257,14 +257,14 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public void emptyFolder( String folderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "emptying folder " + folderId );
+		logger.debug( "emptying folder " + folderId );
 
 		try {
 			mailbox.emptyFolder( folderId );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 		}
 		catch (MailFolderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMailFolderException( null, e.getFolder().getName() );
 		}
 	}
@@ -282,7 +282,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 		if ( folderId != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			UserAccount account = SessionManager.get().getUserAccount();
-			log.debug( "retrieving messages from " + folderId + " ..." );
+			logger.debug( "retrieving messages from " + folderId + " ..." );
 
 			try {
 				IMailFolder currentFolder = mailbox.getMailFolderById( folderId );
@@ -320,7 +320,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				return null;
 			}
 			catch (MessagingException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -338,7 +338,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMessage retrieveMessage( String folderId, long messageId, boolean loadImages ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "retrieving message for " + messageId + " ..." );
+		logger.debug( "retrieving message for " + messageId + " ..." );
 
 		try {
 			IMailFolder selectedFolder = mailbox.getCurrentFolder();
@@ -351,11 +351,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			return result;
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -397,7 +397,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		if ( messageIds != null && messageIds.length > 0 ) {
-			log.debug( "marking " + messageIds.length + " messages..." );
+			logger.debug( "marking " + messageIds.length + " messages..." );
 
 			try {
 				IMailFolder currentFolder = mailbox.getCurrentFolder();
@@ -420,10 +420,10 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 						throw new IllegalArgumentException( "Unknown flag: " + flag );
 					}
 				}
-				log.debug( "...successful" );
+				logger.debug( "...successful" );
 			}
 			catch (MessagingException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -441,18 +441,18 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 		IMailbox mailbox = SessionManager.get().getMailbox();
 
 		if ( messageIds != null && messageIds.length > 0 ) {
-			log.debug( "copy/move " + messageIds.length + " messages..." );
+			logger.debug( "copy/move " + messageIds.length + " messages..." );
 
 			try {
 				mailbox.copyMessages( messageIds, targetFolderId );
-				log.debug( "...successful" );
+				logger.debug( "...successful" );
 
 				if ( toMove ) {
 					mailbox.deleteMessages( messageIds );
 				}
 			}
 			catch (MessagingException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -470,7 +470,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 		IMailbox mailbox = SessionManager.get().getMailbox();
 
 		if ( messageIds != null && messageIds.length > 0 ) {
-			log.debug( "delete " + messageIds.length + " messages..." );
+			logger.debug( "delete " + messageIds.length + " messages..." );
 
 			try {
 				if ( mailbox.getCurrentFolder().isTrash() || mailbox.getTrashFolder() == null ) {
@@ -481,7 +481,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				}
 			}
 			catch (MessagingException e) {
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -497,14 +497,14 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public void sendMessage( GWTMessage message ) throws Exception {
 
 		try {
-			log.debug( "sending message..." );
+			logger.debug( "sending message..." );
 			MessageHandler messageHandler = SessionManager.get().getCurrentComposeMessage();
 			messageHandler.setGWTMessage( message );
 			messageHandler.send();
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			IMailFolder sentFolder = mailbox.getSentFolder();
 			messageHandler.saveToFolder( sentFolder, false );
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 
 			try {
 				getUserAccountDao().saveRecipients( SessionManager.get().getUserAccount(),
@@ -512,22 +512,22 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			}
 			catch (Throwable e) {
 				// catch all exceptions
-				log.error( e.getMessage(), e );
+				logger.error( e.getMessage(), e );
 			}
 		}
 		catch (AddressException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTInvalidAddressException( e.getMessage(), e.getRef() );
 		}
 		catch (SendFailedException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			if ( "Invalid Addresses".equals( e.getMessage() ) ) {
 				String address = "";
 				try {
 					address = MessageUtils.getMailAdressString( e.getInvalidAddresses(), AddressStringType.PERSONAL );
 				}
 				catch (MessagingException ex) {
-					log.error( ex.getMessage(), ex );
+					logger.error( ex.getMessage(), ex );
 				}
 				throw new GWTInvalidAddressException( e.getMessage(), address );
 			}
@@ -536,11 +536,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			}
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -553,7 +553,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 */
 	public void prepareNewMessage() {
 
-		log.debug( "preparing new compose message..." );
+		logger.debug( "preparing new compose message..." );
 		MessageHandler newMessageHandler = MessageHandler.getInstance( SessionManager.get().getMailbox()
 				.getJavaMailSession() );
 		SessionManager.get().setCurrentComposeMessage( newMessageHandler );
@@ -569,7 +569,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMessage prepareReplyMessage( long messageId, boolean replyAll ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "preparing reply message..." );
+		logger.debug( "preparing reply message..." );
 
 		try {
 			IMailFolder currentFolder = mailbox.getCurrentFolder();
@@ -583,11 +583,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			return replyMessageHandler.getGWTMessage();
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -597,7 +597,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 */
 	public void cancelComposeMessage() {
 
-		log.debug( "remove compose message from session..." );
+		logger.debug( "remove compose message from session..." );
 		SessionManager.get().setCurrentComposeMessage( null );
 	}
 
@@ -611,7 +611,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMessage openDraftMessage( long messageId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "open message for " + messageId + " ..." );
+		logger.debug( "open message for " + messageId + " ..." );
 
 		try {
 			IMailFolder selectedFolder = mailbox.getCurrentFolder();
@@ -626,11 +626,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			return result;
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -645,7 +645,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public GWTMessage prepareForwardMessage( long messageId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		log.debug( "preparing forward message..." );
+		logger.debug( "preparing forward message..." );
 
 		try {
 			IMailFolder currentFolder = mailbox.getCurrentFolder();
@@ -662,11 +662,11 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 			return result;
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -679,7 +679,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 */
 	public GWTAttachment[] retrieveCurrentComposeMessageAttachments() throws Exception {
 
-		log.debug( "retrieving compose message..." );
+		logger.debug( "retrieving compose message..." );
 		MessageHandler composeMessage = SessionManager.get().getCurrentComposeMessage();
 		return composeMessage.getGWTComposeAttachments();
 	}
@@ -692,7 +692,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 */
 	public GWTAttachment[] removeAttachmentFromComposeMessage( int index ) throws Exception {
 
-		log.debug( "removing attachment from compose message..." );
+		logger.debug( "removing attachment from compose message..." );
 		MessageHandler composeMessage = SessionManager.get().getCurrentComposeMessage();
 		if ( composeMessage.getComposeAttachments() != null && composeMessage.getComposeAttachments().size() > 0 ) {
 			composeMessage.getComposeAttachments().remove( index );
@@ -711,7 +711,7 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	public void saveMessageAsDraft( GWTMessage message ) throws Exception {
 
 		try {
-			log.debug( "saving message to draft..." );
+			logger.debug( "saving message to draft..." );
 			MessageHandler messageHandler = SessionManager.get().getCurrentComposeMessage();
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			IMailFolder draftFolder = mailbox.getDraftFolder();
@@ -723,18 +723,18 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 				long[] deleteId = new long[] { message.getId() };
 				deleteMessages( deleteId );
 			}
-			log.debug( "...successful" );
+			logger.debug( "...successful" );
 		}
 		catch (AddressException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTInvalidAddressException( e.getMessage(), e.getRef() );
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}

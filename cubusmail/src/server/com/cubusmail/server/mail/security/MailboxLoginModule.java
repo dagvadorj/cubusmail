@@ -48,7 +48,7 @@ import com.cubusmail.server.mail.exceptions.IErrorCodes;
  */
 public class MailboxLoginModule implements LoginModule {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	// initial state
 	private Subject subject;
@@ -83,7 +83,7 @@ public class MailboxLoginModule implements LoginModule {
 	public boolean login() throws LoginException {
 
 		if ( this.callbackHandler == null ) {
-			log.fatal( "callbackHandler is null" );
+			logger.fatal( "callbackHandler is null" );
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
 		}
 
@@ -110,23 +110,23 @@ public class MailboxLoginModule implements LoginModule {
 			IMailbox mailbox = MailboxFactory.get().createMailbox( IMailbox.TYPE_IMAP );
 			mailbox.init( username, new String( password ) );
 
-			log.debug( "Start login..." );
+			logger.debug( "Start login..." );
 			mailbox.login();
-			log.debug( "Login successful" );
+			logger.debug( "Login successful" );
 
 			this.mailboxPrincipal = new MailboxPrincipal( username, mailbox );
 			this.succeeded = true;
 		}
 		catch (IOException ioe) {
-			log.error( ioe.getMessage(), ioe );
+			logger.error( ioe.getMessage(), ioe );
 			throw new LoginException( ioe.toString() );
 		}
 		catch (UnsupportedCallbackException uce) {
-			log.error( uce.getMessage(), uce );
+			logger.error( uce.getMessage(), uce );
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			mapMessagingException( e );
 		}
 
@@ -188,15 +188,15 @@ public class MailboxLoginModule implements LoginModule {
 	 */
 	public boolean logout() throws LoginException {
 
-		log.debug( "Start logout..." );
+		logger.debug( "Start logout..." );
 		try {
 			SecurityUtils.getMailboxPrincipal( this.subject ).getMailbox().logout();
 		}
 		catch (MessagingException e) {
 			// nothing to do
-			log.warn( e.getMessage() );
+			logger.warn( e.getMessage() );
 		}
-		log.debug( "Logout successful" );
+		logger.debug( "Logout successful" );
 
 		this.subject.getPrincipals().remove( SecurityUtils.getMailboxPrincipal( this.subject ) );
 

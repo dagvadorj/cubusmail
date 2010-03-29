@@ -68,7 +68,7 @@ import com.sun.mail.imap.IMAPFolder;
  */
 public class MessageUtils {
 
-	private static final Log log = LogFactory.getLog( MessageUtils.class.getName() );
+	private static final Log logger = LogFactory.getLog( MessageUtils.class.getName() );
 
 	/**
 	 * Type of address string
@@ -146,7 +146,7 @@ public class MessageUtils {
 							address.setPersonal( personal, charset );
 						}
 						catch (UnsupportedEncodingException e) {
-							log.error( e.getMessage(), e );
+							logger.error( e.getMessage(), e );
 						}
 					}
 				}
@@ -305,7 +305,7 @@ public class MessageUtils {
 			}
 		}
 		catch (Exception e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return false;
@@ -443,7 +443,7 @@ public class MessageUtils {
 			}
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return prio;

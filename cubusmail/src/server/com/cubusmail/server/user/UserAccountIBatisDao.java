@@ -19,6 +19,7 @@
  */
 package com.cubusmail.server.user;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
@@ -37,8 +38,6 @@ import com.cubusmail.common.model.UserAccount;
  */
 class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccountDao {
 
-	// private Logger log = Logger.getLogger( this.getClass() );
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,10 +45,11 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#deleteContactFolder(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public void deleteContactFolder( AddressFolder folder ) {
+	public void deleteAddressFolders( List<Long> ids ) {
 
-		// TODO Auto-generated method stub
-
+		if ( ids != null && ids.size() > 0 ) {
+			getSqlMapClientTemplate().delete( "deleteAddressFolders", ids );
+		}
 	}
 
 	/*
@@ -74,21 +74,16 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 */
 	public void saveIdentities( UserAccount account ) {
 
-		try {
-			if ( account != null && account.getIdentities() != null ) {
-				for (Identity identity : account.getIdentities()) {
-					if ( identity.getId() == null ) {
-						Long id = (Long) getSqlMapClientTemplate().insert( "insertIdentity", identity );
-						identity.setId( id );
-					}
-					else {
-						getSqlMapClientTemplate().update( "insertIdentity", identity );
-					}
+		if ( account != null && account.getIdentities() != null ) {
+			for (Identity identity : account.getIdentities()) {
+				if ( identity.getId() == null ) {
+					Long id = (Long) getSqlMapClientTemplate().insert( "insertIdentity", identity );
+					identity.setId( id );
+				}
+				else {
+					getSqlMapClientTemplate().update( "insertIdentity", identity );
 				}
 			}
-		}
-		catch (Exception e) {
-			logger.error( e.getMessage(), e );
 		}
 	}
 
@@ -99,7 +94,11 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#deleteIdentities(java.util.
 	 * List)
 	 */
-	public void deleteIdentities( List<Identity> identities ) {
+	public void deleteIdentities( List<Long> ids ) throws SQLException {
+
+		if ( ids != null && ids.size() > 0 ) {
+			getSqlMapClientTemplate().delete( "deleteIdentities", ids );
+		}
 	}
 
 	/*
@@ -124,23 +123,17 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	@SuppressWarnings("unchecked")
 	public UserAccount getUserAccountByUsername( String username ) {
 
-		try {
-			UserAccount account = (UserAccount) getSqlMapClientTemplate().queryForObject(
-					"selectUserAccountByUsername", username );
-			if ( account != null ) {
-				List<Identity> identities = (List<Identity>) getSqlMapClientTemplate().queryForList(
-						"selectIdentities", account.getId() );
-				if ( identities != null ) {
-					account.setIdentities( identities );
-				}
+		UserAccount account = (UserAccount) getSqlMapClientTemplate().queryForObject( "selectUserAccountByUsername",
+				username );
+		if ( account != null ) {
+			List<Identity> identities = (List<Identity>) getSqlMapClientTemplate().queryForList( "selectIdentities",
+					account.getId() );
+			if ( identities != null ) {
+				account.setIdentities( identities );
 			}
+		}
 
-			return account;
-		}
-		catch (Exception e) {
-			logger.error( e.getMessage(), e );
-		}
-		return null;
+		return account;
 	}
 
 	/*
@@ -163,10 +156,10 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactFolders(com.
 	 * cubusmail.common.model.UserAccount)
 	 */
-	public List<AddressFolder> retrieveContactFolders( UserAccount account ) {
+	public List<AddressFolder> retrieveAddressFolders( UserAccount account ) {
 
-		// TODO Auto-generated method stub
-		return null;
+		List<AddressFolder> result = getSqlMapClientTemplate().queryForList( "selectAddressFolders", account.getId() );
+		return result;
 	}
 
 	/*
@@ -215,10 +208,17 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#saveContactFolder(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public Long saveContactFolder( AddressFolder folder ) {
+	public Long saveAddressFolder( AddressFolder folder ) {
 
-		// TODO Auto-generated method stub
-		return null;
+		if ( folder.getId() == null ) {
+			Long id = (Long) getSqlMapClientTemplate().insert( "insertAddressFolder", folder );
+			folder.setId( id );
+			return id;
+		}
+		else {
+			getSqlMapClientTemplate().update( "updateAddressFolder", folder );
+			return folder.getId();
+		}
 	}
 
 	/*
@@ -243,20 +243,14 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 */
 	public Long saveUserAccount( UserAccount account ) {
 
-		try {
-			if ( account.getId() == null ) {
-				Long id = (Long) getSqlMapClientTemplate().insert( "insertUserAccount", account );
-				account.setId( id );
-				return id;
-			}
-			else {
-				getSqlMapClientTemplate().update( "updateUserAccount", account );
-				return account.getId();
-			}
+		if ( account.getId() == null ) {
+			Long id = (Long) getSqlMapClientTemplate().insert( "insertUserAccount", account );
+			account.setId( id );
+			return id;
 		}
-		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+		else {
+			getSqlMapClientTemplate().update( "updateUserAccount", account );
+			return account.getId();
 		}
-		return null;
 	}
 }

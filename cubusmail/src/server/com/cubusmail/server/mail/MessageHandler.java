@@ -78,7 +78,7 @@ import com.sun.mail.imap.IMAPFolder;
  */
 public class MessageHandler implements Serializable, ApplicationContextAware {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	private static final String[] PREVIEW_EXTENSIONS = new String[] { "jpg", "gif", "png" };
 
@@ -161,7 +161,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 			}
 		}
 		catch (MessagingException e) {
-			log.warn( e.getMessage() );
+			logger.warn( e.getMessage() );
 		}
 	}
 
@@ -179,7 +179,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 				sub = MimeUtility.decodeText( sub );
 			}
 			catch (UnsupportedEncodingException e) {
-				log.error( e.getMessage() );
+				logger.error( e.getMessage() );
 			}
 			return sub;
 		}
@@ -196,7 +196,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 			this.message.setSubject( MimeUtility.encodeText( subject, this.charset, subjectEncoding ), this.charset );
 		}
 		catch (UnsupportedEncodingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			this.message.setSubject( subject );
 		}
 	}

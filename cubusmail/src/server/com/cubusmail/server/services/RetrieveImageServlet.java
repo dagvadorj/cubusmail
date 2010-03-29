@@ -66,7 +66,7 @@ public class RetrieveImageServlet extends HttpServlet {
 	/**
 	 * Comment for <code>serialVersionUID</code>
 	 */
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -130,7 +130,7 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			log.error( ex.getMessage(), ex );
+			logger.error( ex.getMessage(), ex );
 		}
 	}
 
@@ -186,13 +186,13 @@ public class RetrieveImageServlet extends HttpServlet {
 			encoder.encode( thumbImage );
 		}
 		catch (IOException ex) {
-			log.error( ex.getMessage(), ex );
+			logger.error( ex.getMessage(), ex );
 		}
 		catch (InterruptedException ex) {
-			log.error( ex.getMessage(), ex );
+			logger.error( ex.getMessage(), ex );
 		}
 		finally {
-			log.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
+			logger.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
 		}
 	}
 
@@ -219,10 +219,10 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (MessagingException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return null;

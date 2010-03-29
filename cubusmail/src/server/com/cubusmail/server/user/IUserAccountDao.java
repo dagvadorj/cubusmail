@@ -20,22 +20,21 @@
  */
 package com.cubusmail.server.user;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
 
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
 
 /**
  * TODO: documentation
- *
+ * 
  * @author Juergen Schlierf
  */
 public interface IUserAccountDao {
-
 
 	/**
 	 * @param name
@@ -54,27 +53,27 @@ public interface IUserAccountDao {
 	 * @param account
 	 */
 	public void saveIdentities( UserAccount account );
-	
+
 	/**
 	 * @param identities
 	 */
-	public abstract void deleteIdentities( List<Identity> identities );
+	public void deleteIdentities( List<Long> ids ) throws SQLException;
 
 	/**
 	 * @param account
 	 * @return
 	 */
-	public abstract List<AddressFolder> retrieveContactFolders( UserAccount account );
+	public abstract List<AddressFolder> retrieveAddressFolders( UserAccount account );
 
 	/**
 	 * @param folder
 	 */
-	public abstract Long saveContactFolder( AddressFolder folder );
+	public abstract Long saveAddressFolder( AddressFolder folder );
 
 	/**
 	 * @param folder
 	 */
-	public abstract void deleteContactFolder( AddressFolder folder );
+	public abstract void deleteAddressFolders( List<Long> ids );
 
 	/**
 	 * @param folder
@@ -111,7 +110,6 @@ public interface IUserAccountDao {
 	 * @return
 	 */
 	public abstract Address getContactById( Long id );
-
 
 	/**
 	 * @param addresses

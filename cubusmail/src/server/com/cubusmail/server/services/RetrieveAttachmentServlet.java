@@ -50,7 +50,7 @@ import com.cubusmail.server.mail.util.MessageUtils;
  */
 public class RetrieveAttachmentServlet extends HttpServlet {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	/**
 	 * 
@@ -127,7 +127,7 @@ public class RetrieveAttachmentServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			log.error( ex.getMessage(), ex );
+			logger.error( ex.getMessage(), ex );
 		}
 	}
 }

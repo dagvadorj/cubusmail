@@ -59,7 +59,7 @@ import com.sun.mail.imap.Rights.Right;
 @SuppressWarnings("serial")
 public class IMAPMailbox implements IMailbox {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	// Javamail session
 	private Session session;
@@ -175,7 +175,7 @@ public class IMAPMailbox implements IMailbox {
 			}
 		}
 		catch (Exception e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 	}
 
@@ -446,7 +446,7 @@ public class IMAPMailbox implements IMailbox {
 
 			Folder newFolder = this.store.getFolder( newFolderName );
 			if ( !newFolder.exists() ) {
-				log.debug( "Creating folder... " + newFolderName );
+				logger.debug( "Creating folder... " + newFolderName );
 				boolean success = newFolder.create( Folder.HOLDS_MESSAGES );
 				if ( !success ) {
 					throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_CREATE, null );
@@ -585,7 +585,7 @@ public class IMAPMailbox implements IMailbox {
 			store = (IMAPStore) session.getStore();
 		}
 		catch (NoSuchProviderException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return store;
@@ -596,7 +596,7 @@ public class IMAPMailbox implements IMailbox {
 	 */
 	private void loadMailFolder() throws MessagingException {
 
-		log.debug( "loading folder tree..." );
+		logger.debug( "loading folder tree..." );
 		long millis = System.currentTimeMillis();
 		this.mailFolderMap.clear();
 		this.mailFolderList.clear();
@@ -634,7 +634,7 @@ public class IMAPMailbox implements IMailbox {
 			}
 		}
 
-		log.debug( "...finish: " + (System.currentTimeMillis() - millis) + "ms" );
+		logger.debug( "...finish: " + (System.currentTimeMillis() - millis) + "ms" );
 	}
 
 	/**

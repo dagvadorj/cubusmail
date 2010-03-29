@@ -34,13 +34,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Encrypt und decrypt and passwords for mailboxes. 
+ * Encrypt und decrypt and passwords for mailboxes.
  * 
  * @author Juergen Schlierf
  */
 public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	private String algorithm;
 
@@ -52,16 +52,12 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 	public void init() {
 
 		try {
-			if ( log.isDebugEnabled() ) {
-				log.debug( "Create instance of KeyPair..." );
-			}
+			logger.debug( "Create instance of KeyPair..." );
 			this.keyPair = KeyPairGenerator.getInstance( this.algorithm ).generateKeyPair();
-			if ( log.isDebugEnabled() ) {
-				log.debug( "...finish" );
-			}
+			logger.debug( "...finish" );
 		}
-		catch ( NoSuchAlgorithmException e ) {
-			log.error( e.getMessage(), e );
+		catch (NoSuchAlgorithmException e) {
+			logger.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}
@@ -77,9 +73,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
 		Cipher cipher;
 		try {
-			if ( log.isDebugEnabled() ) {
-				log.debug( "encrypt..." );
-			}
+			logger.debug( "encrypt..." );
 			cipher = Cipher.getInstance( this.algorithm );
 			cipher.init( Cipher.ENCRYPT_MODE, this.keyPair.getPublic() );
 
@@ -90,14 +84,12 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			cos.flush();
 			cos.close();
 
-			if ( log.isDebugEnabled() ) {
-				log.debug( "...finish" );
-			}
-			
+			logger.debug( "...finish" );
+
 			return baosEncryptedData.toByteArray();
 		}
-		catch ( Exception e ) {
-			log.error( e.getMessage(), e );
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}
@@ -113,9 +105,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
 		Cipher cipher;
 		try {
-			if ( log.isDebugEnabled() ) {
-				log.debug( "decrypt..." );
-			}
+			logger.debug( "decrypt..." );
 			cipher = Cipher.getInstance( this.algorithm );
 			cipher.init( Cipher.DECRYPT_MODE, this.keyPair.getPrivate() );
 
@@ -123,26 +113,25 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			ByteArrayOutputStream baosDecryptedData = new ByteArrayOutputStream();
 			byte[] buffer = new byte[8192];
 			int len = 0;
-			while ( (len = cis.read( buffer )) > 0 ) {
+			while ((len = cis.read( buffer )) > 0) {
 				baosDecryptedData.write( buffer, 0, len );
 			}
 			baosDecryptedData.flush();
 			cis.close();
 
-			if ( log.isDebugEnabled() ) {
-				log.debug( "...finish" );
-			}
+			logger.debug( "...finish" );
 
 			return new String( baosDecryptedData.toByteArray() );
 		}
-		catch ( Exception e ) {
-			log.error( e.getMessage(), e );
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}
 
 	/**
-	 * @param keyPair The keyPair to set.
+	 * @param keyPair
+	 *            The keyPair to set.
 	 */
 	public void setKeyPair( KeyPair keyPair ) {
 
@@ -150,7 +139,8 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 	}
 
 	/**
-	 * @param algorithm The algorithm to set.
+	 * @param algorithm
+	 *            The algorithm to set.
 	 */
 	public void setAlgorithm( String algorithm ) {
 

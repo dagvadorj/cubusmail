@@ -30,7 +30,7 @@
 <!--	</bean>-->
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
-		destroy-method="close">
+		destroy-method="destroy">
 		<property name="driverClassName" value="org.h2.Driver" />
 		<property name="url" value="jdbc:h2:mem:cubusmailtest" />
 		<property name="username" value="sa" />

@@ -28,7 +28,7 @@
 		match the properties of the target result class.
 	-->
 	<select id="selectUserAccountByUsername" parameterClass="String"
-		resultClass="UserAccount">
+		resultClass="UserAccount" resultMap="UserAccountResult">
 		select ID, USERNAME, CREATED, LASTLOGIN, PREFERENCES from USERS where USERNAME like #username#
   	</select>
 

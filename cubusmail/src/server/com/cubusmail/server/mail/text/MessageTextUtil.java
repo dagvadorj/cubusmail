@@ -55,7 +55,7 @@ import com.cubusmail.server.util.CubusConstants;
  */
 public class MessageTextUtil {
 
-	private static final Log log = LogFactory.getLog( MessageTextUtil.class.getName() );
+	private static final Log logger = LogFactory.getLog( MessageTextUtil.class.getName() );
 
 	private static final CleanerProperties CLEANER_PROPERTIES = new CleanerProperties();
 	static {
@@ -90,7 +90,7 @@ public class MessageTextUtil {
 	public static void messageTextFromPart( Part part, MessageHandler messageHandler, boolean loadImages,
 			MessageTextMode mode, Preferences preferences, int level ) throws MessagingException, IOException {
 
-		log.debug( "Content type of part: " + part.getContentType() );
+		logger.debug( "Content type of part: " + part.getContentType() );
 
 		if ( mode == MessageTextMode.DISPLAY || mode == MessageTextMode.DRAFT ) {
 			if ( MessageUtils.isImagepart( part ) ) {
@@ -222,7 +222,7 @@ public class MessageTextUtil {
 			result = cleaner.getInnerHtml( rootNode );
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return result;
@@ -263,7 +263,7 @@ public class MessageTextUtil {
 			return rootNode.getText().toString();
 		}
 		catch (IOException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 
 		return "";
@@ -305,10 +305,10 @@ public class MessageTextUtil {
 			return sb.toString();
 		}
 		catch (final Exception e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 		catch (final StackOverflowError error) {
-			log.error( StackOverflowError.class.getName(), error );
+			logger.error( StackOverflowError.class.getName(), error );
 		}
 
 		return plainText;
@@ -407,7 +407,7 @@ public class MessageTextUtil {
 				return readStream( inStream, charset );
 			}
 			catch (final IOException e1) {
-				log.error( e1.getLocalizedMessage(), e1 );
+				logger.error( e1.getLocalizedMessage(), e1 );
 				return e1.getLocalizedMessage();
 				// return STR_EMPTY;
 			}
@@ -416,7 +416,7 @@ public class MessageTextUtil {
 					inStream.close();
 				}
 				catch (final IOException e1) {
-					log.error( e1.getLocalizedMessage(), e1 );
+					logger.error( e1.getLocalizedMessage(), e1 );
 				}
 			}
 		}
@@ -451,7 +451,7 @@ public class MessageTextUtil {
 			return "";
 		}
 		catch (final UnsupportedEncodingException e) {
-			log.error( "Unsupported encoding in a message detected and monitored.", e );
+			logger.error( "Unsupported encoding in a message detected and monitored.", e );
 			return "";
 		}
 		finally {
@@ -460,7 +460,7 @@ public class MessageTextUtil {
 					isr.close();
 				}
 				catch (final IOException e) {
-					log.error( e.getLocalizedMessage(), e );
+					logger.error( e.getLocalizedMessage(), e );
 				}
 			}
 		}

@@ -7,7 +7,7 @@
 <sqlMap namespace="AddressFolder">
 
 	<!-- Use type aliases to avoid typing the full classname every time. -->
-	<typeAlias alias="Identity" type="com.cubusmail.common.model.AddressFolder" />	
+	<typeAlias alias="AddressFolder" type="com.cubusmail.common.model.AddressFolder" />	
 
 	<!--
 		Result maps describe the mapping between the columns returned from a
@@ -17,11 +17,11 @@
 	<resultMap id="AddressFolderResult" class="AddressFolder">
 		<result property="id" column="ID" />
 		<result property="name" column="NAME" />
-		<result property="type" column="TYPE" />
+		<result property="typeValue" column="TYPE" />
 	</resultMap>
 
-	<select id="selectAddressFolder" parameterClass="long"
-		resultClass="AddressFolder">
+	<select id="selectAddressFolders" parameterClass="long"
+		resultClass="AddressFolder" resultMap="AddressFolderResult">
 		select * from ADDRESSFOLDERS where USER_ACCOUNT_ID = #id#
   	</select>
 
@@ -35,15 +35,20 @@
 			TYPE,
 			USER_ACCOUNT_ID)
 		values
-			(#id#, #name#, #type#, #userAccount.id#)
+			(#id#, #name#, #typeValue#, #userAccount.id#)
 	</insert>
 
 	<insert id="updateAddressFolder" parameterClass="AddressFolder">
 		update ADDRESSFOLDERS set 
 			NAME = #name#,
-			TYPE = #type#
+			TYPE = #typeValue#
 		where
 			ID = #id#
 	</insert>
 
+	<delete id="deleteAddressFolders">
+		delete from ADDRESSFOLDERS where ID IN (
+			<iterate conjunction=",">#[]#</iterate>
+		)
+	</delete>
 </sqlMap>

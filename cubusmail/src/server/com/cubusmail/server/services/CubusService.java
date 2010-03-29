@@ -55,7 +55,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class CubusService extends RemoteServiceServlet implements ICubusService {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	private static final long serialVersionUID = -3660151485467438601L;
 
@@ -87,7 +87,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 	// return super.processCall( payload );
 	// }
 	// catch (SerializationException e) {
-	// log.error( e.getMessage(), e );
+	// logger.error( e.getMessage(), e );
 	// throw e;
 	// }
 	// }
@@ -135,7 +135,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 			return gwtMailbox.clone();
 		}
 		catch (LoginException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			if ( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED.equals( e.getMessage() ) ) {
 				throw new GWTAuthenticationException( e.getMessage() );
 			}
@@ -162,11 +162,11 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 			SessionManager.invalidateSession();
 		}
 		catch (LoginException e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 			throw new GWTLogoutException( e.getMessage() );
 		}
 		catch (Exception e) {
-			log.error( e.getMessage(), e );
+			logger.error( e.getMessage(), e );
 		}
 	}
 

@@ -40,7 +40,7 @@ import com.cubusmail.server.util.CubusConstants;
  */
 public class CubusStartupListener implements ServletContextListener {
 
-	private final Log log = LogFactory.getLog( getClass() );
+	private final Log logger = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -67,7 +67,7 @@ public class CubusStartupListener implements ServletContextListener {
 			BeanFactory.setContext( context );
 		}
 		catch ( Throwable e ) {
-			log.fatal( e.getMessage(), e );
+			logger.fatal( e.getMessage(), e );
 			throw new IllegalStateException( "Could not load " + CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 		}
 
@@ -76,7 +76,7 @@ public class CubusStartupListener implements ServletContextListener {
 			System.setProperty( CubusConstants.JAAS_PROPERTY_NANE, test.getFile() );
 		}
 		catch ( Throwable e ) {
-			log.fatal( e.getMessage(), e );
+			logger.fatal( e.getMessage(), e );
 			throw new IllegalStateException( "Could not load " + CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 		}
 	}

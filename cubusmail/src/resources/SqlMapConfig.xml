@@ -15,5 +15,6 @@
 	-->
 	<sqlMap resource="com/cubusmail/common/model/UserAccount.xml" />
 	<sqlMap resource="com/cubusmail/common/model/Identity.xml" />
+	<sqlMap resource="com/cubusmail/common/model/AddressFolder.xml" />
 		 
 </sqlMapConfig>

@@ -39,7 +39,7 @@ import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
  */
 public class MessageComparator implements Comparator<Message> {
 
-	private static final Log log = LogFactory.getLog( MessageComparator.class.getName() );
+	private static final Log logger = LogFactory.getLog( MessageComparator.class.getName() );
 
 	private MessageListFields field;
 	private boolean ascending;
@@ -100,7 +100,7 @@ public class MessageComparator implements Comparator<Message> {
 			}
 		}
 		catch (MessagingException e) {
-			log.warn( e.getMessage(), e );
+			logger.warn( e.getMessage(), e );
 		}
 
 		if ( !this.ascending ) {

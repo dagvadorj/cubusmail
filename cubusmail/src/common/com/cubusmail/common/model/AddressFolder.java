@@ -148,4 +148,22 @@ public class AddressFolder implements Serializable {
 
 		this.type = folderType;
 	}
+
+	/**
+	 * @param folderType
+	 *            The folderType to set.
+	 */
+	public void setTypeValue( int type ) {
+
+		this.type = AddressFolderType.valueOf( type );
+	}
+
+	public int getTypeValue() {
+
+		if ( this.type != null ) {
+			return this.type.getType();
+		}
+		
+		return -1;
+	}
 }
