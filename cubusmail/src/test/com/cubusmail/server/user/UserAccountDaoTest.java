@@ -29,6 +29,7 @@ import junit.framework.Assert;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +40,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
 import com.ibatis.common.jdbc.ScriptRunner;
@@ -59,6 +61,8 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 	private final Log logger = LogFactory.getLog( getClass() );
 
 	private ApplicationContext applicationContext;
+
+	private SingleConnectionDataSource dataSource;
 
 	private IUserAccountDao userAccountDao;
 
@@ -81,9 +85,10 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 
 		this.userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
 		this.testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
+		this.dataSource = (SingleConnectionDataSource) this.applicationContext.getBean( "dataSource" );
 
 		try {
-			Connection con = getConnection();
+			Connection con = this.dataSource.getConnection();
 			ScriptRunner runner = new ScriptRunner( con, true, true );
 			runner.runScript( Resources.getResourceAsReader( "sql/createdb_h2.sql" ) );
 
@@ -98,6 +103,12 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			logger.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
+	}
+
+	@After
+	public void resetDB() {
+
+		this.dataSource.resetConnection();
 	}
 
 	@Test
@@ -136,7 +147,6 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		}
 	}
 
-	
 	@Test
 	public void testDeleteIdentities() {
 
@@ -219,18 +229,10 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		Assert.assertEquals( savedAdressFolders.get( 0 ).getName(), folders.get( 2 ).getName() );
 	}
 
-	
 	@Test
 	public void testInsertAddress() {
-		
-	}
-	
-	
-	private Connection getConnection() throws BeansException, SQLException {
 
-		SingleConnectionDataSource dataSource = (SingleConnectionDataSource) this.applicationContext
-				.getBean( "dataSource" );
-		dataSource.resetConnection();
-		return dataSource.getConnection();
+		List<Address> addresses = (List<Address>) this.applicationContext.getBean( "testAddresses" );
+		
 	}
 }

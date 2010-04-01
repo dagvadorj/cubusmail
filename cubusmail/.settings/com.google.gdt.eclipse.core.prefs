@@ -1,3 +1,5 @@
-#Fri Feb 05 19:47:05 CET 2010
+#Thu Apr 01 22:30:46 CEST 2010
 eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=
+jarsExcludedFromWebInfLib=/Users/schlierf/cubusmail/projects/cubusmail/lib/junit-4.8.1.jar|/Users/schlierf/cubusmail/projects/cubusmail/lib/org.springframework.test-3.0.1.RELEASE-A.jar|/Users/schlierf/cubusmail/projects/cubusmail/lib/smartgwt.jar
+warSrcDir=war
+warSrcDirIsOutput=true

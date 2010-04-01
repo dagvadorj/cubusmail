@@ -6,11 +6,8 @@
 	<classpathentry kind="src" path="src/client"/>
 	<classpathentry kind="src" path="src/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/junit-4.4.jar" sourcepath="/Sources/junit-4.4-src.jar"/>
-	<classpathentry kind="lib" path="lib/spring-test.jar" sourcepath="/Sources/spring-test-sources.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar" sourcepath="/Sources/spring-sources.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar" sourcepath="/Sources/javamail-1.4.3-src.zip"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/htmlcleaner2_1.jar"/>
@@ -20,5 +17,17 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/ibatis-2.3.4.726.jar" sourcepath="/Sources/ibatis-src.zip"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/h2-1.2.132.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.beans-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.beans-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.context-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.context-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.orm-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.orm-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.core-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.core-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.transaction-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.transaction-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.jdbc-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.jdbc-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="lib/org.springframework.test-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.test-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.8.1.jar" sourcepath="/Sources/junit-4.8.1-src.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.context.support-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.context-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.web-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.web-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.asm-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.asm-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.expression-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.expression-sources-3.0.1.RELEASE-A.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans default-autowire="no"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-2.5.xsd
-	http://www.springframework.org/schema/util
-	http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<bean id="dateEditor"
+		class="org.springframework.beans.propertyeditors.CustomDateEditor">
+		<constructor-arg>
+			<bean class="java.text.SimpleDateFormat">
+				<constructor-arg value="yyyy-MM-dd" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg value="true" />
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date">
+					<ref local="dateEditor" />
+				</entry>
+			</map>
+		</property>
+	</bean>
 
 
-	<bean id="testUserAccount" class="com.cubusmail.common.model.UserAccount" scope="prototype">
+	<bean id="testUserAccount" class="com.cubusmail.common.model.UserAccount"
+		scope="prototype">
 		<property name="username" value="testuser" />
-		<property name="preferences" ref="testPreferences"/>		
-		<property name="identities" ref="testIdentities"/>
+		<property name="preferences" ref="testPreferences" />
+		<property name="identities" ref="testIdentities" />
 	</bean>
 
 	<bean id="testPreferences" class="com.cubusmail.common.model.Preferences"
@@ -37,65 +54,126 @@
 		<property name="emptyTrashAfterLogout" value="false" />
 		<property name="readingPane" value="0" />
 	</bean>
-	
+
 	<util:list id="testIdentities" scope="prototype">
 		<bean class="com.cubusmail.common.model.Identity">
-			<property name="standard" value="true"/>
-			<property name="displayName" value="Testname"/>
-			<property name="email" value="test@test.de"/>
-			<property name="organization" value="Testorganization"/>
-			<property name="replyTo" value="reply@to.de"/>
-			<property name="signature" value="Good bye"/>
+			<property name="standard" value="true" />
+			<property name="displayName" value="Testname" />
+			<property name="email" value="test@test.de" />
+			<property name="organization" value="Testorganization" />
+			<property name="replyTo" value="reply@to.de" />
+			<property name="signature" value="Good bye" />
 		</bean>
 		<bean class="com.cubusmail.common.model.Identity">
-			<property name="standard" value="false"/>
-			<property name="displayName" value="Testname2"/>
-			<property name="email" value="test2@test.de"/>
-			<property name="organization" value="Testorganization2"/>
-			<property name="replyTo" value="reply2@to.de"/>
-			<property name="signature" value="Good bye2"/>
+			<property name="standard" value="false" />
+			<property name="displayName" value="Testname2" />
+			<property name="email" value="test2@test.de" />
+			<property name="organization" value="Testorganization2" />
+			<property name="replyTo" value="reply2@to.de" />
+			<property name="signature" value="Good bye2" />
 		</bean>
 		<bean class="com.cubusmail.common.model.Identity">
-			<property name="standard" value="false"/>
-			<property name="displayName" value="Testname3"/>
-			<property name="email" value="test3@test.de"/>
-			<property name="organization" value="Testorganization3"/>
-			<property name="replyTo" value="reply3@to.de"/>
-			<property name="signature" value="Good bye3"/>
+			<property name="standard" value="false" />
+			<property name="displayName" value="Testname3" />
+			<property name="email" value="test3@test.de" />
+			<property name="organization" value="Testorganization3" />
+			<property name="replyTo" value="reply3@to.de" />
+			<property name="signature" value="Good bye3" />
 		</bean>
 		<bean class="com.cubusmail.common.model.Identity">
-			<property name="standard" value="false"/>
-			<property name="displayName" value="Testname4"/>
-			<property name="email" value="test4@test.de"/>
-			<property name="organization" value="Testorganization4"/>
-			<property name="replyTo" value="reply4@to.de"/>
-			<property name="signature" value="Good bye4"/>
+			<property name="standard" value="false" />
+			<property name="displayName" value="Testname4" />
+			<property name="email" value="test4@test.de" />
+			<property name="organization" value="Testorganization4" />
+			<property name="replyTo" value="reply4@to.de" />
+			<property name="signature" value="Good bye4" />
 		</bean>
 	</util:list>
-	
-	
+
+
 	<util:list id="testAddressFolders" scope="prototype">
 		<bean class="com.cubusmail.common.model.AddressFolder">
-			<property name="name" value="Addressfolder 1"/>
+			<property name="name" value="Addressfolder 1" />
 			<property name="typeValue" value="0" />
 		</bean>
 		<bean class="com.cubusmail.common.model.AddressFolder">
-			<property name="name" value="Addressfolder 2"/>
+			<property name="name" value="Addressfolder 2" />
 			<property name="typeValue" value="0" />
 		</bean>
 		<bean class="com.cubusmail.common.model.AddressFolder">
-			<property name="name" value="Addressfolder 3"/>
+			<property name="name" value="Addressfolder 3" />
 			<property name="typeValue" value="0" />
 		</bean>
 	</util:list>
-	
+
 	<util:list id="testAddresses">
 		<bean class="com.cubusmail.common.model.Address">
-			<property name="firstName" value="Firstname 1"/>
-			<property name="lastName" value="Lastname 1"/>
-			<property name="email" value="email@email.de"/>
-			<property name="privatePhone" value="013344/234234"/>
-			<property name="workPhone" value="0123454/234234"/>
+			<property name="firstName" value="Firstname 1" />
+			<property name="middleName" value="MiddleName 1" />
+			<property name="lastName" value="LastName 1" />
+			<property name="title" value="Title 1" />
+			<property name="birthDate" value="1980-02-01" />
+			<property name="company" value="company 1" />
+			<property name="position" value="position 1" />
+			<property name="department" value="department 1" />
+			<property name="email" value="email@email1.de" />
+			<property name="email2" value="email2@email1.com" />
+			<property name="email3" value="email3@email1.com" />
+			<property name="email4" value="email4@email1.com" />
+			<property name="email5" value="email5@email1.com" />
+			<property name="im" value="4523424234234" />
+			<property name="url" value="http://test.com" />
+			<property name="privatePhone" value="034676/545453" />
+			<property name="workPhone" value="03234234/3432434" />
+			<property name="privateMobile" value="02343/3242343" />			
+			<property name="privateFax" value="0133443/3424234" />
+			<property name="workFax" value="02424434/23423443" />
+			<property name="pager" value="01234534/2334234" />			
+			<property name="privateStreet" value="privateStreet1" />
+			<property name="privateZipcode" value="privateZipcode1" />
+			<property name="privateCity" value="privateCity1" />
+			<property name="privateState" value="privateState1" />
+			<property name="privateCountry" value="privateCountry1" />
+			<property name="workStreet" value="workStreet1" />
+			<property name="workZipcode" value="workZipcode1" />
+			<property name="workCity" value="workCity1" />
+			<property name="workState" value="workState1" />
+			<property name="workCountry" value="workCountry1" />
+			<property name="notes" value="notes1" />
 		</bean>
-	</util:list>	
+		<bean class="com.cubusmail.common.model.Address">
+			<property name="firstName" value="Firstname 2" />
+			<property name="middleName" value="MiddleName 2" />
+			<property name="lastName" value="LastName 2" />
+			<property name="title" value="Title 2" />
+			<property name="birthDate" value="1986-05-09" />
+			<property name="company" value="company 2" />
+			<property name="position" value="position 2" />
+			<property name="department" value="department 2" />
+			<property name="email" value="email@email2.de" />
+			<property name="email2" value="email2@email2.com" />
+			<property name="email3" value="email3@email2.com" />
+			<property name="email4" value="email4@email2.com" />
+			<property name="email5" value="email5@email2.com" />
+			<property name="im" value="34534534534" />
+			<property name="url" value="http://test2.com" />
+			<property name="privatePhone" value="034676/545453" />
+			<property name="workPhone" value="03234234/3432434" />
+			<property name="privateMobile" value="02343/3242343" />			
+			<property name="privateFax" value="0133443/3424234" />
+			<property name="workFax" value="02424434/23423443" />
+			<property name="pager" value="01234534/2334234" />			
+			<property name="privateStreet" value="privateStreet2" />
+			<property name="privateZipcode" value="privateZipcode2" />
+			<property name="privateCity" value="privateCity2" />
+			<property name="privateState" value="privateState2" />
+			<property name="privateCountry" value="privateCountry2" />
+			<property name="workStreet" value="workStreet2" />
+			<property name="workZipcode" value="workZipcode2" />
+			<property name="workCity" value="workCity2" />
+			<property name="workState" value="workState2" />
+			<property name="workCountry" value="workCountry2" />
+			<property name="notes" value="notes2" />
+		</bean>
+	</util:list>
 </beans>
