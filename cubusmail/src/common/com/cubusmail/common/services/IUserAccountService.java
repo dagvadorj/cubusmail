@@ -81,7 +81,7 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @param contacts
 	 */
-	public void deleteContacts( Long[] ids );
+	public void deleteContacts(  List<Long> ids );
 
 	/**
 	 * @param contactIds

@@ -219,6 +219,13 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 		Assert.assertEquals( savedAdressFolders.get( 0 ).getName(), folders.get( 2 ).getName() );
 	}
 
+	
+	@Test
+	public void testInsertAddress() {
+		
+	}
+	
+	
 	private Connection getConnection() throws BeansException, SQLException {
 
 		SingleConnectionDataSource dataSource = (SingleConnectionDataSource) this.applicationContext

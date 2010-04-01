@@ -82,7 +82,7 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @param contacts
 	 */
-	public void deleteContacts( Long[] ids, AsyncCallback<Void> callback );
+	public void deleteContacts( List<Long> ids, AsyncCallback<Void> callback );
 
 	/**
 	 * @param contactIds

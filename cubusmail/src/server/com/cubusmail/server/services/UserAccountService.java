@@ -126,9 +126,9 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 				account.removeIdentity( identity );
 			}
 		}
-//		if ( identitiesToDelete.size() > 0 ) {
-//			getUserAccountDao().deleteIdentities( identitiesToDelete );
-//		}
+		// if ( identitiesToDelete.size() > 0 ) {
+		// getUserAccountDao().deleteIdentities( identitiesToDelete );
+		// }
 		getUserAccountDao().saveUserAccount( account );
 		SessionManager.get().setUserAccount( account );
 
@@ -216,7 +216,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	@SuppressWarnings("unchecked")
 	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection ) {
 
-		List<Address> contactList = getUserAccountDao().retrieveContactList( folder );
+		List<Address> contactList = getUserAccountDao().retrieveAddressList( folder );
 
 		if ( contactList != null && contactList.size() > 0 ) {
 			if ( !StringUtils.isEmpty( sortField ) ) {
@@ -335,9 +335,9 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#deleteContacts
 	 * (java.util.List)
 	 */
-	public void deleteContacts( Long[] ids ) {
+	public void deleteContacts( List<Long> ids ) {
 
-		getUserAccountDao().deleteContacts( ids );
+		getUserAccountDao().deleteAddresses( ids );
 	}
 
 	/*
@@ -349,7 +349,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 */
 	public void moveContacts( Long[] contactIds, AddressFolder targetFolder ) {
 
-		getUserAccountDao().moveContacts( contactIds, targetFolder );
+		getUserAccountDao().moveAddresses( contactIds, targetFolder );
 	}
 
 	/*
@@ -373,7 +373,8 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 */
 	public Address retrieveContact( Long id ) {
 
-		return getUserAccountDao().getContactById( id );
+		// return getUserAccountDao().getContactById( id );
+		return null;
 	}
 
 	/*

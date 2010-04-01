@@ -79,7 +79,7 @@ public interface IUserAccountDao {
 	 * @param folder
 	 * @return
 	 */
-	public abstract List<Address> retrieveContactList( AddressFolder folder );
+	public abstract List<Address> retrieveAddressList( AddressFolder folder );
 
 	/**
 	 * @param account
@@ -97,19 +97,13 @@ public interface IUserAccountDao {
 	/**
 	 * @param ids
 	 */
-	public abstract void deleteContacts( Long[] ids );
+	public abstract void deleteAddresses( List<Long> ids );
 
 	/**
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public abstract void moveContacts( Long[] contactIds, AddressFolder targetFolder );
-
-	/**
-	 * @param id
-	 * @return
-	 */
-	public abstract Address getContactById( Long id );
+	public abstract void moveAddresses( Long[] contactIds, AddressFolder targetFolder );
 
 	/**
 	 * @param addresses

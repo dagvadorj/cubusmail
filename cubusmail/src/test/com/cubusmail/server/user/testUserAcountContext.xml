@@ -87,5 +87,15 @@
 			<property name="name" value="Addressfolder 3"/>
 			<property name="typeValue" value="0" />
 		</bean>
+	</util:list>
+	
+	<util:list id="testAddresses">
+		<bean class="com.cubusmail.common.model.Address">
+			<property name="firstName" value="Firstname 1"/>
+			<property name="lastName" value="Lastname 1"/>
+			<property name="email" value="email@email.de"/>
+			<property name="privatePhone" value="013344/234234"/>
+			<property name="workPhone" value="0123454/234234"/>
+		</bean>
 	</util:list>	
 </beans>

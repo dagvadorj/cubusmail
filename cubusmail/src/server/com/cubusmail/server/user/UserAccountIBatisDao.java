@@ -59,10 +59,11 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#deleteContacts(java.lang.Long
 	 * [])
 	 */
-	public void deleteContacts( Long[] ids ) {
+	public void deleteAddresses( List<Long> ids ) {
 
-		// TODO Auto-generated method stub
-
+		if ( ids != null && ids.size() > 0 ) {
+			getSqlMapClientTemplate().delete( "deleteAddress", ids );
+		}
 	}
 
 	/*
@@ -105,18 +106,6 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.cubusmail.server.user.IUserAccountDao#getContactById(java.lang.Long)
-	 */
-	public Address getContactById( Long id ) {
-
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * com.cubusmail.server.user.IUserAccountDao#getUserAccountByUsername(java
 	 * .lang.String)
 	 */
@@ -143,7 +132,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#moveContacts(java.lang.Long[],
 	 * com.cubusmail.common.model.ContactFolder)
 	 */
-	public void moveContacts( Long[] contactIds, AddressFolder targetFolder ) {
+	public void moveAddresses( Long[] contactIds, AddressFolder targetFolder ) {
 
 		// TODO Auto-generated method stub
 
@@ -156,6 +145,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactFolders(com.
 	 * cubusmail.common.model.UserAccount)
 	 */
+	@SuppressWarnings("unchecked")
 	public List<AddressFolder> retrieveAddressFolders( UserAccount account ) {
 
 		List<AddressFolder> result = getSqlMapClientTemplate().queryForList( "selectAddressFolders", account.getId() );
@@ -169,10 +159,11 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactList(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
-	public List<Address> retrieveContactList( AddressFolder folder ) {
+	@SuppressWarnings("unchecked")
+	public List<Address> retrieveAddressList( AddressFolder folder ) {
 
-		// TODO Auto-generated method stub
-		return null;
+		List<Address> result = getSqlMapClientTemplate().queryForList( "selectAddresses", folder.getId() );
+		return result;
 	}
 
 	/*
