@@ -195,10 +195,17 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * com.cubusmail.server.user.IUserAccountDao#saveContact(com.cubusmail.common
 	 * .model.Contact)
 	 */
-	public Long saveContact( Address contact ) {
+	public Long saveAddress( Address address ) {
 
-		// TODO Auto-generated method stub
-		return null;
+		if ( address.getId() == null ) {
+			Long id = (Long) getSqlMapClientTemplate().insert( "insertAddressFolder", address );
+			address.setId( id );
+			return id;
+		}
+		else {
+			getSqlMapClientTemplate().update( "updateAddressFolder", address );
+			return address.getId();
+		}
 	}
 
 	/*

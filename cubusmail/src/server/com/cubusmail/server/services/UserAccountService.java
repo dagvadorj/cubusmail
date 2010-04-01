@@ -361,7 +361,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 	 */
 	public void saveContact( Address contact ) {
 
-		getUserAccountDao().saveContact( contact );
+		getUserAccountDao().saveAddress( contact );
 	}
 
 	/*

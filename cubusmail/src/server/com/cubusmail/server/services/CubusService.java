@@ -69,7 +69,6 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 	 * @return
 	 */
 	private IUserAccountDao getUserAccountDao() {
-
 		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
 	}
 

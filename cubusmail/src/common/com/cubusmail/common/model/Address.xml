@@ -57,7 +57,7 @@
 	-->
 	<select id="selectAddresses" parameterClass="long" 
 		resultClass="Address" resultMap="AddressResult">
-		select * from ADDRESSES where USER_ACCOUNT_ID = #id#
+		select * from ADDRESSES where ADDRESS_FOLDER_ID = #id#
   	</select>
 
 	<insert id="insertAddress" parameterClass="Address">
@@ -66,36 +66,93 @@
 		</selectKey>
 		insert into ADDRESSES (
 			ID,
-			DISPLAYNAME,
+			FIRSTNAME,
+			MIDDLENAME,
+			LASTNAME,
+			TITLE,
+			BIRTHDATE,
+			COMPANY,
+			POSITION,
+			DEPARTMENT,
 			EMAIL,
-			ORGANIZATION,
-			REPLY_TO,
-			BCC,
-			SIGNATURE,
-			HTML_SIGNATURE,
-			STANDARD,
-			USER_ACCOUNT_ID)
+			EMAIL2,
+			EMAIL3,
+			EMAIL4,
+			EMAIL5,
+			IM,
+			URL,
+			PRIVATEPHONE,
+			WORKPHONE,
+			PRIVATEMOBILE,
+			WORKMOBILE,
+			PRIVATEFAX,
+			WORKFAX,
+			PAGER,
+			PRIVATESTREET,
+			PRIVATEZIPCODE,
+			PRIVATECITY,
+			PRIVATESTATE,
+			PRIVATECOUNTRY,
+			WORKSTREET,
+			WORKZIPCODE,
+			WORKCITY,
+			WORKSTATE,
+			WORKCOUNTRY,
+			NOTES,
+			ADDRESS_FOLDER_ID)
 		values
-			(#id#, #displayName#, #email#, #organization#, #replyTo#,
-			#bcc#, #signature#, #htmlSignature#, #standard#, #userAccount.id#)
+			(#id#, #firstName#, #middleName#, #lastName#, #title#,
+			#birthDate#, #company#, #position#, #department#, #email#, 
+			#email2#, #email3#, #email4#, #email5#, #im#, #url#,  
+			#privatePhone#, #workPhone#, #privateMobile#, #workMobile#,
+			#privateFax#, #workFax#, #pager#, #privateStreet#, #privateZipcode#, 
+			#privateCity#, #privateState#, #privateCountry#, #workStreet#,
+			#workZipcode#, #workCity#, #workState#, #workCountry#, #notes#,
+			#userAccount.id#)
 	</insert>
 
 	<insert id="updateAddress" parameterClass="Address">
-		update IDENTITIES set
-			DISPLAYNAME = #displayName#,
+		update ADDRESSES set
+			FIRSTNAME = #firstName#,
+			MIDDLENAME = #middleName#,
+			LASTNAME = #lastName#,
+			TITLE = #title#,
+			BIRTHDATE = #birthDate#,
+			COMPANY = #company#,
+			POSITION = #position#,
+			DEPARTMENT = #department#,
 			EMAIL = #email#,
-			ORGANIZATION = #organization#,
-			REPLY_TO = #replyTo#,
-			BCC = #bcc#,
-			SIGNATURE = #signature#,
-			HTML_SIGNATURE = #htmlSignature#,
-			STANDARD = #standard#
+			EMAIL2 = #email2#,
+			EMAIL3 = #email3#,
+			EMAIL4 = #email4#,
+			EMAIL5 = #email5#,
+			IM = #im#,
+			URL = #url#,
+			PRIVATEPHONE = #privatePhone#,
+			WORKPHONE = #workPhone#,
+			PRIVATEMOBILE = #privateMobile#,
+			WORKMOBILE = #workMobile#,
+			PRIVATEFAX = #privateFax#,
+			WORKFAX = #workFax#,
+			PAGER = #pager#,
+			PRIVATESTREET = #privateStreet#,
+			PRIVATEZIPCODE = #privateZipcode#,
+			PRIVATECITY = #privateCity#,
+			PRIVATESTATE = #privateState#,
+			PRIVATECOUNTRY = #privateCountry#,
+			WORKSTREET = #workStreet#,
+			WORKZIPCODE = #workZipcode#,
+			WORKCITY = #workCity#,
+			WORKSTATE = #workState#,
+			WORKCOUNTRY = #workCountry#,
+			NOTES = #notes#,
+			ADDRESS_FOLDER_ID = #userAccount.id#
 		where
 			ID = #id#
 	</insert>
 
-	<delete id="deleteIdentities">
-		delete from IDENTITIES where ID IN (
+	<delete id="deleteAddress">
+		delete from ADDRESSES where ID IN (
 			<iterate conjunction=",">#[]#</iterate>
 		)
 	</delete>

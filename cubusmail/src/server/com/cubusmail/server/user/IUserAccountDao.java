@@ -92,7 +92,7 @@ public interface IUserAccountDao {
 	 * @param contact
 	 * @return
 	 */
-	public abstract Long saveContact( Address contact );
+	public abstract Long saveAddress( Address contact );
 
 	/**
 	 * @param ids
