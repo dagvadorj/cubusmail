@@ -106,7 +106,7 @@
 		</bean>
 	</util:list>
 
-	<util:list id="testAddresses">
+	<util:list id="testAddresses" scope="prototype">
 		<bean class="com.cubusmail.common.model.Address">
 			<property name="firstName" value="Firstname 1" />
 			<property name="middleName" value="MiddleName 1" />

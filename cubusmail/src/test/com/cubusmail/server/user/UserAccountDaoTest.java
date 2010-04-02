@@ -27,6 +27,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
@@ -257,6 +258,41 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 
 			List<Address> savedAddressList = this.userAccountDao.retrieveAddressList( folders.get( 0 ) );
 			Assert.assertEquals( testAddressList.get( 0 ), savedAddressList.get( 0 ) );
+		}
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
+			Assert.fail( e.getMessage() );
+		}
+	}
+
+	@Test
+	public void testUpdateAddress() {
+
+		try {
+			List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
+			folders.get( 0 ).setUserAccount( this.testUserAccount );
+			this.userAccountDao.saveAddressFolder( folders.get( 0 ) );
+
+			List<Address> testAddressList = (List<Address>) this.applicationContext.getBean( "testAddresses" );
+			for (Address address : testAddressList) {
+				address.setAddressFolder( folders.get( 0 ) );
+				this.userAccountDao.saveAddress( address );
+			}
+
+			List<Address> savedAddressList = this.userAccountDao.retrieveAddressList( folders.get( 0 ) );
+			Assert.assertNotNull( savedAddressList );
+			Assert.assertTrue( savedAddressList.size() > 0 );
+			Assert.assertEquals( testAddressList.get( 0 ), savedAddressList.get( 0 ) );
+			
+			Address savedAddress = savedAddressList.get( 0 );
+			Address testAddress2 = testAddressList.get( 1 );
+			
+			// copy modify properties
+			Long saveId = savedAddress.getId();
+			AddressFolder savedFolder = savedAddress.getAddressFolder();
+			BeanUtils.copyProperties( savedAddress, testAddress2 );
+			savedAddress.setId( saveId );
+			this.userAccountDao.saveAddress( savedAddress );			
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );
