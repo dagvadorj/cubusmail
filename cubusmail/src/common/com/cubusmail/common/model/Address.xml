@@ -108,7 +108,7 @@
 			#privateFax#, #workFax#, #pager#, #privateStreet#, #privateZipcode#, 
 			#privateCity#, #privateState#, #privateCountry#, #workStreet#,
 			#workZipcode#, #workCity#, #workState#, #workCountry#, #notes#,
-			#userAccount.id#)
+			#addressFolder.id#)
 	</insert>
 
 	<insert id="updateAddress" parameterClass="Address">
@@ -146,7 +146,7 @@
 			WORKSTATE = #workState#,
 			WORKCOUNTRY = #workCountry#,
 			NOTES = #notes#,
-			ADDRESS_FOLDER_ID = #userAccount.id#
+			ADDRESS_FOLDER_ID = #addressFolder.id#
 		where
 			ID = #id#
 	</insert>

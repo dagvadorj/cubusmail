@@ -92,7 +92,7 @@ public interface IUserAccountDao {
 	 * @param contact
 	 * @return
 	 */
-	public abstract Long saveAddress( Address contact );
+	public abstract Long saveAddress( Address address );
 
 	/**
 	 * @param ids
@@ -103,7 +103,7 @@ public interface IUserAccountDao {
 	 * @param contactIds
 	 * @param targetFolder
 	 */
-	public abstract void moveAddresses( Long[] contactIds, AddressFolder targetFolder );
+	public abstract void moveAddresses( Long[] ids, AddressFolder targetFolder );
 
 	/**
 	 * @param addresses

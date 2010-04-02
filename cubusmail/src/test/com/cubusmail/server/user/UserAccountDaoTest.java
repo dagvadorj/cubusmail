@@ -193,46 +193,74 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 	@Test
 	public void testUpdateAddressFolders() {
 
-		List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
-		for (AddressFolder folder : folders) {
-			folder.setUserAccount( this.testUserAccount );
-			this.userAccountDao.saveAddressFolder( folder );
+		try {
+			List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
+			for (AddressFolder folder : folders) {
+				folder.setUserAccount( this.testUserAccount );
+				this.userAccountDao.saveAddressFolder( folder );
+			}
+
+			folders.get( 0 ).setName( "NewName" );
+			this.userAccountDao.saveAddressFolder( folders.get( 0 ) );
+
+			List<AddressFolder> updatedFolders = this.userAccountDao.retrieveAddressFolders( this.testUserAccount );
+			Assert.assertNotNull( updatedFolders );
+			Assert.assertTrue( updatedFolders.size() > 0 );
+			Assert.assertEquals( updatedFolders.get( 0 ).getName(), folders.get( 0 ).getName() );
 		}
-
-		folders.get( 0 ).setName( "NewName" );
-		this.userAccountDao.saveAddressFolder( folders.get( 0 ) );
-
-		List<AddressFolder> updatedFolders = this.userAccountDao.retrieveAddressFolders( this.testUserAccount );
-		Assert.assertNotNull( updatedFolders );
-		Assert.assertTrue( updatedFolders.size() > 0 );
-		Assert.assertEquals( updatedFolders.get( 0 ).getName(), folders.get( 0 ).getName() );
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
+			Assert.fail( e.getMessage() );
+		}
 	}
 
 	@Test
 	public void testDeleteAddressFolders() {
 
-		List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
-		int foldersCount = folders.size();
-		for (AddressFolder folder : folders) {
-			folder.setUserAccount( this.testUserAccount );
-			this.userAccountDao.saveAddressFolder( folder );
+		try {
+			List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
+			int foldersCount = folders.size();
+			for (AddressFolder folder : folders) {
+				folder.setUserAccount( this.testUserAccount );
+				this.userAccountDao.saveAddressFolder( folder );
+			}
+
+			List<Long> ids = new ArrayList<Long>();
+			ids.add( folders.get( 0 ).getId() );
+			ids.add( folders.get( 1 ).getId() );
+			this.userAccountDao.deleteAddressFolders( ids );
+
+			List<AddressFolder> savedAdressFolders = this.userAccountDao.retrieveAddressFolders( this.testUserAccount );
+			Assert.assertNotNull( savedAdressFolders );
+			Assert.assertEquals( savedAdressFolders.size(), foldersCount - 2 );
+			Assert.assertEquals( savedAdressFolders.get( 0 ).getName(), folders.get( 2 ).getName() );
 		}
-
-		List<Long> ids = new ArrayList<Long>();
-		ids.add( folders.get( 0 ).getId() );
-		ids.add( folders.get( 1 ).getId() );
-		this.userAccountDao.deleteAddressFolders( ids );
-
-		List<AddressFolder> savedAdressFolders = this.userAccountDao.retrieveAddressFolders( this.testUserAccount );
-		Assert.assertNotNull( savedAdressFolders );
-		Assert.assertEquals( savedAdressFolders.size(), foldersCount - 2 );
-		Assert.assertEquals( savedAdressFolders.get( 0 ).getName(), folders.get( 2 ).getName() );
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
+			Assert.fail( e.getMessage() );
+		}
 	}
 
 	@Test
 	public void testInsertAddress() {
 
-		List<Address> addresses = (List<Address>) this.applicationContext.getBean( "testAddresses" );
-		
+		try {
+			List<AddressFolder> folders = (List<AddressFolder>) this.applicationContext.getBean( "testAddressFolders" );
+			folders.get( 0 ).setUserAccount( this.testUserAccount );
+			this.userAccountDao.saveAddressFolder( folders.get( 0 ) );
+
+			List<Address> testAddressList = (List<Address>) this.applicationContext.getBean( "testAddresses" );
+			for (Address address : testAddressList) {
+				address.setAddressFolder( folders.get( 0 ) );
+				this.userAccountDao.saveAddress( address );
+			}
+
+			List<Address> savedAddressList = this.userAccountDao.retrieveAddressList( folders.get( 0 ) );
+			Assert.assertEquals( testAddressList.get( 0 ), savedAddressList.get( 0 ) );
+		}
+		catch (Exception e) {
+			logger.error( e.getMessage(), e );
+			Assert.fail( e.getMessage() );
+		}
 	}
 }

@@ -149,6 +149,9 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	public List<AddressFolder> retrieveAddressFolders( UserAccount account ) {
 
 		List<AddressFolder> result = getSqlMapClientTemplate().queryForList( "selectAddressFolders", account.getId() );
+		for (AddressFolder folder : result) {
+			folder.setUserAccount( account );
+		}
 		return result;
 	}
 
@@ -163,6 +166,9 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	public List<Address> retrieveAddressList( AddressFolder folder ) {
 
 		List<Address> result = getSqlMapClientTemplate().queryForList( "selectAddresses", folder.getId() );
+		for (Address address : result) {
+			address.setAddressFolder( folder );
+		}
 		return result;
 	}
 
@@ -189,12 +195,12 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	public Long saveAddress( Address address ) {
 
 		if ( address.getId() == null ) {
-			Long id = (Long) getSqlMapClientTemplate().insert( "insertAddressFolder", address );
+			Long id = (Long) getSqlMapClientTemplate().insert( "insertAddress", address );
 			address.setId( id );
 			return id;
 		}
 		else {
-			getSqlMapClientTemplate().update( "updateAddressFolder", address );
+			getSqlMapClientTemplate().update( "updateAddress", address );
 			return address.getId();
 		}
 	}

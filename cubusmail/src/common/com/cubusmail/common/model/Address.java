@@ -685,4 +685,234 @@ public class Address implements Serializable {
 
 		this.notes = notes;
 	}
+
+	@Override
+	public boolean equals( Object obj ) {
+
+		if ( this == obj )
+			return true;
+		if ( obj == null )
+			return false;
+		if ( getClass() != obj.getClass() )
+			return false;
+		Address other = (Address) obj;
+		if ( addressFolder == null ) {
+			if ( other.addressFolder != null )
+				return false;
+		}
+		else if ( !addressFolder.equals( other.addressFolder ) )
+			return false;
+		if ( birthDate == null ) {
+			if ( other.birthDate != null )
+				return false;
+		}
+		else if ( !birthDate.equals( other.birthDate ) )
+			return false;
+		if ( company == null ) {
+			if ( other.company != null )
+				return false;
+		}
+		else if ( !company.equals( other.company ) )
+			return false;
+		if ( department == null ) {
+			if ( other.department != null )
+				return false;
+		}
+		else if ( !department.equals( other.department ) )
+			return false;
+		if ( displayName == null ) {
+			if ( other.displayName != null )
+				return false;
+		}
+		else if ( !displayName.equals( other.displayName ) )
+			return false;
+		if ( email == null ) {
+			if ( other.email != null )
+				return false;
+		}
+		else if ( !email.equals( other.email ) )
+			return false;
+		if ( email2 == null ) {
+			if ( other.email2 != null )
+				return false;
+		}
+		else if ( !email2.equals( other.email2 ) )
+			return false;
+		if ( email3 == null ) {
+			if ( other.email3 != null )
+				return false;
+		}
+		else if ( !email3.equals( other.email3 ) )
+			return false;
+		if ( email4 == null ) {
+			if ( other.email4 != null )
+				return false;
+		}
+		else if ( !email4.equals( other.email4 ) )
+			return false;
+		if ( email5 == null ) {
+			if ( other.email5 != null )
+				return false;
+		}
+		else if ( !email5.equals( other.email5 ) )
+			return false;
+		if ( firstName == null ) {
+			if ( other.firstName != null )
+				return false;
+		}
+		else if ( !firstName.equals( other.firstName ) )
+			return false;
+		if ( id == null ) {
+			if ( other.id != null )
+				return false;
+		}
+		else if ( !id.equals( other.id ) )
+			return false;
+		if ( im == null ) {
+			if ( other.im != null )
+				return false;
+		}
+		else if ( !im.equals( other.im ) )
+			return false;
+		if ( lastName == null ) {
+			if ( other.lastName != null )
+				return false;
+		}
+		else if ( !lastName.equals( other.lastName ) )
+			return false;
+		if ( middleName == null ) {
+			if ( other.middleName != null )
+				return false;
+		}
+		else if ( !middleName.equals( other.middleName ) )
+			return false;
+		if ( notes == null ) {
+			if ( other.notes != null )
+				return false;
+		}
+		else if ( !notes.equals( other.notes ) )
+			return false;
+		if ( pager == null ) {
+			if ( other.pager != null )
+				return false;
+		}
+		else if ( !pager.equals( other.pager ) )
+			return false;
+		if ( position == null ) {
+			if ( other.position != null )
+				return false;
+		}
+		else if ( !position.equals( other.position ) )
+			return false;
+		if ( privateCity == null ) {
+			if ( other.privateCity != null )
+				return false;
+		}
+		else if ( !privateCity.equals( other.privateCity ) )
+			return false;
+		if ( privateCountry == null ) {
+			if ( other.privateCountry != null )
+				return false;
+		}
+		else if ( !privateCountry.equals( other.privateCountry ) )
+			return false;
+		if ( privateFax == null ) {
+			if ( other.privateFax != null )
+				return false;
+		}
+		else if ( !privateFax.equals( other.privateFax ) )
+			return false;
+		if ( privateMobile == null ) {
+			if ( other.privateMobile != null )
+				return false;
+		}
+		else if ( !privateMobile.equals( other.privateMobile ) )
+			return false;
+		if ( privatePhone == null ) {
+			if ( other.privatePhone != null )
+				return false;
+		}
+		else if ( !privatePhone.equals( other.privatePhone ) )
+			return false;
+		if ( privateState == null ) {
+			if ( other.privateState != null )
+				return false;
+		}
+		else if ( !privateState.equals( other.privateState ) )
+			return false;
+		if ( privateStreet == null ) {
+			if ( other.privateStreet != null )
+				return false;
+		}
+		else if ( !privateStreet.equals( other.privateStreet ) )
+			return false;
+		if ( privateZipcode == null ) {
+			if ( other.privateZipcode != null )
+				return false;
+		}
+		else if ( !privateZipcode.equals( other.privateZipcode ) )
+			return false;
+		if ( title == null ) {
+			if ( other.title != null )
+				return false;
+		}
+		else if ( !title.equals( other.title ) )
+			return false;
+		if ( url == null ) {
+			if ( other.url != null )
+				return false;
+		}
+		else if ( !url.equals( other.url ) )
+			return false;
+		if ( workCity == null ) {
+			if ( other.workCity != null )
+				return false;
+		}
+		else if ( !workCity.equals( other.workCity ) )
+			return false;
+		if ( workCountry == null ) {
+			if ( other.workCountry != null )
+				return false;
+		}
+		else if ( !workCountry.equals( other.workCountry ) )
+			return false;
+		if ( workFax == null ) {
+			if ( other.workFax != null )
+				return false;
+		}
+		else if ( !workFax.equals( other.workFax ) )
+			return false;
+		if ( workMobile == null ) {
+			if ( other.workMobile != null )
+				return false;
+		}
+		else if ( !workMobile.equals( other.workMobile ) )
+			return false;
+		if ( workPhone == null ) {
+			if ( other.workPhone != null )
+				return false;
+		}
+		else if ( !workPhone.equals( other.workPhone ) )
+			return false;
+		if ( workState == null ) {
+			if ( other.workState != null )
+				return false;
+		}
+		else if ( !workState.equals( other.workState ) )
+			return false;
+		if ( workStreet == null ) {
+			if ( other.workStreet != null )
+				return false;
+		}
+		else if ( !workStreet.equals( other.workStreet ) )
+			return false;
+		if ( workZipcode == null ) {
+			if ( other.workZipcode != null )
+				return false;
+		}
+		else if ( !workZipcode.equals( other.workZipcode ) )
+			return false;
+		return true;
+	}
+
 }
