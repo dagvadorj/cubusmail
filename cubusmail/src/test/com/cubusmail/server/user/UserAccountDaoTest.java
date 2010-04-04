@@ -283,16 +283,23 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertNotNull( savedAddressList );
 			Assert.assertTrue( savedAddressList.size() > 0 );
 			Assert.assertEquals( testAddressList.get( 0 ), savedAddressList.get( 0 ) );
-			
+
 			Address savedAddress = savedAddressList.get( 0 );
 			Address testAddress2 = testAddressList.get( 1 );
-			
+
 			// copy modify properties
 			Long saveId = savedAddress.getId();
 			AddressFolder savedFolder = savedAddress.getAddressFolder();
 			BeanUtils.copyProperties( savedAddress, testAddress2 );
 			savedAddress.setId( saveId );
-			this.userAccountDao.saveAddress( savedAddress );			
+			savedAddress.setAddressFolder( savedFolder );
+			this.userAccountDao.saveAddress( savedAddress );
+			
+			List<Address> savedAddressList2 = this.userAccountDao.retrieveAddressList( folders.get( 0 ) );
+			Assert.assertNotNull( savedAddressList2 );
+			Assert.assertTrue( savedAddressList2.size() > 0 );
+			Assert.assertEquals( savedAddress, savedAddressList2.get( 0 ) );
+			
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );

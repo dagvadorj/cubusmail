@@ -18,7 +18,7 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gwt.eclipse.core.moduleClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -startupUrl cubusmail.jsp -logLevel INFO -port 8888 -war C:\projects\cubusmail\projects\cubusmail\war com.cubusmail.Cubusmail"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -startupUrl cubusmail.jsp -logLevel INFO -port 8888 -war /Users/schlierf/cubusmail/projects/cubusmail/war com.cubusmail.Cubusmail"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="cubusmail"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss2048k -Xmx1024M -Dcubus.config=C:\projects\cubusmail\projects\cubusmail\etc\cubus.properties"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -d32 -Xss2048k -Xmx1024M -Dcubus.config=C:\projects\cubusmail\projects\cubusmail\etc\cubus.properties"/>
 </launchConfiguration>
