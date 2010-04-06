@@ -32,6 +32,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cubusmail.server.util.BeanFactory;
 import com.cubusmail.server.util.CubusConstants;
+import com.cubusmail.server.util.DBManager;
 
 /**
  * Initialize application context and JAAS.
@@ -61,21 +62,25 @@ public class CubusStartupListener implements ServletContextListener {
 	 */
 	public void contextInitialized( ServletContextEvent servletcontextevent ) {
 
+		WebApplicationContext context = WebApplicationContextUtils
+				.getRequiredWebApplicationContext( servletcontextevent.getServletContext() );
+		BeanFactory.setContext( context );
 
 		try {
-			WebApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext( servletcontextevent.getServletContext() );
-			BeanFactory.setContext( context );
+			DBManager dbManager = context.getBean( DBManager.class );
+			dbManager.initInternalDB();
 		}
-		catch ( Throwable e ) {
+		catch (Throwable e) {
 			logger.fatal( e.getMessage(), e );
-			throw new IllegalStateException( "Could not load " + CubusConstants.LOGIN_MODULE_CONFIG_FILE );
+			throw new IllegalStateException( "Could not initialize internal DB!" );
 		}
 
 		try {
-			URL test = CubusStartupListener.class.getClassLoader().getResource( CubusConstants.LOGIN_MODULE_CONFIG_FILE );
+			URL test = CubusStartupListener.class.getClassLoader()
+					.getResource( CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 			System.setProperty( CubusConstants.JAAS_PROPERTY_NANE, test.getFile() );
 		}
-		catch ( Throwable e ) {
+		catch (Throwable e) {
 			logger.fatal( e.getMessage(), e );
 			throw new IllegalStateException( "Could not load " + CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 		}

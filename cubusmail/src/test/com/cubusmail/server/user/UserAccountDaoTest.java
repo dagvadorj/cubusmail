@@ -20,7 +20,6 @@
 package com.cubusmail.server.user;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +43,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.UserAccount;
-import com.ibatis.common.jdbc.ScriptRunner;
-import com.ibatis.common.resources.Resources;
+import com.cubusmail.server.util.DBManager;
 
 /**
  * Unittests for UserAccountDao
@@ -54,7 +52,7 @@ import com.ibatis.common.resources.Resources;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml",
-		"classpath*:com/cubusmail/server/user/testDBContext.xml",
+		"classpath*:com/cubusmail/server/user/testDataSourceContext.xml",
 		"classpath*:com/cubusmail/server/user/testUserAcountContext.xml" })
 @SuppressWarnings("unchecked")
 public class UserAccountDaoTest implements ApplicationContextAware {
@@ -84,15 +82,13 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 	@Before
 	public void initDB() {
 
-		this.userAccountDao = (IUserAccountDao) this.applicationContext.getBean( "userAccountDao" );
-		this.testUserAccount = (UserAccount) this.applicationContext.getBean( "testUserAccount" );
-		this.dataSource = (SingleConnectionDataSource) this.applicationContext.getBean( "dataSource" );
+		this.userAccountDao = this.applicationContext.getBean( IUserAccountDao.class );
+		this.testUserAccount = this.applicationContext.getBean( "testUserAccount", UserAccount.class );
+		this.dataSource = this.applicationContext.getBean( SingleConnectionDataSource.class );
+		DBManager manager = this.applicationContext.getBean( DBManager.class );
 
 		try {
-			Connection con = this.dataSource.getConnection();
-			ScriptRunner runner = new ScriptRunner( con, true, true );
-			runner.runScript( Resources.getResourceAsReader( "sql/createdb_h2.sql" ) );
-
+			manager.initInternalDB();
 			Long id = this.userAccountDao.saveUserAccount( testUserAccount );
 			Assert.assertNotNull( id );
 		}
@@ -294,12 +290,12 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			savedAddress.setId( saveId );
 			savedAddress.setAddressFolder( savedFolder );
 			this.userAccountDao.saveAddress( savedAddress );
-			
+
 			List<Address> savedAddressList2 = this.userAccountDao.retrieveAddressList( folders.get( 0 ) );
 			Assert.assertNotNull( savedAddressList2 );
 			Assert.assertTrue( savedAddressList2.size() > 0 );
 			Assert.assertEquals( savedAddress, savedAddressList2.get( 0 ) );
-			
+
 		}
 		catch (Exception e) {
 			logger.error( e.getMessage(), e );

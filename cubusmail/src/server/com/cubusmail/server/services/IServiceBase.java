@@ -1,6 +1,6 @@
-/* ICubusService.java
+/* IServiceBase.java
 
-   Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
+   Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
    This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
 	
@@ -16,43 +16,20 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-   
  */
-package com.cubusmail.common.services;
+package com.cubusmail.server.services;
 
-import com.cubusmail.common.model.GWTMailbox;
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Interface for CubusService.
+ * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-@RemoteServiceRelativePath("cubusService.rpc")
-public interface ICubusService extends RemoteService {
+public interface IServiceBase {
 
-	/**
-	 * Do login
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 * @throws Exception
-	 */
-	public GWTMailbox login( String username, String password ) throws Exception;
+	public void setPerThreadRequest( ThreadLocal<HttpServletRequest> perThreadRequest );
 
-	/**
-	 * Do logout.
-	 * 
-	 * @throws Exception
-	 */
-	public void logout() throws Exception;
-
-	/**
-	 * get mailbox
-	 * 
-	 * @return
-	 */
-	public GWTMailbox retrieveMailbox();
+	public void setPerThreadResponse( ThreadLocal<HttpServletResponse> perThreadResponse );
 }

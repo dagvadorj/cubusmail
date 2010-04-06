@@ -33,10 +33,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cubusmail.common.exceptions.GWTInvalidAddressException;
-import com.cubusmail.common.exceptions.GWTInvalidSessionException;
 import com.cubusmail.common.exceptions.GWTMessageException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
@@ -61,12 +59,6 @@ import com.cubusmail.server.mail.text.MessageTextUtil;
 import com.cubusmail.server.mail.util.MessageUtils;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
 import com.cubusmail.server.user.IUserAccountDao;
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.BeanIds;
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.server.rpc.RPC;
-import com.google.gwt.user.server.rpc.RPCRequest;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.sun.mail.imap.IMAPFolder;
 
 /**
@@ -74,42 +66,13 @@ import com.sun.mail.imap.IMAPFolder;
  * 
  * @author Juergen Schlierf
  */
-public class MailboxService extends RemoteServiceServlet implements IMailboxService {
+public class MailboxService extends ServiceBase implements IMailboxService {
 
 	private final Log logger = LogFactory.getLog( getClass() );
 
 	private static final long serialVersionUID = 6489103982844626238L;
 
 	private WebApplicationContext applicationContext;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.server.rpc.RemoteServiceServlet#processCall(java.
-	 * lang.String)
-	 */
-	@Override
-	public String processCall( String payload ) throws SerializationException {
-
-		if ( this.applicationContext == null ) {
-			this.applicationContext = WebApplicationContextUtils.getWebApplicationContext( getServletContext() );
-		}
-
-		if ( SessionManager.isLoggedIn() ) {
-			try {
-				return super.processCall( payload );
-			}
-			catch (SerializationException e) {
-				logger.error( e.getMessage(), e );
-				throw e;
-			}
-		}
-		else {
-			RPCRequest rpcRequest = RPC.decodeRequest( payload, this.getClass(), this );
-			return RPC.encodeResponseForFailure( rpcRequest.getMethod(), new GWTInvalidSessionException() );
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -768,6 +731,6 @@ public class MailboxService extends RemoteServiceServlet implements IMailboxServ
 	 */
 	private IUserAccountDao getUserAccountDao() {
 
-		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
+		return getApplicationContext().getBean( IUserAccountDao.class );
 	}
 }

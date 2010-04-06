@@ -52,9 +52,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 	public void init() {
 
 		try {
-			logger.debug( "Create instance of KeyPair..." );
 			this.keyPair = KeyPairGenerator.getInstance( this.algorithm ).generateKeyPair();
-			logger.debug( "...finish" );
 		}
 		catch (NoSuchAlgorithmException e) {
 			logger.error( e.getMessage(), e );
@@ -73,7 +71,6 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
 		Cipher cipher;
 		try {
-			logger.debug( "encrypt..." );
 			cipher = Cipher.getInstance( this.algorithm );
 			cipher.init( Cipher.ENCRYPT_MODE, this.keyPair.getPublic() );
 
@@ -83,8 +80,6 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			cos.write( password.getBytes( "UTF-8" ) );
 			cos.flush();
 			cos.close();
-
-			logger.debug( "...finish" );
 
 			return baosEncryptedData.toByteArray();
 		}

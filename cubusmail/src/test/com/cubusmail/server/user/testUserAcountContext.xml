@@ -27,7 +27,6 @@
 		</property>
 	</bean>
 
-
 	<bean id="testUserAccount" class="com.cubusmail.common.model.UserAccount"
 		scope="prototype">
 		<property name="username" value="testuser" />

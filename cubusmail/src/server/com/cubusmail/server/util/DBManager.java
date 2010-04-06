@@ -1,0 +1,49 @@
+/* DBManager.java
+
+   Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
+   
+   This file is part of Cubusmail (http://code.google.com/p/cubusmail/).
+	
+   This library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
+	
+   This library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+	
+   You should have received a copy of the GNU Lesser General Public
+   License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.cubusmail.server.util;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import com.ibatis.common.jdbc.ScriptRunner;
+import com.ibatis.common.resources.Resources;
+
+/**
+ * TODO: documentation
+ * 
+ * @author Juergen Schlierf
+ */
+public class DBManager extends JdbcDaoSupport {
+
+	private static final String SELECT = "select count(*) from INFORMATION_SCHEMA.TABLES where TABLE_NAME='USERS'";
+
+	public void initInternalDB() throws SQLException, IOException {
+
+		Integer count = getJdbcTemplate().queryForObject( SELECT, Integer.class );
+		if ( count == null || count == 1 ) {
+			Connection con = this.getDataSource().getConnection();
+			ScriptRunner runner = new ScriptRunner( con, true, true );
+			runner.runScript( Resources.getResourceAsReader( "sql/createdb_h2.sql" ) );
+		}
+	}
+}

@@ -27,15 +27,15 @@ import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 
 /**
- * Workbench Canvas.
+ * Workbench manager.
  * 
  * @author Juergen Schlierf
  */
-public class WorkbenchCanvas extends TabSet {
+public class WorkbenchManager extends TabSet {
 
 	private VLayout mailCanvas;
 
-	public WorkbenchCanvas() {
+	public WorkbenchManager() {
 
 		super();
 

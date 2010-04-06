@@ -44,52 +44,20 @@ import com.cubusmail.server.mail.exceptions.IErrorCodes;
 import com.cubusmail.server.mail.security.MailboxCallbackHandler;
 import com.cubusmail.server.mail.security.MailboxLoginModule;
 import com.cubusmail.server.user.IUserAccountDao;
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.BeanIds;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * CubusService implementation.
  * 
  * @author Juergen Schlierf
  */
-public class CubusService extends RemoteServiceServlet implements ICubusService {
+
+public class CubusService extends ServiceBase implements ICubusService {
 
 	private final Log logger = LogFactory.getLog( getClass() );
 
-	private static final long serialVersionUID = -3660151485467438601L;
-
 	public CubusService() {
 
-		// setBeanManager( (HibernateBeanManager) BeanFactory.getBean(
-		// "hibernateBeanManager" ) );
 	}
-
-	/**
-	 * @return
-	 */
-	private IUserAccountDao getUserAccountDao() {
-		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.server.rpc.RemoteServiceServlet#processCall(java.
-	 * lang.String)
-	 */
-	// public String processCall( String payload ) throws SerializationException
-	// {
-	//
-	// try {
-	// return super.processCall( payload );
-	// }
-	// catch (SerializationException e) {
-	// logger.error( e.getMessage(), e );
-	// throw e;
-	// }
-	// }
 
 	/*
 	 * (non-Javadoc)
@@ -115,8 +83,8 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 			// create useraccount
 			if ( account == null ) {
 				account = createUserAccount( mailbox );
-				if ( getThreadLocalRequest().getLocale() != null ) {
-					String lang = getThreadLocalRequest().getLocale().getLanguage();
+				if ( getPerThreadRequest().get().getLocale() != null ) {
+					String lang = getPerThreadRequest().get().getLocale().getLanguage();
 					account.getPreferences().setLanguage( lang );
 				}
 			}
@@ -131,7 +99,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 
 			GWTMailbox gwtMailbox = ConvertUtil.convert( mailbox );
 
-			return gwtMailbox.clone();
+			return gwtMailbox;
 		}
 		catch (LoginException e) {
 			logger.error( e.getMessage(), e );
@@ -178,7 +146,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 
 		if ( SessionManager.get() != null && SessionManager.get().getMailbox() != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
-			return ConvertUtil.convert( mailbox ).clone();
+			return ConvertUtil.convert( mailbox );
 		}
 		else {
 			return null;
@@ -193,7 +161,7 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 	 */
 	private UserAccount createUserAccount( IMailbox mailbox ) {
 
-		UserAccount account = (UserAccount) BeanFactory.getBean( "userAccount" );
+		UserAccount account = getApplicationContext().getBean( "userAccount", UserAccount.class );
 		account.setUsername( mailbox.getUserName() );
 		account.setCreated( new Date() );
 		account.setLastLogin( new Date() );
@@ -226,5 +194,13 @@ public class CubusService extends RemoteServiceServlet implements ICubusService 
 		defaultIdentity.setStandard( true );
 
 		return defaultIdentity;
+	}
+
+	/**
+	 * @return
+	 */
+	private IUserAccountDao getUserAccountDao() {
+
+		return getApplicationContext().getBean( IUserAccountDao.class );
 	}
 }
