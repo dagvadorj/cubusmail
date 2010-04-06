@@ -28,7 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
-import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
@@ -44,7 +43,7 @@ public class GwtRpcController extends RemoteServiceServlet implements Controller
 
 	private ServletContext servletContext;
 
-	private RemoteService remoteService;
+	private IServiceBase remoteService;
 
 	private Class<?> remoteServiceClass;
 
@@ -72,10 +71,9 @@ public class GwtRpcController extends RemoteServiceServlet implements Controller
 	public String processCall( String payload ) throws SerializationException {
 
 		try {
-			if ( this.remoteService instanceof IServiceBase) {
-				((IServiceBase) this.remoteService).setPerThreadRequest( this.perThreadRequest );
-				((IServiceBase) this.remoteService).setPerThreadResponse( this.perThreadResponse );
-			}
+			this.remoteService.setPerThreadRequest( this.perThreadRequest );
+			this.remoteService.setPerThreadResponse( this.perThreadResponse );
+
 			RPCRequest rpcRequest = RPC.decodeRequest( payload, this.remoteServiceClass, this );
 			onAfterRequestDeserialized( rpcRequest );
 			return RPC.invokeAndEncodeResponse( this.remoteService, rpcRequest.getMethod(), rpcRequest.getParameters(),
@@ -113,7 +111,7 @@ public class GwtRpcController extends RemoteServiceServlet implements Controller
 	/**
 	 * @param remoteService
 	 */
-	public void setRemoteService( RemoteService remoteService ) {
+	public void setRemoteService( IServiceBase remoteService ) {
 
 		this.remoteService = remoteService;
 		this.remoteServiceClass = this.remoteService.getClass();

@@ -70,7 +70,7 @@ public class CubusService extends ServiceBase implements ICubusService {
 
 		try {
 			LoginContext context = new LoginContext( MailboxLoginModule.class.getSimpleName(),
-					new MailboxCallbackHandler( username, password ) );
+					new MailboxCallbackHandler( getApplicationContext(), username, password ) );
 
 			context.login();
 

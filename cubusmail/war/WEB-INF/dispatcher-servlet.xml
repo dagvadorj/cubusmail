@@ -11,6 +11,7 @@
 			<value>
 				/**/cubusService.rpc=cubusService
 				/**/mailboxService.rpc=mailboxService
+				/**/userAccountService.rpc=userAccountService
             </value>
 		</property>
 	</bean>
@@ -24,6 +25,12 @@
 	<bean id="mailboxService" class="com.cubusmail.server.services.GwtRpcController">
 		<property name="remoteService">
 			<bean class="com.cubusmail.server.services.MailboxService" />
+		</property>
+	</bean>
+
+	<bean id="userAccountService" class="com.cubusmail.server.services.GwtRpcController">
+		<property name="remoteService">
+			<bean class="com.cubusmail.server.services.UserAccountService" />
 		</property>
 	</bean>
 

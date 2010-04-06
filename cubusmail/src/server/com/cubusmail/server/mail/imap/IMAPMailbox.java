@@ -38,16 +38,18 @@ import javax.mail.event.FolderListener;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import com.cubusmail.common.model.UserAccount;
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.exceptions.IErrorCodes;
 import com.cubusmail.server.mail.exceptions.MailFolderException;
 import com.cubusmail.server.mail.security.MailboxAuthenticator;
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.CubusConstants;
 import com.sun.mail.imap.IMAPStore;
 import com.sun.mail.imap.Rights.Right;
 
@@ -57,9 +59,11 @@ import com.sun.mail.imap.Rights.Right;
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-public class IMAPMailbox implements IMailbox {
+public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 
 	private final Log logger = LogFactory.getLog( getClass() );
+
+	private ApplicationContext applicationContext;
 
 	// Javamail session
 	private Session session;
@@ -823,8 +827,13 @@ public class IMAPMailbox implements IMailbox {
 	 */
 	private IMailFolder createMailFolder( Folder folder ) {
 
-		IMAPMailFolder mailFolder = (IMAPMailFolder) BeanFactory.getBean( "imapMailFolder" );
+		IMAPMailFolder mailFolder = this.applicationContext.getBean( IMAPMailFolder.class );
 		mailFolder.init( folder );
 		return mailFolder;
+	}
+
+	public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException {
+
+		this.applicationContext = applicationContext;
 	}
 }

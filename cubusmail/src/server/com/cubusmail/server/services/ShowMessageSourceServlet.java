@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
-import com.cubusmail.server.util.CubusConstants;
 
 /**
  * Servlet for showing the message source.

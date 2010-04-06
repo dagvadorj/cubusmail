@@ -49,12 +49,12 @@ import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.Preferences;
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.mail.IMailFolder;
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
-import com.cubusmail.server.util.CubusConstants;
 import com.sun.mail.imap.IMAPFolder;
 
 /**

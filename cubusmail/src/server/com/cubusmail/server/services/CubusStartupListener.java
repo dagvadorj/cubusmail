@@ -30,8 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.CubusConstants;
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.util.DBManager;
 
 /**
@@ -64,7 +63,6 @@ public class CubusStartupListener implements ServletContextListener {
 
 		WebApplicationContext context = WebApplicationContextUtils
 				.getRequiredWebApplicationContext( servletcontextevent.getServletContext() );
-		BeanFactory.setContext( context );
 
 		try {
 			DBManager dbManager = context.getBean( DBManager.class );

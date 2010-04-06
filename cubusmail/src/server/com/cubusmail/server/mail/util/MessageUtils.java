@@ -58,7 +58,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.cubusmail.common.model.MessageListFields;
-import com.cubusmail.server.util.CubusConstants;
+import com.cubusmail.common.util.CubusConstants;
 import com.sun.mail.imap.IMAPFolder;
 
 /**

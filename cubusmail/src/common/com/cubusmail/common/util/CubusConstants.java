@@ -17,7 +17,7 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cubusmail.server.util;
+package com.cubusmail.common.util;
 
 /**
  * Globale constants for cubusmail application.
@@ -27,7 +27,6 @@ package com.cubusmail.server.util;
 public interface CubusConstants {
 
 	public static final String APPLICATION_NAME = "Cubusmail";
-	public static final String CUBUS_CONFIG_PROPERTY = "cubus.config";
 
 	public static final String JAAS_PROPERTY_NANE = "java.security.auth.login.config";
 

@@ -62,13 +62,12 @@ import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.Preferences;
 import com.cubusmail.common.model.UserAccount;
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.mail.text.MessageTextMode;
 import com.cubusmail.server.mail.text.MessageTextUtil;
 import com.cubusmail.server.mail.util.MessageUtils;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
 import com.cubusmail.server.services.ConvertUtil;
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.CubusConstants;
 import com.sun.mail.imap.IMAPFolder;
 
 /**
@@ -76,6 +75,7 @@ import com.sun.mail.imap.IMAPFolder;
  * 
  * @author Juergen Schlierf
  */
+@SuppressWarnings("serial")
 public class MessageHandler implements Serializable, ApplicationContextAware {
 
 	private final Log logger = LogFactory.getLog( getClass() );
@@ -85,8 +85,6 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 	private static final String HEADER_NOTIFICATION = "Disposition-Notification-To";
 
 	private static final String HEADER_PRIORITY = "X-Priority";
-
-	private static final long serialVersionUID = -968726069586298205L;
 
 	private Session session;
 	private MimeMessage message;
@@ -112,30 +110,11 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 
 	}
 
-	/**
-	 * @param session
-	 * @return
-	 */
-	public static MessageHandler getInstance( Session session ) {
-
-		MessageHandler instance = (MessageHandler) BeanFactory.getBean( "messageHandler" );
-		instance.init( session );
-
-		return instance;
-	}
-
-	public static MessageHandler getInstance( Session session, MimeMessage message ) {
-
-		MessageHandler instance = (MessageHandler) BeanFactory.getBean( "messageHandler" );
-		instance.init( session, message );
-
-		return instance;
-	}
 
 	/**
 	 * @param session
 	 */
-	private void init( Session session ) {
+	public void init( Session session ) {
 
 		init( session, new MimeMessage( session ) );
 	}
@@ -144,7 +123,7 @@ public class MessageHandler implements Serializable, ApplicationContextAware {
 	 * @param session
 	 * @param message
 	 */
-	private void init( Session session, MimeMessage message ) {
+	public void init( Session session, MimeMessage message ) {
 
 		this.session = session;
 		this.message = message;

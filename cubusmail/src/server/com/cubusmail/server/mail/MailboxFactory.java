@@ -22,38 +22,43 @@ package com.cubusmail.server.mail;
 
 import java.util.Map;
 
-import com.cubusmail.server.util.BeanFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * Create a mailbox (IMAP only at the moment)
  * 
  * @author Juergen Schlierf
  */
-public class MailboxFactory {
-
-	private final static String BEAN_ID = "mailboxFactory";
+public class MailboxFactory implements ApplicationContextAware {
 
 	private Map<String, String> mailboxMap = null;
 
-	public static MailboxFactory get() {
-
-		return (MailboxFactory) BeanFactory.getBean( BEAN_ID );
-	}
+	private ApplicationContext applicationContext;
 
 	public IMailbox createMailbox( String type ) {
 
 		if ( this.mailboxMap != null ) {
-			return (IMailbox) BeanFactory.getBean( this.mailboxMap.get( type ) );
-		} else {
+			return this.applicationContext.getBean( this.mailboxMap.get( type ), IMailbox.class );
+		}
+		else {
 			return null;
 		}
 	}
 
 	/**
-	 * @param mailboxMap The mailboxMap to set.
+	 * @param mailboxMap
+	 *            The mailboxMap to set.
 	 */
 	public void setMailboxMap( Map<String, String> mailboxMap ) {
 
 		this.mailboxMap = mailboxMap;
+	}
+
+	@Override
+	public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException {
+
+		this.applicationContext = applicationContext;
 	}
 }

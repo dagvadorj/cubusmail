@@ -41,7 +41,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.util.HtmlUtils;
 
-import com.cubusmail.common.exceptions.GWTInvalidSessionException;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressListFields;
@@ -53,60 +52,20 @@ import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.util.MessageUtils;
 import com.cubusmail.server.mail.util.MessageUtils.AddressStringType;
 import com.cubusmail.server.user.IUserAccountDao;
-import com.cubusmail.server.util.BeanFactory;
-import com.cubusmail.server.util.BeanIds;
-import com.google.gwt.user.client.rpc.SerializationException;
-import com.google.gwt.user.server.rpc.RPC;
-import com.google.gwt.user.server.rpc.RPCRequest;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * Implementation of UserAccountService.
  * 
  * @author Juergen Schlierf
  */
-public class UserAccountService extends RemoteServiceServlet implements IUserAccountService {
+public class UserAccountService extends ServiceBase implements IUserAccountService {
 
-	private static final long serialVersionUID = 3680152258110434790L;
-
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	public UserAccountService() {
 
 	}
 
-	/**
-	 * @return
-	 */
-	private IUserAccountDao getUserAccountDao() {
-
-		return (IUserAccountDao) BeanFactory.getBean( BeanIds.USER_ACCOUNT_DAO );
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.google.gwt.user.server.rpc.RemoteServiceServlet#processCall(java.
-	 * lang.String)
-	 */
-	@Override
-	public String processCall( String payload ) throws SerializationException {
-
-		if ( SessionManager.isLoggedIn() ) {
-			try {
-				return super.processCall( payload );
-			}
-			catch (SerializationException e) {
-				logger.error( e.getMessage(), e );
-				throw e;
-			}
-		}
-		else {
-			RPCRequest rpcRequest = RPC.decodeRequest( payload, this.getClass(), this );
-			return RPC.encodeResponseForFailure( rpcRequest.getMethod(), new GWTInvalidSessionException() );
-		}
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -322,7 +281,7 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 		}
 		catch (MessagingException e) {
 			// should never happen
-			logger.error( e.getMessage() );
+			log.error( e.getMessage() );
 		}
 
 		return result;
@@ -419,5 +378,13 @@ public class UserAccountService extends RemoteServiceServlet implements IUserAcc
 		Collections.sort( result, new BeanComparator( "rawOffset" ) );
 
 		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	private IUserAccountDao getUserAccountDao() {
+
+		return getApplicationContext().getBean( IUserAccountDao.class );
 	}
 }

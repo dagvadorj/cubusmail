@@ -10,8 +10,7 @@
 
 	<context:property-placeholder location="file:${cubus.config}" />
 	
-	<bean id="mailboxFactory" class="com.cubusmail.server.mail.MailboxFactory"
-		scope="singleton">
+	<bean id="mailboxFactory" class="com.cubusmail.server.mail.MailboxFactory">
 		<property name="mailboxMap">
 			<map>
 				<entry key="imap" value="imapMailbox" />

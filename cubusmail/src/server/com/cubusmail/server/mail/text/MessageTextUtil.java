@@ -44,9 +44,9 @@ import org.htmlcleaner.TagNode;
 import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.model.Preferences;
+import com.cubusmail.common.util.CubusConstants;
 import com.cubusmail.server.mail.MessageHandler;
 import com.cubusmail.server.mail.util.MessageUtils;
-import com.cubusmail.server.util.CubusConstants;
 
 /**
  * Util class for message text preparation.

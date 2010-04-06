@@ -28,6 +28,8 @@ import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * Security callback handler for authentication.
  * 
@@ -38,8 +40,11 @@ public class MailboxCallbackHandler implements CallbackHandler {
 	private String username;
 	private String password;
 
-	public MailboxCallbackHandler( String username, String  password) {
+	private ApplicationContext applicationContext;
 
+	public MailboxCallbackHandler( ApplicationContext context, String username, String password ) {
+
+		this.applicationContext = context;
 		this.username = username;
 		this.password = password;
 	}
@@ -53,17 +58,28 @@ public class MailboxCallbackHandler implements CallbackHandler {
 	 */
 	public void handle( Callback[] callbacks ) throws IOException, UnsupportedCallbackException {
 
-		for ( Callback callback : callbacks ) {
+		for (Callback callback : callbacks) {
 			if ( callback instanceof NameCallback ) {
 				NameCallback nc = (NameCallback) callback;
 				nc.setName( this.username );
-			} else if ( callback instanceof PasswordCallback ) {
+			}
+			else if ( callback instanceof PasswordCallback ) {
 				PasswordCallback pc = (PasswordCallback) callback;
 				pc.setPassword( this.password.toCharArray() );
-			} else {
+			}
+			else {
 				throw new UnsupportedCallbackException( callback, "Unrecognized Callback" );
 			}
 		}
 	}
 
+	public void setApplicationContext( ApplicationContext applicationContext ) {
+
+		this.applicationContext = applicationContext;
+	}
+
+	public ApplicationContext getApplicationContext() {
+
+		return applicationContext;
+	}
 }

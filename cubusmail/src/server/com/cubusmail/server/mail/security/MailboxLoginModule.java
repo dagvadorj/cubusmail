@@ -52,7 +52,7 @@ public class MailboxLoginModule implements LoginModule {
 
 	// initial state
 	private Subject subject;
-	private CallbackHandler callbackHandler;
+	private MailboxCallbackHandler callbackHandler;
 
 	// the authentication status
 	private boolean succeeded = false;
@@ -72,7 +72,7 @@ public class MailboxLoginModule implements LoginModule {
 			Map<String, ?> options ) {
 
 		this.subject = subject;
-		this.callbackHandler = callbackHandler;
+		this.callbackHandler = (MailboxCallbackHandler) callbackHandler;
 	}
 
 	/*
@@ -105,9 +105,8 @@ public class MailboxLoginModule implements LoginModule {
 			((PasswordCallback) callbacks[1]).clearPassword();
 
 			// start authentication
-			// IMailbox mailbox = IMailbox.Factory.getInstance(
-			// IMailbox.TYPE_IMAP, username, new String( password ) );
-			IMailbox mailbox = MailboxFactory.get().createMailbox( IMailbox.TYPE_IMAP );
+			MailboxFactory factory = this.callbackHandler.getApplicationContext().getBean( MailboxFactory.class );
+			IMailbox mailbox = factory.createMailbox( IMailbox.TYPE_IMAP );
 			mailbox.init( username, new String( password ) );
 
 			logger.debug( "Start login..." );

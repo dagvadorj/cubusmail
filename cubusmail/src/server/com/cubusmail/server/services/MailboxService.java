@@ -27,12 +27,12 @@ import javax.mail.Flags;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
+import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.cubusmail.common.exceptions.GWTInvalidAddressException;
 import com.cubusmail.common.exceptions.GWTMessageException;
@@ -68,11 +68,9 @@ import com.sun.mail.imap.IMAPFolder;
  */
 public class MailboxService extends ServiceBase implements IMailboxService {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private static final long serialVersionUID = 6489103982844626238L;
-
-	private WebApplicationContext applicationContext;
 
 	/*
 	 * (non-Javadoc)
@@ -89,12 +87,12 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			mailbox.reloadFolder();
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		GWTMailFolder[] result = ConvertUtil.convert( mailbox.getMailFolderList() );
 
-		logger.debug( "Time for retrieveFolderTree(): " + (System.currentTimeMillis() - millis) + "ms" );
+		log.debug( "Time for retrieveFolderTree(): " + (System.currentTimeMillis() - millis) + "ms" );
 
 		return result;
 	}
@@ -109,17 +107,17 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMailFolder createFolder( String parentFolderId, String folderName ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "creating folder... " + folderName );
+		log.debug( "creating folder... " + folderName );
 
 		IMailFolder newFolder;
 		try {
 			newFolder = mailbox.createFolder( parentFolderId, folderName );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 
 			return ConvertUtil.convert( newFolder, true );
 		}
 		catch (MailFolderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, folderName );
 			}
@@ -139,17 +137,17 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMailFolder moveFolder( String sourceFolderId, String targetFolderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "moving folder... " + sourceFolderId );
+		log.debug( "moving folder... " + sourceFolderId );
 
 		IMailFolder sourceFolder = mailbox.getMailFolderById( sourceFolderId );
 		try {
 			IMailFolder folder = mailbox.moveFolder( sourceFolderId, targetFolderId );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 
 			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, sourceFolder.getName() );
 			}
@@ -169,16 +167,16 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMailFolder renameFolder( String folderId, String newName ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "renaming folder... " + folderId );
+		log.debug( "renaming folder... " + folderId );
 
 		try {
 			IMailFolder folder = mailbox.renameFolder( folderId, newName );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 
 			return ConvertUtil.convert( folder, true );
 		}
 		catch (MailFolderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			if ( e.hasErrorCode( IErrorCodes.EXCEPTION_FOLDER_ALREADY_EXIST ) ) {
 				throw new GWTMailFolderExistException( null, e.getFolder().getName() );
 			}
@@ -198,14 +196,14 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public void deleteFolder( String folderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "deleting folder " + folderId );
+		log.debug( "deleting folder " + folderId );
 
 		try {
 			mailbox.deleteFolder( folderId );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 		}
 		catch (MailFolderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMailFolderException( null, e.getFolder().getName() );
 		}
 	}
@@ -220,14 +218,14 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public void emptyFolder( String folderId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "emptying folder " + folderId );
+		log.debug( "emptying folder " + folderId );
 
 		try {
 			mailbox.emptyFolder( folderId );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 		}
 		catch (MailFolderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMailFolderException( null, e.getFolder().getName() );
 		}
 	}
@@ -245,7 +243,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 		if ( folderId != null ) {
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			UserAccount account = SessionManager.get().getUserAccount();
-			logger.debug( "retrieving messages from " + folderId + " ..." );
+			log.debug( "retrieving messages from " + folderId + " ..." );
 
 			try {
 				IMailFolder currentFolder = mailbox.getMailFolderById( folderId );
@@ -274,7 +272,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 					Preferences preferences = SessionManager.get().getPreferences();
 
 					GWTMessageRecord[] messageStringArray = ConvertUtil.convertMessagesToStringArray(
-							this.applicationContext, preferences, (IMAPFolder) currentFolder.getFolder(), pageSize,
+							getApplicationContext(), preferences, (IMAPFolder) currentFolder.getFolder(), pageSize,
 							pagedMessages );
 
 					return new GWTMessageList( messageStringArray, msgs.length );
@@ -283,7 +281,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 				return null;
 			}
 			catch (MessagingException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -301,24 +299,24 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMessage retrieveMessage( String folderId, long messageId, boolean loadImages ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "retrieving message for " + messageId + " ..." );
+		log.debug( "retrieving message for " + messageId + " ..." );
 
 		try {
 			IMailFolder selectedFolder = mailbox.getCurrentFolder();
 			Message msg = selectedFolder.getMessageById( messageId );
 
-			MessageHandler handler = MessageHandler.getInstance( mailbox.getJavaMailSession(), (MimeMessage) msg );
+			MessageHandler handler = getMessageHandler( mailbox.getJavaMailSession(), (MimeMessage) msg );
 			handler.readBodyContent( loadImages, MessageTextMode.DISPLAY );
 			GWTMessage result = handler.getGWTMessage();
 
 			return result;
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -360,7 +358,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 		if ( messageIds != null && messageIds.length > 0 ) {
-			logger.debug( "marking " + messageIds.length + " messages..." );
+			log.debug( "marking " + messageIds.length + " messages..." );
 
 			try {
 				IMailFolder currentFolder = mailbox.getCurrentFolder();
@@ -383,10 +381,10 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 						throw new IllegalArgumentException( "Unknown flag: " + flag );
 					}
 				}
-				logger.debug( "...successful" );
+				log.debug( "...successful" );
 			}
 			catch (MessagingException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -404,18 +402,18 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 		IMailbox mailbox = SessionManager.get().getMailbox();
 
 		if ( messageIds != null && messageIds.length > 0 ) {
-			logger.debug( "copy/move " + messageIds.length + " messages..." );
+			log.debug( "copy/move " + messageIds.length + " messages..." );
 
 			try {
 				mailbox.copyMessages( messageIds, targetFolderId );
-				logger.debug( "...successful" );
+				log.debug( "...successful" );
 
 				if ( toMove ) {
 					mailbox.deleteMessages( messageIds );
 				}
 			}
 			catch (MessagingException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -433,7 +431,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 		IMailbox mailbox = SessionManager.get().getMailbox();
 
 		if ( messageIds != null && messageIds.length > 0 ) {
-			logger.debug( "delete " + messageIds.length + " messages..." );
+			log.debug( "delete " + messageIds.length + " messages..." );
 
 			try {
 				if ( mailbox.getCurrentFolder().isTrash() || mailbox.getTrashFolder() == null ) {
@@ -444,7 +442,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 				}
 			}
 			catch (MessagingException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 				throw new GWTMessageException( e.getMessage() );
 			}
 		}
@@ -460,14 +458,14 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public void sendMessage( GWTMessage message ) throws Exception {
 
 		try {
-			logger.debug( "sending message..." );
+			log.debug( "sending message..." );
 			MessageHandler messageHandler = SessionManager.get().getCurrentComposeMessage();
 			messageHandler.setGWTMessage( message );
 			messageHandler.send();
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			IMailFolder sentFolder = mailbox.getSentFolder();
 			messageHandler.saveToFolder( sentFolder, false );
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 
 			try {
 				getUserAccountDao().saveRecipients( SessionManager.get().getUserAccount(),
@@ -475,22 +473,22 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			}
 			catch (Throwable e) {
 				// catch all exceptions
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 		}
 		catch (AddressException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTInvalidAddressException( e.getMessage(), e.getRef() );
 		}
 		catch (SendFailedException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			if ( "Invalid Addresses".equals( e.getMessage() ) ) {
 				String address = "";
 				try {
 					address = MessageUtils.getMailAdressString( e.getInvalidAddresses(), AddressStringType.PERSONAL );
 				}
 				catch (MessagingException ex) {
-					logger.error( ex.getMessage(), ex );
+					log.error( ex.getMessage(), ex );
 				}
 				throw new GWTInvalidAddressException( e.getMessage(), address );
 			}
@@ -499,11 +497,11 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			}
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -516,9 +514,8 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	 */
 	public void prepareNewMessage() {
 
-		logger.debug( "preparing new compose message..." );
-		MessageHandler newMessageHandler = MessageHandler.getInstance( SessionManager.get().getMailbox()
-				.getJavaMailSession() );
+		log.debug( "preparing new compose message..." );
+		MessageHandler newMessageHandler = getMessageHandler( SessionManager.get().getMailbox().getJavaMailSession() );
 		SessionManager.get().setCurrentComposeMessage( newMessageHandler );
 	}
 
@@ -532,13 +529,13 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMessage prepareReplyMessage( long messageId, boolean replyAll ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "preparing reply message..." );
+		log.debug( "preparing reply message..." );
 
 		try {
 			IMailFolder currentFolder = mailbox.getCurrentFolder();
 			Message msg = currentFolder.getMessageById( messageId );
 
-			MessageHandler replyMessageHandler = MessageHandler.getInstance( mailbox.getJavaMailSession() );
+			MessageHandler replyMessageHandler = getMessageHandler( mailbox.getJavaMailSession() );
 			replyMessageHandler.createReplyMessage( msg, replyAll );
 
 			SessionManager.get().setCurrentComposeMessage( replyMessageHandler );
@@ -546,11 +543,11 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			return replyMessageHandler.getGWTMessage();
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -560,7 +557,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	 */
 	public void cancelComposeMessage() {
 
-		logger.debug( "remove compose message from session..." );
+		log.debug( "remove compose message from session..." );
 		SessionManager.get().setCurrentComposeMessage( null );
 	}
 
@@ -574,13 +571,13 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMessage openDraftMessage( long messageId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "open message for " + messageId + " ..." );
+		log.debug( "open message for " + messageId + " ..." );
 
 		try {
 			IMailFolder selectedFolder = mailbox.getCurrentFolder();
 			Message msg = selectedFolder.getMessageById( messageId );
 
-			MessageHandler readHandler = MessageHandler.getInstance( mailbox.getJavaMailSession(), (MimeMessage) msg );
+			MessageHandler readHandler = getMessageHandler( mailbox.getJavaMailSession(), (MimeMessage) msg );
 			readHandler.readBodyContent( true, MessageTextMode.DRAFT );
 			prepareNewMessage();
 
@@ -589,11 +586,11 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			return result;
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -608,28 +605,28 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public GWTMessage prepareForwardMessage( long messageId ) throws Exception {
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
-		logger.debug( "preparing forward message..." );
+		log.debug( "preparing forward message..." );
 
 		try {
 			IMailFolder currentFolder = mailbox.getCurrentFolder();
 			Message msg = currentFolder.getMessageById( messageId );
 
-			MessageHandler forardMessageHandler = MessageHandler.getInstance( mailbox.getJavaMailSession() );
-			forardMessageHandler.createForwardMessage( msg );
+			MessageHandler forwardMessageHandler = getMessageHandler( mailbox.getJavaMailSession() );
+			forwardMessageHandler.createForwardMessage( msg );
 
-			SessionManager.get().setCurrentComposeMessage( forardMessageHandler );
+			SessionManager.get().setCurrentComposeMessage( forwardMessageHandler );
 
-			GWTMessage result = forardMessageHandler.getGWTMessage();
-			result.setAttachments( forardMessageHandler.getGWTComposeAttachments() );
+			GWTMessage result = forwardMessageHandler.getGWTMessage();
+			result.setAttachments( forwardMessageHandler.getGWTComposeAttachments() );
 
 			return result;
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -642,7 +639,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	 */
 	public GWTAttachment[] retrieveCurrentComposeMessageAttachments() throws Exception {
 
-		logger.debug( "retrieving compose message..." );
+		log.debug( "retrieving compose message..." );
 		MessageHandler composeMessage = SessionManager.get().getCurrentComposeMessage();
 		return composeMessage.getGWTComposeAttachments();
 	}
@@ -655,7 +652,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	 */
 	public GWTAttachment[] removeAttachmentFromComposeMessage( int index ) throws Exception {
 
-		logger.debug( "removing attachment from compose message..." );
+		log.debug( "removing attachment from compose message..." );
 		MessageHandler composeMessage = SessionManager.get().getCurrentComposeMessage();
 		if ( composeMessage.getComposeAttachments() != null && composeMessage.getComposeAttachments().size() > 0 ) {
 			composeMessage.getComposeAttachments().remove( index );
@@ -674,7 +671,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	public void saveMessageAsDraft( GWTMessage message ) throws Exception {
 
 		try {
-			logger.debug( "saving message to draft..." );
+			log.debug( "saving message to draft..." );
 			MessageHandler messageHandler = SessionManager.get().getCurrentComposeMessage();
 			IMailbox mailbox = SessionManager.get().getMailbox();
 			IMailFolder draftFolder = mailbox.getDraftFolder();
@@ -686,18 +683,18 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 				long[] deleteId = new long[] { message.getId() };
 				deleteMessages( deleteId );
 			}
-			logger.debug( "...successful" );
+			log.debug( "...successful" );
 		}
 		catch (AddressException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTInvalidAddressException( e.getMessage(), e.getRef() );
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTMessageException( e.getMessage() );
 		}
 	}
@@ -732,5 +729,28 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	private IUserAccountDao getUserAccountDao() {
 
 		return getApplicationContext().getBean( IUserAccountDao.class );
+	}
+
+	/**
+	 * @param mailSession
+	 * @return
+	 */
+	private MessageHandler getMessageHandler( Session mailSession ) {
+
+		MessageHandler handler = getApplicationContext().getBean( MessageHandler.class );
+		handler.init( mailSession );
+		return handler;
+	}
+
+	/**
+	 * @param mailSession
+	 * @param message
+	 * @return
+	 */
+	private MessageHandler getMessageHandler( Session mailSession, MimeMessage message ) {
+
+		MessageHandler handler = getApplicationContext().getBean( MessageHandler.class );
+		handler.init( mailSession, message );
+		return handler;
 	}
 }

@@ -36,13 +36,8 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/cubusmail/mailboxService.rpc</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>userAccountService</servlet-name>
-		<servlet-class>com.cubusmail.server.services.UserAccountService</servlet-class>
-	</servlet>
 	<servlet-mapping>
-		<servlet-name>userAccountService</servlet-name>
+		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/cubusmail/userAccountService.rpc</url-pattern>
 	</servlet-mapping>
 
