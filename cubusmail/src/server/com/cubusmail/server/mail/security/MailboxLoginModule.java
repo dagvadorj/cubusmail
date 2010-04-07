@@ -1,4 +1,4 @@
-/* MailboxCallbackHandler.java
+/* MailboxLoginModule.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -36,9 +36,12 @@ import javax.security.auth.spi.LoginModule;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.cubusmail.server.mail.IMailbox;
 import com.cubusmail.server.mail.MailboxFactory;
+import com.cubusmail.server.mail.SessionManager;
 import com.cubusmail.server.mail.exceptions.IErrorCodes;
 
 /**
@@ -48,11 +51,11 @@ import com.cubusmail.server.mail.exceptions.IErrorCodes;
  */
 public class MailboxLoginModule implements LoginModule {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	// initial state
 	private Subject subject;
-	private MailboxCallbackHandler callbackHandler;
+	private CallbackHandler callbackHandler;
 
 	// the authentication status
 	private boolean succeeded = false;
@@ -72,7 +75,7 @@ public class MailboxLoginModule implements LoginModule {
 			Map<String, ?> options ) {
 
 		this.subject = subject;
-		this.callbackHandler = (MailboxCallbackHandler) callbackHandler;
+		this.callbackHandler = callbackHandler;
 	}
 
 	/*
@@ -83,7 +86,7 @@ public class MailboxLoginModule implements LoginModule {
 	public boolean login() throws LoginException {
 
 		if ( this.callbackHandler == null ) {
-			logger.fatal( "callbackHandler is null" );
+			log.fatal( "callbackHandler is null" );
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
 		}
 
@@ -105,27 +108,30 @@ public class MailboxLoginModule implements LoginModule {
 			((PasswordCallback) callbacks[1]).clearPassword();
 
 			// start authentication
-			MailboxFactory factory = this.callbackHandler.getApplicationContext().getBean( MailboxFactory.class );
+			// TODO: very dirty, must be replaced by Spring Security stuff
+			ApplicationContext context = WebApplicationContextUtils.getRequiredWebApplicationContext( SessionManager
+					.getRequest().getSession().getServletContext() );
+			MailboxFactory factory = context.getBean( MailboxFactory.class );
 			IMailbox mailbox = factory.createMailbox( IMailbox.TYPE_IMAP );
 			mailbox.init( username, new String( password ) );
 
-			logger.debug( "Start login..." );
+			log.debug( "Start login..." );
 			mailbox.login();
-			logger.debug( "Login successful" );
+			log.debug( "Login successful" );
 
 			this.mailboxPrincipal = new MailboxPrincipal( username, mailbox );
 			this.succeeded = true;
 		}
 		catch (IOException ioe) {
-			logger.error( ioe.getMessage(), ioe );
+			log.error( ioe.getMessage(), ioe );
 			throw new LoginException( ioe.toString() );
 		}
 		catch (UnsupportedCallbackException uce) {
-			logger.error( uce.getMessage(), uce );
+			log.error( uce.getMessage(), uce );
 			throw new LoginException( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED );
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			mapMessagingException( e );
 		}
 
@@ -187,15 +193,15 @@ public class MailboxLoginModule implements LoginModule {
 	 */
 	public boolean logout() throws LoginException {
 
-		logger.debug( "Start logout..." );
+		log.debug( "Start logout..." );
 		try {
 			SecurityUtils.getMailboxPrincipal( this.subject ).getMailbox().logout();
 		}
 		catch (MessagingException e) {
 			// nothing to do
-			logger.warn( e.getMessage() );
+			log.warn( e.getMessage() );
 		}
-		logger.debug( "Logout successful" );
+		log.debug( "Logout successful" );
 
 		this.subject.getPrincipals().remove( SecurityUtils.getMailboxPrincipal( this.subject ) );
 

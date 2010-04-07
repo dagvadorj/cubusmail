@@ -39,7 +39,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  */
 public class PreferencesTypeHandler implements TypeHandlerCallback {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -76,16 +76,16 @@ public class PreferencesTypeHandler implements TypeHandlerCallback {
 				}
 			}
 			catch (JSONException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 			catch (NumberFormatException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 			catch (IllegalArgumentException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 			catch (IllegalAccessException e) {
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 		}
 
@@ -108,7 +108,7 @@ public class PreferencesTypeHandler implements TypeHandlerCallback {
 			}
 			catch (Exception e) {
 				setter.setString( "" );
-				logger.error( e.getMessage(), e );
+				log.error( e.getMessage(), e );
 			}
 		}
 		else {

@@ -40,7 +40,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private String algorithm;
 
@@ -55,7 +55,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			this.keyPair = KeyPairGenerator.getInstance( this.algorithm ).generateKeyPair();
 		}
 		catch (NoSuchAlgorithmException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}
@@ -84,7 +84,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			return baosEncryptedData.toByteArray();
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}
@@ -100,7 +100,7 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 
 		Cipher cipher;
 		try {
-			logger.debug( "decrypt..." );
+			log.debug( "decrypt..." );
 			cipher = Cipher.getInstance( this.algorithm );
 			cipher.init( Cipher.DECRYPT_MODE, this.keyPair.getPrivate() );
 
@@ -114,12 +114,12 @@ public class MailPasswordEncryptor implements IMailPasswordEncryptor {
 			baosDecryptedData.flush();
 			cis.close();
 
-			logger.debug( "...finish" );
+			log.debug( "...finish" );
 
 			return new String( baosDecryptedData.toByteArray() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new IllegalStateException( e.getMessage(), e );
 		}
 	}

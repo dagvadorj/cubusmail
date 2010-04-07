@@ -16,5 +16,19 @@
 		<config>war/WEB-INF/dispatcher-servlet.xml</config>
 	</configs>
 	<configSets>
+		<configSet>
+			<name><![CDATA[group]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/resources/applicationContext.xml</config>
+				<config>src/resources/applicationDataSourceContext.xml</config>
+				<config>src/resources/applicationMailContext.xml</config>
+				<config>src/test/com/cubusmail/server/user/testDataSourceContext.xml</config>
+				<config>src/test/com/cubusmail/server/user/testPerformanceDataSourceContext.xml</config>
+				<config>src/test/com/cubusmail/server/user/testUserAcountContext.xml</config>
+				<config>war/WEB-INF/dispatcher-servlet.xml</config>
+			</configs>
+		</configSet>
 	</configSets>
 </beansProjectDescription>

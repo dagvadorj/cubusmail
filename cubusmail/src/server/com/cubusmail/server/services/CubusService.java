@@ -53,11 +53,9 @@ import com.cubusmail.server.user.IUserAccountDao;
 
 public class CubusService extends ServiceBase implements ICubusService {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
-	public CubusService() {
-
-	}
+	private IUserAccountDao userAccountDao;
 
 	/*
 	 * (non-Javadoc)
@@ -69,8 +67,9 @@ public class CubusService extends ServiceBase implements ICubusService {
 	public GWTMailbox login( String username, String password ) throws Exception {
 
 		try {
+
 			LoginContext context = new LoginContext( MailboxLoginModule.class.getSimpleName(),
-					new MailboxCallbackHandler( getApplicationContext(), username, password ) );
+					new MailboxCallbackHandler( username, password ) );
 
 			context.login();
 
@@ -79,7 +78,7 @@ public class CubusService extends ServiceBase implements ICubusService {
 
 			IMailbox mailbox = SessionManager.get().getMailbox();
 
-			UserAccount account = getUserAccountDao().getUserAccountByUsername( username );
+			UserAccount account = this.userAccountDao.getUserAccountByUsername( username );
 			// create useraccount
 			if ( account == null ) {
 				account = createUserAccount( mailbox );
@@ -94,7 +93,7 @@ public class CubusService extends ServiceBase implements ICubusService {
 				}
 				account.setLastLogin( new Date() );
 			}
-			getUserAccountDao().saveUserAccount( account );
+			this.userAccountDao.saveUserAccount( account );
 			mailbox.setUserAccount( account );
 
 			GWTMailbox gwtMailbox = ConvertUtil.convert( mailbox );
@@ -102,7 +101,7 @@ public class CubusService extends ServiceBase implements ICubusService {
 			return gwtMailbox;
 		}
 		catch (LoginException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			if ( IErrorCodes.EXCEPTION_AUTHENTICATION_FAILED.equals( e.getMessage() ) ) {
 				throw new GWTAuthenticationException( e.getMessage() );
 			}
@@ -129,11 +128,11 @@ public class CubusService extends ServiceBase implements ICubusService {
 			SessionManager.invalidateSession();
 		}
 		catch (LoginException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			throw new GWTLogoutException( e.getMessage() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 	}
 
@@ -189,7 +188,7 @@ public class CubusService extends ServiceBase implements ICubusService {
 	 */
 	private Identity createDefaultIdentity( IMailbox mailbox ) {
 
-		Identity defaultIdentity = new Identity();
+		Identity defaultIdentity = getApplicationContext().getBean( "identity", Identity.class );
 		defaultIdentity.setEmail( mailbox.getEmailAddress() );
 		defaultIdentity.setStandard( true );
 
@@ -197,10 +196,10 @@ public class CubusService extends ServiceBase implements ICubusService {
 	}
 
 	/**
-	 * @return
+	 * @param userAccountDao
 	 */
-	private IUserAccountDao getUserAccountDao() {
+	public void setUserAccountDao( IUserAccountDao userAccountDao ) {
 
-		return getApplicationContext().getBean( IUserAccountDao.class );
+		this.userAccountDao = userAccountDao;
 	}
 }

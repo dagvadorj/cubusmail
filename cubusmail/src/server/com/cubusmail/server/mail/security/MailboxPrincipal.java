@@ -30,9 +30,8 @@ import com.cubusmail.server.mail.IMailbox;
  * 
  * @author Juergen Schlierf
  */
+@SuppressWarnings("serial")
 public class MailboxPrincipal implements Principal, Serializable {
-
-	private static final long serialVersionUID = -1315531461986805390L;
 
 	private String username;
 	private IMailbox mailbox;

@@ -77,6 +77,11 @@ public class SessionManager {
 		threadLocalRequest.set( request );
 	}
 
+	public static HttpServletRequest getRequest() {
+
+		return threadLocalRequest.get();
+	}
+
 	/**
 	 * create a new session and store the mailbox.
 	 * 

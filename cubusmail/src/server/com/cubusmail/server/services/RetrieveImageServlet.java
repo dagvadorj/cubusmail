@@ -59,14 +59,13 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * 
  * @author Juergen Schlierf
  */
+@SuppressWarnings("serial")
 public class RetrieveImageServlet extends HttpServlet {
-
-	private static final long serialVersionUID = -8629074720127118704L;
 
 	/**
 	 * Comment for <code>serialVersionUID</code>
 	 */
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -130,7 +129,7 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (Exception ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 	}
 
@@ -186,13 +185,13 @@ public class RetrieveImageServlet extends HttpServlet {
 			encoder.encode( thumbImage );
 		}
 		catch (IOException ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 		catch (InterruptedException ex) {
-			logger.error( ex.getMessage(), ex );
+			log.error( ex.getMessage(), ex );
 		}
 		finally {
-			logger.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
+			log.debug( "Time for thumbnail: " + (System.currentTimeMillis() - millis) + "ms" );
 		}
 	}
 
@@ -219,10 +218,10 @@ public class RetrieveImageServlet extends HttpServlet {
 			}
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 
 		return null;

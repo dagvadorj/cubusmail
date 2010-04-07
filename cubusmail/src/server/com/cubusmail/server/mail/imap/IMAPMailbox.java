@@ -61,7 +61,7 @@ import com.sun.mail.imap.Rights.Right;
 @SuppressWarnings("serial")
 public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private ApplicationContext applicationContext;
 
@@ -179,7 +179,7 @@ public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 			}
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 	}
 
@@ -450,7 +450,7 @@ public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 
 			Folder newFolder = this.store.getFolder( newFolderName );
 			if ( !newFolder.exists() ) {
-				logger.debug( "Creating folder... " + newFolderName );
+				log.debug( "Creating folder... " + newFolderName );
 				boolean success = newFolder.create( Folder.HOLDS_MESSAGES );
 				if ( !success ) {
 					throw new MailFolderException( IErrorCodes.EXCEPTION_FOLDER_CREATE, null );
@@ -589,7 +589,7 @@ public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 			store = (IMAPStore) session.getStore();
 		}
 		catch (NoSuchProviderException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 
 		return store;
@@ -600,7 +600,7 @@ public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 	 */
 	private void loadMailFolder() throws MessagingException {
 
-		logger.debug( "loading folder tree..." );
+		log.debug( "loading folder tree..." );
 		long millis = System.currentTimeMillis();
 		this.mailFolderMap.clear();
 		this.mailFolderList.clear();
@@ -638,7 +638,7 @@ public class IMAPMailbox implements IMailbox, ApplicationContextAware {
 			}
 		}
 
-		logger.debug( "...finish: " + (System.currentTimeMillis() - millis) + "ms" );
+		log.debug( "...finish: " + (System.currentTimeMillis() - millis) + "ms" );
 	}
 
 	/**

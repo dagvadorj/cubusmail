@@ -51,7 +51,7 @@ import com.cubusmail.server.mail.SessionManager;
  */
 public class ShowMessageSourceServlet extends HttpServlet {
 
-	private Log logger = LogFactory.getLog( this.getClass() );
+	private Log log = LogFactory.getLog( this.getClass() );
 
 	/**
 	 * 
@@ -104,7 +104,7 @@ public class ShowMessageSourceServlet extends HttpServlet {
 					reader = new InputStreamReader( bufInputStream, charset );
 				}
 				catch (UnsupportedEncodingException e) {
-					logger.error( e.getMessage(), e );
+					log.error( e.getMessage(), e );
 					reader = new InputStreamReader( bufInputStream );
 				}
 
@@ -117,7 +117,7 @@ public class ShowMessageSourceServlet extends HttpServlet {
 					}
 				}
 				catch (Throwable e) {
-					logger.warn( "Download canceled!" );
+					log.warn( "Download canceled!" );
 				}
 
 				writer.flush();
@@ -128,7 +128,7 @@ public class ShowMessageSourceServlet extends HttpServlet {
 
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 	}
 
@@ -154,7 +154,7 @@ public class ShowMessageSourceServlet extends HttpServlet {
 			}
 		}
 		catch (MessagingException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 
 		return headerString.toString();

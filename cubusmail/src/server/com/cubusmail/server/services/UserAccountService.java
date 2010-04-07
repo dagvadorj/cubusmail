@@ -62,10 +62,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 
 	private final Log log = LogFactory.getLog( getClass() );
 
-	public UserAccountService() {
-
-	}
-
+	private IUserAccountDao userAccountDao;
 
 	/*
 	 * (non-Javadoc)
@@ -86,9 +83,9 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 			}
 		}
 		// if ( identitiesToDelete.size() > 0 ) {
-		// getUserAccountDao().deleteIdentities( identitiesToDelete );
+		// this.userAccountDao.deleteIdentities( identitiesToDelete );
 		// }
-		getUserAccountDao().saveUserAccount( account );
+		this.userAccountDao.saveUserAccount( account );
 		SessionManager.get().setUserAccount( account );
 
 		return account;
@@ -105,7 +102,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 
 		IMailbox mailbox = SessionManager.get().getMailbox();
 
-		return getUserAccountDao().getUserAccountByUsername( mailbox.getUserName() );
+		return this.userAccountDao.getUserAccountByUsername( mailbox.getUserName() );
 	}
 
 	/*
@@ -117,7 +114,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	public List<AddressFolder> retrieveContactFolders() {
 
 		UserAccount account = SessionManager.get().getUserAccount();
-		return getUserAccountDao().retrieveAddressFolders( account );
+		return this.userAccountDao.retrieveAddressFolders( account );
 	}
 
 	/*
@@ -134,7 +131,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
-		getUserAccountDao().saveAddressFolder( folder );
+		this.userAccountDao.saveAddressFolder( folder );
 
 		return folder;
 	}
@@ -150,7 +147,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
-		getUserAccountDao().saveAddressFolder( folder );
+		this.userAccountDao.saveAddressFolder( folder );
 	}
 
 	/*
@@ -162,7 +159,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 */
 	public void deleteContactFolder( AddressFolder folder ) {
 
-		// getUserAccountDao().deleteAddressFolders( folder );
+		// this.userAccountDao.deleteAddressFolders( folder );
 	}
 
 	/*
@@ -175,7 +172,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	@SuppressWarnings("unchecked")
 	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection ) {
 
-		List<Address> contactList = getUserAccountDao().retrieveAddressList( folder );
+		List<Address> contactList = this.userAccountDao.retrieveAddressList( folder );
 
 		if ( contactList != null && contactList.size() > 0 ) {
 			if ( !StringUtils.isEmpty( sortField ) ) {
@@ -230,7 +227,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		String[] addressStrings = parsePreviousAndLastAddress( addressLine );
 
 		String searchString = addressStrings[1];
-		List<Address> contacts = getUserAccountDao().retrieveRecipients( account, searchString );
+		List<Address> contacts = this.userAccountDao.retrieveRecipients( account, searchString );
 
 		if ( contacts != null ) {
 			String[][] array = new String[contacts.size()][2];
@@ -296,7 +293,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 */
 	public void deleteContacts( List<Long> ids ) {
 
-		getUserAccountDao().deleteAddresses( ids );
+		this.userAccountDao.deleteAddresses( ids );
 	}
 
 	/*
@@ -308,7 +305,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 */
 	public void moveContacts( Long[] contactIds, AddressFolder targetFolder ) {
 
-		getUserAccountDao().moveAddresses( contactIds, targetFolder );
+		this.userAccountDao.moveAddresses( contactIds, targetFolder );
 	}
 
 	/*
@@ -320,7 +317,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 */
 	public void saveContact( Address contact ) {
 
-		getUserAccountDao().saveAddress( contact );
+		this.userAccountDao.saveAddress( contact );
 	}
 
 	/*
@@ -332,7 +329,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 */
 	public Address retrieveContact( Long id ) {
 
-		// return getUserAccountDao().getContactById( id );
+		// return this.userAccountDao.getContactById( id );
 		return null;
 	}
 
@@ -380,11 +377,8 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		return result;
 	}
 
-	/**
-	 * @return
-	 */
-	private IUserAccountDao getUserAccountDao() {
+	public void setUserAccountDao( IUserAccountDao userAccountDao ) {
 
-		return getApplicationContext().getBean( IUserAccountDao.class );
+		this.userAccountDao = userAccountDao;
 	}
 }

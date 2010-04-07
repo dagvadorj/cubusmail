@@ -40,7 +40,7 @@ import com.cubusmail.server.util.DBManager;
  */
 public class CubusStartupListener implements ServletContextListener {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -68,9 +68,9 @@ public class CubusStartupListener implements ServletContextListener {
 			DBManager dbManager = context.getBean( DBManager.class );
 			dbManager.initInternalDB();
 		}
-		catch (Throwable e) {
-			logger.fatal( e.getMessage(), e );
-			throw new IllegalStateException( "Could not initialize internal DB!" );
+		catch (Exception e) {
+			log.fatal( e.getMessage(), e );
+			throw new IllegalStateException( "Could not initialize internal database!" );
 		}
 
 		try {
@@ -78,8 +78,8 @@ public class CubusStartupListener implements ServletContextListener {
 					.getResource( CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 			System.setProperty( CubusConstants.JAAS_PROPERTY_NANE, test.getFile() );
 		}
-		catch (Throwable e) {
-			logger.fatal( e.getMessage(), e );
+		catch (Exception e) {
+			log.fatal( e.getMessage(), e );
 			throw new IllegalStateException( "Could not load " + CubusConstants.LOGIN_MODULE_CONFIG_FILE );
 		}
 	}

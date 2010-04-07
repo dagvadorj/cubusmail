@@ -36,7 +36,7 @@ import com.cubusmail.server.mail.SessionManager;
  */
 public class CubusSessionListener implements HttpSessionListener {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	/*
 	 * (non-Javadoc)
@@ -59,7 +59,7 @@ public class CubusSessionListener implements HttpSessionListener {
 	public void sessionDestroyed( HttpSessionEvent event ) {
 
 		try {
-			logger.debug( "Session expired. Execute logout." );
+			log.debug( "Session expired. Execute logout." );
 			if ( SessionManager.get( event.getSession() ) != null ) {
 				IMailbox mailbox = SessionManager.get( event.getSession() ).getMailbox();
 				if ( mailbox != null && mailbox.isLoggedIn() ) {
@@ -69,7 +69,7 @@ public class CubusSessionListener implements HttpSessionListener {
 		}
 		catch (Throwable ex) {
 			// nothing to do
-			logger.warn( ex.getMessage() );
+			log.warn( ex.getMessage() );
 		}
 	}
 }

@@ -42,7 +42,7 @@ import org.apache.commons.logging.LogFactory;
 @SuppressWarnings("serial")
 public class CubusmailServlet extends HttpServlet {
 
-	private Log logger = LogFactory.getLog( this.getClass() );
+	private Log log = LogFactory.getLog( this.getClass() );
 
 	@Override
 	public void service( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
@@ -61,7 +61,7 @@ public class CubusmailServlet extends HttpServlet {
 			}
 		}
 		catch (Throwable e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 		}
 
 		writer.flush();

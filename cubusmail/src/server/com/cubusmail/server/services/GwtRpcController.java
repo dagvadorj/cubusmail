@@ -45,7 +45,7 @@ public class GwtRpcController extends RemoteServiceServlet implements Controller
 
 	private IServiceBase remoteService;
 
-	private Class<?> remoteServiceClass;
+	private Class<? extends IServiceBase> remoteServiceClass;
 
 	/*
 	 * (non-Javadoc)

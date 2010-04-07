@@ -70,7 +70,7 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 
 	private final Log log = LogFactory.getLog( getClass() );
 
-	private static final long serialVersionUID = 6489103982844626238L;
+	private IUserAccountDao userAccountDao;
 
 	/*
 	 * (non-Javadoc)
@@ -468,8 +468,8 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 			log.debug( "...successful" );
 
 			try {
-				getUserAccountDao().saveRecipients( SessionManager.get().getUserAccount(),
-						messageHandler.getAllRecipients() );
+				this.userAccountDao.saveRecipients( SessionManager.get().getUserAccount(), messageHandler
+						.getAllRecipients() );
 			}
 			catch (Throwable e) {
 				// catch all exceptions
@@ -724,14 +724,6 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 	}
 
 	/**
-	 * @return
-	 */
-	private IUserAccountDao getUserAccountDao() {
-
-		return getApplicationContext().getBean( IUserAccountDao.class );
-	}
-
-	/**
 	 * @param mailSession
 	 * @return
 	 */
@@ -752,5 +744,10 @@ public class MailboxService extends ServiceBase implements IMailboxService {
 		MessageHandler handler = getApplicationContext().getBean( MessageHandler.class );
 		handler.init( mailSession, message );
 		return handler;
+	}
+
+	public void setUserAccountDao( IUserAccountDao userAccountDao ) {
+
+		this.userAccountDao = userAccountDao;
 	}
 }

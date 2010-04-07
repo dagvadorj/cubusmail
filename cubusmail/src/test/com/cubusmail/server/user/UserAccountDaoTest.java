@@ -57,7 +57,7 @@ import com.cubusmail.server.util.DBManager;
 @SuppressWarnings("unchecked")
 public class UserAccountDaoTest implements ApplicationContextAware {
 
-	private final Log logger = LogFactory.getLog( getClass() );
+	private final Log log = LogFactory.getLog( getClass() );
 
 	private ApplicationContext applicationContext;
 
@@ -93,11 +93,11 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertNotNull( id );
 		}
 		catch (SQLException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 		catch (IOException e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -122,7 +122,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( "Testtheme", userAccount2.getPreferences().getTheme() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -139,7 +139,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( userAccount, userAccount.getIdentities().get( 0 ).getUserAccount() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -160,7 +160,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( testUserAccount2.getIdentities().size(), identityCount - 2 );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -182,7 +182,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( folders.get( 0 ).getName(), savedAdressFolders.get( 0 ).getName() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -206,7 +206,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( updatedFolders.get( 0 ).getName(), folders.get( 0 ).getName() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -233,7 +233,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( savedAdressFolders.get( 0 ).getName(), folders.get( 2 ).getName() );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -256,7 +256,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 			Assert.assertEquals( testAddressList.get( 0 ), savedAddressList.get( 0 ) );
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
@@ -298,7 +298,7 @@ public class UserAccountDaoTest implements ApplicationContextAware {
 
 		}
 		catch (Exception e) {
-			logger.error( e.getMessage(), e );
+			log.error( e.getMessage(), e );
 			Assert.fail( e.getMessage() );
 		}
 	}
