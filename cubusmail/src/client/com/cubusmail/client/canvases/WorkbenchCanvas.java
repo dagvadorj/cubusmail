@@ -31,11 +31,11 @@ import com.smartgwt.client.widgets.tab.TabSet;
  * 
  * @author Juergen Schlierf
  */
-public class WorkbenchManager extends TabSet {
+public class WorkbenchCanvas extends TabSet {
 
 	private VLayout mailCanvas;
 
-	public WorkbenchManager() {
+	public WorkbenchCanvas() {
 
 		super();
 

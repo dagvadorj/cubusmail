@@ -63,7 +63,7 @@ public enum CanvasRegistry {
 
 		switch (this) {
 		case WORKBENCH_CANVAS:
-			return new WorkbenchManager();
+			return new WorkbenchCanvas();
 		case MAIL_FOLDER_CANVAS:
 			return new MailfolderCanvas();
 		case MESSAGE_LIST_CANVAS:
