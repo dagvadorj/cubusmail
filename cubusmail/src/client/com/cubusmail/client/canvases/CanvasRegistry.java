@@ -22,6 +22,8 @@ package com.cubusmail.client.canvases;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cubusmail.client.canvases.addressbook.AddressBookCanvas;
+import com.cubusmail.client.canvases.mail.MailCanvas;
 import com.cubusmail.client.canvases.mail.MailfolderCanvas;
 import com.cubusmail.client.canvases.mail.MessageListCanvas;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneCanvas;
@@ -33,7 +35,9 @@ import com.smartgwt.client.widgets.Canvas;
  * @author Juergen Schlierf
  */
 public enum CanvasRegistry {
-	WORKBENCH_CANVAS, MAIL_FOLDER_CANVAS, MESSAGE_LIST_CANVAS, MESSAGE_READING_PANE;
+	MAIL_CANVAS, MAIL_FOLDER_CANVAS, MESSAGE_LIST_CANVAS, MESSAGE_READING_PANE,
+
+	ADDRESS_BOOK_CANVAS;
 
 	private static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
 
@@ -62,14 +66,17 @@ public enum CanvasRegistry {
 	private Canvas create() {
 
 		switch (this) {
-		case WORKBENCH_CANVAS:
-			return new WorkbenchCanvas();
+		case MAIL_CANVAS:
+			return new MailCanvas();
 		case MAIL_FOLDER_CANVAS:
 			return new MailfolderCanvas();
 		case MESSAGE_LIST_CANVAS:
 			return new MessageListCanvas();
 		case MESSAGE_READING_PANE:
 			return new MessageReadingPaneCanvas();
+
+		case ADDRESS_BOOK_CANVAS:
+			return new AddressBookCanvas();
 		}
 
 		throw new IllegalArgumentException( "Panel missing: " + name() );

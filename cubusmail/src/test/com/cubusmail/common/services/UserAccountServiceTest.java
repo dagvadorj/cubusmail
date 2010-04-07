@@ -1,4 +1,4 @@
-/* MailboxServiceTest.java
+/* UserAccountServiceTest.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,21 +19,20 @@
  */
 package com.cubusmail.common.services;
 
+import java.util.List;
+
 import com.cubusmail.client.util.ServiceProvider;
-import com.cubusmail.common.model.GWTMailbox;
-import com.cubusmail.common.model.GWTMessageList;
-import com.cubusmail.common.model.GWTMessageRecord;
-import com.cubusmail.common.model.MessageListFields;
+import com.cubusmail.common.model.AddressFolder;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * Unittests for mailbox service.
+ * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-public class MailboxServiceTest extends GWTTestCase {
+public class UserAccountServiceTest extends GWTTestCase {
 
 	/*
 	 * (non-Javadoc)
@@ -46,16 +45,12 @@ public class MailboxServiceTest extends GWTTestCase {
 		return "com.cubusmail.CubusmailUnitTests";
 	}
 
-	/**
-	 * 
-	 */
-	public void testLogin() {
+	public void testRetrieveAddressFolders() {
 
-		ServiceProvider.getCubusService().login( "schlierf", "schlierf", new AsyncCallback<GWTMailbox>() {
+		ServiceProvider.getUserAccountService().retrieveAddressFolders( new AsyncCallback<List<AddressFolder>>() {
 
-			public void onSuccess( GWTMailbox result ) {
-
-				retrieveMessages();
+			public void onSuccess( List<AddressFolder> result ) {
+				
 			}
 
 			public void onFailure( Throwable caught ) {
@@ -68,36 +63,4 @@ public class MailboxServiceTest extends GWTTestCase {
 
 		delayTestFinish( 100000 );
 	}
-
-	/**
-	 * 
-	 */
-	private void retrieveMessages() {
-
-		MessageListFields[] fields = new MessageListFields[] { MessageListFields.CONTENT };
-		String[] values = new String[] { "wissen", "wie" };
-		ServiceProvider.getMailboxService().retrieveMessages( "INBOX", 0, 100, null, true, fields, values,
-				new AsyncCallback<GWTMessageList>() {
-
-					public void onSuccess( GWTMessageList result ) {
-
-						assertNotNull( result );
-						assertNotNull( result.getMessages() );
-
-						for (GWTMessageRecord record : result.getMessages()) {
-							GWT.log( record.getId() + " : " + record.getFrom() + " : " + record.getSubject(), null );
-						}
-
-						finishTest();
-					}
-
-					public void onFailure( Throwable caught ) {
-
-						finishTest();
-						GWT.log( caught.getMessage(), caught );
-						assertTrue( false );
-					}
-				} );
-	}
-
 }

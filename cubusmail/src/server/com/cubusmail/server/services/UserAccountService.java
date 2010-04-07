@@ -111,7 +111,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 * @seecom.cubusmail.gwtui.client.services.IUserAccountService#
 	 * retrieveContactFolders()
 	 */
-	public List<AddressFolder> retrieveContactFolders() {
+	public List<AddressFolder> retrieveAddressFolders() {
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		return this.userAccountDao.retrieveAddressFolders( account );
@@ -124,7 +124,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#createContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public AddressFolder createContactFolder( String folderName ) {
+	public AddressFolder createAddressFolder( String folderName ) {
 
 		AddressFolder folder = new AddressFolder();
 		folder.setName( folderName );
@@ -143,7 +143,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#saveContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public void saveContactFolder( AddressFolder folder ) {
+	public void saveAddressFolder( AddressFolder folder ) {
 
 		UserAccount account = SessionManager.get().getUserAccount();
 		folder.setUserAccount( account );
@@ -157,7 +157,7 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#deleteContactFolder
 	 * (com.cubusmail.gwtui.domain.ContactFolder)
 	 */
-	public void deleteContactFolder( AddressFolder folder ) {
+	public void deleteAddressFolder( AddressFolder folder ) {
 
 		// this.userAccountDao.deleteAddressFolders( folder );
 	}

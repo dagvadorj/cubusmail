@@ -79,7 +79,7 @@ public interface ImageProvider {
 	public static final String CONTACT_FOLDER_NEW = "folder_add.png";
 	public static final String CONTACT_FOLDER_DELETE = "folder_delete.png";
 	public static final String CONTACT_FOLDER_RENAME = "folder_edit.png";
-	public static final String CONTACT_FOLDER = "contact/folder_user.png";
+	public static final String ADDRESS_FOLDER = "contact/folder_user.png";
 
 	// Identitiy related icons
 	public static final String IDENTITY_ADD = "newspaper_add.png";

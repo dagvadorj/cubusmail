@@ -19,6 +19,13 @@
  */
 package com.cubusmail.client;
 
+import com.cubusmail.client.canvases.CanvasRegistry;
+import com.cubusmail.client.util.TextProvider;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
+
 /**
  * TODO: documentation
  * 
@@ -26,7 +33,64 @@ package com.cubusmail.client;
  */
 public class WorkbenchManager {
 
+	private static WorkbenchManager instance;
+
+	private TabSet workbenchTabset;
+
+	private Tab mailTab;
+	private Tab addressBookTab;
+	private Tab settingsTab;
+
+	public static WorkbenchManager get() {
+
+		if ( instance == null ) {
+			instance = new WorkbenchManager();
+		}
+
+		return instance;
+	}
+
+	public WorkbenchManager() {
+
+		this.workbenchTabset = new TabSet();
+		this.workbenchTabset.setWidth100();
+		this.workbenchTabset.setHeight100();
+
+		this.mailTab = new Tab( TextProvider.get().tab_email() );
+		this.addressBookTab = new Tab( TextProvider.get().tab_address_book() );
+		this.settingsTab = new Tab( TextProvider.get().tab_preferences() );
+
+		this.workbenchTabset.addTab( this.mailTab );
+		this.workbenchTabset.addTab( this.addressBookTab );
+		this.workbenchTabset.addTab( this.settingsTab );
+
+		this.workbenchTabset.addTabSelectedHandler( new WorkbenchTabSelectedHandler() );
+	}
+
 	public void createWorkbench() {
 
+		// this.mailTab.setPane( CanvasRegistry.MAIL_CANVAS.get() );
+		this.mailTab.setPane( CanvasRegistry.ADDRESS_BOOK_CANVAS.get() );
+		this.workbenchTabset.draw();
+	}
+
+	private class WorkbenchTabSelectedHandler implements TabSelectedHandler {
+
+		@Override
+		public void onTabSelected( TabSelectedEvent event ) {
+
+			if ( TextProvider.get().tab_email().equals( event.getTab().getTitle() ) ) {
+				if ( event.getTab().getPane() == null ) {
+					final Tab tab = event.getTab();
+					tab.setPane( CanvasRegistry.MAIL_CANVAS.get() );
+				}
+			}
+			else if ( TextProvider.get().tab_address_book().equals( event.getTab().getTitle() ) ) {
+				if ( event.getTab().getPane() == null ) {
+					final Tab tab = event.getTab();
+					tab.setPane( CanvasRegistry.ADDRESS_BOOK_CANVAS.get() );
+				}
+			}
+		}
 	}
 }

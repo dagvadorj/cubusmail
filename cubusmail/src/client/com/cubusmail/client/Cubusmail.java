@@ -21,7 +21,6 @@
 package com.cubusmail.client;
 
 import com.cubusmail.client.actions.LoginAction;
-import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.LogoutListener;
 import com.cubusmail.client.util.GWTSessionManager;
@@ -109,7 +108,7 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 	 */
 	private void openWorkbench() {
 
-		CanvasRegistry.WORKBENCH_CANVAS.get().draw();
+		WorkbenchManager.get().createWorkbench();
 	}
 
 	public void onHistoryChanged( String historyToken ) {

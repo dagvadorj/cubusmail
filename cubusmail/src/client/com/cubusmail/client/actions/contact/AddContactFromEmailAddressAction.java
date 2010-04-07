@@ -60,13 +60,13 @@ public class AddContactFromEmailAddressAction extends GWTAction implements Async
 	public void execute() {
 
 		if ( GWTSessionManager.get().getStandardContactFolder() == null ) {
-			ServiceProvider.getUserAccountService().retrieveContactFolders(
+			ServiceProvider.getUserAccountService().retrieveAddressFolders(
 					new AsyncCallbackAdapter<List<AddressFolder>>() {
 
 						@Override
 						public void onSuccess( List<AddressFolder> result ) {
 
-							GWTSessionManager.get().setContactFolderList( result );
+							GWTSessionManager.get().setAddressFolderList( result );
 							saveAddress();
 						}
 					} );

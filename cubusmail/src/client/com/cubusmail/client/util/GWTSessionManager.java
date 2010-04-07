@@ -192,7 +192,7 @@ public class GWTSessionManager {
 	 * @param contactFolderList
 	 *            The contactFolderList to set.
 	 */
-	public void setContactFolderList( List<AddressFolder> contactFolderList ) {
+	public void setAddressFolderList( List<AddressFolder> contactFolderList ) {
 
 		this.contactFolderList = contactFolderList;
 	}

@@ -1,4 +1,4 @@
-/* MailCanvas.java
+/* AddressBookCanvas.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -17,11 +17,10 @@
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.cubusmail.client.canvases.mail;
+package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.IWorkbenchCanvas;
-import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -30,24 +29,22 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Juergen Schlierf
  */
-public class MailCanvas extends VLayout implements IWorkbenchCanvas {
+public class AddressBookCanvas extends VLayout implements IWorkbenchCanvas {
 
-	public MailCanvas() {
+	public AddressBookCanvas() {
 
 		super();
 		setBackgroundImage( "[SKIN]/shared/background.gif" );
 		setWidth100();
 		setHeight100();
 		setBorder( "0px" );
-		addMember( ToolbarRegistry.MAIL.get() );
 
+		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
+		
 		HLayout contentCanvas = new HLayout();
 		contentCanvas.setWidth100();
 		contentCanvas.setHeight100();
-
-		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
 		contentCanvas.addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
-		contentCanvas.addMember( CanvasRegistry.MESSAGE_LIST_CANVAS.get() );
 
 		addMember( contentCanvas );
 	}

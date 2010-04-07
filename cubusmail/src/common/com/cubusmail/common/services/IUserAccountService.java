@@ -49,22 +49,22 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @return
 	 */
-	public List<AddressFolder> retrieveContactFolders();
+	public List<AddressFolder> retrieveAddressFolders();
 
 	/**
 	 * @param folder
 	 */
-	public AddressFolder createContactFolder( String folderName );
+	public AddressFolder createAddressFolder( String folderName );
 
 	/**
 	 * @param folder
 	 */
-	public void saveContactFolder( AddressFolder folder );
+	public void saveAddressFolder( AddressFolder folder );
 
 	/**
 	 * @param folder
 	 */
-	public void deleteContactFolder( AddressFolder folder );
+	public void deleteAddressFolder( AddressFolder folder );
 
 	/**
 	 * Retrieve the contacts especially for the grid.

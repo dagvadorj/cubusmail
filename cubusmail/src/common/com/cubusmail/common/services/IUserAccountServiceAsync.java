@@ -49,22 +49,22 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @return
 	 */
-	public void retrieveContactFolders( AsyncCallback<List<AddressFolder>> callback );
+	public void retrieveAddressFolders( AsyncCallback<List<AddressFolder>> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void createContactFolder( String folderName, AsyncCallback<AddressFolder> callback );
+	public void createAddressFolder( String folderName, AsyncCallback<AddressFolder> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void saveContactFolder( AddressFolder folder, AsyncCallback<Void> callback );
+	public void saveAddressFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * @param folder
 	 */
-	public void deleteContactFolder( AddressFolder folder, AsyncCallback<Void> callback );
+	public void deleteAddressFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
 	 * Retrieve the contacts especially for the grid.
