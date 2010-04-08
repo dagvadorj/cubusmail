@@ -31,34 +31,21 @@ import java.util.List;
  * @author Juergen Schlierf
  */
 @SuppressWarnings("serial")
-// @Entity
-// @Table(name = "users")
 public class UserAccount implements Serializable {
 
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	// @Column(name = "username", nullable = false, unique = true)
 	private String username;
 
-	// @Column(name = "created")
-	// @Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
-	// @Column(name = "lastLogin")
 	private Date lastLogin;
 
-	// @Transient
 	private Preferences preferences;
 
-	// @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch =
-	// FetchType.EAGER)
 	private List<Identity> identities;
 
-	// @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch =
-	// FetchType.LAZY)
-	private List<AddressFolder> contactFolders;
+	private List<AddressFolder> addressFolders;
 
 	/**
 	 * @return Returns the id.
@@ -220,26 +207,26 @@ public class UserAccount implements Serializable {
 	/**
 	 * @return Returns the contactFolders.
 	 */
-	public List<AddressFolder> getContactFolders() {
+	public List<AddressFolder> getAddressFolders() {
 
-		return this.contactFolders;
+		return this.addressFolders;
 	}
 
 	/**
 	 * @param contactFolders
 	 *            The contactFolders to set.
 	 */
-	public void setContactFolders( List<AddressFolder> contactFolders ) {
+	public void setAddressFolders( List<AddressFolder> contactFolders ) {
 
-		this.contactFolders = contactFolders;
+		this.addressFolders = contactFolders;
 	}
 
-	public void addContactFolder( AddressFolder folder ) {
+	public void addAddressFolder( AddressFolder folder ) {
 
-		if ( this.contactFolders == null ) {
-			this.contactFolders = new ArrayList<AddressFolder>();
+		if ( this.addressFolders == null ) {
+			this.addressFolders = new ArrayList<AddressFolder>();
 		}
 		folder.setUserAccount( this );
-		this.contactFolders.add( folder );
+		this.addressFolders.add( folder );
 	}
 }

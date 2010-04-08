@@ -44,12 +44,7 @@ public class AddressFolder implements Serializable {
 
 	public AddressFolder() {
 
-		this( AddressFolderType.USER );
-	}
-
-	public AddressFolder( AddressFolderType type ) {
-
-		this.type = type;
+		this.type = AddressFolderType.USER;
 	}
 
 	/**
@@ -163,7 +158,7 @@ public class AddressFolder implements Serializable {
 		if ( this.type != null ) {
 			return this.type.getType();
 		}
-		
+
 		return -1;
 	}
 }

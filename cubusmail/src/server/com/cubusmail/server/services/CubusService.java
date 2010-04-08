@@ -92,10 +92,10 @@ public class CubusService extends ServiceBase implements ICubusService {
 					account.addIdentity( createDefaultIdentity( mailbox ) );
 				}
 				account.setLastLogin( new Date() );
+				this.userAccountDao.saveUserAccount( account );
 			}
-			this.userAccountDao.saveUserAccount( account );
+			
 			mailbox.setUserAccount( account );
-
 			GWTMailbox gwtMailbox = ConvertUtil.convert( mailbox );
 
 			return gwtMailbox;
@@ -160,24 +160,30 @@ public class CubusService extends ServiceBase implements ICubusService {
 	 */
 	private UserAccount createUserAccount( IMailbox mailbox ) {
 
-		UserAccount account = getApplicationContext().getBean( "userAccount", UserAccount.class );
+		UserAccount account = getApplicationContext().getBean( UserAccount.class );
 		account.setUsername( mailbox.getUserName() );
 		account.setCreated( new Date() );
 		account.setLastLogin( new Date() );
+		this.userAccountDao.saveUserAccount( account );
 
 		// check Identities
 		Identity defaultIdentity = createDefaultIdentity( mailbox );
 		account.addIdentity( defaultIdentity );
+		this.userAccountDao.saveIdentities( account );
 
-		AddressFolder folder = new AddressFolder( AddressFolderType.STANDARD );
+		AddressFolder folder = getApplicationContext().getBean( AddressFolder.class );
+		folder.setType( AddressFolderType.STANDARD );
 		folder.setName( "Standard" );
 		folder.setUserAccount( account );
-		account.addContactFolder( folder );
+		account.addAddressFolder( folder );
+		this.userAccountDao.saveAddressFolder( folder );
 
-		folder = new AddressFolder( AddressFolderType.RECIPIENTS );
+		folder = getApplicationContext().getBean( AddressFolder.class );
+		folder.setType( AddressFolderType.RECIPIENTS );
 		folder.setName( "Recipients" );
 		folder.setUserAccount( account );
-		account.addContactFolder( folder );
+		account.addAddressFolder( folder );
+		this.userAccountDao.saveAddressFolder( folder );
 
 		return account;
 	}

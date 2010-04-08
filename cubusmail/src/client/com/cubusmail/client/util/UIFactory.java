@@ -181,9 +181,7 @@ public abstract class UIFactory {
 		return button;
 	}
 
-	public static TreeNode createTreeNode( List<AddressFolder> folderList ) {
-
-		TreeNode rootnode = new TreeNode( "root" );
+	public static TreeNode[] createAddressFolderTreeNodes( List<AddressFolder> folderList ) {
 
 		TreeNode[] nodes = new TreeNode[folderList.size()];
 		for (int i = 0; i < folderList.size(); i++) {
@@ -192,9 +190,8 @@ public abstract class UIFactory {
 			nodes[i].setAttribute( "icon", ImageProvider.ADDRESS_FOLDER );
 			nodes[i].setID( folder.getName() );
 		}
-		rootnode.setChildren( nodes );
 
-		return rootnode;
+		return nodes;
 	}
 
 	/**

@@ -26,8 +26,6 @@ import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.GWTMailFolder;
-import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -120,7 +118,7 @@ public class AddressFolderDataSource extends GwtRpcDataSource {
 	private void mapResponse( DSResponse response, List<AddressFolder> folderList ) {
 
 		GWTSessionManager.get().setAddressFolderList( folderList );
-		TreeNode root = UIFactory.createTreeNode( folderList );
-		response.setData( new TreeNode[] { root } );
+		TreeNode[] nodes = UIFactory.createAddressFolderTreeNodes( folderList );
+		response.setData( nodes );
 	}
 }

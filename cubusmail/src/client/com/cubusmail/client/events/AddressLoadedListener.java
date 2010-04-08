@@ -1,4 +1,4 @@
-/* ContactFolderSelectedListener.java
+/* ContactLoadedListener.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -20,20 +20,17 @@
  */
 package com.cubusmail.client.events;
 
-import com.cubusmail.common.model.AddressFolder;
-
+import com.cubusmail.common.model.Address;
 
 /**
- * Listener for selecting folders.
- *
+ * Listener for load contacts.
+ * 
  * @author Juergen Schlierf
  */
-public interface ContactFolderSelectedListener {
+public interface AddressLoadedListener {
 
 	/**
-	 * Called when FolderSelect event fired.
-	 * 
-	 * @param folderId
+	 * @param contact
 	 */
-	public void onFolderSelected( AddressFolder contactFolder );
+	public void onAddressLoaded( Address contact );
 }

@@ -1,4 +1,4 @@
-/* ContactSelectedListener.java
+/* ReloadContactsListener.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -20,19 +20,16 @@
  */
 package com.cubusmail.client.events;
 
-import com.cubusmail.common.model.Address;
 
 /**
- * Listener for selected contacts.
- * 
+ * Listener for reloading contacts.
+ *
  * @author Juergen Schlierf
  */
-public interface ContactSelectedListener {
+public interface ReloadAddressListListener {
 
 	/**
-	 * Called when MessageSelect event is fired.
 	 * 
-	 * @param messageId
 	 */
-	public void onContactSelected( Address contact );
+	public void onReloadAddressList();
 }

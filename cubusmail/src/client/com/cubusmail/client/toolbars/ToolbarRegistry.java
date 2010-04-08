@@ -31,7 +31,7 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
  * @author Juergen Schlierf
  */
 public enum ToolbarRegistry {
-	MAIL, ADDRESS_BOOK;
+	MAIL, ADDRESS_FILTER;
 
 	private static Map<ToolbarRegistry, ToolStrip> TOOLBAR_MAP = new HashMap<ToolbarRegistry, ToolStrip>();
 
@@ -55,7 +55,7 @@ public enum ToolbarRegistry {
 		// type.cast() is not pssible with GWT
 		return (T) get();
 	}
-	
+
 	/**
 	 * create actions
 	 */
@@ -64,6 +64,8 @@ public enum ToolbarRegistry {
 		switch (this) {
 		case MAIL:
 			return new MailToolbar();
+		case ADDRESS_FILTER:
+			return new AddressFilterToolbar();
 		}
 
 		throw new IllegalArgumentException( "Toolbar missing: " + name() );

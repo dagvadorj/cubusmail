@@ -52,15 +52,15 @@ public class EventBroker {
 
 	private List<CleanReadingPaneListener> cleanReadingPaneListenerList = null;
 
-	private List<ContactFolderSelectedListener> contactFolderSelectedListenerList = null;
+	private List<AddressFolderSelectedListener> addressFolderSelectedListenerList = null;
 
-	private List<ContactLoadedListener> contactLoadedListenerList = null;
+	private List<AddressLoadedListener> addressLoadedListenerList = null;
 
-	private List<ReloadContactsListener> reloadContactsListenerList = null;
+	private List<ReloadAddressListListener> reloadAdressListListenerList = null;
 
 	private List<PreferencesChangedListener> preferencesChangedListenerList = null;
 
-	private List<ContactSelectedListener> contactSelectedListenerList = null;
+	private List<AddressSelectedListener> addressSelectedListenerList = null;
 
 	private EventBroker() {
 
@@ -68,13 +68,13 @@ public class EventBroker {
 		this.foldersReloadListenerList = new ArrayList<FoldersReloadListener>();
 		this.folderSelectedListenerList = new ArrayList<FolderSelectedListener>();
 		this.messageLoadedListenerList = new ArrayList<MessageLoadedListener>();
-		this.contactSelectedListenerList = new ArrayList<ContactSelectedListener>();
+		this.addressSelectedListenerList = new ArrayList<AddressSelectedListener>();
 		this.messagesReloadListenerList = new ArrayList<MessagesReloadListener>();
 		this.messagesChangedListenerList = new ArrayList<MessagesChangedListener>();
 		this.cleanReadingPaneListenerList = new ArrayList<CleanReadingPaneListener>();
-		this.contactFolderSelectedListenerList = new ArrayList<ContactFolderSelectedListener>();
-		this.contactLoadedListenerList = new ArrayList<ContactLoadedListener>();
-		this.reloadContactsListenerList = new ArrayList<ReloadContactsListener>();
+		this.addressFolderSelectedListenerList = new ArrayList<AddressFolderSelectedListener>();
+		this.addressLoadedListenerList = new ArrayList<AddressLoadedListener>();
+		this.reloadAdressListListenerList = new ArrayList<ReloadAddressListListener>();
 		this.preferencesChangedListenerList = new ArrayList<PreferencesChangedListener>();
 	}
 
@@ -218,57 +218,57 @@ public class EventBroker {
 		}
 	}
 
-	public void addContactFolderSelectedListener( ContactFolderSelectedListener listener ) {
+	public void addAddressFolderSelectedListener( AddressFolderSelectedListener listener ) {
 
-		this.contactFolderSelectedListenerList.add( listener );
+		this.addressFolderSelectedListenerList.add( listener );
 	}
 
-	public void removeContactFolderSelectedListener( ContactFolderSelectedListener listener ) {
+	public void removeAddressFolderSelectedListener( AddressFolderSelectedListener listener ) {
 
-		this.contactFolderSelectedListenerList.remove( listener );
+		this.addressFolderSelectedListenerList.remove( listener );
 	}
 
-	public void fireContactFolderSelected( AddressFolder contactFolder ) {
+	public void fireAddressFolderSelected( AddressFolder addressFolder ) {
 
-		for (int i = 0; i < this.contactFolderSelectedListenerList.size(); i++) {
-			ContactFolderSelectedListener listener = this.contactFolderSelectedListenerList.get( i );
-			listener.onFolderSelected( contactFolder );
+		for (int i = 0; i < this.addressFolderSelectedListenerList.size(); i++) {
+			AddressFolderSelectedListener listener = this.addressFolderSelectedListenerList.get( i );
+			listener.onFolderSelected( addressFolder );
 		}
 	}
 
-	public void addContactLoadedListener( ContactLoadedListener listener ) {
+	public void addAddressLoadedListener( AddressLoadedListener listener ) {
 
-		this.contactLoadedListenerList.add( listener );
+		this.addressLoadedListenerList.add( listener );
 	}
 
-	public void removeContactLoadedListener( ContactLoadedListener listener ) {
+	public void removeAddressLoadedListener( AddressLoadedListener listener ) {
 
-		this.contactLoadedListenerList.remove( listener );
+		this.addressLoadedListenerList.remove( listener );
 	}
 
-	public void fireContactLoaded( Address contact ) {
+	public void fireAddressLoaded( Address address ) {
 
-		for (int i = 0; i < this.contactLoadedListenerList.size(); i++) {
-			ContactLoadedListener listener = this.contactLoadedListenerList.get( i );
-			listener.onContactLoaded( contact );
+		for (int i = 0; i < this.addressLoadedListenerList.size(); i++) {
+			AddressLoadedListener listener = this.addressLoadedListenerList.get( i );
+			listener.onAddressLoaded( address );
 		}
 	}
 
-	public void addReloadContactsListener( ReloadContactsListener listener ) {
+	public void addReloadAddressListListener( ReloadAddressListListener listener ) {
 
-		this.reloadContactsListenerList.add( listener );
+		this.reloadAdressListListenerList.add( listener );
 	}
 
-	public void removeReloadContactsListener( ReloadContactsListener listener ) {
+	public void removeReloadAddressListListener( ReloadAddressListListener listener ) {
 
-		this.reloadContactsListenerList.remove( listener );
+		this.reloadAdressListListenerList.remove( listener );
 	}
 
-	public void fireReloadContacts() {
+	public void fireReloadAddressList() {
 
-		for (int i = 0; i < this.reloadContactsListenerList.size(); i++) {
-			ReloadContactsListener listener = this.reloadContactsListenerList.get( i );
-			listener.onReloadContacts();
+		for (int i = 0; i < this.reloadAdressListListenerList.size(); i++) {
+			ReloadAddressListListener listener = this.reloadAdressListListenerList.get( i );
+			listener.onReloadAddressList();
 		}
 	}
 
@@ -290,21 +290,21 @@ public class EventBroker {
 		}
 	}
 
-	public void addContactSelectedListener( ContactSelectedListener listener ) {
+	public void addAddressSelectedListener( AddressSelectedListener listener ) {
 
-		this.contactSelectedListenerList.add( listener );
+		this.addressSelectedListenerList.add( listener );
 	}
 
-	public void removeContactSelectedListener( ContactSelectedListener listener ) {
+	public void removeAddressSelectedListener( AddressSelectedListener listener ) {
 
-		this.contactSelectedListenerList.remove( listener );
+		this.addressSelectedListenerList.remove( listener );
 	}
 
-	public void fireContactSelected( Address contact ) {
+	public void fireAddressSelected( Address address ) {
 
-		for (int i = 0; i < this.contactSelectedListenerList.size(); i++) {
-			ContactSelectedListener listener = this.contactSelectedListenerList.get( i );
-			listener.onContactSelected( contact );
+		for (int i = 0; i < this.addressSelectedListenerList.size(); i++) {
+			AddressSelectedListener listener = this.addressSelectedListenerList.get( i );
+			listener.onAddressSelected( address );
 		}
 	}
 }

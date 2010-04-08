@@ -26,6 +26,8 @@ import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.types.SortArrow;
 import com.smartgwt.client.types.TreeModelType;
+import com.smartgwt.client.widgets.events.DrawEvent;
+import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
 import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.layout.SectionStack;
@@ -53,6 +55,16 @@ public class AddressFolderCanvas extends SectionStack {
 
 		createTree();
 		section.setItems( this.tree );
+		setSections( section );
+
+		addDrawHandler( new DrawHandler() {
+
+			@Override
+			public void onDraw( DrawEvent event ) {
+
+				tree.fetchData();
+			}
+		} );
 	}
 
 	private void createTree() {
@@ -84,5 +96,5 @@ public class AddressFolderCanvas extends SectionStack {
 				tree.getData().openAll();
 			}
 		} );
-}
+	}
 }

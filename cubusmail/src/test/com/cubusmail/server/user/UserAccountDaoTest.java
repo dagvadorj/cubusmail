@@ -51,9 +51,9 @@ import com.cubusmail.server.util.DBManager;
  * @author Juergen Schlierf
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml",
-		"classpath*:com/cubusmail/server/user/testDataSourceContext.xml",
-		"classpath*:com/cubusmail/server/user/testUserAcountContext.xml" })
+@ContextConfiguration(locations = { "classpath:applicationContext.xml",
+		"classpath:com/cubusmail/server/user/testDataSourceContext.xml",
+		"classpath:com/cubusmail/server/user/testUserAcountContext.xml" })
 @SuppressWarnings("unchecked")
 public class UserAccountDaoTest implements ApplicationContextAware {
 

@@ -21,6 +21,7 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.IWorkbenchCanvas;
+import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -29,7 +30,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Juergen Schlierf
  */
-public class AddressBookCanvas extends VLayout implements IWorkbenchCanvas {
+public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 
 	public AddressBookCanvas() {
 
@@ -39,13 +40,18 @@ public class AddressBookCanvas extends VLayout implements IWorkbenchCanvas {
 		setHeight100();
 		setBorder( "0px" );
 
-		CanvasRegistry.MAIL_FOLDER_CANVAS.get().setWidth( 200 );
-		
-		HLayout contentCanvas = new HLayout();
-		contentCanvas.setWidth100();
-		contentCanvas.setHeight100();
-		contentCanvas.addMember( CanvasRegistry.MAIL_FOLDER_CANVAS.get() );
+		CanvasRegistry.ADDRESS_FOLDER_CANVAS.get().setWidth( 200 );
+		addMember( CanvasRegistry.ADDRESS_FOLDER_CANVAS.get() );
 
-		addMember( contentCanvas );
+		VLayout addressListLayout = new VLayout();
+		addressListLayout.addMember( ToolbarRegistry.ADDRESS_FILTER.get() );
+
+		HLayout addressHLayout = new HLayout();
+		AddressListGrid addressListGrid = new AddressListGrid();
+		addressListGrid.setWidth("220px");
+		addressHLayout.addMember(addressListGrid);
+		addressListLayout.addMember(addressHLayout);
+
+		addMember( addressListLayout );
 	}
 }

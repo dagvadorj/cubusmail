@@ -35,9 +35,9 @@ import com.cubusmail.common.model.UserAccount;
  * @author Juergen Schlierf
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml",
-		"classpath*:com/cubusmail/server/user/testPerformanceDBContext.xml",
-		"classpath*:com/cubusmail/server/user/testUserAcountContext.xml" })
+@ContextConfiguration(locations = { "classpath:applicationContext.xml",
+		"classpath:com/cubusmail/server/user/testPerformanceDBContext.xml",
+		"classpath:com/cubusmail/server/user/testUserAcountContext.xml" })
 public class UserAccountPerformanceTest implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;

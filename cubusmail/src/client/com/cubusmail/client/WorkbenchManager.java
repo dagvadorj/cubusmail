@@ -70,7 +70,8 @@ public class WorkbenchManager {
 	public void createWorkbench() {
 
 		// this.mailTab.setPane( CanvasRegistry.MAIL_CANVAS.get() );
-		this.mailTab.setPane( CanvasRegistry.ADDRESS_BOOK_CANVAS.get() );
+		this.addressBookTab.setPane( CanvasRegistry.ADDRESS_BOOK_CANVAS.get() );
+		this.workbenchTabset.setSelectedTab( 1 );
 		this.workbenchTabset.draw();
 	}
 

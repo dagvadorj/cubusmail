@@ -16,9 +16,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:applicationContext.xml
-			classpath*:applicationDataSourceContext.xml
-			classpath*:applicationMailContext.xml
+			classpath:applicationContext.xml
+			classpath:applicationDataSourceContext.xml
+			classpath:applicationMailContext.xml
 		</param-value>
 	</context-param>
 	

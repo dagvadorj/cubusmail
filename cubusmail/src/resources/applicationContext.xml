@@ -23,6 +23,14 @@
 		scope="prototype">
 	</bean>
 
+	<bean id="addressFolder" class="com.cubusmail.common.model.AddressFolder"
+		scope="prototype">
+	</bean>
+
+	<bean id="address" class="com.cubusmail.common.model.Address"
+		scope="prototype">
+	</bean>
+
 	<bean id="preferencesBean" class="com.cubusmail.common.model.Preferences"
 		scope="prototype">
 		<!-- default values -->
