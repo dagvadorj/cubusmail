@@ -1,4 +1,4 @@
-/* GWTMailConstants.java
+/* GWTConstants.java
 
    Copyright (c) 2009 Juergen Schlierf, All Rights Reserved
    
@@ -25,8 +25,9 @@ package com.cubusmail.common.model;
  * 
  * @author Juergen Schlierf
  */
-public interface GWTMailConstants {
+public interface GWTConstants {
 
+	// constants for mails
 	public final static int PRIORITY_NONE = 0;
 	public final static int PRIORITY_VERY_HIGH = 1;
 	public final static int PRIORITY_HIGH = 2;
@@ -42,4 +43,7 @@ public interface GWTMailConstants {
 	public final static int MESSAGE_LIST_PAGE_SIZE = 100;
 
 	public final static int MESSAGE_READING_PANE_LABEL_WIDTH = 50;
+	
+	// Address folders and list
+	public final static String ADDRESS_FOLDER = "addressFolder";
 }

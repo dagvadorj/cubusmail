@@ -26,7 +26,7 @@ import com.cubusmail.client.events.DelayedResizeHandlerProxy;
 import com.cubusmail.client.toolbars.MailToolbar;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMessageFlags;
 import com.cubusmail.common.model.ImageProvider;
 import com.cubusmail.common.model.MessageListFields;
@@ -66,7 +66,7 @@ public class MessageListGrid extends ListGrid {
 		setAlternateRecordStyles( true );
 		setWidth100();
 		setDataSource( DataSourceRegistry.MESSAGE_LIST.get() );
-		setDataPageSize( GWTMailConstants.MESSAGE_LIST_PAGE_SIZE );
+		setDataPageSize( GWTConstants.MESSAGE_LIST_PAGE_SIZE );
 		setFastCellUpdates( false );
 		setSaveLocally( false );
 		setFields( generateFields() );

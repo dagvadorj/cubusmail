@@ -27,7 +27,7 @@ import com.cubusmail.client.events.FolderSelectedListener;
 import com.cubusmail.client.events.MessageLoadedListener;
 import com.cubusmail.client.events.MessagesReloadListener;
 import com.cubusmail.client.util.GWTSessionManager;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMessage;
 import com.cubusmail.common.model.GWTMessageRecord;
@@ -128,8 +128,8 @@ public class MessageListCanvas extends VLayout implements MessagesReloadListener
 		DSRequest request = null;
 		if ( this.searchForm.getSearchValues() != null ) {
 			request = new DSRequest();
-			request.setAttribute( GWTMailConstants.PARAM_SEARCH_FIELDS, this.searchForm.getSearchFields() );
-			request.setAttribute( GWTMailConstants.PARAM_SEARCH_VALUES, this.searchForm.getSearchValues() );
+			request.setAttribute( GWTConstants.PARAM_SEARCH_FIELDS, this.searchForm.getSearchFields() );
+			request.setAttribute( GWTConstants.PARAM_SEARCH_VALUES, this.searchForm.getSearchValues() );
 		}
 
 		this.grid.invalidateCache();

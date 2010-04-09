@@ -42,7 +42,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.model.GWTEmailAddress;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.GWTMessageFlags;
@@ -234,13 +234,13 @@ public class ConvertUtil {
 	private static String getPriorityImage( Message msg ) {
 
 		int priority = MessageUtils.getMessagePriority( msg );
-		if ( priority == GWTMailConstants.PRIORITY_NONE ) {
+		if ( priority == GWTConstants.PRIORITY_NONE ) {
 			return null;
 		}
-		else if ( priority == GWTMailConstants.PRIORITY_VERY_LOW || priority == GWTMailConstants.PRIORITY_LOW ) {
+		else if ( priority == GWTConstants.PRIORITY_VERY_LOW || priority == GWTConstants.PRIORITY_LOW ) {
 			return ImageProvider.PRIORITY_LOW;
 		}
-		else if ( priority == GWTMailConstants.PRIORITY_VERY_HIGH || priority == GWTMailConstants.PRIORITY_VERY_HIGH ) {
+		else if ( priority == GWTConstants.PRIORITY_VERY_HIGH || priority == GWTConstants.PRIORITY_VERY_HIGH ) {
 			return ImageProvider.PRIORITY_HIGH;
 		}
 

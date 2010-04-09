@@ -19,9 +19,20 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import com.cubusmail.client.canvases.CanvasRegistry;
+import com.cubusmail.client.datasource.DataSourceRegistry;
+import com.cubusmail.client.events.DelayedResizeHandlerProxy;
+import com.cubusmail.client.events.EventBroker;
+import com.cubusmail.client.events.ReloadAddressListListener;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.common.model.AddressFolder;
+import com.cubusmail.common.model.AddressListFields;
+import com.smartgwt.client.data.Criteria;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.types.SelectionStyle;
+import com.smartgwt.client.widgets.events.ResizedEvent;
+import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
@@ -30,17 +41,69 @@ import com.smartgwt.client.widgets.grid.ListGridField;
  * 
  * @author Juergen Schlierf
  */
-public class AddressListGrid extends ListGrid {
+public class AddressListGrid extends ListGrid implements ReloadAddressListListener {
 
 	public AddressListGrid() {
 
 		super();
 		setAlternateRecordStyles( true );
 		setSelectionType( SelectionStyle.MULTIPLE );
-		setSelectionAppearance( SelectionAppearance.CHECKBOX );
-		setBaseStyle( "myOtherGridCell" );
+		setSelectionAppearance( SelectionAppearance.ROW_STYLE );
+		setAutoFetchData( false );
+		setDataSource( DataSourceRegistry.ADDRESS_LIST.get() );
+		setShowHeaderContextMenu( false );
+		setFields( generateField() );
+		setShowResizeBar( true );
+		setCanDrag( true );
+		setDragTarget( CanvasRegistry.ADDRESS_FOLDER_CANVAS.get() );
+        setCanDragRecordsOut(true);
 
-		ListGridField nameField = new ListGridField( "displayName", TextProvider.get().contact_list_panel_col_name() );
-		setFields(nameField);
+		addResizedHandler( DelayedResizeHandlerProxy.get( new ResizedHandler() {
+
+			public void onResized( ResizedEvent event ) {
+
+				resizeField();
+			}
+		} ) );
+
+		EventBroker.get().addReloadAddressListListener( this );
+	}
+
+	/**
+	 * @return
+	 */
+	private ListGridField generateField() {
+
+		ListGridField nameField = new ListGridField( AddressListFields.DISPLAY_NAME.name(), TextProvider.get()
+				.contact_list_panel_col_name() );
+		nameField.setAlign( Alignment.LEFT );
+		nameField.setCanGroupBy( false );
+		nameField.setShowGridSummary( false );
+		nameField.setCanFreeze( false );
+
+		return nameField;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.events.ReloadAddressListListener#onReloadAddressList
+	 * (com.cubusmail.common.model.AddressFolder)
+	 */
+	public void onReloadAddressList( AddressFolder folder ) {
+
+		Criteria criteria = new Criteria();
+		criteria.addCriteria( "folderId", String.valueOf( folder.getId() ) );
+		fetchData( criteria );
+	}
+
+	/**
+	 * 
+	 */
+	private void resizeField() {
+
+		int width = getWidth() - 2 - getScrollbarSize();
+		resizeField( 0, width );
 	}
 }

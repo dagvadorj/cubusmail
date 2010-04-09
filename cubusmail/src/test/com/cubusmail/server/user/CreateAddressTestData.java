@@ -20,6 +20,7 @@
 package com.cubusmail.server.user;
 
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -34,6 +35,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.UserAccount;
@@ -49,6 +51,8 @@ import com.cubusmail.server.util.DBManager;
 		"classpath:applicationMailContext.xml" })
 public class CreateAddressTestData implements ApplicationContextAware {
 
+	private final static String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ0123456789";
+
 	private final Log log = LogFactory.getLog( getClass() );
 
 	private ApplicationContext applicationContext;
@@ -59,18 +63,55 @@ public class CreateAddressTestData implements ApplicationContextAware {
 
 		try {
 			UserAccount account = this.userAccountDao.getUserAccountByUsername( "schlierf" );
-			if ( account == null ) {
-				account = this.applicationContext.getBean( UserAccount.class );
-				account.setCreated( new Date() );
-				account.setUsername( "schlierf" );
-				this.userAccountDao.saveUserAccount( account );
-			}
-			for (int i = 1; i < 10; i++) {
-				AddressFolder folder = this.applicationContext.getBean( AddressFolder.class );
-				folder.setName( "Folder " + i );
-				folder.setType( AddressFolderType.STANDARD );
-				account.addAddressFolder( folder );
-				this.userAccountDao.saveAddressFolder( folder );
+			List<AddressFolder> folderList = this.userAccountDao.retrieveAddressFolders( account );
+			AddressFolder addressFolder = folderList.get( 0 );
+			for (int i = 0; i < alpha.length(); i++) {
+				char begin = alpha.charAt( i );
+				for (int j = 1; j < 10; j++) {
+					Address address = this.applicationContext.getBean( Address.class );
+					address.setFirstName( begin + "firstName" + j );
+					address.setMiddleName( begin + "middleName" + j );
+					address.setLastName( begin + "lastName" + j );
+					address.setTitle( begin + "title" + j );
+					address.setBirthDate( new Date() );
+					address.setCompany( begin + "company" + j );
+					address.setPosition( begin + "position" + j );
+					address.setDepartment( begin + "department" + j );
+
+					address.setEmail( begin + "email" + j );
+					address.setEmail2( begin + "email2" + j );
+					address.setEmail3( begin + "email3" + j );
+					address.setEmail4( begin + "email4" + j );
+					address.setEmail5( begin + "email5" + j );
+					address.setIm( begin + "im" + j );
+					address.setUrl( begin + "url" + j );
+
+					address.setPrivatePhone( begin + "privatePhone" + j );
+					address.setWorkPhone( begin + "workPhone" + j );
+					address.setPrivateMobile( begin + "privateMobile" + j );
+					address.setWorkMobile( begin + "workMobile" + j );
+					address.setPrivateFax( begin + "privateFax" + j );
+					address.setWorkFax( begin + "workFax" + j );
+					address.setPager( begin + "pager" + j );
+
+					address.setPrivateStreet( begin + "privateStreet" + j );
+					address.setPrivateZipcode( begin + "privateZipcode" + j );
+					address.setPrivateCity( begin + "privateCity" + j );
+					address.setPrivateState( begin + "privateState" + j );
+					address.setPrivateCountry( begin + "privateCountry" + j );
+
+					address.setWorkStreet( begin + "workStreet" + j );
+					address.setWorkZipcode( begin + "workZipcode" + j );
+					address.setWorkCity( begin + "workCity" + j );
+					address.setWorkState( begin + "workState" + j );
+					address.setWorkCountry( begin + "workCountry" + j );
+
+					address.setNotes( begin + "notes" + j );
+
+					address.setAddressFolder( addressFolder );
+					this.userAccountDao.saveAddress( address );
+				}
+
 			}
 		}
 		catch (Exception e) {

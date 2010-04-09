@@ -43,7 +43,7 @@ public class GWTSessionManager {
 	private GWTMailbox mailbox;
 	private GWTMailFolder mailFolder;
 	private GWTMailFolder currentMailFolder;
-	private AddressFolder currentContactFolder;
+	private AddressFolder currentAddressFolder;
 	private GWTMessage currentMessage;
 
 	
@@ -154,18 +154,18 @@ public class GWTSessionManager {
 	/**
 	 * @return Returns the currentContactFolder.
 	 */
-	public AddressFolder getCurrentContactFolder() {
+	public AddressFolder getCurrentAddressFolder() {
 
-		return this.currentContactFolder;
+		return this.currentAddressFolder;
 	}
 
 	/**
 	 * @param currentContactFolder
 	 *            The currentContactFolder to set.
 	 */
-	public void setCurrentContactFolder( AddressFolder currentContactFolder ) {
+	public void setCurrentAddressFolder( AddressFolder currentContactFolder ) {
 
-		this.currentContactFolder = currentContactFolder;
+		this.currentAddressFolder = currentContactFolder;
 	}
 
 	/**

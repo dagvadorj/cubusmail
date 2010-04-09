@@ -67,12 +67,10 @@ public interface IUserAccountServiceAsync {
 	public void deleteAddressFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
-	 * Retrieve the contacts especially for the grid.
-	 * 
-	 * @return
+	 * @param addressFolderId
+	 * @param callback
 	 */
-	public void retrieveContactArray( AddressFolder folder, String sortField, String sortDirection,
-			AsyncCallback<String[][]> callback );
+	public void retrieveAddressList( AddressFolder folder, AsyncCallback<List<Address>> callback );
 
 	/**
 	 * @param contact
@@ -89,12 +87,6 @@ public interface IUserAccountServiceAsync {
 	 * @param targetFolder
 	 */
 	public void moveContacts( Long[] contactIds, AddressFolder targetFolder, AsyncCallback<Void> callback );
-
-	/**
-	 * @param id
-	 * @return
-	 */
-	public void retrieveContact( Long id, AsyncCallback<Address> callback );
 
 	/**
 	 * @return

@@ -21,7 +21,7 @@ package com.cubusmail.client.canvases.mail;
 
 import com.cubusmail.client.widgets.EmailAddressLink;
 import com.cubusmail.common.model.GWTEmailAddress;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -51,7 +51,7 @@ public class EmailAddressLine extends HLayout {
 		setVisible( false );
 
 		this.label = new Label( labelText );
-		this.label.setWidth( GWTMailConstants.MESSAGE_READING_PANE_LABEL_WIDTH );
+		this.label.setWidth( GWTConstants.MESSAGE_READING_PANE_LABEL_WIDTH );
 		this.label.setAutoHeight();
 
 		this.emailAddresses = new FlowPanel();

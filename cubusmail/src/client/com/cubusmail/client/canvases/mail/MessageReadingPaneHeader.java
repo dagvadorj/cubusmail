@@ -23,9 +23,8 @@ import com.cubusmail.client.actions.ActionRegistry;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMessage;
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.WidgetCanvas;
@@ -83,7 +82,7 @@ public class MessageReadingPaneHeader extends VLayout {
 		this.date.setWidth100();
 		this.date.setAutoHeight();
 		Label dateLabel = new Label( TextProvider.get().message_reading_pane_panel_date() );
-		dateLabel.setWidth( GWTMailConstants.MESSAGE_READING_PANE_LABEL_WIDTH );
+		dateLabel.setWidth( GWTConstants.MESSAGE_READING_PANE_LABEL_WIDTH );
 		dateLabel.setAutoHeight();
 		this.dateLine.setMembers( dateLabel, this.date );
 
@@ -100,7 +99,6 @@ public class MessageReadingPaneHeader extends VLayout {
 
 			public void onDraw( DrawEvent event ) {
 
-				GWT.log( "Draw", null );
 				layoutChildren( "test" );
 				parentResized();
 				EmailContextMenu emailContextMenu = new EmailContextMenu();
@@ -175,12 +173,6 @@ public class MessageReadingPaneHeader extends VLayout {
 //		setHeight( height + 20 );
 	}
 
-	@Override
-	protected void onDraw() {
-
-		GWT.log( "Draw", null );
-		super.onDraw();
-	}
 
 	private class EmailContextMenu extends Menu {
 

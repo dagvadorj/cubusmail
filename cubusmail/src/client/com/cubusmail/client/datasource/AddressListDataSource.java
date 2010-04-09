@@ -16,58 +16,118 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.cubusmail.client.datasource;
 
+import java.util.List;
+
+import com.cubusmail.client.exceptions.GWTExceptionHandler;
+import com.cubusmail.client.util.GWTSessionManager;
+import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.common.model.Address;
+import com.cubusmail.common.model.AddressFolder;
+import com.cubusmail.common.model.AddressListFields;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
-
+import com.smartgwt.client.rpc.RPCResponse;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
  * TODO: documentation
- *
+ * 
  * @author Juergen Schlierf
  */
 public class AddressListDataSource extends GwtRpcDataSource {
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.datasource.GwtRpcDataSource#executeAdd(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.datasource.GwtRpcDataSource#executeAdd(java.lang
+	 * .String, com.smartgwt.client.data.DSRequest,
+	 * com.smartgwt.client.data.DSResponse)
 	 */
 	@Override
 	protected void executeAdd( String requestId, DSRequest request, DSResponse response ) {
 
-		// TODO Auto-generated method stub
-
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.datasource.GwtRpcDataSource#executeFetch(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.datasource.GwtRpcDataSource#executeFetch(java.lang
+	 * .String, com.smartgwt.client.data.DSRequest,
+	 * com.smartgwt.client.data.DSResponse)
 	 */
 	@Override
-	protected void executeFetch( String requestId, DSRequest request, DSResponse response ) {
+	protected void executeFetch( final String requestId, final DSRequest request, final DSResponse response ) {
 
-		// TODO Auto-generated method stub
+		AddressFolder folder = GWTSessionManager.get().getCurrentAddressFolder();
+		ServiceProvider.getUserAccountService().retrieveAddressList( folder, new AsyncCallback<List<Address>>() {
 
+			@Override
+			public void onSuccess( List<Address> result ) {
+
+				mapResponse( response, result );
+				response.setStatus( RPCResponse.STATUS_SUCCESS );
+				processResponse( requestId, response );
+			}
+
+			@Override
+			public void onFailure( Throwable caught ) {
+
+				GWTExceptionHandler.handleException( caught );
+				response.setStatus( RPCResponse.STATUS_FAILURE );
+				processResponse( requestId, response );
+			}
+		} );
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.datasource.GwtRpcDataSource#executeRemove(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.datasource.GwtRpcDataSource#executeRemove(java.lang
+	 * .String, com.smartgwt.client.data.DSRequest,
+	 * com.smartgwt.client.data.DSResponse)
 	 */
 	@Override
 	protected void executeRemove( String requestId, DSRequest request, DSResponse response ) {
 
-		// TODO Auto-generated method stub
-
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.datasource.GwtRpcDataSource#executeUpdate(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.datasource.GwtRpcDataSource#executeUpdate(java.lang
+	 * .String, com.smartgwt.client.data.DSRequest,
+	 * com.smartgwt.client.data.DSResponse)
 	 */
 	@Override
 	protected void executeUpdate( String requestId, DSRequest request, DSResponse response ) {
 
-		// TODO Auto-generated method stub
-
 	}
 
+	/**
+	 * @param response
+	 * @param addressList
+	 */
+	private void mapResponse( DSResponse response, List<Address> addressList ) {
+
+		if ( addressList != null && addressList.size() > 0 ) {
+			ListGridRecord[] records = new ListGridRecord[addressList.size()];
+			for (int i = 0; i < addressList.size(); i++) {
+				records[i] = new ListGridRecord();
+				records[i].setAttribute( AddressListFields.ID.name(), addressList.get( i ).getId() );
+				records[i].setAttribute( AddressListFields.DISPLAY_NAME.name(), addressList.get( i ).getDisplayName() );
+				records[i].setAttribute( AddressListFields.ADDRESS_OBJECT.name(), addressList.get( i ) );
+			}
+
+			response.setData( records );
+			response.setTotalRows( addressList.size() );
+		}
+	}
 }

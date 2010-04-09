@@ -27,7 +27,7 @@ import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.client.util.UIFactory;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderException;
 import com.cubusmail.common.exceptions.folder.GWTMailFolderExistException;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -63,7 +63,7 @@ public class MailfolderDataSource extends GwtRpcDataSource {
 	@Override
 	protected void executeAdd( final String requestId, final DSRequest request, final DSResponse response ) {
 
-		JavaScriptObject jsObject = request.getAttributeAsJavaScriptObject( GWTMailConstants.PARAM_PARENT_FOLDER );
+		JavaScriptObject jsObject = request.getAttributeAsJavaScriptObject( GWTConstants.PARAM_PARENT_FOLDER );
 		TreeNode parentNode = TreeNode.getOrCreateRef( jsObject );
 		String parentId = parentNode.getAttributeAsString( "id" );
 		TreeNode newFolderNode = TreeNode.getOrCreateRef( request.getData() );

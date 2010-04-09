@@ -33,7 +33,7 @@ public enum DataSourceRegistry {
 	
 	MAIL_FOLDER, MESSAGE_LIST,
 
-	ADDRESS_FOLDER;
+	ADDRESS_FOLDER, ADDRESS_LIST;
 
 	private static Map<DataSourceRegistry, DataSource> DATASOURCE_MAP = new HashMap<DataSourceRegistry, DataSource>();
 
@@ -63,6 +63,8 @@ public enum DataSourceRegistry {
 			
 		case ADDRESS_FOLDER:
 			return new AddressFolderDataSource();
+		case ADDRESS_LIST:
+			return new AddressListDataSource();
 		}
 
 		throw new IllegalArgumentException( "DataSource missing: " + name() );

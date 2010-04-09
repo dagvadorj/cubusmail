@@ -138,7 +138,8 @@ public class MailfolderCanvas extends SectionStack implements FoldersReloadListe
 		this.tree.setDataSource( DataSourceRegistry.MAIL_FOLDER.get() );
 		this.tree.setCanEdit( true );
 		this.tree.setConfirmCancelEditing( false );
-		
+		this.tree.setLeaveScrollbarGap(false);  
+
 		TreeGridField field = new TreeGridField( "name" );
 		this.tree.setFields( field );
 		this.tree.setCanReorderRecords( true );

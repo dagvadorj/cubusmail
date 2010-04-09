@@ -27,5 +27,5 @@ package com.cubusmail.common.model;
  */
 public enum AddressListFields {
 
-	ID, DISPLAY_NAME, EMAIL, COMPANY, INTERNET_ADDRESS
+	ID, DISPLAY_NAME, ADDRESS_OBJECT
 }

@@ -22,7 +22,7 @@ package com.cubusmail.client.datasource;
 import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.ServiceProvider;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMessageList;
 import com.cubusmail.common.model.GWTMessageRecord;
 import com.cubusmail.common.model.MessageListFields;
@@ -85,7 +85,7 @@ public class MessageListDataSource extends GwtRpcDataSource {
 
 		final int startIndex = (request.getStartRow() < 0) ? 0 : request.getStartRow();
 		final int endIndex = (request.getEndRow() == null) ? -1 : request.getEndRow();
-		final int pageSize = (endIndex != -1) ? (endIndex - startIndex) : GWTMailConstants.MESSAGE_LIST_PAGE_SIZE;
+		final int pageSize = (endIndex != -1) ? (endIndex - startIndex) : GWTConstants.MESSAGE_LIST_PAGE_SIZE;
 
 		final String folderId = GWTSessionManager.get().getCurrentMailFolder().getId();
 		boolean ascending = true;
@@ -98,8 +98,8 @@ public class MessageListDataSource extends GwtRpcDataSource {
 		}
 
 		MessageListFields[] searchFields = (MessageListFields[]) request
-				.getAttributeAsObject( GWTMailConstants.PARAM_SEARCH_FIELDS );
-		String[] searchValues = request.getAttributeAsStringArray( GWTMailConstants.PARAM_SEARCH_VALUES );
+				.getAttributeAsObject( GWTConstants.PARAM_SEARCH_FIELDS );
+		String[] searchValues = request.getAttributeAsStringArray( GWTConstants.PARAM_SEARCH_VALUES );
 
 		ServiceProvider.getMailboxService().retrieveMessages( folderId, startIndex, pageSize, sortColumn, ascending,
 				searchFields, searchValues, new AsyncCallback<GWTMessageList>() {

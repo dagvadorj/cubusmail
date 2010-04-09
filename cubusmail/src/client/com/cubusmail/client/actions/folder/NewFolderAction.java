@@ -26,7 +26,7 @@ import java.util.List;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.client.util.TextProvider;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.data.DSCallback;
@@ -92,7 +92,7 @@ public class NewFolderAction extends GWTFolderAction {
 		TreeNode newFolder = new TreeNode( folderName );
 		newFolder.setParentID( getSelectedTreeNode().getAttributeAsString( "id" ) );
 		DSRequest request = new DSRequest();
-		request.setAttribute( GWTMailConstants.PARAM_PARENT_FOLDER, getSelectedTreeNode() );
+		request.setAttribute( GWTConstants.PARAM_PARENT_FOLDER, getSelectedTreeNode() );
 		this.tree.addData( newFolder, new DSCallback() {
 
 			public void execute( DSResponse response, Object rawData, DSRequest request ) {

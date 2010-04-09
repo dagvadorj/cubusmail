@@ -25,7 +25,7 @@ import com.cubusmail.client.actions.IGWTAction;
 import com.cubusmail.client.widgets.CubusButton;
 import com.cubusmail.client.widgets.CubusImgButton;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.GWTMailConstants;
+import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.GWTMailFolder;
 import com.cubusmail.common.model.GWTMailbox;
 import com.cubusmail.common.model.IGWTFolder;
@@ -189,6 +189,7 @@ public abstract class UIFactory {
 			nodes[i] = new TreeNode( folder.getName() );
 			nodes[i].setAttribute( "icon", ImageProvider.ADDRESS_FOLDER );
 			nodes[i].setID( folder.getName() );
+			nodes[i].setAttribute( GWTConstants.ADDRESS_FOLDER, folder );
 		}
 
 		return nodes;
@@ -216,7 +217,7 @@ public abstract class UIFactory {
 			TreeNode[] nodes = new TreeNode[mailFolder.getSubfolders().length];
 			for (int i = 0; i < mailFolder.getSubfolders().length; i++) {
 				nodes[i] = createTreeNode( mailFolder.getSubfolders()[i] );
-				nodes[i].setAttribute( GWTMailConstants.PARAM_PARENT_FOLDER, node );
+				nodes[i].setAttribute( GWTConstants.PARAM_PARENT_FOLDER, node );
 			}
 			node.setChildren( nodes );
 		}

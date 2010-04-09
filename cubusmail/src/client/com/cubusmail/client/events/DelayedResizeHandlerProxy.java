@@ -61,11 +61,6 @@ public class DelayedResizeHandlerProxy implements ResizedHandler {
 		this.delayTimer.schedule( DELAY_MILLIS );
 	}
 
-	/**
-	 * TODO: documentation
-	 * 
-	 * @author Juergen Schlierf
-	 */
 	private class DelayTimer extends Timer {
 
 		private ResizedEvent resizedEvent;

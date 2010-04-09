@@ -20,6 +20,8 @@
  */
 package com.cubusmail.client.events;
 
+import com.cubusmail.common.model.AddressFolder;
+
 
 /**
  * Listener for reloading contacts.
@@ -31,5 +33,5 @@ public interface ReloadAddressListListener {
 	/**
 	 * 
 	 */
-	public void onReloadAddressList();
+	public void onReloadAddressList(AddressFolder folder);
 }

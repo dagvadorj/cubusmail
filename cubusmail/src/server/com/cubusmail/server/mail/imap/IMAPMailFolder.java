@@ -51,9 +51,8 @@ import com.sun.mail.imap.Rights;
  * 
  * @author Juergen Schlierf
  */
+@SuppressWarnings("serial")
 public class IMAPMailFolder implements IMailFolder, ApplicationContextAware {
-
-	private static final long serialVersionUID = -8334924396229313354L;
 
 	private final static String ATTRIBUTE_HAS_CHILDREN = "\\HasChildren";
 

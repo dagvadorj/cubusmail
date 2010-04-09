@@ -24,7 +24,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +34,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +41,6 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.AddressListFields;
 import com.cubusmail.common.model.Identity;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.common.services.IUserAccountService;
@@ -162,56 +159,15 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		// this.userAccountDao.deleteAddressFolders( folder );
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.cubusmail.gwtui.client.services.IUserAccountService#retrieveContactArray
-	 * ()
+	/* (non-Javadoc)
+	 * @see com.cubusmail.common.services.IUserAccountService#retrieveAddressList(com.cubusmail.common.model.AddressFolder)
 	 */
-	@SuppressWarnings("unchecked")
-	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection ) {
+	public List<Address> retrieveAddressList( AddressFolder folder ) {
 
-		List<Address> contactList = this.userAccountDao.retrieveAddressList( folder );
+		List<Address> addressList = this.userAccountDao.retrieveAddressList( folder );
+		fillDisplayName( addressList );
 
-		if ( contactList != null && contactList.size() > 0 ) {
-			if ( !StringUtils.isEmpty( sortField ) ) {
-				boolean ascending = "ASC".equals( sortDirection );
-				String fieldName = null;
-				if ( sortField.equals( AddressListFields.DISPLAY_NAME.name() ) ) {
-					fieldName = "displayName";
-				}
-				else if ( sortField.equals( AddressListFields.EMAIL.name() ) ) {
-					fieldName = "email";
-				}
-				else if ( sortField.equals( AddressListFields.COMPANY.name() ) ) {
-					fieldName = "company";
-				}
-				Comparator comparator = null;
-				if ( ascending ) {
-					comparator = new BeanComparator( fieldName );
-				}
-				else {
-					comparator = new ReverseComparator( new BeanComparator( fieldName ) );
-				}
-				Collections.sort( contactList, comparator );
-			}
-
-			String[][] array = new String[contactList.size()][AddressListFields.values().length];
-			for (int i = 0; i < contactList.size(); i++) {
-				array[i][AddressListFields.ID.ordinal()] = Long.toString( contactList.get( i ).getId() );
-				array[i][AddressListFields.DISPLAY_NAME.ordinal()] = contactList.get( i ).getDisplayName();
-				array[i][AddressListFields.EMAIL.ordinal()] = contactList.get( i ).getEmail();
-				array[i][AddressListFields.COMPANY.ordinal()] = contactList.get( i ).getCompany();
-				array[i][AddressListFields.INTERNET_ADDRESS.ordinal()] = MessageUtils.toInternetAddress( contactList
-						.get( i ).getEmail(), contactList.get( i ).getDisplayName() );
-			}
-
-			return array;
-		}
-		else {
-			return new String[0][0];
-		}
+		return addressList;
 	}
 
 	/*
@@ -324,19 +280,6 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.cubusmail.gwtui.client.services.IUserAccountService#retrieveContact
-	 * (java.lang.Long)
-	 */
-	public Address retrieveContact( Long id ) {
-
-		// return this.userAccountDao.getContactById( id );
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#retrieveTimezones
 	 * ()
 	 */
@@ -375,6 +318,30 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		Collections.sort( result, new BeanComparator( "rawOffset" ) );
 
 		return result;
+	}
+
+	/**
+	 * @param contactList
+	 */
+	private void fillDisplayName( List<Address> addressList ) {
+
+		if ( addressList != null ) {
+			for (Address contact : addressList) {
+				String displayName = "";
+				boolean isLastNameEmpty = StringUtils.isEmpty( contact.getLastName() );
+				boolean isFirstNameEmpty = StringUtils.isEmpty( contact.getFirstName() );
+				if ( !isLastNameEmpty ) {
+					displayName = contact.getLastName();
+				}
+				if ( !isLastNameEmpty && !isFirstNameEmpty ) {
+					displayName += ", ";
+				}
+				if ( !isFirstNameEmpty ) {
+					displayName += contact.getFirstName();
+				}
+				contact.setDisplayName( displayName );
+			}
+		}
 	}
 
 	public void setUserAccountDao( IUserAccountDao userAccountDao ) {

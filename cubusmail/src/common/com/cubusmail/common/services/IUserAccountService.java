@@ -67,11 +67,10 @@ public interface IUserAccountService extends RemoteService {
 	public void deleteAddressFolder( AddressFolder folder );
 
 	/**
-	 * Retrieve the contacts especially for the grid.
-	 * 
+	 * @param addressFolderId
 	 * @return
 	 */
-	public String[][] retrieveContactArray( AddressFolder folder, String sortField, String sortDirection );
+	public List<Address> retrieveAddressList(  AddressFolder folder );
 
 	/**
 	 * @param contact
@@ -81,19 +80,13 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @param contacts
 	 */
-	public void deleteContacts(  List<Long> ids );
+	public void deleteContacts( List<Long> ids );
 
 	/**
 	 * @param contactIds
 	 * @param targetFolder
 	 */
 	public void moveContacts( Long[] contactIds, AddressFolder targetFolder );
-	
-	/**
-	 * @param id
-	 * @return
-	 */
-	public Address retrieveContact( Long id );
 
 	/**
 	 * @return
@@ -103,5 +96,5 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @return
 	 */
-	public String[][] retrieveRecipientsArray(String filterLine);
+	public String[][] retrieveRecipientsArray( String filterLine );
 }
