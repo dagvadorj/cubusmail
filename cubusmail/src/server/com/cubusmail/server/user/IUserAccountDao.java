@@ -80,7 +80,13 @@ public interface IUserAccountDao {
 	 * @return
 	 */
 	public abstract List<Address> retrieveAddressList( AddressFolder folder );
-
+	
+	/**
+	 * @param folder
+	 * @return
+	 */
+	public abstract List<Address> retrieveAddressList( AddressFolder folder, List<String> beginChars );
+	
 	/**
 	 * @param account
 	 * @param searchString

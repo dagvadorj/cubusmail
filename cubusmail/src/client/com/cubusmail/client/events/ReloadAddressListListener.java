@@ -33,5 +33,5 @@ public interface ReloadAddressListListener {
 	/**
 	 * 
 	 */
-	public void onReloadAddressList(AddressFolder folder);
+	public void onReloadAddressList(AddressFolder folder, String beginChars);
 }

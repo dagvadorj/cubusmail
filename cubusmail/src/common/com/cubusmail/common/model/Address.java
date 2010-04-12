@@ -37,14 +37,12 @@ public class Address implements Serializable {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	private String displayName;
 	private String title;
 	private Date birthDate;
 	private String company;
 	private String position;
 	private String department;
-
-	// transient
-	private String displayName;
 
 	// internet
 	private String email;

@@ -37,7 +37,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
-import com.cubusmail.common.model.AddressFolderType;
 import com.cubusmail.common.model.UserAccount;
 import com.cubusmail.server.util.DBManager;
 

@@ -64,8 +64,12 @@ public class Cubusmail implements EntryPoint, GWT.UncaughtExceptionHandler, Logo
 			public void onSuccess( GWTMailbox result ) {
 
 				if ( result == null || !result.isLoggedIn() ) {
-					// openLoginWindow();
-					testLogin();
+					if ( GWT.isScript() ) {
+						openLoginWindow();
+					}
+					else {
+						testLogin();
+					}
 				}
 				else {
 					GWTSessionManager.get().setMailbox( result );

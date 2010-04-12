@@ -159,15 +159,25 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		// this.userAccountDao.deleteAddressFolders( folder );
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.common.services.IUserAccountService#retrieveAddressList(com.cubusmail.common.model.AddressFolder)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.common.services.IUserAccountService#retrieveAddressList
+	 * (com.cubusmail.common.model.AddressFolder)
 	 */
-	public List<Address> retrieveAddressList( AddressFolder folder ) {
+	public List<Address> retrieveAddressList( AddressFolder folder, String beginChars ) {
 
-		List<Address> addressList = this.userAccountDao.retrieveAddressList( folder );
-		fillDisplayName( addressList );
+		List<String> beginCharList = null;
+		if ( beginChars != null && beginChars.length() > 0 ) {
+			beginCharList = new ArrayList<String>();
+			for (int i = 0; i < beginChars.length(); i++) {
+				String beginChar = String.valueOf( beginChars.charAt( i ) ) + "%";
+				beginCharList.add( beginChar );
+			}
+		}
 
-		return addressList;
+		return this.userAccountDao.retrieveAddressList( folder, beginCharList );
 	}
 
 	/*
@@ -318,30 +328,6 @@ public class UserAccountService extends ServiceBase implements IUserAccountServi
 		Collections.sort( result, new BeanComparator( "rawOffset" ) );
 
 		return result;
-	}
-
-	/**
-	 * @param contactList
-	 */
-	private void fillDisplayName( List<Address> addressList ) {
-
-		if ( addressList != null ) {
-			for (Address contact : addressList) {
-				String displayName = "";
-				boolean isLastNameEmpty = StringUtils.isEmpty( contact.getLastName() );
-				boolean isFirstNameEmpty = StringUtils.isEmpty( contact.getFirstName() );
-				if ( !isLastNameEmpty ) {
-					displayName = contact.getLastName();
-				}
-				if ( !isLastNameEmpty && !isFirstNameEmpty ) {
-					displayName += ", ";
-				}
-				if ( !isFirstNameEmpty ) {
-					displayName += contact.getFirstName();
-				}
-				contact.setDisplayName( displayName );
-			}
-		}
 	}
 
 	public void setUserAccountDao( IUserAccountDao userAccountDao ) {

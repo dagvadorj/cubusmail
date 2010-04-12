@@ -70,7 +70,7 @@ public interface IUserAccountService extends RemoteService {
 	 * @param addressFolderId
 	 * @return
 	 */
-	public List<Address> retrieveAddressList(  AddressFolder folder );
+	public List<Address> retrieveAddressList( AddressFolder folder, String beginChars );
 
 	/**
 	 * @param contact

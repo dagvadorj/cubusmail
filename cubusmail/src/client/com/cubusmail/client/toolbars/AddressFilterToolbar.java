@@ -19,8 +19,12 @@
  */
 package com.cubusmail.client.toolbars;
 
+import com.cubusmail.client.events.EventBroker;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
 /**
@@ -38,21 +42,49 @@ public class AddressFilterToolbar extends ToolStrip {
 		setBorder( "0px" );
 		IButton button = new IButton( "All" );
 		button.setSelected( true );
-		button.setAutoFit( true );
+		button.setWidth( 60 );
 		button.setActionType( SelectionType.RADIO );
 		button.setRadioGroup( "addressFilter" );
+		button.addClickHandler( new ClickHandler() {
+
+			@Override
+			public void onClick( ClickEvent event ) {
+
+				EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(), null );
+			}
+		} );
 		addMember( button );
+
 		button = new IButton( "123" );
 		button.setWidth( 35 );
 		button.setActionType( SelectionType.RADIO );
 		button.setRadioGroup( "addressFilter" );
+		button.addClickHandler( new ClickHandler() {
+
+			@Override
+			public void onClick( ClickEvent event ) {
+
+				EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(),
+						"0123456789" );
+			}
+		} );
 		addMember( button );
 
 		for (int i = 0; i < alpha.length(); i++) {
-			IButton but = new IButton( String.valueOf( alpha.charAt( i ) ) );
+			final String beginChar = String.valueOf( alpha.charAt( i ) );
+			IButton but = new IButton( beginChar );
 			but.setWidth( 21 );
 			but.setActionType( SelectionType.RADIO );
 			but.setRadioGroup( "addressFilter" );
+			but.addClickHandler( new ClickHandler() {
+
+				@Override
+				public void onClick( ClickEvent event ) {
+
+					EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(),
+							beginChar );
+				}
+			} );
 			addMember( but );
 		}
 	}

@@ -27,6 +27,7 @@ import com.cubusmail.client.util.ServiceProvider;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressListFields;
+import com.cubusmail.common.model.GWTConstants;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
@@ -65,24 +66,26 @@ public class AddressListDataSource extends GwtRpcDataSource {
 	protected void executeFetch( final String requestId, final DSRequest request, final DSResponse response ) {
 
 		AddressFolder folder = GWTSessionManager.get().getCurrentAddressFolder();
-		ServiceProvider.getUserAccountService().retrieveAddressList( folder, new AsyncCallback<List<Address>>() {
+		String beginChars = request.getCriteria().getAttribute( GWTConstants.ADDRESS_BEGIN_CHARS );
+		ServiceProvider.getUserAccountService().retrieveAddressList( folder, beginChars,
+				new AsyncCallback<List<Address>>() {
 
-			@Override
-			public void onSuccess( List<Address> result ) {
+					@Override
+					public void onSuccess( List<Address> result ) {
 
-				mapResponse( response, result );
-				response.setStatus( RPCResponse.STATUS_SUCCESS );
-				processResponse( requestId, response );
-			}
+						mapResponse( response, result );
+						response.setStatus( RPCResponse.STATUS_SUCCESS );
+						processResponse( requestId, response );
+					}
 
-			@Override
-			public void onFailure( Throwable caught ) {
+					@Override
+					public void onFailure( Throwable caught ) {
 
-				GWTExceptionHandler.handleException( caught );
-				response.setStatus( RPCResponse.STATUS_FAILURE );
-				processResponse( requestId, response );
-			}
-		} );
+						GWTExceptionHandler.handleException( caught );
+						response.setStatus( RPCResponse.STATUS_FAILURE );
+						processResponse( requestId, response );
+					}
+				} );
 	}
 
 	/*

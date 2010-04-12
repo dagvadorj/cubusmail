@@ -264,11 +264,11 @@ public class EventBroker {
 		this.reloadAdressListListenerList.remove( listener );
 	}
 
-	public void fireReloadAddressList(AddressFolder folder) {
+	public void fireReloadAddressList( AddressFolder folder, String beginChars ) {
 
 		for (int i = 0; i < this.reloadAdressListListenerList.size(); i++) {
 			ReloadAddressListListener listener = this.reloadAdressListListenerList.get( i );
-			listener.onReloadAddressList(folder);
+			listener.onReloadAddressList( folder, beginChars );
 		}
 	}
 

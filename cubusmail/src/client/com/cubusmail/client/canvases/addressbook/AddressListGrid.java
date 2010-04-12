@@ -27,6 +27,7 @@ import com.cubusmail.client.events.ReloadAddressListListener;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressListFields;
+import com.cubusmail.common.model.GWTConstants;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SelectionAppearance;
@@ -91,10 +92,11 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 	 * com.cubusmail.client.events.ReloadAddressListListener#onReloadAddressList
 	 * (com.cubusmail.common.model.AddressFolder)
 	 */
-	public void onReloadAddressList( AddressFolder folder ) {
+	public void onReloadAddressList( AddressFolder folder, String beginChars ) {
 
 		Criteria criteria = new Criteria();
-		criteria.addCriteria( "folderId", String.valueOf( folder.getId() ) );
+		criteria.addCriteria( GWTConstants.ADDRESS_FOLDER_ID, String.valueOf( folder.getId() ) );
+		criteria.addCriteria( GWTConstants.ADDRESS_BEGIN_CHARS, beginChars );
 		fetchData( criteria );
 	}
 

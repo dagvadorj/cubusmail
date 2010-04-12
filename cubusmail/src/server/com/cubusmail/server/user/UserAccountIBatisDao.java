@@ -20,10 +20,13 @@
 package com.cubusmail.server.user;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.cubusmail.common.model.Address;
@@ -159,13 +162,34 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 * (non-Javadoc)
 	 * 
 	 * @see
+	 * com.cubusmail.server.user.IUserAccountDao#retrieveAddressList(com.cubusmail
+	 * .common.model.AddressFolder)
+	 */
+	public List<Address> retrieveAddressList( AddressFolder folder ) {
+
+		return retrieveAddressList( folder, null );
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 * com.cubusmail.server.user.IUserAccountDao#retrieveContactList(com.cubusmail
 	 * .common.model.ContactFolder)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Address> retrieveAddressList( AddressFolder folder ) {
+	public List<Address> retrieveAddressList( AddressFolder folder, List<String> beginChars ) {
 
-		List<Address> result = getSqlMapClientTemplate().queryForList( "selectAddresses", folder.getId() );
+		List<Address> result = null;
+		if ( beginChars != null && beginChars.size() > 0 ) {
+			Map<String, Object> parameterMap = new HashMap<String, Object>();
+			parameterMap.put( "id", folder.getId() );
+			parameterMap.put( "beginChars", beginChars );
+			result = getSqlMapClientTemplate().queryForList( "selectAddressesBeginWith", parameterMap );
+		}
+		else {
+			result = getSqlMapClientTemplate().queryForList( "selectAddresses", folder.getId() );
+		}
 		for (Address address : result) {
 			address.setAddressFolder( folder );
 		}
@@ -194,6 +218,7 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 	 */
 	public Long saveAddress( Address address ) {
 
+		address.setDisplayName( createDisplayName( address ) );
 		if ( address.getId() == null ) {
 			Long id = (Long) getSqlMapClientTemplate().insert( "insertAddress", address );
 			address.setId( id );
@@ -256,5 +281,32 @@ class UserAccountIBatisDao extends SqlMapClientDaoSupport implements IUserAccoun
 			getSqlMapClientTemplate().update( "updateUserAccount", account );
 			return account.getId();
 		}
+	}
+
+	/**
+	 * @param address
+	 * @return
+	 */
+	private String createDisplayName( Address address ) {
+
+		String displayName = "";
+		boolean isLastNameEmpty = StringUtils.isEmpty( address.getLastName() );
+		boolean isFirstNameEmpty = StringUtils.isEmpty( address.getFirstName() );
+		if ( isLastNameEmpty && isFirstNameEmpty ) {
+			displayName = address.getEmail();
+		}
+		else {
+			if ( !isLastNameEmpty ) {
+				displayName = address.getLastName();
+			}
+			if ( !isLastNameEmpty && !isFirstNameEmpty ) {
+				displayName += ", ";
+			}
+			if ( !isFirstNameEmpty ) {
+				displayName += address.getFirstName();
+			}
+		}
+
+		return displayName;
 	}
 }

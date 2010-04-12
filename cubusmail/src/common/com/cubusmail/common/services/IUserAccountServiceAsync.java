@@ -67,10 +67,11 @@ public interface IUserAccountServiceAsync {
 	public void deleteAddressFolder( AddressFolder folder, AsyncCallback<Void> callback );
 
 	/**
-	 * @param addressFolderId
+	 * @param folder
+	 * @param beginChars
 	 * @param callback
 	 */
-	public void retrieveAddressList( AddressFolder folder, AsyncCallback<List<Address>> callback );
+	public void retrieveAddressList( AddressFolder folder, String beginChars, AsyncCallback<List<Address>> callback );
 
 	/**
 	 * @param contact
