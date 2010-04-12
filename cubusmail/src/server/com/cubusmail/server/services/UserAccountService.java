@@ -55,7 +55,8 @@ import com.cubusmail.server.user.IUserAccountDao;
  * 
  * @author Juergen Schlierf
  */
-public class UserAccountService extends ServiceBase implements IUserAccountService {
+@SuppressWarnings("serial")
+public class UserAccountService extends AbstractGwtService implements IUserAccountService {
 
 	private final Log log = LogFactory.getLog( getClass() );
 

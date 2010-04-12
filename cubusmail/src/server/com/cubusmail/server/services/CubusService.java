@@ -50,8 +50,8 @@ import com.cubusmail.server.user.IUserAccountDao;
  * 
  * @author Juergen Schlierf
  */
-
-public class CubusService extends ServiceBase implements ICubusService {
+@SuppressWarnings("serial")
+public class CubusService extends AbstractGwtService implements ICubusService {
 
 	private final Log log = LogFactory.getLog( getClass() );
 
@@ -82,8 +82,8 @@ public class CubusService extends ServiceBase implements ICubusService {
 			// create useraccount
 			if ( account == null ) {
 				account = createUserAccount( mailbox );
-				if ( getPerThreadRequest().get().getLocale() != null ) {
-					String lang = getPerThreadRequest().get().getLocale().getLanguage();
+				if ( getThreadLocalRequest().getLocale() != null ) {
+					String lang = getThreadLocalRequest().getLocale().getLanguage();
 					account.getPreferences().setLanguage( lang );
 				}
 			}

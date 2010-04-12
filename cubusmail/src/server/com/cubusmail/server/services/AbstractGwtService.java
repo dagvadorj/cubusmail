@@ -1,4 +1,4 @@
-/* ServiceBase.java
+/* AbstractGwtService.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,32 +19,48 @@
  */
 package com.cubusmail.server.services;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
  * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-public abstract class ServiceBase implements IServiceBase, ApplicationContextAware {
-
-	protected transient ThreadLocal<HttpServletRequest> perThreadRequest;
-	protected transient ThreadLocal<HttpServletResponse> perThreadResponse;
+@SuppressWarnings("serial")
+public abstract class AbstractGwtService extends RemoteServiceServlet implements Controller, ApplicationContextAware,
+		ServletContextAware {
 
 	private ApplicationContext applicationContext;
+
+	private ServletContext servletContext;
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.springframework.context.ApplicationContextAware#setApplicationContext
-	 * (org.springframework.context.ApplicationContext)
+	 * org.springframework.web.servlet.mvc.Controller#handleRequest(javax.servlet
+	 * .http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
+	@Override
+	public ModelAndView handleRequest( HttpServletRequest request, HttpServletResponse response ) throws Exception {
+
+		super.doPost( request, response );
+
+		return null;
+	}
+
+	@Override
 	public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException {
 
 		this.applicationContext = applicationContext;
@@ -55,23 +71,15 @@ public abstract class ServiceBase implements IServiceBase, ApplicationContextAwa
 		return applicationContext;
 	}
 
-	public void setPerThreadRequest( ThreadLocal<HttpServletRequest> perThreadRequest ) {
+	@Override
+	public void setServletContext( ServletContext servletContext ) {
 
-		this.perThreadRequest = perThreadRequest;
+		this.servletContext = servletContext;
 	}
 
-	public void setPerThreadResponse( ThreadLocal<HttpServletResponse> perThreadResponse ) {
+	@Override
+	public ServletContext getServletContext() {
 
-		this.perThreadResponse = perThreadResponse;
-	}
-
-	protected ThreadLocal<HttpServletRequest> getPerThreadRequest() {
-
-		return perThreadRequest;
-	}
-
-	protected ThreadLocal<HttpServletResponse> getPerThreadResponse() {
-
-		return perThreadResponse;
+		return this.servletContext;
 	}
 }

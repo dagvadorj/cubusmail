@@ -66,7 +66,8 @@ import com.sun.mail.imap.IMAPFolder;
  * 
  * @author Juergen Schlierf
  */
-public class MailboxService extends ServiceBase implements IMailboxService {
+@SuppressWarnings("serial")
+public class MailboxService extends AbstractGwtService implements IMailboxService {
 
 	private final Log log = LogFactory.getLog( getClass() );
 

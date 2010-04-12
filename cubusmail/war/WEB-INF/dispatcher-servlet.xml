@@ -16,28 +16,16 @@
 		</property>
 	</bean>
 
-	<bean id="cubusService" class="com.cubusmail.server.services.GwtRpcController">
-		<property name="remoteService">
-			<bean class="com.cubusmail.server.services.CubusService" >
-				<property name="userAccountDao" ref="userAccountDao"/>
-			</bean>
-		</property>
+	<bean id="cubusService" class="com.cubusmail.server.services.CubusService">
+		<property name="userAccountDao" ref="userAccountDao" />
 	</bean>
 
-	<bean id="mailboxService" class="com.cubusmail.server.services.GwtRpcController">
-		<property name="remoteService">
-			<bean class="com.cubusmail.server.services.MailboxService" >
-				<property name="userAccountDao" ref="userAccountDao"/>
-			</bean>
-		</property>
+	<bean id="mailboxService" class="com.cubusmail.server.services.MailboxService">
+		<property name="userAccountDao" ref="userAccountDao" />
 	</bean>
 
-	<bean id="userAccountService" class="com.cubusmail.server.services.GwtRpcController">
-		<property name="remoteService">
-			<bean class="com.cubusmail.server.services.UserAccountService" >
-				<property name="userAccountDao" ref="userAccountDao"/>
-			</bean>
-		</property>
+	<bean id="userAccountService" class="com.cubusmail.server.services.UserAccountService">
+		<property name="userAccountDao" ref="userAccountDao" />
 	</bean>
 
 </beans>
