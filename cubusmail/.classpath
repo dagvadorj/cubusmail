@@ -30,5 +30,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.asm-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.asm-sources-3.0.1.RELEASE-A.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.expression-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.expression-sources-3.0.1.RELEASE-A.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/org.springframework.web.servlet-3.0.1.RELEASE-A.jar" sourcepath="/Sources/org.springframework.web.servlet-sources-3.0.1.RELEASE-A.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-core-3.0.2.RELEASE.jar" sourcepath="/Sources/spring-security-core-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-web-3.0.2.RELEASE.jar" sourcepath="/Sources/spring-security-web-3.0.2.RELEASE-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

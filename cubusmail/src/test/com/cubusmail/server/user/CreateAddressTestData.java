@@ -66,7 +66,7 @@ public class CreateAddressTestData implements ApplicationContextAware {
 			AddressFolder addressFolder = folderList.get( 0 );
 			for (int i = 0; i < alpha.length(); i++) {
 				char begin = alpha.charAt( i );
-				for (int j = 1; j < 10; j++) {
+				for (int j = 1; j < 2; j++) {
 					Address address = this.applicationContext.getBean( Address.class );
 					address.setFirstName( begin + "firstName" + j );
 					address.setMiddleName( begin + "middleName" + j );
