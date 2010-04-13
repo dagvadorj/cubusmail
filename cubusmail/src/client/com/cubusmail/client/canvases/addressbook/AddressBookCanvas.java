@@ -47,10 +47,10 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 		addressListLayout.addMember( ToolbarRegistry.ADDRESS_FILTER.get() );
 
 		HLayout addressHLayout = new HLayout();
-		AddressListGrid addressListGrid = new AddressListGrid();
-		addressListGrid.setWidth("220px");
-		addressHLayout.addMember(addressListGrid);
-		addressListLayout.addMember(addressHLayout);
+		CanvasRegistry.ADDRESS_LIST.get().setWidth( "220px" );
+		addressHLayout.addMember( CanvasRegistry.ADDRESS_LIST.get() );
+		addressHLayout.addMember( CanvasRegistry.ADDRESS_DETAILS.get() );
+		addressListLayout.addMember( addressHLayout );
 
 		addMember( addressListLayout );
 	}

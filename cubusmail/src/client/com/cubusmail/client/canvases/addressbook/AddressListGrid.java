@@ -25,6 +25,7 @@ import com.cubusmail.client.events.DelayedResizeHandlerProxy;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.ReloadAddressListListener;
 import com.cubusmail.client.util.TextProvider;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressListFields;
 import com.cubusmail.common.model.GWTConstants;
@@ -36,6 +37,8 @@ import com.smartgwt.client.widgets.events.ResizedEvent;
 import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
+import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 
 /**
  * TODO: documentation
@@ -57,7 +60,7 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 		setShowResizeBar( true );
 		setCanDrag( true );
 		setDragTarget( CanvasRegistry.ADDRESS_FOLDER_CANVAS.get() );
-        setCanDragRecordsOut(true);
+		setCanDragRecordsOut( true );
 
 		addResizedHandler( DelayedResizeHandlerProxy.get( new ResizedHandler() {
 
@@ -66,6 +69,17 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 				resizeField();
 			}
 		} ) );
+
+		addSelectionChangedHandler( new SelectionChangedHandler() {
+
+			@Override
+			public void onSelectionChanged( SelectionEvent event ) {
+
+				Address address = (Address) event.getRecord().getAttributeAsObject(
+						AddressListFields.ADDRESS_OBJECT.name() );
+				AddressDetailsForms.setAddress( address );
+			}
+		} );
 
 		EventBroker.get().addReloadAddressListListener( this );
 	}

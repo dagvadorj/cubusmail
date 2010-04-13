@@ -36,7 +36,7 @@ public enum AddressDetailsForms {
 
 	EMAIL1("Email 1"), EMAIL2("Email 2"), EMAIL3("Email 3"), EMAIL4("Email 4"), EMAIL5("Email 5"), URL("URL"), IM("IM"),
 
-	COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department"), TITLE("Title");
+	TITLE("Title"), COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department");
 
 	private final static Map<AddressDetailsForms, AddressDetailSubForm> FORM_MAP = new HashMap<AddressDetailsForms, AddressDetailSubForm>();
 
@@ -70,12 +70,18 @@ public enum AddressDetailsForms {
 		case WORK_MOBILE:
 		case PRIVATE_FAX:
 		case WORK_FAX:
+		case IM:
+		case TITLE:
+		case COMPANY:
+		case POSITION:
+		case DEPARTMENT:
 			return createStandardTextLine( this );
 		case EMAIL1:
 		case EMAIL2:
 		case EMAIL3:
 		case EMAIL4:
 		case EMAIL5:
+		case URL:
 			return createLinkLine( this );
 		}
 
@@ -138,6 +144,16 @@ public enum AddressDetailsForms {
 					return address.getPrivateFax();
 				case WORK_FAX:
 					return address.getWorkFax();
+				case IM:
+					return address.getIm();
+				case TITLE:
+					return address.getTitle();
+				case COMPANY:
+					return address.getCompany();
+				case POSITION:
+					return address.getPosition();
+				case DEPARTMENT:
+					return address.getDepartment();
 				}
 
 				throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
@@ -171,6 +187,8 @@ public enum AddressDetailsForms {
 					return address.getEmail4();
 				case EMAIL5:
 					return address.getEmail5();
+				case URL:
+					return address.getUrl();
 				}
 
 				throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
