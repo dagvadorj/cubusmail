@@ -40,7 +40,7 @@ public enum CanvasRegistry {
 
 	ADDRESS_BOOK_CANVAS, ADDRESS_FOLDER_CANVAS;
 
-	private static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
+	private final static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
 
 	public Canvas get() {
 
@@ -82,6 +82,6 @@ public enum CanvasRegistry {
 			return new AddressFolderCanvas();
 		}
 
-		throw new IllegalArgumentException( "Panel missing: " + name() );
+		throw new IllegalArgumentException( "Canvas missing: " + name() );
 	}
 }

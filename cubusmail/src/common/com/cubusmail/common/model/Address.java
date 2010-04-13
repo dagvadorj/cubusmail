@@ -79,6 +79,19 @@ public class Address implements Serializable {
 
 	private AddressFolder addressFolder;
 
+	public String getAddressDetailName() {
+
+		String name = this.firstName;
+		if ( name != null && name.length() > 0 ) {
+			name += " " + this.lastName;
+		}
+		else {
+			name = this.lastName;
+		}
+
+		return name;
+	}
+
 	public void setAddressFolder( AddressFolder addressFolder ) {
 
 		this.addressFolder = addressFolder;
