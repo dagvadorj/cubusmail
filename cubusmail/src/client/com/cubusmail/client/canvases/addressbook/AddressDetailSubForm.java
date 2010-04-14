@@ -32,27 +32,37 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
  */
 public abstract class AddressDetailSubForm extends DynamicForm {
 
-	private final static int TITLE_WIDTH = 100;
+	private final static int TITLE_WIDTH = 120;
 
 	protected FormItem formItem;
+	protected AddressDetailsForms detailsForm;
 
-	public AddressDetailSubForm( String title ) {
+	public AddressDetailSubForm( AddressDetailsForms detailsForm ) {
 
 		super();
 		setWidth100();
 		setPadding( 2 );
+		setCellPadding( 0 );
 		setTitleWidth( TITLE_WIDTH );
 		setVisible( false );
+		this.detailsForm = detailsForm;
 
-		init( title );
+		init();
 	}
 
-	protected void init( String title ) {
+	/**
+	 * @param title
+	 */
+	protected void init() {
 
-		this.formItem = new StaticTextItem( "textItem", title );
+		this.formItem = new StaticTextItem( "textItem", this.detailsForm.getTitle() );
+		this.formItem.setTitleStyle( "addressDetailsTitle" );
 		setItems( this.formItem );
 	}
 
+	/**
+	 * @param address
+	 */
 	public void setAddress( Address address ) {
 
 		String value = getValue( address );
@@ -65,5 +75,9 @@ public abstract class AddressDetailSubForm extends DynamicForm {
 		}
 	}
 
+	/**
+	 * @param address
+	 * @return
+	 */
 	protected abstract String getValue( Address address );
 }

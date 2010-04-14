@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.cubusmail.client.canvases.addressbook.AddressBookCanvas;
-import com.cubusmail.client.canvases.addressbook.AddressDetailCanvas;
+import com.cubusmail.client.canvases.addressbook.AddressDetailsCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressFolderCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressListGrid;
 import com.cubusmail.client.canvases.mail.MailCanvas;
@@ -85,7 +85,7 @@ public enum CanvasRegistry {
 		case ADDRESS_LIST:
 			return new AddressListGrid();
 		case ADDRESS_DETAILS:
-			return new AddressDetailCanvas();
+			return new AddressDetailsCanvas();
 		}
 
 		throw new IllegalArgumentException( "Canvas missing: " + name() );

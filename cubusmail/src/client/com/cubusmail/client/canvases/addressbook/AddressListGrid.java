@@ -108,6 +108,7 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 	 */
 	public void onReloadAddressList( AddressFolder folder, String beginChars ) {
 
+		AddressDetailsForms.setAddress( null );
 		Criteria criteria = new Criteria();
 		criteria.addCriteria( GWTConstants.ADDRESS_FOLDER_ID, String.valueOf( folder.getId() ) );
 		criteria.addCriteria( GWTConstants.ADDRESS_BEGIN_CHARS, beginChars );

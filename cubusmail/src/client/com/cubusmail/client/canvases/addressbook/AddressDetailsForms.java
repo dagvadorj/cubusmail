@@ -22,8 +22,10 @@ package com.cubusmail.client.canvases.addressbook;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.smartgwt.client.widgets.form.fields.LinkItem;
+import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 
 /**
  * TODO: documentation
@@ -35,6 +37,8 @@ public enum AddressDetailsForms {
 			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax"),
 
 	EMAIL1("Email 1"), EMAIL2("Email 2"), EMAIL3("Email 3"), EMAIL4("Email 4"), EMAIL5("Email 5"), URL("URL"), IM("IM"),
+
+	PRIVATE_ADDRESS("Private Address"), WORK_ADDRESS("Work Address"),
 
 	TITLE("Title"), COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department");
 
@@ -63,7 +67,7 @@ public enum AddressDetailsForms {
 
 		switch (this) {
 		case DETAIL_HEADER:
-			return createHeaderLine();
+			return createHeaderSubForm();
 		case PRIVATE_PHONE:
 		case WORK_PHONE:
 		case PRIVATE_MOBILE:
@@ -75,14 +79,17 @@ public enum AddressDetailsForms {
 		case COMPANY:
 		case POSITION:
 		case DEPARTMENT:
-			return createStandardTextLine( this );
+			return createStandardSubForm( this );
 		case EMAIL1:
 		case EMAIL2:
 		case EMAIL3:
 		case EMAIL4:
 		case EMAIL5:
 		case URL:
-			return createLinkLine( this );
+			return createLinkSubForm( this );
+		case PRIVATE_ADDRESS:
+		case WORK_ADDRESS:
+			return createAddressSubForm( this );
 		}
 
 		throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
@@ -94,25 +101,35 @@ public enum AddressDetailsForms {
 	public static void setAddress( Address address ) {
 
 		for (AddressDetailsForms form : values()) {
-			form.get().setAddress( address );
+			if ( address != null ) {
+				form.get().setAddress( address );
+			}
+			else {
+				form.get().setVisible( false );
+			}
 		}
 	}
+
+	public String getTitle() {
+
+		return title;
+	};
 
 	/************************************************************************/
 	/* creating Subforms *************************************************** */
 	/************************************************************************/
-	private AddressDetailSubForm createHeaderLine() {
+	private AddressDetailSubForm createHeaderSubForm() {
 
-		return new AddressDetailSubForm( this.title ) {
+		return new AddressDetailSubForm( this ) {
 
 			@Override
-			public void init( String title ) {
+			public void init() {
 
-				super.init( title );
+				super.init();
 				setBackgroundColor( "#EEEEEE" );
-				setColWidths( "100%" );
+				setTitleSuffix( "" );
 
-				this.formItem.setShowTitle( false );
+				this.formItem.setTitle( "" );
 				this.formItem.setTextBoxStyle( "addressDetailsHeader" );
 			}
 
@@ -124,14 +141,14 @@ public enum AddressDetailsForms {
 		};
 	}
 
-	private AddressDetailSubForm createStandardTextLine( final AddressDetailsForms form ) {
+	private AddressDetailSubForm createStandardSubForm( final AddressDetailsForms form ) {
 
-		return new AddressDetailSubForm( this.title ) {
+		return new AddressDetailSubForm( this ) {
 
 			@Override
 			protected String getValue( Address address ) {
 
-				switch (form) {
+				switch (this.detailsForm) {
 				case PRIVATE_PHONE:
 					return address.getPrivatePhone();
 				case WORK_PHONE:
@@ -161,22 +178,23 @@ public enum AddressDetailsForms {
 		};
 	}
 
-	private AddressDetailSubForm createLinkLine( final AddressDetailsForms form ) {
+	private AddressDetailSubForm createLinkSubForm( final AddressDetailsForms form ) {
 
-		return new AddressDetailSubForm( this.title ) {
+		return new AddressDetailSubForm( this ) {
 
 			@Override
-			protected void init( String title ) {
+			protected void init() {
 
 				this.formItem = new LinkItem( "linkItem" );
-				this.formItem.setTitle( title );
+				this.formItem.setTitleStyle( "addressDetailsTitle" );
+				this.formItem.setTitle( this.detailsForm.getTitle() );
 				setItems( this.formItem );
 			}
 
 			@Override
 			protected String getValue( Address address ) {
 
-				switch (form) {
+				switch (this.detailsForm) {
 				case EMAIL1:
 					return address.getEmail();
 				case EMAIL2:
@@ -192,6 +210,92 @@ public enum AddressDetailsForms {
 				}
 
 				throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
+			}
+		};
+	}
+
+	private AddressDetailSubForm createAddressSubForm( final AddressDetailsForms form ) {
+
+		return new AddressDetailSubForm( this ) {
+
+			private StaticTextItem streetItem;
+			private StaticTextItem zipCityItem;
+			private StaticTextItem countryItem;
+
+			@Override
+			protected void init() {
+
+				setTitleSuffix( "" );
+				this.streetItem = new StaticTextItem( "streetItem", "" );
+				this.streetItem.setTitleStyle( "addressDetailsTitle" );
+				this.zipCityItem = new StaticTextItem( "zipCityItem", "" );
+				this.zipCityItem.setTitleStyle( "addressDetailsTitle" );
+				this.countryItem = new StaticTextItem( "countryItem", "" );
+				this.countryItem.setTitleStyle( "addressDetailsTitle" );
+				setItems( this.streetItem, this.zipCityItem, this.countryItem );
+			}
+
+			@Override
+			public void setAddress( Address address ) {
+
+				String street = this.detailsForm == PRIVATE_ADDRESS ? address.getPrivateStreet() : address
+						.getWorkStreet();
+				String zipCode = this.detailsForm == PRIVATE_ADDRESS ? address.getPrivateZipcode() : address
+						.getWorkZipcode();
+				String city = this.detailsForm == PRIVATE_ADDRESS ? address.getPrivateCity() : address.getWorkCity();
+				String country = this.detailsForm == PRIVATE_ADDRESS ? address.getPrivateCountry() : address
+						.getWorkCountry();
+
+				if ( GWTUtil.hasText( street ) || GWTUtil.hasText( zipCode ) || GWTUtil.hasText( city )
+						|| GWTUtil.hasText( country ) ) {
+					boolean isTitleSet = false;
+					if ( GWTUtil.hasText( street ) ) {
+						this.streetItem.setTitle( this.detailsForm.getTitle() + " :" );
+						isTitleSet = true;
+						this.streetItem.setValue( street );
+						this.streetItem.setVisible( true );
+					}
+					else {
+						this.streetItem.setVisible( false );
+					}
+
+					if ( GWTUtil.hasText( zipCode ) || GWTUtil.hasText( city ) ) {
+						if ( !isTitleSet ) {
+							this.zipCityItem.setTitle( this.detailsForm.getTitle() + " :" );
+							isTitleSet = true;
+						}
+						String value = "";
+						if ( GWTUtil.hasText( zipCode ) ) {
+							value = zipCode + " ";
+						}
+						if ( GWTUtil.hasText( city ) ) {
+							value += city;
+						}
+						this.zipCityItem.setValue( value );
+						this.zipCityItem.setVisible( true );
+					}
+					else {
+						this.zipCityItem.setVisible( false );
+					}
+
+					if ( GWTUtil.hasText( country ) ) {
+						if ( !isTitleSet ) {
+							this.countryItem.setTitle( this.detailsForm.getTitle() + " :" );
+						}
+						this.countryItem.setValue( country );
+						this.countryItem.setVisible( true );
+					}
+					else {
+						this.countryItem.setVisible( false );
+					}
+					setVisible( true );
+				}
+			}
+
+			@Override
+			protected String getValue( Address address ) {
+
+				return null;
 			}
 		};
 	}

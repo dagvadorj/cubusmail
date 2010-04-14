@@ -78,10 +78,12 @@ public class CreateAddressTestData implements ApplicationContextAware {
 					address.setDepartment( begin + "department" + j );
 
 					address.setEmail( begin + "email" + j );
-					address.setEmail2( begin + "email2" + j );
-					address.setEmail3( begin + "email3" + j );
-					address.setEmail4( begin + "email4" + j );
-					address.setEmail5( begin + "email5" + j );
+					if ( (i % 2) == 0 ) {
+						address.setEmail2( begin + "email2" + j );
+						address.setEmail3( begin + "email3" + j );
+						address.setEmail4( begin + "email4" + j );
+						address.setEmail5( begin + "email5" + j );
+					}
 					address.setIm( begin + "im" + j );
 					address.setUrl( begin + "url" + j );
 
@@ -99,12 +101,13 @@ public class CreateAddressTestData implements ApplicationContextAware {
 					address.setPrivateState( begin + "privateState" + j );
 					address.setPrivateCountry( begin + "privateCountry" + j );
 
-					address.setWorkStreet( begin + "workStreet" + j );
-					address.setWorkZipcode( begin + "workZipcode" + j );
-					address.setWorkCity( begin + "workCity" + j );
-					address.setWorkState( begin + "workState" + j );
-					address.setWorkCountry( begin + "workCountry" + j );
-
+					if ( (i % 2) == 0 ) {
+						address.setWorkStreet( begin + "workStreet" + j );
+						address.setWorkZipcode( begin + "workZipcode" + j );
+						address.setWorkCity( begin + "workCity" + j );
+						address.setWorkState( begin + "workState" + j );
+						address.setWorkCountry( begin + "workCountry" + j );
+					}
 					address.setNotes( begin + "notes" + j );
 
 					address.setAddressFolder( addressFolder );

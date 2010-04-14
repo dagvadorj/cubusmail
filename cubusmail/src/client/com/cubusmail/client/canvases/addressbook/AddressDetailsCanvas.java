@@ -1,4 +1,4 @@
-/* AddressDetailCanvas.java
+/* AddressDetailsCanvas.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,6 +19,7 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -27,11 +28,12 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Juergen Schlierf
  */
-public class AddressDetailCanvas extends VLayout {
+public class AddressDetailsCanvas extends VLayout {
 
-	public AddressDetailCanvas() {
+	public AddressDetailsCanvas() {
 
 		super();
+		setOverflow( Overflow.SCROLL );
 
 		DynamicForm[] forms = new DynamicForm[AddressDetailsForms.values().length];
 		for (int i = 0; i < AddressDetailsForms.values().length; i++) {

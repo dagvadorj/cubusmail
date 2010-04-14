@@ -1,27 +1,22 @@
-
-
-
 /**********************************************************************/
-/* Mail CSS */
-/**********************************************************************/
-
+	/* Mail CSS */
+	/**********************************************************************/
 .deletedMessageRecord {
 	text-decoration: line-through;
 	font-weight: bold;
 }
 
-
 .cubusImgButtonDown {
-    background:#BEDDFF url(./images/cssButton/button_Down_stretch.png) repeat-x;
-	border-left:1px solid #b8cfef;
-	border-right:1px solid #b8cfef;
-	border-top:1px solid #87B6EC;
-	border-bottom:1px solid #75AEEC;
+	background: #BEDDFF url(./images/cssButton/button_Down_stretch.png)
+		repeat-x;
+	border-left: 1px solid #b8cfef;
+	border-right: 1px solid #b8cfef;
+	border-top: 1px solid #87B6EC;
+	border-bottom: 1px solid #75AEEC;
 }
 
-
 .messageReadingPaneHeader {
-	background-color:#eeeeee;
+	background-color: #eeeeee;
 }
 
 .message-subject {
@@ -51,7 +46,7 @@
 }
 
 .gwt-TextArea {
-	font-family: monospace; 
+	font-family: monospace;
 	font-size: 10pt;
 }
 
@@ -85,10 +80,10 @@
 .message-header {
 	font: bold 11px arial, tahoma, sans-serif;
 }
+
 .message-subject {
 	font: bold 14px arial, tahoma, sans-serif;
 }
-
 
 .messagelist-mailfolder-name {
 	font: bold 14px tahoma, arial, helvetica;
@@ -109,9 +104,12 @@
 }
 
 /**********************************************************************/
-/* Addressbook CSS                                                    */
-/**********************************************************************/
+	/* Addressbook CSS                                                    */
+	/**********************************************************************/
 .addressDetailsHeader {
-	font: bold 18px arial, tahoma, sans-serif;
-	padding-left: 100px;
+	font: bold 18px Arial, Verdana, sans-serif;
+}
+
+.addressDetailsTitle {
+	font: bold 11px Arial, Verdana, sans-serif;
 }
