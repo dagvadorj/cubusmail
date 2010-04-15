@@ -2,10 +2,14 @@ package com.guitest.client;
 
 import java.util.Date;
 
+import com.cubusmail.client.canvases.addressbook.AddressDetailsCanvas;
+import com.cubusmail.client.canvases.addressbook.AddressDetailsForms;
+import com.cubusmail.client.canvases.addressbook.AddressEditCanvas;
 import com.cubusmail.client.canvases.mail.ComposeMessageCanvas;
 import com.cubusmail.client.canvases.mail.EmailAddressLine;
 import com.cubusmail.client.canvases.mail.MessageReadingPaneHeader;
 import com.cubusmail.client.widgets.ImageHyperlink;
+import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.GWTAttachment;
 import com.cubusmail.common.model.GWTEmailAddress;
 import com.cubusmail.common.model.GWTMessage;
@@ -51,7 +55,69 @@ public class Guitest implements EntryPoint {
 		// testTileLayoutWidthAttachments();
 		// testFlowPanel2();
 		// testEmailAddressLine();
-		testComposeMessageCanvas();
+		// testComposeMessageCanvas();
+		// testAddressDetialCanvas();
+		testAddressEditCanvas();
+	}
+
+	private void testAddressEditCanvas() {
+		AddressEditCanvas edit = new AddressEditCanvas();
+		edit.setWidth100();
+		edit.setHeight100();
+
+		edit.draw();
+	}
+
+	private void testAddressDetialCanvas() {
+		AddressDetailsCanvas detail = new AddressDetailsCanvas();
+		detail.setWidth100();
+		detail.setHeight100();
+
+		AddressDetailsForms.setAddress(createTestAddress());
+
+		detail.draw();
+	}
+
+	private Address createTestAddress() {
+		Address address = new Address();
+		address.setFirstName("firstname");
+		address.setLastName("lastname");
+		address.setWorkPhone("089/35345345");
+		address.setPrivatePhone("089/3333333333");
+		address.setPrivateMobile("0175/35345345");
+		address.setWorkMobile("0175/33333333332");
+		address.setPrivateFax("089/11111111111");
+		address.setWorkFax("089/666666666666");
+		address.setPager("098/234123424");
+		address.setEmail("test@test.de");
+		address.setEmail2("test2@test.de");
+		address.setEmail3("test3@test.de");
+		address.setEmail4("test4@test.de");
+		address.setEmail5("test5@test.de");
+		address.setPager("098/234123424");
+		address.setIm("3425345234534");
+		address.setUrl("http://test.de");
+		address.setTitle("Title");
+		address.setBirthDate(new Date());
+		address.setCompany("Company");
+		address.setPosition("Position");
+		address.setDepartment("Department");
+
+		address.setPrivateStreet("Teststreet 5");
+		address.setPrivateZipcode("81345");
+		address.setPrivateCity("Citiy");
+		address.setPrivateState("State");
+		address.setPrivateCountry("Country");
+
+		address.setWorkStreet("Workstreet 5");
+		address.setWorkZipcode("345345");
+		address.setWorkCity("Worksitiy");
+		address.setWorkState("State");
+		address.setWorkCountry("Country");
+
+		address.setNotes("Notes");
+
+		return address;
 	}
 
 	private void testComposeMessageCanvas() {

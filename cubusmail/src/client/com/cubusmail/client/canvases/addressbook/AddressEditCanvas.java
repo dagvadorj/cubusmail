@@ -1,4 +1,4 @@
-/* AddressDetailsCanvas.java
+/* AddressEditCanvas.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -28,18 +28,17 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Juergen Schlierf
  */
-public class AddressDetailsCanvas extends VLayout {
+public class AddressEditCanvas extends VLayout {
 
-	public AddressDetailsCanvas() {
+	public AddressEditCanvas() {
 
 		super();
 		setOverflow( Overflow.SCROLL );
 
-		DynamicForm[] forms = new DynamicForm[AddressDetailsForms.values().length];
-		for (int i = 0; i < AddressDetailsForms.values().length; i++) {
-			forms[i] = AddressDetailsForms.values()[i].get();
+		DynamicForm[] forms = new DynamicForm[AddressEditForms.values().length];
+		for (int i = 0; i < AddressEditForms.values().length; i++) {
+			forms[i] = AddressEditForms.values()[i].get();
 		}
 		setMembers( forms );
-		
 	}
 }

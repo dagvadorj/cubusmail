@@ -48,4 +48,7 @@ public interface GWTConstants {
 	public final static String ADDRESS_FOLDER = "addressFolder";
 	public final static String ADDRESS_FOLDER_ID = "addressFolder";
 	public final static String ADDRESS_BEGIN_CHARS = "addressBeginChars";
+	
+	// address detials
+	public final static int ADDRESS_TITLE_WIDTH = 120;
 }

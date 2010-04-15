@@ -21,6 +21,7 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.cubusmail.common.model.GWTConstants;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
@@ -32,7 +33,6 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
  */
 public abstract class AddressDetailSubForm extends DynamicForm {
 
-	private final static int TITLE_WIDTH = 120;
 
 	protected FormItem formItem;
 	protected AddressDetailsForms detailsForm;
@@ -43,7 +43,7 @@ public abstract class AddressDetailSubForm extends DynamicForm {
 		setWidth100();
 		setPadding( 2 );
 		setCellPadding( 0 );
-		setTitleWidth( TITLE_WIDTH );
+		setTitleWidth( GWTConstants.ADDRESS_TITLE_WIDTH );
 		setVisible( false );
 		this.detailsForm = detailsForm;
 

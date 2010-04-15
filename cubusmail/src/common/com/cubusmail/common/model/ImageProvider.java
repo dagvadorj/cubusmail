@@ -99,4 +99,7 @@ public interface ImageProvider {
 	public static final String CLOSE = "cross.png";
 	public static final String CANCEL = "cancel.png";
 	public static final String FIND = "find.png";
+	
+	public static final String BUTTON_ADD = "btn_add.png";
+	public static final String BUTTON_REMOVE = "btn_remove.png";
 }
