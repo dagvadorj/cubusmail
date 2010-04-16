@@ -35,9 +35,9 @@ public class AddressDetailsCanvas extends VLayout {
 		super();
 		setOverflow( Overflow.SCROLL );
 
-		DynamicForm[] forms = new DynamicForm[AddressDetailsForms.values().length];
-		for (int i = 0; i < AddressDetailsForms.values().length; i++) {
-			forms[i] = AddressDetailsForms.values()[i].get();
+		DynamicForm[] forms = new DynamicForm[AddressDetailsFormsManagerEnum.values().length];
+		for (int i = 0; i < AddressDetailsFormsManagerEnum.values().length; i++) {
+			forms[i] = AddressDetailsFormsManagerEnum.values()[i].get();
 		}
 		setMembers( forms );
 		

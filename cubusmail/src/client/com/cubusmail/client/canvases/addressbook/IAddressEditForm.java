@@ -1,4 +1,4 @@
-/* AddressEditCanvas.java
+/* IAddressEditForm.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,28 +19,14 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.layout.VLayout;
+import com.cubusmail.common.model.Address;
 
 /**
  * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditCanvas extends VLayout {
+public interface IAddressEditForm {
 
-	public AddressEditCanvas() {
-
-		super();
-		setOverflow( Overflow.SCROLL );
-
-		DynamicForm[] forms = new DynamicForm[AddressEditFormsManagerEnum.values().length];
-		for (int i = 0; i < AddressEditFormsManagerEnum.values().length; i++) {
-			forms[i] = AddressEditFormsManagerEnum.values()[i].getDynmaicForm();
-		}
-		setMembers( forms );
-
-		AddressEditFormsManagerEnum.setAddress( null );
-	}
+	public void setAddress( Address address );
 }

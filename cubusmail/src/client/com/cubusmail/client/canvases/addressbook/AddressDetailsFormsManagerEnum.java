@@ -1,4 +1,4 @@
-/* AddressDetailsForms.java
+/* AddressDetailsFormsManagerEnum.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -32,7 +32,7 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
  * 
  * @author Juergen Schlierf
  */
-public enum AddressDetailsForms {
+public enum AddressDetailsFormsManagerEnum {
 	DETAIL_HEADER(""), PRIVATE_PHONE("Private Phone"), WORK_PHONE("Work Phone"), PRIVATE_MOBILE("Private Mobile"), WORK_MOBILE(
 			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax"),
 
@@ -42,18 +42,18 @@ public enum AddressDetailsForms {
 
 	TITLE("Title"), COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department");
 
-	private final static Map<AddressDetailsForms, AddressDetailSubForm> FORM_MAP = new HashMap<AddressDetailsForms, AddressDetailSubForm>();
+	private final static Map<AddressDetailsFormsManagerEnum, AddressDetailForm> FORM_MAP = new HashMap<AddressDetailsFormsManagerEnum, AddressDetailForm>();
 
 	private String title;
 
-	private AddressDetailsForms( String title ) {
+	private AddressDetailsFormsManagerEnum( String title ) {
 
 		this.title = title;
 	}
 
-	public AddressDetailSubForm get() {
+	public AddressDetailForm get() {
 
-		AddressDetailSubForm result = FORM_MAP.get( this );
+		AddressDetailForm result = FORM_MAP.get( this );
 		if ( result == null ) {
 			result = create();
 			result.setID( this.name() );
@@ -63,7 +63,7 @@ public enum AddressDetailsForms {
 		return result;
 	}
 
-	private AddressDetailSubForm create() {
+	private AddressDetailForm create() {
 
 		switch (this) {
 		case DETAIL_HEADER:
@@ -92,7 +92,7 @@ public enum AddressDetailsForms {
 			return createAddressSubForm( this );
 		}
 
-		throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
+		throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: " + name() );
 	}
 
 	/**
@@ -100,7 +100,7 @@ public enum AddressDetailsForms {
 	 */
 	public static void setAddress( Address address ) {
 
-		for (AddressDetailsForms form : values()) {
+		for (AddressDetailsFormsManagerEnum form : values()) {
 			if ( address != null ) {
 				form.get().setAddress( address );
 			}
@@ -118,9 +118,9 @@ public enum AddressDetailsForms {
 	/************************************************************************/
 	/* creating Subforms *************************************************** */
 	/************************************************************************/
-	private AddressDetailSubForm createHeaderSubForm() {
+	private AddressDetailForm createHeaderSubForm() {
 
-		return new AddressDetailSubForm( this ) {
+		return new AddressDetailForm( this ) {
 
 			@Override
 			public void init() {
@@ -141,9 +141,9 @@ public enum AddressDetailsForms {
 		};
 	}
 
-	private AddressDetailSubForm createStandardSubForm( final AddressDetailsForms form ) {
+	private AddressDetailForm createStandardSubForm( final AddressDetailsFormsManagerEnum form ) {
 
-		return new AddressDetailSubForm( this ) {
+		return new AddressDetailForm( this ) {
 
 			@Override
 			protected String getValue( Address address ) {
@@ -173,14 +173,14 @@ public enum AddressDetailsForms {
 					return address.getDepartment();
 				}
 
-				throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
+				throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: " + name() );
 			}
 		};
 	}
 
-	private AddressDetailSubForm createLinkSubForm( final AddressDetailsForms form ) {
+	private AddressDetailForm createLinkSubForm( final AddressDetailsFormsManagerEnum form ) {
 
-		return new AddressDetailSubForm( this ) {
+		return new AddressDetailForm( this ) {
 
 			@Override
 			protected void init() {
@@ -209,14 +209,14 @@ public enum AddressDetailsForms {
 					return address.getUrl();
 				}
 
-				throw new IllegalArgumentException( "AddressDetailsForms type missing: " + name() );
+				throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: " + name() );
 			}
 		};
 	}
 
-	private AddressDetailSubForm createAddressSubForm( final AddressDetailsForms form ) {
+	private AddressDetailForm createAddressSubForm( final AddressDetailsFormsManagerEnum form ) {
 
-		return new AddressDetailSubForm( this ) {
+		return new AddressDetailForm( this ) {
 
 			private StaticTextItem streetItem;
 			private StaticTextItem zipCityItem;

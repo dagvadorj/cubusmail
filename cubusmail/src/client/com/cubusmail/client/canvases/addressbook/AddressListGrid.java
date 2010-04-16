@@ -77,7 +77,7 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 
 				Address address = (Address) event.getRecord().getAttributeAsObject(
 						AddressListFields.ADDRESS_OBJECT.name() );
-				AddressDetailsForms.setAddress( address );
+				AddressDetailsFormsManagerEnum.setAddress( address );
 			}
 		} );
 
@@ -108,7 +108,7 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 	 */
 	public void onReloadAddressList( AddressFolder folder, String beginChars ) {
 
-		AddressDetailsForms.setAddress( null );
+		AddressDetailsFormsManagerEnum.setAddress( null );
 		Criteria criteria = new Criteria();
 		criteria.addCriteria( GWTConstants.ADDRESS_FOLDER_ID, String.valueOf( folder.getId() ) );
 		criteria.addCriteria( GWTConstants.ADDRESS_BEGIN_CHARS, beginChars );

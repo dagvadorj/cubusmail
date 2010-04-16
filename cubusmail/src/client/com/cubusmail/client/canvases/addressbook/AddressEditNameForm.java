@@ -1,4 +1,4 @@
-/* AddressDetailSubForm.java
+/* AddressEditNameForm.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,65 +19,44 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.GWTConstants;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.FormItem;
-import com.smartgwt.client.widgets.form.fields.StaticTextItem;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
  * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-public abstract class AddressDetailSubForm extends DynamicForm {
+public class AddressEditNameForm extends DynamicForm implements IAddressEditForm {
 
-
-	protected FormItem formItem;
-	protected AddressDetailsForms detailsForm;
-
-	public AddressDetailSubForm( AddressDetailsForms detailsForm ) {
+	public AddressEditNameForm() {
 
 		super();
 		setWidth100();
-		setPadding( 2 );
-		setCellPadding( 0 );
 		setTitleWidth( GWTConstants.ADDRESS_TITLE_WIDTH );
-		setVisible( false );
-		this.detailsForm = detailsForm;
+		setBackgroundColor( "#EEEEEE" );
+		setTitleSuffix( "" );
+		setNumCols( 3 );
+		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, "*" );
 
-		init();
+		TextItem firstNameItem = new TextItem( "firstName", "" );
+		firstNameItem.setTextBoxStyle( "addressDetailsHeader" );
+		firstNameItem.setHeight( 30 );
+		firstNameItem.setHint( "First Name" );
+		firstNameItem.setShowHintInField( true );
+		TextItem lastNameItem = new TextItem( "lastName" );
+		lastNameItem.setShowTitle( false );
+		lastNameItem.setTextBoxStyle( "addressDetailsHeader" );
+		lastNameItem.setHeight( 30 );
+		lastNameItem.setHint( "Last Name" );
+		lastNameItem.setShowHintInField( true );
+
+		setItems( firstNameItem, lastNameItem );
 	}
 
-	/**
-	 * @param title
-	 */
-	protected void init() {
-
-		this.formItem = new StaticTextItem( "textItem", this.detailsForm.getTitle() );
-		this.formItem.setTitleStyle( "addressDetailsTitle" );
-		setItems( this.formItem );
-	}
-
-	/**
-	 * @param address
-	 */
 	public void setAddress( Address address ) {
 
-		String value = getValue( address );
-		if ( GWTUtil.hasText( value ) ) {
-			this.formItem.setValue( value );
-			setVisible( true );
-		}
-		else {
-			setVisible( false );
-		}
 	}
-
-	/**
-	 * @param address
-	 * @return
-	 */
-	protected abstract String getValue( Address address );
 }
