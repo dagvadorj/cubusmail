@@ -61,8 +61,10 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 
 		this.typeSelectionItem = new SelectItem( "typeSelectionItem" );
 		this.typeSelectionItem.setShowTitle( false );
+		// this.typeSelectionItem.setRedrawOnChange(true);
 
 		this.removeItem = new StaticTextItem( "removeItem" );
+		// this.removeItem.setRedrawOnChange(true);
 		this.removeItem.setIcons( REMOVE_ICON );
 		this.removeItem.setShowTitle( false );
 		if ( this.managerEnum == AddressEditFormsManagerEnum.PHONE_GROUP[0] ) {
@@ -70,6 +72,7 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		}
 
 		this.addItem = new StaticTextItem( "addItem" );
+		// this.addItem.setRedrawOnChange(true);
 		this.addItem.setIcons( ADD_ICON );
 		this.addItem.setShowTitle( false );
 	}

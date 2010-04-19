@@ -34,7 +34,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 	private TextItem phoneItem;
 
-	public AddressEditPhoneForm( AddressEditFormsManagerEnum managerEnum ) {
+	public AddressEditPhoneForm( final AddressEditFormsManagerEnum managerEnum ) {
 
 		super( managerEnum );
 
@@ -49,7 +49,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 			public void onIconClick( IconClickEvent event ) {
 
 				phoneItem.clearValue();
-				setVisible( false );
+				AddressEditFormsManagerEnum.removePhoneForm( managerEnum );
 			}
 		} );
 		this.addItem.addIconClickHandler( new IconClickHandler() {
@@ -60,6 +60,10 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 				AddressEditFormsManagerEnum.addPhoneForm();
 			}
 		} );
+
+		if ( this.managerEnum == AddressEditFormsManagerEnum.PRIVATE_PHONE ) {
+			this.removeItem.setVisible( false );
+		}
 
 		setItems( this.typeSelectionItem, this.phoneItem, this.removeItem, this.addItem );
 	}

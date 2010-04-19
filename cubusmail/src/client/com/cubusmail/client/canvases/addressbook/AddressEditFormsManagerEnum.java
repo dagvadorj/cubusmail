@@ -95,9 +95,55 @@ public enum AddressEditFormsManagerEnum {
 		}
 	}
 
-	public static DynamicForm[] getAllDynamicForms() {
+	/**
+	 * 
+	 */
+	public static void addPhoneForm() {
 
-		return null;
+		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
+			if ( !formsManager.isVisible() ) {
+				managePhoneItems();
+				formsManager.setVisible( true );
+				String[] phoneTypes = formsManager.getUnusedPhoneTypes();
+				formsManager.setSelectionType( phoneTypes[0] );
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @param formsManager
+	 */
+	public static void removePhoneForm( AddressEditFormsManagerEnum formsManager ) {
+
+		formsManager.setVisible( false );
+		managePhoneItems();
+	}
+
+	private static void managePhoneItems() {
+
+		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
+			String[] phoneTypes = formsManager.getUnusedPhoneTypes();
+			if ( formsManager.isVisible() ) {
+				formsManager.setSelectionTypes( phoneTypes );
+				formsManager.setAddButtonVisible( false );
+			}
+			else {
+				formsManager.setSelectionTypes( phoneTypes );
+				formsManager.setSelectionType( phoneTypes[0] );
+				formsManager.setAddButtonVisible( true );
+			}
+		}
+	}
+
+	public void setVisible( boolean visible ) {
+
+		getDynmaicForm().setVisible( visible );
+	}
+
+	public boolean isVisible() {
+
+		return getDynmaicForm().isVisible();
 	}
 
 	private String[] getUnusedPhoneTypes() {
@@ -112,30 +158,23 @@ public enum AddressEditFormsManagerEnum {
 		return types.toArray( new String[0] );
 	}
 
-	public static void addPhoneForm() {
+	public void setRemoveButtonVisible( boolean visible ) {
 
-		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
-			AddressEditAbstractForm form = (AddressEditAbstractForm) formsManager.getForm();
-			if ( !form.isVisible() ) {
-				String[] phoneTypes = formsManager.getUnusedPhoneTypes();
-				form.setSelectionTypes( phoneTypes );
-				form.setSelectionType( phoneTypes[0] );
-				form.setVisible( true );
-				break;
-			}
-			else {
-				form.setSelectionTypes( formsManager.getUnusedPhoneTypes() );
-			}
-		}
+		((AddressEditAbstractForm) getForm()).getRemoveItem().setVisible( visible );
 	}
 
-	public void setVisible( boolean visible ) {
+	public void setAddButtonVisible( boolean visible ) {
 
-		getDynmaicForm().setVisible( visible );
+		((AddressEditAbstractForm) getForm()).getAddItem().setVisible( visible );
 	}
 
-	public boolean isVisible() {
+	public void setSelectionTypes( String[] values ) {
 
-		return getDynmaicForm().isVisible();
+		((AddressEditAbstractForm) getForm()).setSelectionTypes( values );
+	}
+
+	public void setSelectionType( String value ) {
+
+		((AddressEditAbstractForm) getForm()).setSelectionType( value );
 	}
 }
