@@ -19,6 +19,7 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.GWTConstants;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -31,6 +32,9 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
  */
 public class AddressEditNameForm extends DynamicForm implements IAddressEditForm {
 
+	private TextItem firstNameItem;
+	private TextItem lastNameItem;
+
 	public AddressEditNameForm() {
 
 		super();
@@ -41,22 +45,30 @@ public class AddressEditNameForm extends DynamicForm implements IAddressEditForm
 		setNumCols( 3 );
 		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, "*" );
 
-		TextItem firstNameItem = new TextItem( "firstName", "" );
-		firstNameItem.setTextBoxStyle( "addressDetailsHeader" );
-		firstNameItem.setHeight( 30 );
-		firstNameItem.setHint( "First Name" );
-		firstNameItem.setShowHintInField( true );
-		TextItem lastNameItem = new TextItem( "lastName" );
-		lastNameItem.setShowTitle( false );
-		lastNameItem.setTextBoxStyle( "addressDetailsHeader" );
-		lastNameItem.setHeight( 30 );
-		lastNameItem.setHint( "Last Name" );
-		lastNameItem.setShowHintInField( true );
+		this.firstNameItem = new TextItem( "firstName", "" );
+		this.firstNameItem.setTextBoxStyle( "addressDetailsHeader" );
+		this.firstNameItem.setHeight( 30 );
+		this.firstNameItem.setHint( "First Name" );
+		this.firstNameItem.setShowHintInField( true );
+		this.lastNameItem = new TextItem( "lastName" );
+		this.lastNameItem.setShowTitle( false );
+		this.lastNameItem.setTextBoxStyle( "addressDetailsHeader" );
+		this.lastNameItem.setHeight( 30 );
+		this.lastNameItem.setHint( "Last Name" );
+		this.lastNameItem.setShowHintInField( true );
 
-		setItems( firstNameItem, lastNameItem );
+		setItems( this.firstNameItem, this.lastNameItem );
 	}
 
 	public void setAddress( Address address ) {
 
+		if ( address != null ) {
+			this.firstNameItem.setValue( GWTUtil.hasText( address.getFirstName() ) ? address.getFirstName() : "" );
+			this.lastNameItem.setValue( GWTUtil.hasText( address.getLastName() ) ? address.getLastName() : "" );
+		}
+		else {
+			this.firstNameItem.setValue( "" );
+			this.lastNameItem.setValue( "" );
+		}
 	}
 }

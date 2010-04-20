@@ -19,8 +19,12 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cubusmail.client.util.GWTUtil;
+import com.cubusmail.common.model.Address;
 import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -30,17 +34,49 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public class AddressEditCanvas extends VLayout {
 
+	private AddressEditNameForm nameForm;
+	private List<AddressEditPhoneForm> phoneForms = new ArrayList<AddressEditPhoneForm>(
+			AddressEditFormsManagerEnum.PHONE_GROUP.length );
+
 	public AddressEditCanvas() {
 
 		super();
 		setOverflow( Overflow.SCROLL );
 
-		DynamicForm[] forms = new DynamicForm[AddressEditFormsManagerEnum.values().length];
-		for (int i = 0; i < AddressEditFormsManagerEnum.values().length; i++) {
-			forms[i] = AddressEditFormsManagerEnum.values()[i].getDynmaicForm();
+		this.nameForm = new AddressEditNameForm();
+		for (AddressEditFormsManagerEnum typeEnum : AddressEditFormsManagerEnum.PHONE_GROUP) {
+			this.phoneForms.add( new AddressEditPhoneForm( typeEnum ) );
 		}
-		setMembers( forms );
 
-		AddressEditFormsManagerEnum.setAddress( null );
+		init();
+		// AddressEditFormsManagerEnum.setAddress( null );
+	}
+
+	public void init() {
+
+		// name form
+		if ( !hasMember( this.nameForm ) ) {
+			addMember( this.nameForm );
+		}
+
+		// first phone form
+		if ( !hasMember( this.phoneForms.get( 0 ) ) ) {
+			addMember( this.phoneForms.get( 0 ) );
+		}
+
+		// remove other phone forms
+		for (int i = 1; i < AddressEditFormsManagerEnum.PHONE_GROUP.length; i++) {
+			if ( hasMember( this.phoneForms.get( i ) ) ) {
+				removeMember( this.phoneForms.get( i ) );
+			}
+		}
+	}
+
+	public void setAddress( Address address ) {
+
+		this.nameForm.setAddress( address );
+		if ( GWTUtil.hasText( address.getPrivatePhone() ) ) {
+			this.phoneForms.get( 0 ).setAddress( address );
+		}
 	}
 }

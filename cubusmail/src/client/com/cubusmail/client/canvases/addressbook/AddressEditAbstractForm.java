@@ -45,7 +45,7 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		REMOVE_ICON.setSrc( ImageProvider.BUTTON_REMOVE );
 	}
 
-	protected AddressEditFormsManagerEnum managerEnum;
+	protected AddressEditFormsManagerEnum type;
 	protected SelectItem typeSelectionItem;
 
 	protected StaticTextItem removeItem;
@@ -57,7 +57,7 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		setNumCols( 4 );
 		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, 15, "*" );
 
-		this.managerEnum = managerEnum;
+		this.type = managerEnum;
 
 		this.typeSelectionItem = new SelectItem( "typeSelectionItem" );
 		this.typeSelectionItem.setShowTitle( false );
@@ -67,7 +67,7 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		// this.removeItem.setRedrawOnChange(true);
 		this.removeItem.setIcons( REMOVE_ICON );
 		this.removeItem.setShowTitle( false );
-		if ( this.managerEnum == AddressEditFormsManagerEnum.PHONE_GROUP[0] ) {
+		if ( this.type == AddressEditFormsManagerEnum.PHONE_GROUP[0] ) {
 			this.removeItem.setVisible( false );
 		}
 
@@ -98,4 +98,9 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 	}
 
 	public abstract void setAddress( Address address );
+
+	public void setType( AddressEditFormsManagerEnum type ) {
+
+		this.type = type;
+	}
 }

@@ -22,8 +22,6 @@ package com.cubusmail.client.canvases.addressbook;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
 
 /**
  * TODO: documentation
@@ -34,34 +32,16 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 	private TextItem phoneItem;
 
-	public AddressEditPhoneForm( final AddressEditFormsManagerEnum managerEnum ) {
+	public AddressEditPhoneForm( final AddressEditFormsManagerEnum defaultType ) {
 
-		super( managerEnum );
+		super( defaultType );
 
 		this.phoneItem = new TextItem( "phoneItem" );
 		this.phoneItem.setHint( "Phone Number" );
 		this.phoneItem.setShowHintInField( true );
 		this.phoneItem.setShowTitle( false );
 
-		this.removeItem.addIconClickHandler( new IconClickHandler() {
-
-			@Override
-			public void onIconClick( IconClickEvent event ) {
-
-				phoneItem.clearValue();
-				AddressEditFormsManagerEnum.removePhoneForm( managerEnum );
-			}
-		} );
-		this.addItem.addIconClickHandler( new IconClickHandler() {
-
-			@Override
-			public void onIconClick( IconClickEvent event ) {
-
-				AddressEditFormsManagerEnum.addPhoneForm();
-			}
-		} );
-
-		if ( this.managerEnum == AddressEditFormsManagerEnum.PRIVATE_PHONE ) {
+		if ( this.type == AddressEditFormsManagerEnum.PRIVATE_PHONE ) {
 			this.removeItem.setVisible( false );
 		}
 
@@ -73,7 +53,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 		String value = null;
 
-		switch (this.managerEnum) {
+		switch (this.type) {
 		case PRIVATE_PHONE:
 			value = address.getPrivatePhone();
 			break;
@@ -95,7 +75,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 		default:
 			throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: "
-					+ this.managerEnum.name() );
+					+ this.type.name() );
 		}
 
 		if ( GWTUtil.hasText( value ) ) {
