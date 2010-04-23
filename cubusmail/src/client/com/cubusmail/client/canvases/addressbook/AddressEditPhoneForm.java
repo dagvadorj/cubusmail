@@ -32,7 +32,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 	private TextItem phoneItem;
 
-	public AddressEditPhoneForm( final AddressEditFormsManagerEnum defaultType ) {
+	public AddressEditPhoneForm( final AddressEditFormTypeEnum defaultType ) {
 
 		super( defaultType );
 
@@ -41,7 +41,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 		this.phoneItem.setShowHintInField( true );
 		this.phoneItem.setShowTitle( false );
 
-		if ( this.type == AddressEditFormsManagerEnum.PRIVATE_PHONE ) {
+		if ( this.type == AddressEditFormTypeEnum.PRIVATE_PHONE ) {
 			this.removeItem.setVisible( false );
 		}
 

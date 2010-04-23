@@ -36,7 +36,7 @@ public class AddressEditCanvas extends VLayout {
 
 	private AddressEditNameForm nameForm;
 	private List<AddressEditPhoneForm> phoneForms = new ArrayList<AddressEditPhoneForm>(
-			AddressEditFormsManagerEnum.PHONE_GROUP.length );
+			AddressEditFormTypeEnum.PHONE_GROUP.length );
 
 	public AddressEditCanvas() {
 
@@ -44,12 +44,12 @@ public class AddressEditCanvas extends VLayout {
 		setOverflow( Overflow.SCROLL );
 
 		this.nameForm = new AddressEditNameForm();
-		for (AddressEditFormsManagerEnum typeEnum : AddressEditFormsManagerEnum.PHONE_GROUP) {
+		for (AddressEditFormTypeEnum typeEnum : AddressEditFormTypeEnum.PHONE_GROUP) {
 			this.phoneForms.add( new AddressEditPhoneForm( typeEnum ) );
 		}
 
 		init();
-		// AddressEditFormsManagerEnum.setAddress( null );
+		// AddressEditFormTypeEnum.setAddress( null );
 	}
 
 	public void init() {
@@ -65,7 +65,7 @@ public class AddressEditCanvas extends VLayout {
 		}
 
 		// remove other phone forms
-		for (int i = 1; i < AddressEditFormsManagerEnum.PHONE_GROUP.length; i++) {
+		for (int i = 1; i < AddressEditFormTypeEnum.PHONE_GROUP.length; i++) {
 			if ( hasMember( this.phoneForms.get( i ) ) ) {
 				removeMember( this.phoneForms.get( i ) );
 			}
@@ -78,5 +78,26 @@ public class AddressEditCanvas extends VLayout {
 		if ( GWTUtil.hasText( address.getPrivatePhone() ) ) {
 			this.phoneForms.get( 0 ).setAddress( address );
 		}
+	}
+
+	public void addPhoneForm() {
+
+	}
+
+	/**
+	 * @return
+	 */
+	public AddressEditFormTypeEnum[] getAvailableFormTypes() {
+
+		List<AddressEditFormTypeEnum> typeList = new ArrayList<AddressEditFormTypeEnum>();
+
+		for (int i = 0; i < this.phoneForms.size(); i++) {
+			AddressEditPhoneForm form = this.phoneForms.get( i );
+			if ( !hasMember( form ) ) {
+				typeList.add( form.getDefaultType() );
+			}
+		}
+
+		return typeList.toArray( new AddressEditFormTypeEnum[0] );
 	}
 }

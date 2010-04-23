@@ -1,4 +1,4 @@
-/* AddressEditFormsManagerEnum.java
+/* AddressEditFormTypeEnum.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -30,17 +30,17 @@ import com.smartgwt.client.widgets.form.DynamicForm;
  * 
  * @author Juergen Schlierf
  */
-public enum AddressEditFormsManagerEnum {
+public enum AddressEditFormTypeEnum {
 	DETAIL_NAME(""), PRIVATE_PHONE("Private Phone"), WORK_PHONE("Work Phone"), PRIVATE_MOBILE("Private Mobile"), WORK_MOBILE(
 			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax");
 
-	public final static AddressEditFormsManagerEnum[] PHONE_GROUP = { PRIVATE_PHONE, WORK_PHONE, PRIVATE_MOBILE,
+	public final static AddressEditFormTypeEnum[] PHONE_GROUP = { PRIVATE_PHONE, WORK_PHONE, PRIVATE_MOBILE,
 			WORK_MOBILE, PRIVATE_FAX, WORK_FAX };
 
 	private String title;
 	private IAddressEditForm form;
 
-	private AddressEditFormsManagerEnum( String title ) {
+	private AddressEditFormTypeEnum( String title ) {
 
 		this.title = title;
 	}
@@ -73,7 +73,7 @@ public enum AddressEditFormsManagerEnum {
 			return new AddressEditPhoneForm( this );
 		}
 
-		throw new IllegalArgumentException( "AddressEditFormsManagerEnum type missing: " + name() );
+		throw new IllegalArgumentException( "AddressEditFormTypeEnum type missing: " + name() );
 	}
 
 	/**
@@ -87,7 +87,7 @@ public enum AddressEditFormsManagerEnum {
 	public static void setAddress( Address address ) {
 
 		if ( address == null ) {
-			for (AddressEditFormsManagerEnum formsManager : values()) {
+			for (AddressEditFormTypeEnum formsManager : values()) {
 				formsManager.setVisible( false );
 			}
 			DETAIL_NAME.setVisible( true );
@@ -100,7 +100,7 @@ public enum AddressEditFormsManagerEnum {
 	 */
 	public static void addPhoneForm() {
 
-		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
+		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
 			if ( !formsManager.isVisible() ) {
 				managePhoneItems();
 				formsManager.setVisible( true );
@@ -114,7 +114,7 @@ public enum AddressEditFormsManagerEnum {
 	/**
 	 * @param formsManager
 	 */
-	public static void removePhoneForm( AddressEditFormsManagerEnum formsManager ) {
+	public static void removePhoneForm( AddressEditFormTypeEnum formsManager ) {
 
 		formsManager.setVisible( false );
 		managePhoneItems();
@@ -122,7 +122,7 @@ public enum AddressEditFormsManagerEnum {
 
 	private static void managePhoneItems() {
 
-		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
+		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
 			String[] phoneTypes = formsManager.getUnusedPhoneTypes();
 			if ( formsManager.isVisible() ) {
 				formsManager.setSelectionTypes( phoneTypes );
@@ -150,7 +150,7 @@ public enum AddressEditFormsManagerEnum {
 
 		List<String> types = new ArrayList<String>();
 		types.add( this.title );
-		for (AddressEditFormsManagerEnum formsManager : PHONE_GROUP) {
+		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
 			if ( formsManager != this && !formsManager.isVisible() ) {
 				types.add( formsManager.title );
 			}
