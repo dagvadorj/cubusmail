@@ -25,6 +25,8 @@ import java.util.List;
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -44,8 +46,19 @@ public class AddressEditCanvas extends VLayout {
 		setOverflow( Overflow.SCROLL );
 
 		this.nameForm = new AddressEditNameForm();
+		
 		for (AddressEditFormTypeEnum typeEnum : AddressEditFormTypeEnum.PHONE_GROUP) {
-			this.phoneForms.add( new AddressEditPhoneForm( typeEnum ) );
+			AddressEditPhoneForm form = new AddressEditPhoneForm( typeEnum );
+			form.getAddItem().addIconClickHandler( new IconClickHandler() {
+
+				@Override
+				public void onIconClick( IconClickEvent event ) {
+
+					addPhoneForm();
+				}
+			} );
+
+			this.phoneForms.add( form );
 		}
 
 		init();
@@ -59,17 +72,14 @@ public class AddressEditCanvas extends VLayout {
 			addMember( this.nameForm );
 		}
 
-		// first phone form
-		if ( !hasMember( this.phoneForms.get( 0 ) ) ) {
-			addMember( this.phoneForms.get( 0 ) );
-		}
-
 		// remove other phone forms
 		for (int i = 1; i < AddressEditFormTypeEnum.PHONE_GROUP.length; i++) {
 			if ( hasMember( this.phoneForms.get( i ) ) ) {
 				removeMember( this.phoneForms.get( i ) );
 			}
 		}
+
+		addPhoneForm();
 	}
 
 	public void setAddress( Address address ) {
@@ -82,7 +92,26 @@ public class AddressEditCanvas extends VLayout {
 
 	public void addPhoneForm() {
 
+		for (AddressEditPhoneForm form : this.phoneForms) {
+			if ( !hasMember( form ) ) {
+				AddressEditFormTypeEnum[] types = getAvailableFormTypes();
+				form.setFormTypes( types );
+				form.setType( types[0] );				
+				form.getAddItem().setVisible( true );
+				addMember( form );
+				break;
+			}
+			else {
+				form.getAddItem().setVisible( false );
+				form.redraw();
+			}
+		}
 	}
+	
+	public void removePhoneForm(AddressEditPhoneForm form) {
+		removeMember( form );
+	}
+	
 
 	/**
 	 * @return
@@ -90,7 +119,6 @@ public class AddressEditCanvas extends VLayout {
 	public AddressEditFormTypeEnum[] getAvailableFormTypes() {
 
 		List<AddressEditFormTypeEnum> typeList = new ArrayList<AddressEditFormTypeEnum>();
-
 		for (int i = 0; i < this.phoneForms.size(); i++) {
 			AddressEditPhoneForm form = this.phoneForms.get( i );
 			if ( !hasMember( form ) ) {

@@ -45,21 +45,19 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		REMOVE_ICON.setSrc( ImageProvider.BUTTON_REMOVE );
 	}
 
-	protected AddressEditFormTypeEnum type;
 	protected AddressEditFormTypeEnum defaultType;
 	protected SelectItem typeSelectionItem;
 
 	protected StaticTextItem removeItem;
 	protected StaticTextItem addItem;
 
-	public AddressEditAbstractForm( AddressEditFormTypeEnum type ) {
+	public AddressEditAbstractForm( AddressEditFormTypeEnum defaultType ) {
 
 		setWidth100();
 		setNumCols( 4 );
 		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, 15, "*" );
 
-		this.type = type;
-		this.defaultType = type;
+		this.defaultType = defaultType;
 
 		this.typeSelectionItem = new SelectItem( "typeSelectionItem" );
 		this.typeSelectionItem.setShowTitle( false );
@@ -69,9 +67,6 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		// this.removeItem.setRedrawOnChange(true);
 		this.removeItem.setIcons( REMOVE_ICON );
 		this.removeItem.setShowTitle( false );
-		if ( this.type == AddressEditFormTypeEnum.PHONE_GROUP[0] ) {
-			this.removeItem.setVisible( false );
-		}
 
 		this.addItem = new StaticTextItem( "addItem" );
 		// this.addItem.setRedrawOnChange(true);
@@ -103,7 +98,30 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 
 	public void setType( AddressEditFormTypeEnum type ) {
 
-		this.type = type;
+		if ( type == AddressEditFormTypeEnum.PHONE_GROUP[0] ) {
+			this.removeItem.setVisible( false );
+		}
+		else {
+			this.removeItem.setVisible( true );
+		}
+
+		this.typeSelectionItem.setValue( type.getTitle() );
+	}
+
+	public AddressEditFormTypeEnum getType() {
+
+		return AddressEditFormTypeEnum.getByTitle( this.typeSelectionItem.getValue().toString() );
+	}
+
+	public void setFormTypes( AddressEditFormTypeEnum[] types ) {
+
+		if ( types != null ) {
+			String[] typeStrings = new String[types.length];
+			for (int i = 0; i < types.length; i++) {
+				typeStrings[i] = types[i].getTitle();
+			}
+			this.typeSelectionItem.setValueMap( typeStrings );
+		}
 	}
 
 	public AddressEditFormTypeEnum getDefaultType() {

@@ -41,10 +41,6 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 		this.phoneItem.setShowHintInField( true );
 		this.phoneItem.setShowTitle( false );
 
-		if ( this.type == AddressEditFormTypeEnum.PRIVATE_PHONE ) {
-			this.removeItem.setVisible( false );
-		}
-
 		setItems( this.typeSelectionItem, this.phoneItem, this.removeItem, this.addItem );
 	}
 
@@ -53,7 +49,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 		String value = null;
 
-		switch (this.type) {
+		switch (getType()) {
 		case PRIVATE_PHONE:
 			value = address.getPrivatePhone();
 			break;
@@ -75,7 +71,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 		default:
 			throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: "
-					+ this.type.name() );
+					+ this.getType().name() );
 		}
 
 		if ( GWTUtil.hasText( value ) ) {

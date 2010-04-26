@@ -84,6 +84,17 @@ public enum AddressEditFormTypeEnum {
 		return title;
 	}
 
+	public static AddressEditFormTypeEnum getByTitle( String title ) {
+
+		for (AddressEditFormTypeEnum type : PHONE_GROUP) {
+			if ( type.getTitle().equals( title ) ) {
+				return type;
+			}
+		}
+
+		return null;
+	}
+
 	public static void setAddress( Address address ) {
 
 		if ( address == null ) {
