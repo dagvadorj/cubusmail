@@ -19,14 +19,8 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -37,95 +31,31 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class AddressEditCanvas extends VLayout {
 
 	private AddressEditNameForm nameForm;
-	private List<AddressEditPhoneForm> phoneForms = new ArrayList<AddressEditPhoneForm>(
-			AddressEditFormTypeEnum.PHONE_GROUP.length );
+	private AddressEditPhoneCanvas phoneEditCanvas;
 
 	public AddressEditCanvas() {
 
 		super();
 		setOverflow( Overflow.SCROLL );
+		setWidth100();
+		setAutoHeight();
 
 		this.nameForm = new AddressEditNameForm();
-		
-		for (AddressEditFormTypeEnum typeEnum : AddressEditFormTypeEnum.PHONE_GROUP) {
-			AddressEditPhoneForm form = new AddressEditPhoneForm( typeEnum );
-			form.getAddItem().addIconClickHandler( new IconClickHandler() {
+		this.phoneEditCanvas = new AddressEditPhoneCanvas();
 
-				@Override
-				public void onIconClick( IconClickEvent event ) {
-
-					addPhoneForm();
-				}
-			} );
-
-			this.phoneForms.add( form );
-		}
+		setMembers( this.nameForm, this.phoneEditCanvas );
 
 		init();
-		// AddressEditFormTypeEnum.setAddress( null );
 	}
 
-	public void init() {
+	private void init() {
 
-		// name form
-		if ( !hasMember( this.nameForm ) ) {
-			addMember( this.nameForm );
-		}
-
-		// remove other phone forms
-		for (int i = 1; i < AddressEditFormTypeEnum.PHONE_GROUP.length; i++) {
-			if ( hasMember( this.phoneForms.get( i ) ) ) {
-				removeMember( this.phoneForms.get( i ) );
-			}
-		}
-
-		addPhoneForm();
+		this.phoneEditCanvas.init();
 	}
 
 	public void setAddress( Address address ) {
 
 		this.nameForm.setAddress( address );
-		if ( GWTUtil.hasText( address.getPrivatePhone() ) ) {
-			this.phoneForms.get( 0 ).setAddress( address );
-		}
-	}
-
-	public void addPhoneForm() {
-
-		for (AddressEditPhoneForm form : this.phoneForms) {
-			if ( !hasMember( form ) ) {
-				AddressEditFormTypeEnum[] types = getAvailableFormTypes();
-				form.setFormTypes( types );
-				form.setType( types[0] );				
-				form.getAddItem().setVisible( true );
-				addMember( form );
-				break;
-			}
-			else {
-				form.getAddItem().setVisible( false );
-				form.redraw();
-			}
-		}
-	}
-	
-	public void removePhoneForm(AddressEditPhoneForm form) {
-		removeMember( form );
-	}
-	
-
-	/**
-	 * @return
-	 */
-	public AddressEditFormTypeEnum[] getAvailableFormTypes() {
-
-		List<AddressEditFormTypeEnum> typeList = new ArrayList<AddressEditFormTypeEnum>();
-		for (int i = 0; i < this.phoneForms.size(); i++) {
-			AddressEditPhoneForm form = this.phoneForms.get( i );
-			if ( !hasMember( form ) ) {
-				typeList.add( form.getDefaultType() );
-			}
-		}
-
-		return typeList.toArray( new AddressEditFormTypeEnum[0] );
+		this.phoneEditCanvas.setAddress( address );
 	}
 }

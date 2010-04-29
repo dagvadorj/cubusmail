@@ -19,11 +19,6 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cubusmail.common.model.Address;
-import com.smartgwt.client.widgets.form.DynamicForm;
 
 /**
  * TODO: documentation
@@ -38,42 +33,10 @@ public enum AddressEditFormTypeEnum {
 			WORK_MOBILE, PRIVATE_FAX, WORK_FAX };
 
 	private String title;
-	private IAddressEditForm form;
 
 	private AddressEditFormTypeEnum( String title ) {
 
 		this.title = title;
-	}
-
-	public IAddressEditForm getForm() {
-
-		if ( this.form == null ) {
-			this.form = create();
-		}
-
-		return this.form;
-	}
-
-	public DynamicForm getDynmaicForm() {
-
-		return (DynamicForm) getForm();
-	}
-
-	private IAddressEditForm create() {
-
-		switch (this) {
-		case DETAIL_NAME:
-			return new AddressEditNameForm();
-		case PRIVATE_PHONE:
-		case WORK_PHONE:
-		case PRIVATE_MOBILE:
-		case WORK_MOBILE:
-		case PRIVATE_FAX:
-		case WORK_FAX:
-			return new AddressEditPhoneForm( this );
-		}
-
-		throw new IllegalArgumentException( "AddressEditFormTypeEnum type missing: " + name() );
 	}
 
 	/**
@@ -93,99 +56,5 @@ public enum AddressEditFormTypeEnum {
 		}
 
 		return null;
-	}
-
-	public static void setAddress( Address address ) {
-
-		if ( address == null ) {
-			for (AddressEditFormTypeEnum formsManager : values()) {
-				formsManager.setVisible( false );
-			}
-			DETAIL_NAME.setVisible( true );
-			addPhoneForm();
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public static void addPhoneForm() {
-
-		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
-			if ( !formsManager.isVisible() ) {
-				managePhoneItems();
-				formsManager.setVisible( true );
-				String[] phoneTypes = formsManager.getUnusedPhoneTypes();
-				formsManager.setSelectionType( phoneTypes[0] );
-				break;
-			}
-		}
-	}
-
-	/**
-	 * @param formsManager
-	 */
-	public static void removePhoneForm( AddressEditFormTypeEnum formsManager ) {
-
-		formsManager.setVisible( false );
-		managePhoneItems();
-	}
-
-	private static void managePhoneItems() {
-
-		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
-			String[] phoneTypes = formsManager.getUnusedPhoneTypes();
-			if ( formsManager.isVisible() ) {
-				formsManager.setSelectionTypes( phoneTypes );
-				formsManager.setAddButtonVisible( false );
-			}
-			else {
-				formsManager.setSelectionTypes( phoneTypes );
-				formsManager.setSelectionType( phoneTypes[0] );
-				formsManager.setAddButtonVisible( true );
-			}
-		}
-	}
-
-	public void setVisible( boolean visible ) {
-
-		getDynmaicForm().setVisible( visible );
-	}
-
-	public boolean isVisible() {
-
-		return getDynmaicForm().isVisible();
-	}
-
-	private String[] getUnusedPhoneTypes() {
-
-		List<String> types = new ArrayList<String>();
-		types.add( this.title );
-		for (AddressEditFormTypeEnum formsManager : PHONE_GROUP) {
-			if ( formsManager != this && !formsManager.isVisible() ) {
-				types.add( formsManager.title );
-			}
-		}
-		return types.toArray( new String[0] );
-	}
-
-	public void setRemoveButtonVisible( boolean visible ) {
-
-		((AddressEditAbstractForm) getForm()).getRemoveItem().setVisible( visible );
-	}
-
-	public void setAddButtonVisible( boolean visible ) {
-
-		((AddressEditAbstractForm) getForm()).getAddItem().setVisible( visible );
-	}
-
-	public void setSelectionTypes( String[] values ) {
-
-		((AddressEditAbstractForm) getForm()).setSelectionTypes( values );
-	}
-
-	public void setSelectionType( String value ) {
-
-		((AddressEditAbstractForm) getForm()).setSelectionType( value );
 	}
 }

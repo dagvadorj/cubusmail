@@ -20,7 +20,6 @@
 package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.util.GWTUtil;
-import com.cubusmail.common.model.Address;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
@@ -32,9 +31,7 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 	private TextItem phoneItem;
 
-	public AddressEditPhoneForm( final AddressEditFormTypeEnum defaultType ) {
-
-		super( defaultType );
+	public AddressEditPhoneForm() {
 
 		this.phoneItem = new TextItem( "phoneItem" );
 		this.phoneItem.setHint( "Phone Number" );
@@ -45,42 +42,21 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 	}
 
 	@Override
-	public void setAddress( Address address ) {
+	public String getValue() {
 
-		String value = null;
+		return (String) this.phoneItem.getValue();
+	}
 
-		switch (getType()) {
-		case PRIVATE_PHONE:
-			value = address.getPrivatePhone();
-			break;
-		case WORK_PHONE:
-			value = address.getWorkPhone();
-			break;
-		case PRIVATE_MOBILE:
-			value = address.getPrivateMobile();
-			break;
-		case WORK_MOBILE:
-			value = address.getWorkMobile();
-			break;
-		case PRIVATE_FAX:
-			value = address.getPrivateFax();
-			break;
-		case WORK_FAX:
-			value = address.getPrivateFax();
-			break;
-
-		default:
-			throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: "
-					+ this.getType().name() );
-		}
+	@Override
+	public void setValue( String value ) {
 
 		if ( GWTUtil.hasText( value ) ) {
 			this.phoneItem.setValue( value );
-			setVisible( true );
 		}
 		else {
-			this.phoneItem.clearValue();
-			setVisible( false );
+			if ( this.phoneItem.getValue() != null ) {
+				this.phoneItem.clearValue();
+			}
 		}
 	}
 }

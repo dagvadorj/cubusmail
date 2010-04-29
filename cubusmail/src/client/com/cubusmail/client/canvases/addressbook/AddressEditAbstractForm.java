@@ -19,7 +19,6 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.ImageProvider;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -32,46 +31,40 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
  * 
  * @author Juergen Schlierf
  */
-abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEditForm {
+abstract class AddressEditAbstractForm extends DynamicForm {
 
-	protected final static FormItemIcon ADD_ICON = new FormItemIcon();
-	protected final static FormItemIcon REMOVE_ICON = new FormItemIcon();
-	static {
-		ADD_ICON.setWidth( 12 );
-		ADD_ICON.setHeight( 12 );
-		ADD_ICON.setSrc( ImageProvider.BUTTON_ADD );
-		REMOVE_ICON.setWidth( 12 );
-		REMOVE_ICON.setHeight( 12 );
-		REMOVE_ICON.setSrc( ImageProvider.BUTTON_REMOVE );
-	}
-
-	protected AddressEditFormTypeEnum defaultType;
 	protected SelectItem typeSelectionItem;
 
 	protected StaticTextItem removeItem;
 	protected StaticTextItem addItem;
 
-	public AddressEditAbstractForm( AddressEditFormTypeEnum defaultType ) {
+	public AddressEditAbstractForm() {
 
 		setWidth100();
 		setNumCols( 4 );
 		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, 15, "*" );
 
-		this.defaultType = defaultType;
-
 		this.typeSelectionItem = new SelectItem( "typeSelectionItem" );
 		this.typeSelectionItem.setShowTitle( false );
-		// this.typeSelectionItem.setRedrawOnChange(true);
 
 		this.removeItem = new StaticTextItem( "removeItem" );
-		// this.removeItem.setRedrawOnChange(true);
-		this.removeItem.setIcons( REMOVE_ICON );
+		// this.removeItem.setRedrawOnChange( true );
+		FormItemIcon removeIcon = new FormItemIcon();
+		removeIcon.setWidth( 12 );
+		removeIcon.setHeight( 12 );
+		removeIcon.setSrc( ImageProvider.BUTTON_REMOVE );
+		this.removeItem.setIcons( removeIcon );
 		this.removeItem.setShowTitle( false );
 
 		this.addItem = new StaticTextItem( "addItem" );
-		// this.addItem.setRedrawOnChange(true);
-		this.addItem.setIcons( ADD_ICON );
+		// this.addItem.setRedrawOnChange( true );
+		FormItemIcon addIcon = new FormItemIcon();
+		addIcon.setWidth( 12 );
+		addIcon.setHeight( 12 );
+		addIcon.setSrc( ImageProvider.BUTTON_ADD );
+		this.addItem.setIcons( addIcon );
 		this.addItem.setShowTitle( false );
+		this.addItem.setVisible( false );
 	}
 
 	public void setSelectionTypes( String[] values ) {
@@ -93,8 +86,6 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 
 		return addItem;
 	}
-
-	public abstract void setAddress( Address address );
 
 	public void setType( AddressEditFormTypeEnum type ) {
 
@@ -124,8 +115,7 @@ abstract class AddressEditAbstractForm extends DynamicForm implements IAddressEd
 		}
 	}
 
-	public AddressEditFormTypeEnum getDefaultType() {
+	public abstract String getValue();
 
-		return defaultType;
-	}
+	public abstract void setValue( String value );
 }

@@ -30,7 +30,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditNameForm extends DynamicForm implements IAddressEditForm {
+public class AddressEditNameForm extends DynamicForm {
 
 	private TextItem firstNameItem;
 	private TextItem lastNameItem;
