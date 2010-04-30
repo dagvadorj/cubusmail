@@ -24,6 +24,7 @@ import java.util.List;
 
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
@@ -151,7 +152,9 @@ public class AddressEditPhoneCanvas extends VLayout {
 		for (int i = this.phoneForms.size() - 2; i >= 0; i--) {
 			if ( hasMember( this.phoneForms.get( i ) ) ) {
 				this.phoneForms.get( i ).getAddItem().setVisible( visible );
-				this.phoneForms.get( i ).getAddItem().redraw();
+
+				this.phoneForms.get( i ).redraw();
+				
 				visible = false;
 			}
 		}

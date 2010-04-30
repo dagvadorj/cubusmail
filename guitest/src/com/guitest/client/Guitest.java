@@ -30,6 +30,12 @@ import com.smartgwt.client.widgets.events.MouseOutEvent;
 import com.smartgwt.client.widgets.events.MouseOutHandler;
 import com.smartgwt.client.widgets.events.RightMouseDownEvent;
 import com.smartgwt.client.widgets.events.RightMouseDownHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.FormItemIcon;
+import com.smartgwt.client.widgets.form.fields.StaticTextItem;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HStack;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.menu.Menu;
@@ -58,6 +64,7 @@ public class Guitest implements EntryPoint {
 		// testComposeMessageCanvas();
 		// testAddressDetialCanvas();
 		testAddressEditCanvas();
+		// testForms();
 	}
 
 	private void testAddressEditCanvas() {
@@ -65,7 +72,38 @@ public class Guitest implements EntryPoint {
 		edit.setWidth100();
 		edit.setHeight100();
 
+		edit.setAddress(createTestAddress());
+
 		edit.draw();
+	}
+
+	private void testForms() {
+		final DynamicForm form = new DynamicForm();
+		form.setWidth100();
+		form.setHeight100();
+
+		final StaticTextItem iconButton = new StaticTextItem();
+		final FormItemIcon addIcon = new FormItemIcon();
+		addIcon.setWidth(12);
+		addIcon.setHeight(12);
+		addIcon.setSrc(ImageProvider.BUTTON_ADD);
+		iconButton.setIcons(addIcon);
+		iconButton.setRedrawOnChange(true);
+
+		ButtonItem button = new ButtonItem("Test", "test");
+		button.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				boolean visible = !iconButton.getVisible();
+				iconButton.setVisible(visible);
+				// iconButton.redraw();
+				form.redraw();
+			}
+		});
+
+		form.setItems(iconButton, button);
+
+		form.draw();
 	}
 
 	private void testAddressDetialCanvas() {
@@ -86,8 +124,8 @@ public class Guitest implements EntryPoint {
 		address.setPrivatePhone("089/3333333333");
 		address.setPrivateMobile("0175/35345345");
 		address.setWorkMobile("0175/33333333332");
-		address.setPrivateFax("089/11111111111");
-		address.setWorkFax("089/666666666666");
+		// address.setPrivateFax("089/11111111111");
+		// address.setWorkFax("089/666666666666");
 		address.setPager("098/234123424");
 		address.setEmail("test@test.de");
 		address.setEmail2("test2@test.de");
