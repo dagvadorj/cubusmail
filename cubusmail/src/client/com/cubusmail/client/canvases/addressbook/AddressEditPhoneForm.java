@@ -33,6 +33,9 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 
 	public AddressEditPhoneForm() {
 
+		super();
+		setVisible( false );
+
 		this.phoneItem = new TextItem( "phoneItem" );
 		this.phoneItem.setHint( "Phone Number" );
 		this.phoneItem.setShowHintInField( true );
