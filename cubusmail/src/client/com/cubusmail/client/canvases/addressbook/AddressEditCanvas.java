@@ -31,7 +31,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class AddressEditCanvas extends VLayout {
 
 	private AddressEditNameForm nameForm;
-	private AddressEditPhoneCanvas phoneEditCanvas;
+	private AddressEditPhoneSubCanvas phoneSubCanvas;
+	private AddressEditEmailSubCanvas emailSubCanvas;
 
 	public AddressEditCanvas() {
 
@@ -41,21 +42,24 @@ public class AddressEditCanvas extends VLayout {
 		setAutoHeight();
 
 		this.nameForm = new AddressEditNameForm();
-		this.phoneEditCanvas = new AddressEditPhoneCanvas();
+		this.phoneSubCanvas = new AddressEditPhoneSubCanvas();
+		this.emailSubCanvas = new AddressEditEmailSubCanvas();
 
-		setMembers( this.nameForm, this.phoneEditCanvas );
+		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas );
 
 		init();
 	}
 
 	private void init() {
 
-		this.phoneEditCanvas.init();
+		this.phoneSubCanvas.init();
+		this.emailSubCanvas.init();
 	}
 
 	public void setAddress( Address address ) {
 
 		this.nameForm.setAddress( address );
-		this.phoneEditCanvas.setAddress( address );
+		this.phoneSubCanvas.setAddress( address );
+		this.emailSubCanvas.setAddress( address );
 	}
 }

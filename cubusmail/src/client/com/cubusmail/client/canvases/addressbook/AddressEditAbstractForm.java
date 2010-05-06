@@ -77,7 +77,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		return this.typeSelectionItem.getValues();
 	}
 
-
 	public StaticTextItem getRemoveItem() {
 
 		return removeItem;
@@ -89,13 +88,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 	}
 
 	public void setType( AddressEditFormTypeEnum type ) {
-
-		if ( type == AddressEditFormTypeEnum.PHONE_GROUP[0] ) {
-			this.removeItem.setVisible( false );
-		}
-		else {
-			this.removeItem.setVisible( true );
-		}
 
 		this.typeSelectionItem.setValue( type.getTitle() );
 	}

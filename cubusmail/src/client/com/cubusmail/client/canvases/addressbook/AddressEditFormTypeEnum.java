@@ -19,18 +19,24 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-
 /**
  * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
 public enum AddressEditFormTypeEnum {
-	DETAIL_NAME(""), PRIVATE_PHONE("Private Phone"), WORK_PHONE("Work Phone"), PRIVATE_MOBILE("Private Mobile"), WORK_MOBILE(
-			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax");
+	DETAIL_NAME(""),
+
+	PRIVATE_PHONE("Private Phone"), WORK_PHONE("Work Phone"), PRIVATE_MOBILE("Private Mobile"), WORK_MOBILE(
+			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax"),
+
+	EMAIL1("Email 1"), EMAIL2("Email 2"), EMAIL3("Email 3"), EMAIL4("Email 4"), EMAIL5("Email 5"), IM("IM"), URL(
+			"Website");
 
 	public final static AddressEditFormTypeEnum[] PHONE_GROUP = { PRIVATE_PHONE, WORK_PHONE, PRIVATE_MOBILE,
 			WORK_MOBILE, PRIVATE_FAX, WORK_FAX };
+
+	public final static AddressEditFormTypeEnum[] EMAIL_GROUP = { EMAIL1, EMAIL2, EMAIL3, EMAIL4, EMAIL5 };
 
 	private String title;
 
@@ -49,7 +55,7 @@ public enum AddressEditFormTypeEnum {
 
 	public static AddressEditFormTypeEnum getByTitle( String title ) {
 
-		for (AddressEditFormTypeEnum type : PHONE_GROUP) {
+		for (AddressEditFormTypeEnum type : values()) {
 			if ( type.getTitle().equals( title ) ) {
 				return type;
 			}
