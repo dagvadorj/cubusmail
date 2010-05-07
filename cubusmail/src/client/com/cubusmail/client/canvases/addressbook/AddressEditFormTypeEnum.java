@@ -31,12 +31,19 @@ public enum AddressEditFormTypeEnum {
 			"Work Mobile"), PRIVATE_FAX("Private Fax"), WORK_FAX("Work Fax"),
 
 	EMAIL1("Email 1"), EMAIL2("Email 2"), EMAIL3("Email 3"), EMAIL4("Email 4"), EMAIL5("Email 5"), IM("IM"), URL(
-			"Website");
+			"Website"),
+
+	// other information
+	TITLE("Title"), BIRTHDATE("Birthdate"), COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department"), PAGER(
+			"Pager");
 
 	public final static AddressEditFormTypeEnum[] PHONE_GROUP = { PRIVATE_PHONE, WORK_PHONE, PRIVATE_MOBILE,
 			WORK_MOBILE, PRIVATE_FAX, WORK_FAX };
 
 	public final static AddressEditFormTypeEnum[] EMAIL_GROUP = { EMAIL1, EMAIL2, EMAIL3, EMAIL4, EMAIL5 };
+
+	public final static AddressEditFormTypeEnum[] MORE_INFO_GROUP = { TITLE, COMPANY, POSITION, DEPARTMENT, URL, IM,
+			PAGER };
 
 	private String title;
 

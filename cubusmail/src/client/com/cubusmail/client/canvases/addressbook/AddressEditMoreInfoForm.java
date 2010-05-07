@@ -1,4 +1,4 @@
-/* AddressEditPhoneForm.java
+/* AddressEditMoreInfoForm.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -27,40 +27,53 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditPhoneForm extends AddressEditAbstractForm {
+public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 
-	private TextItem phoneItem;
+	private TextItem infoItem;
 
-	public AddressEditPhoneForm() {
+	public AddressEditMoreInfoForm() {
 
 		super();
 		setVisible( false );
 
-		this.phoneItem = new TextItem( "phoneItem" );
-		this.phoneItem.setHint( "Phone Number" );
-		this.phoneItem.setShowHintInField( true );
-		this.phoneItem.setShowTitle( false );
+		this.infoItem = new TextItem( "infoItem" );
+		this.infoItem.setShowHintInField( true );
+		this.infoItem.setShowTitle( false );
 
-		setItems( this.typeSelectionItem, this.phoneItem, this.removeItem, this.addItem );
+		setItems( this.typeSelectionItem, this.infoItem, this.removeItem, this.addItem );
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#getValue
+	 * ()
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public String getValue() {
 
-		return (String) this.phoneItem.getValue();
+		return (String) this.infoItem.getValue();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#setValue
+	 * (java.lang.String)
+	 */
 	@Override
 	public void setValue( String value ) {
-
 		if ( GWTUtil.hasText( value ) ) {
-			this.phoneItem.setValue( value );
+			this.infoItem.setValue( value );
 		}
 		else {
-			if ( this.phoneItem.getValue() != null ) {
-				this.phoneItem.clearValue();
+			if ( this.infoItem.getValue() != null ) {
+				this.infoItem.clearValue();
 			}
 		}
 	}
+
 }

@@ -1,4 +1,4 @@
-/* AddressEditPhoneForm.java
+/* AddressEditBirthdayForm.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -19,48 +19,20 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
-import com.cubusmail.client.util.GWTUtil;
-import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.DateItem;
 
 /**
  * TODO: documentation
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditPhoneForm extends AddressEditAbstractForm {
+public class AddressEditBirthdayForm extends DynamicForm {
 
-	private TextItem phoneItem;
+	private DateItem dateItem;
 
-	public AddressEditPhoneForm() {
-
+	public AddressEditBirthdayForm() {
+		
 		super();
-		setVisible( false );
-
-		this.phoneItem = new TextItem( "phoneItem" );
-		this.phoneItem.setHint( "Phone Number" );
-		this.phoneItem.setShowHintInField( true );
-		this.phoneItem.setShowTitle( false );
-
-		setItems( this.typeSelectionItem, this.phoneItem, this.removeItem, this.addItem );
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public String getValue() {
-
-		return (String) this.phoneItem.getValue();
-	}
-
-	@Override
-	public void setValue( String value ) {
-
-		if ( GWTUtil.hasText( value ) ) {
-			this.phoneItem.setValue( value );
-		}
-		else {
-			if ( this.phoneItem.getValue() != null ) {
-				this.phoneItem.clearValue();
-			}
-		}
 	}
 }

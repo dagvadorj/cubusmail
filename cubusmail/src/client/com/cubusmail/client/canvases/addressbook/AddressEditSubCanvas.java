@@ -123,9 +123,10 @@ public abstract class AddressEditSubCanvas extends VLayout {
 		for (int i = index; i < this.forms.size() - 1; i++) {
 			AddressEditAbstractForm target = this.forms.get( i );
 			AddressEditAbstractForm source = this.forms.get( i + 1 );
-			target.setValue( source.getValue() );
-			target.setType( source.getType() );
-			target.setSelectionTypes( source.getSelectionTypes() );
+			if ( source.isVisible() ) {
+				target.setValue( (String) source.getValue() );
+				target.setType( source.getType() );
+			}
 		}
 		for (int i = this.forms.size() - 1; i >= 0; i--) {
 			if ( this.forms.get( i ).isVisible() ) {

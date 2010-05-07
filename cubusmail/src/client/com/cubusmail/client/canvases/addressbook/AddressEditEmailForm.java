@@ -16,16 +16,15 @@
 	
    You should have received a copy of the GNU Lesser General Public
    License along with Cubusmail. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.util.GWTUtil;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
-
 /**
  * TODO: documentation
- *
+ * 
  * @author Juergen Schlierf
  */
 public class AddressEditEmailForm extends AddressEditAbstractForm {
@@ -44,17 +43,27 @@ public class AddressEditEmailForm extends AddressEditAbstractForm {
 
 		setItems( this.typeSelectionItem, this.emailItem, this.removeItem, this.addItem );
 	}
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#getValue()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#getValue
+	 * ()
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public String getValue() {
 
 		return (String) this.emailItem.getValue();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#setValue(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.cubusmail.client.canvases.addressbook.AddressEditAbstractForm#setValue
+	 * (java.lang.String)
 	 */
 	@Override
 	public void setValue( String value ) {

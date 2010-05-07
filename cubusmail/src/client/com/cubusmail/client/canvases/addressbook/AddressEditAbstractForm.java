@@ -108,7 +108,7 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		}
 	}
 
-	public abstract String getValue();
+	public abstract <T extends Object> T getValue();
 
 	public abstract void setValue( String value );
 }

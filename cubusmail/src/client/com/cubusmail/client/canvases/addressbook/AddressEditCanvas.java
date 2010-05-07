@@ -33,6 +33,7 @@ public class AddressEditCanvas extends VLayout {
 	private AddressEditNameForm nameForm;
 	private AddressEditPhoneSubCanvas phoneSubCanvas;
 	private AddressEditEmailSubCanvas emailSubCanvas;
+	private AddressEditMoreInfoSubCanvas moreInfoSubCanvas;
 
 	public AddressEditCanvas() {
 
@@ -44,8 +45,9 @@ public class AddressEditCanvas extends VLayout {
 		this.nameForm = new AddressEditNameForm();
 		this.phoneSubCanvas = new AddressEditPhoneSubCanvas();
 		this.emailSubCanvas = new AddressEditEmailSubCanvas();
+		this.moreInfoSubCanvas = new AddressEditMoreInfoSubCanvas();
 
-		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas );
+		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas, this.moreInfoSubCanvas );
 
 		init();
 	}
@@ -54,6 +56,7 @@ public class AddressEditCanvas extends VLayout {
 
 		this.phoneSubCanvas.init();
 		this.emailSubCanvas.init();
+		this.moreInfoSubCanvas.init();
 	}
 
 	public void setAddress( Address address ) {
@@ -61,5 +64,6 @@ public class AddressEditCanvas extends VLayout {
 		this.nameForm.setAddress( address );
 		this.phoneSubCanvas.setAddress( address );
 		this.emailSubCanvas.setAddress( address );
+		this.moreInfoSubCanvas.setAddress( address );
 	}
 }
