@@ -35,7 +35,9 @@ public enum AddressEditFormTypeEnum {
 
 	// other information
 	TITLE("Title"), BIRTHDATE("Birthdate"), COMPANY("Company"), POSITION("Position"), DEPARTMENT("Department"), PAGER(
-			"Pager");
+			"Pager"),
+
+	PRVATE_ADDRESS("Private Address"), WORK_ADDRESS("Work Address");
 
 	public final static AddressEditFormTypeEnum[] PHONE_GROUP = { PRIVATE_PHONE, WORK_PHONE, PRIVATE_MOBILE,
 			WORK_MOBILE, PRIVATE_FAX, WORK_FAX };
@@ -44,6 +46,8 @@ public enum AddressEditFormTypeEnum {
 
 	public final static AddressEditFormTypeEnum[] MORE_INFO_GROUP = { TITLE, COMPANY, POSITION, DEPARTMENT, URL, IM,
 			PAGER };
+
+	public final static AddressEditFormTypeEnum[] ADDRESS_GROUP = { PRVATE_ADDRESS, WORK_ADDRESS };
 
 	private String title;
 

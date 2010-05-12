@@ -65,9 +65,9 @@ public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 	 * (java.lang.String)
 	 */
 	@Override
-	public void setValue( String value ) {
-		if ( GWTUtil.hasText( value ) ) {
-			this.infoItem.setValue( value );
+	public void setValue( Object value ) {
+		if ( GWTUtil.hasText( (String)value ) ) {
+			this.infoItem.setValue( (String)value );
 		}
 		else {
 			if ( this.infoItem.getValue() != null ) {

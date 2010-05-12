@@ -52,10 +52,10 @@ public class AddressEditPhoneForm extends AddressEditAbstractForm {
 	}
 
 	@Override
-	public void setValue( String value ) {
+	public void setValue( Object value ) {
 
-		if ( GWTUtil.hasText( value ) ) {
-			this.phoneItem.setValue( value );
+		if ( GWTUtil.hasText( (String)value ) ) {
+			this.phoneItem.setValue( (String)value );
 		}
 		else {
 			if ( this.phoneItem.getValue() != null ) {

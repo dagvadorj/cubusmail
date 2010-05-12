@@ -66,10 +66,10 @@ public class AddressEditEmailForm extends AddressEditAbstractForm {
 	 * (java.lang.String)
 	 */
 	@Override
-	public void setValue( String value ) {
+	public void setValue( Object value ) {
 
-		if ( GWTUtil.hasText( value ) ) {
-			this.emailItem.setValue( value );
+		if ( GWTUtil.hasText( (String) value ) ) {
+			this.emailItem.setValue( (String) value );
 		}
 		else {
 			if ( this.emailItem.getValue() != null ) {

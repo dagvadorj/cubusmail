@@ -21,6 +21,7 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.ImageProvider;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -40,6 +41,7 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 
 	public AddressEditAbstractForm() {
 
+		super();
 		setWidth100();
 		setNumCols( 4 );
 		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, 15, "*" );
@@ -48,7 +50,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		this.typeSelectionItem.setShowTitle( false );
 
 		this.removeItem = new StaticTextItem( "removeItem" );
-		// this.removeItem.setRedrawOnChange( true );
 		FormItemIcon removeIcon = new FormItemIcon();
 		removeIcon.setWidth( 12 );
 		removeIcon.setHeight( 12 );
@@ -57,7 +58,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		this.removeItem.setShowTitle( false );
 
 		this.addItem = new StaticTextItem( "addItem" );
-		// this.addItem.setRedrawOnChange( true );
 		FormItemIcon addIcon = new FormItemIcon();
 		addIcon.setWidth( 12 );
 		addIcon.setHeight( 12 );
@@ -110,5 +110,5 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 
 	public abstract <T extends Object> T getValue();
 
-	public abstract void setValue( String value );
+	public abstract void setValue( Object value );
 }
