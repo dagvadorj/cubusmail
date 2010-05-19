@@ -21,7 +21,6 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.common.model.GWTConstants;
 import com.cubusmail.common.model.ImageProvider;
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.SelectItem;

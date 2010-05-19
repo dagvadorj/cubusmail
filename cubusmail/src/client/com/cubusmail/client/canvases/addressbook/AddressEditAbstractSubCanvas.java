@@ -1,4 +1,4 @@
-/* AddressEditSubCanvas.java
+/* AddressEditAbstractSubCanvas.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -33,17 +33,18 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Juergen Schlierf
  */
-public abstract class AddressEditSubCanvas extends VLayout {
+public abstract class AddressEditAbstractSubCanvas extends VLayout {
 
 	protected List<AddressEditAbstractForm> forms = new ArrayList<AddressEditAbstractForm>();
 
 	private AddressEditFormTypeEnum[] enumGroup = null;
 
-	public AddressEditSubCanvas( Class<? extends AddressEditAbstractForm> type, AddressEditFormTypeEnum[] enumGroup ) {
+	public AddressEditAbstractSubCanvas( Class<? extends AddressEditAbstractForm> type,
+			AddressEditFormTypeEnum[] enumGroup ) {
 
 		super();
 		setOverflow( Overflow.VISIBLE );
-		setShowEdges( true );
+		setShowEdges( false );
 		setAutoHeight();
 
 		this.enumGroup = enumGroup;
@@ -94,7 +95,7 @@ public abstract class AddressEditSubCanvas extends VLayout {
 	/**
 	 * 
 	 */
-	protected void addForm( AddressEditFormTypeEnum type, String value ) {
+	protected void addForm( AddressEditFormTypeEnum type, Object value ) {
 
 		for (AddressEditAbstractForm form : this.forms) {
 			if ( !form.isVisible() ) {

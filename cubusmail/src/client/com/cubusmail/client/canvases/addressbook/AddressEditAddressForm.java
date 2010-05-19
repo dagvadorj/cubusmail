@@ -1,5 +1,6 @@
 package com.cubusmail.client.canvases.addressbook;
 
+import com.cubusmail.common.model.Address;
 import com.smartgwt.client.widgets.form.fields.SpacerItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
@@ -51,7 +52,37 @@ public class AddressEditAddressForm extends AddressEditAbstractForm {
 	@Override
 	public void setValue( Object value ) {
 
-		// TODO Auto-generated method stub
-
+		Address address = (Address) value;
+		if ( value == null ) {
+			if ( this.streetItem.getValue() != null ) {
+				this.streetItem.clearValue();
+			}
+			if ( this.zipItem.getValue() != null ) {
+				this.zipItem.clearValue();
+			}
+			if ( this.cityItem.getValue() != null ) {
+				this.cityItem.clearValue();
+			}
+			if ( this.stateItem.getValue() != null ) {
+				this.stateItem.clearValue();
+			}
+			if ( this.countryItem.getValue() != null ) {
+				this.countryItem.clearValue();
+			}
+		}
+		else if ( getType() == AddressEditFormTypeEnum.PRVATE_ADDRESS ) {
+			this.streetItem.setValue( address.getPrivateStreet() );
+			this.zipItem.setValue( address.getPrivateZipcode() );
+			this.cityItem.setValue( address.getPrivateCity() );
+			this.stateItem.setValue( address.getPrivateState() );
+			this.countryItem.setValue( address.getPrivateCountry() );
+		}
+		else {
+			this.streetItem.setValue( address.getWorkStreet() );
+			this.zipItem.setValue( address.getWorkZipcode() );
+			this.cityItem.setValue( address.getWorkCity() );
+			this.stateItem.setValue( address.getWorkState() );
+			this.countryItem.setValue( address.getWorkCountry() );
+		}
 	}
 }

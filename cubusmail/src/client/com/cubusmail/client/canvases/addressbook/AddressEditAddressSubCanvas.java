@@ -1,4 +1,4 @@
-/* AddressEditEmailSubCanvas.java
+/* AddressEditAddressSubCanvas.java
 
    Copyright (c) 2010 Juergen Schlierf, All Rights Reserved
    
@@ -27,39 +27,24 @@ import com.cubusmail.common.model.Address;
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditEmailSubCanvas extends AddressEditAbstractSubCanvas {
+public class AddressEditAddressSubCanvas extends AddressEditAbstractSubCanvas {
 
-	public AddressEditEmailSubCanvas() {
+	public AddressEditAddressSubCanvas() {
 
-		super( AddressEditEmailForm.class, AddressEditFormTypeEnum.EMAIL_GROUP );
+		super( AddressEditAddressForm.class, AddressEditFormTypeEnum.ADDRESS_GROUP );
 	}
 
-	/**
-	 * @param address
-	 */
 	public void setAddress( Address address ) {
 
-		// remove other phone forms
-		for (AddressEditAbstractForm form : this.forms) {
-			if ( form.isVisible() ) {
-				form.setVisible( false );
-			}
+		if ( GWTUtil.hasText( address.getPrivateStreet() ) || GWTUtil.hasText( address.getPrivateZipcode() )
+				|| GWTUtil.hasText( address.getPrivateState() ) || GWTUtil.hasText( address.getPrivateCity() )
+				|| GWTUtil.hasText( address.getPrivateCountry() ) ) {
+			addForm( AddressEditFormTypeEnum.PRVATE_ADDRESS, address );
 		}
-
-		if ( GWTUtil.hasText( address.getEmail() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL1, address.getEmail() );
-		}
-		if ( GWTUtil.hasText( address.getEmail2() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL2, address.getEmail2() );
-		}
-		if ( GWTUtil.hasText( address.getEmail3() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL3, address.getEmail3() );
-		}
-		if ( GWTUtil.hasText( address.getEmail4() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL4, address.getEmail4() );
-		}
-		if ( GWTUtil.hasText( address.getEmail5() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL5, address.getEmail5() );
+		if ( GWTUtil.hasText( address.getWorkStreet() ) || GWTUtil.hasText( address.getWorkZipcode() )
+				|| GWTUtil.hasText( address.getWorkState() ) || GWTUtil.hasText( address.getWorkCity() )
+				|| GWTUtil.hasText( address.getWorkCountry() ) ) {
+			addForm( AddressEditFormTypeEnum.WORK_ADDRESS, address );
 		}
 	}
 }

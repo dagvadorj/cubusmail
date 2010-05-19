@@ -27,7 +27,7 @@ import com.cubusmail.common.model.Address;
  * 
  * @author Juergen Schlierf
  */
-public class AddressEditPhoneSubCanvas extends AddressEditSubCanvas {
+public class AddressEditPhoneSubCanvas extends AddressEditAbstractSubCanvas {
 
 	public AddressEditPhoneSubCanvas() {
 

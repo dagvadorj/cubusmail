@@ -33,6 +33,7 @@ public class AddressEditCanvas extends VLayout {
 	private AddressEditNameForm nameForm;
 	private AddressEditPhoneSubCanvas phoneSubCanvas;
 	private AddressEditEmailSubCanvas emailSubCanvas;
+	private AddressEditAddressSubCanvas addressSubCanvas;
 	private AddressEditMoreInfoSubCanvas moreInfoSubCanvas;
 
 	public AddressEditCanvas() {
@@ -41,13 +42,16 @@ public class AddressEditCanvas extends VLayout {
 		setOverflow( Overflow.SCROLL );
 		setWidth100();
 		setAutoHeight();
+		setMembersMargin( 15 );
 
 		this.nameForm = new AddressEditNameForm();
 		this.phoneSubCanvas = new AddressEditPhoneSubCanvas();
 		this.emailSubCanvas = new AddressEditEmailSubCanvas();
+		this.addressSubCanvas = new AddressEditAddressSubCanvas();
 		this.moreInfoSubCanvas = new AddressEditMoreInfoSubCanvas();
 
-		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas, this.moreInfoSubCanvas );
+		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas, this.addressSubCanvas,
+				this.moreInfoSubCanvas );
 
 		init();
 	}
@@ -56,6 +60,7 @@ public class AddressEditCanvas extends VLayout {
 
 		this.phoneSubCanvas.init();
 		this.emailSubCanvas.init();
+		this.addressSubCanvas.init();
 		this.moreInfoSubCanvas.init();
 	}
 
