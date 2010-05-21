@@ -926,4 +926,25 @@ public class Address implements Serializable {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+
+		return "Address [addressFolder=" + addressFolder + ", birthDate=" + birthDate + ", company=" + company
+				+ ", department=" + department + ", displayName=" + displayName + ", email=" + email + ", email2="
+				+ email2 + ", email3=" + email3 + ", email4=" + email4 + ", email5=" + email5 + ", firstName="
+				+ firstName + ", id=" + id + ", im=" + im + ", lastName=" + lastName + ", middleName=" + middleName
+				+ ", notes=" + notes + ", pager=" + pager + ", position=" + position + ", privateCity=" + privateCity
+				+ ", privateCountry=" + privateCountry + ", privateFax=" + privateFax + ", privateMobile="
+				+ privateMobile + ", privatePhone=" + privatePhone + ", privateState=" + privateState
+				+ ", privateStreet=" + privateStreet + ", privateZipcode=" + privateZipcode + ", title=" + title
+				+ ", url=" + url + ", workCity=" + workCity + ", workCountry=" + workCountry + ", workFax=" + workFax
+				+ ", workMobile=" + workMobile + ", workPhone=" + workPhone + ", workState=" + workState
+				+ ", workStreet=" + workStreet + ", workZipcode=" + workZipcode + "]";
+	}
+
 }

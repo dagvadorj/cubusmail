@@ -33,7 +33,6 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.SortSpecifier;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.rpc.RPCResponse;
-import com.smartgwt.client.types.DSServerType;
 import com.smartgwt.client.types.SortDirection;
 
 /**
@@ -46,7 +45,6 @@ public class MessageListDataSource extends GwtRpcDataSource {
 	public MessageListDataSource() {
 
 		super();
-		setServerType( DSServerType.GENERIC );
 		setPreventHTTPCaching( true );
 		setCanMultiSort( false );
 		for (MessageListFields fieldDef : MessageListFields.values()) {

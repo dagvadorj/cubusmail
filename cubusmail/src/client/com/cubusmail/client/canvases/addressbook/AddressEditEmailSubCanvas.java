@@ -34,6 +34,33 @@ public class AddressEditEmailSubCanvas extends AddressEditAbstractSubCanvas {
 		super( AddressEditEmailForm.class, AddressEditFormTypeEnum.EMAIL_GROUP );
 	}
 
+	public void fillAddress( Address address ) {
+
+		for (AddressEditAbstractForm form : this.forms) {
+			if ( form.isVisible() ) {
+				String email = form.getValue();
+				switch (form.getType()) {
+				case EMAIL1:
+					address.setEmail( email );
+					break;
+				case EMAIL2:
+					address.setEmail2( email );
+					break;
+				case EMAIL3:
+					address.setEmail3( email );
+					break;
+				case EMAIL4:
+					address.setEmail4( email );
+					break;
+				case EMAIL5:
+					address.setEmail5( email );
+					break;
+				}
+			}
+		}
+
+	}
+
 	/**
 	 * @param address
 	 */

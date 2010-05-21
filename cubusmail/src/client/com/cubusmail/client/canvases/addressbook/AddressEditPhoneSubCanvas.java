@@ -34,6 +34,35 @@ public class AddressEditPhoneSubCanvas extends AddressEditAbstractSubCanvas {
 		super( AddressEditPhoneForm.class, AddressEditFormTypeEnum.PHONE_GROUP );
 	}
 
+	public void fillAddress( Address address ) {
+
+		for (AddressEditAbstractForm form : this.forms) {
+			if ( form.isVisible() ) {
+				String phone = form.getValue();
+				switch (form.getType()) {
+				case PRIVATE_PHONE:
+					address.setPrivatePhone( phone );
+					break;
+				case WORK_PHONE:
+					address.setWorkPhone( phone );
+					break;
+				case PRIVATE_MOBILE:
+					address.setPrivateMobile( phone );
+					break;
+				case WORK_MOBILE:
+					address.setWorkMobile( phone );
+					break;
+				case PRIVATE_FAX:
+					address.setPrivateFax( phone );
+					break;
+				case WORK_FAX:
+					address.setPrivateFax( phone );
+					break;
+				}
+			}
+		}
+	}
+
 	/**
 	 * @param address
 	 */

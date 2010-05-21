@@ -34,6 +34,35 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 		super( AddressEditMoreInfoForm.class, AddressEditFormTypeEnum.MORE_INFO_GROUP );
 	}
 
+	public void fillAddress( Address address ) {
+
+		for (AddressEditAbstractForm form : this.forms) {
+			if ( form.isVisible() ) {
+				String value = form.getValue();
+				switch (form.getType()) {
+				case TITLE:
+					address.setTitle( value );
+					break;
+				case POSITION:
+					address.setPosition( value );
+					break;
+				case DEPARTMENT:
+					address.setDepartment( value );
+					break;
+				case URL:
+					address.setUrl( value );
+					break;
+				case IM:
+					address.setIm( value );
+					break;
+				case PAGER:
+					address.setPager( value );
+					break;
+				}
+			}
+		}
+	}
+
 	public void setAddress( Address address ) {
 
 		// remove other phone forms
@@ -47,19 +76,19 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 			addForm( AddressEditFormTypeEnum.TITLE, address.getTitle() );
 		}
 		if ( GWTUtil.hasText( address.getPosition() ) ) {
-			addForm( AddressEditFormTypeEnum.POSITION, address.getTitle() );
+			addForm( AddressEditFormTypeEnum.POSITION, address.getPosition() );
 		}
 		if ( GWTUtil.hasText( address.getDepartment() ) ) {
-			addForm( AddressEditFormTypeEnum.DEPARTMENT, address.getTitle() );
+			addForm( AddressEditFormTypeEnum.DEPARTMENT, address.getDepartment() );
 		}
 		if ( GWTUtil.hasText( address.getUrl() ) ) {
-			addForm( AddressEditFormTypeEnum.URL, address.getTitle() );
+			addForm( AddressEditFormTypeEnum.URL, address.getUrl() );
 		}
 		if ( GWTUtil.hasText( address.getIm() ) ) {
-			addForm( AddressEditFormTypeEnum.IM, address.getTitle() );
+			addForm( AddressEditFormTypeEnum.IM, address.getIm() );
 		}
 		if ( GWTUtil.hasText( address.getPager() ) ) {
-			addForm( AddressEditFormTypeEnum.PAGER, address.getTitle() );
+			addForm( AddressEditFormTypeEnum.PAGER, address.getPager() );
 		}
 	}
 }

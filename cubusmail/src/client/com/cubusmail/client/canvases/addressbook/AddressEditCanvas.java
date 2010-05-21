@@ -21,6 +21,8 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.common.model.Address;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -36,6 +38,8 @@ public class AddressEditCanvas extends VLayout {
 	private AddressEditAddressSubCanvas addressSubCanvas;
 	private AddressEditMoreInfoSubCanvas moreInfoSubCanvas;
 
+	private Button saveButton;
+
 	public AddressEditCanvas() {
 
 		super();
@@ -50,8 +54,13 @@ public class AddressEditCanvas extends VLayout {
 		this.addressSubCanvas = new AddressEditAddressSubCanvas();
 		this.moreInfoSubCanvas = new AddressEditMoreInfoSubCanvas();
 
+		this.saveButton = new Button( "Save" );
+		this.saveButton.setHeight( 30 );
+		this.saveButton.setPadding( 20 );
+		this.saveButton.setLeft( 20 );
+
 		setMembers( this.nameForm, this.phoneSubCanvas, this.emailSubCanvas, this.addressSubCanvas,
-				this.moreInfoSubCanvas );
+				this.moreInfoSubCanvas, this.saveButton );
 
 		init();
 	}
@@ -69,6 +78,28 @@ public class AddressEditCanvas extends VLayout {
 		this.nameForm.setAddress( address );
 		this.phoneSubCanvas.setAddress( address );
 		this.emailSubCanvas.setAddress( address );
+		this.addressSubCanvas.setAddress( address );
 		this.moreInfoSubCanvas.setAddress( address );
+	}
+
+	public Address getAddress() {
+
+		Address result = new Address();
+
+		this.nameForm.fillAddress( result );
+		this.phoneSubCanvas.fillAddress( result );
+		this.emailSubCanvas.fillAddress( result );
+		this.addressSubCanvas.fillAddress( result );
+		this.moreInfoSubCanvas.fillAddress( result );
+
+		return result;
+	}
+
+	/**
+	 * @param handler
+	 */
+	public void addSaveButtonHandler( ClickHandler handler ) {
+
+		this.saveButton.addClickHandler( handler );
 	}
 }

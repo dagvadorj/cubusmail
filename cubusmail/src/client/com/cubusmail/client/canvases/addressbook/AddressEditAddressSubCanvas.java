@@ -34,7 +34,36 @@ public class AddressEditAddressSubCanvas extends AddressEditAbstractSubCanvas {
 		super( AddressEditAddressForm.class, AddressEditFormTypeEnum.ADDRESS_GROUP );
 	}
 
+	public void fillAddress( Address address ) {
+
+		for (AddressEditAbstractForm form : this.forms) {
+			if ( form.isVisible() ) {
+				Address source = form.getValue();
+				if ( form.getType() == AddressEditFormTypeEnum.PRVATE_ADDRESS ) {
+					address.setPrivateStreet( source.getPrivateStreet() );
+					address.setPrivateState(  source.getPrivateState() );
+					address.setPrivateZipcode( source.getPrivateZipcode() );
+					address.setPrivateCity( source.getPrivateCity() );
+					address.setPrivateCountry( source.getPrivateCountry() );
+				}
+				else if ( form.getType() == AddressEditFormTypeEnum.WORK_ADDRESS ) {
+					address.setWorkStreet( source.getWorkStreet() );
+					address.setWorkState(  source.getWorkState() );
+					address.setWorkZipcode( source.getWorkZipcode() );
+					address.setWorkCity( source.getWorkCity() );
+					address.setWorkCountry( source.getWorkCountry() );
+				}
+			}
+		}
+	}
+
 	public void setAddress( Address address ) {
+
+		for (AddressEditAbstractForm form : this.forms) {
+			if ( form.isVisible() ) {
+				form.setVisible( false );
+			}
+		}
 
 		if ( GWTUtil.hasText( address.getPrivateStreet() ) || GWTUtil.hasText( address.getPrivateZipcode() )
 				|| GWTUtil.hasText( address.getPrivateState() ) || GWTUtil.hasText( address.getPrivateCity() )

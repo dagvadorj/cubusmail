@@ -35,7 +35,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.rpc.RPCResponse;
-import com.smartgwt.client.types.DSServerType;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -49,7 +48,6 @@ public class MailfolderDataSource extends GwtRpcDataSource {
 	public MailfolderDataSource() {
 
 		super();
-		setServerType( DSServerType.GENERIC );
 	}
 
 	/*

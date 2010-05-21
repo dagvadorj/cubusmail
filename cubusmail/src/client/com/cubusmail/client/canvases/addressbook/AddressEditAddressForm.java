@@ -37,16 +37,39 @@ public class AddressEditAddressForm extends AddressEditAbstractForm {
 		this.countryItem.setShowHintInField( true );
 		this.countryItem.setShowTitle( false );
 
-		setItems( this.typeSelectionItem, this.streetItem, this.removeItem, this.addItem, new SpacerItem(),
-				this.cityItem, new SpacerItem(), new SpacerItem(), new SpacerItem(), this.stateItem, this.zipItem,
-				new SpacerItem(), new SpacerItem(), this.countryItem );
+		SpacerItem firstSpacer = new SpacerItem();
+		firstSpacer.setStartRow( true );
+		SpacerItem secondSpacer = new SpacerItem();
+		secondSpacer.setStartRow( true );
+		SpacerItem thirdSpacer = new SpacerItem();
+		thirdSpacer.setStartRow( true );
+
+		setItems( this.typeSelectionItem, this.streetItem, this.removeItem, this.addItem, firstSpacer, this.cityItem,
+				secondSpacer, this.stateItem, this.zipItem, thirdSpacer, this.countryItem );
 	}
 
 	@Override
-	public <T> T getValue() {
+	@SuppressWarnings("unchecked")
+	public Address getValue() {
 
-		// TODO Auto-generated method stub
-		return null;
+		Address result = new Address();
+
+		if ( getType() == AddressEditFormTypeEnum.PRVATE_ADDRESS ) {
+			result.setPrivateStreet( (String) this.streetItem.getValue() );
+			result.setPrivateZipcode( (String) this.zipItem.getValue() );
+			result.setPrivateCity( (String) this.cityItem.getValue() );
+			result.setPrivateState( (String) this.stateItem.getValue() );
+			result.setPrivateCountry( (String) this.countryItem.getValue() );
+		}
+		else {
+			result.setWorkStreet( (String) this.streetItem.getValue() );
+			result.setWorkZipcode( (String) this.zipItem.getValue() );
+			result.setWorkCity( (String) this.cityItem.getValue() );
+			result.setWorkState( (String) this.stateItem.getValue() );
+			result.setWorkCountry( (String) this.countryItem.getValue() );
+		}
+
+		return result;
 	}
 
 	@Override

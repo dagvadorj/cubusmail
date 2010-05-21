@@ -60,6 +60,12 @@ public class AddressEditNameForm extends DynamicForm {
 		setItems( this.firstNameItem, this.lastNameItem );
 	}
 
+	public void fillAddress( Address address ) {
+
+		address.setFirstName( this.firstNameItem.getValue() != null ? this.firstNameItem.getValue().toString() : null );
+		address.setLastName( this.lastNameItem.getValue() != null ? this.lastNameItem.getValue().toString() : null );
+	}
+
 	public void setAddress( Address address ) {
 
 		if ( address != null ) {

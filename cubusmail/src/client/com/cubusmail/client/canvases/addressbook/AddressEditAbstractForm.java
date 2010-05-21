@@ -66,15 +66,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		this.addItem.setVisible( false );
 	}
 
-	public void setSelectionTypes( String[] values ) {
-
-		this.typeSelectionItem.setValueMap( values );
-	}
-
-	public String[] getSelectionTypes() {
-
-		return this.typeSelectionItem.getValues();
-	}
 
 	public StaticTextItem getRemoveItem() {
 

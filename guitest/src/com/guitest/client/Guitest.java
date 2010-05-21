@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.cubusmail.client.canvases.addressbook.AddressDetailsCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressDetailsFormsManagerEnum;
+import com.cubusmail.client.canvases.addressbook.AddressEditAddressForm;
 import com.cubusmail.client.canvases.addressbook.AddressEditCanvas;
 import com.cubusmail.client.canvases.mail.ComposeMessageCanvas;
 import com.cubusmail.client.canvases.mail.EmailAddressLine;
@@ -65,14 +66,30 @@ public class Guitest implements EntryPoint {
 		// testAddressDetialCanvas();
 		testAddressEditCanvas();
 		// testForms();
+		// testAddressForm();
+	}
+
+	private void testAddressForm() {
+		AddressEditAddressForm form = new AddressEditAddressForm();
+		form.draw();
 	}
 
 	private void testAddressEditCanvas() {
-		AddressEditCanvas edit = new AddressEditCanvas();
+		final AddressEditCanvas edit = new AddressEditCanvas();
 		edit.setWidth100();
 		edit.setHeight100();
 
 		edit.setAddress(createTestAddress());
+
+		edit
+				.addSaveButtonHandler(new com.smartgwt.client.widgets.events.ClickHandler() {
+
+					@Override
+					public void onClick(
+							com.smartgwt.client.widgets.events.ClickEvent event) {
+						GWT.log(edit.getAddress().toString());
+					}
+				});
 
 		edit.draw();
 	}

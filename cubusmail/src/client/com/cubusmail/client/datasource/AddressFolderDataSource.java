@@ -30,7 +30,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.rpc.RPCResponse;
-import com.smartgwt.client.types.DSServerType;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -42,8 +41,7 @@ public class AddressFolderDataSource extends GwtRpcDataSource {
 
 	public AddressFolderDataSource() {
 
-		super();
-		setServerType( DSServerType.GENERIC );
+		super();		
 	}
 
 	/*
