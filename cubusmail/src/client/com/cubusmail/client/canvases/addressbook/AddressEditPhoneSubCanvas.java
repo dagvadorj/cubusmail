@@ -56,7 +56,7 @@ public class AddressEditPhoneSubCanvas extends AddressEditAbstractSubCanvas {
 					address.setPrivateFax( phone );
 					break;
 				case WORK_FAX:
-					address.setPrivateFax( phone );
+					address.setWorkFax( phone );
 					break;
 				}
 			}

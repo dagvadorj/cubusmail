@@ -19,6 +19,8 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.Date;
+
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
 
@@ -38,25 +40,31 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 
 		for (AddressEditAbstractForm form : this.forms) {
 			if ( form.isVisible() ) {
-				String value = form.getValue();
+				Object value = form.getValue();
 				switch (form.getType()) {
+				case BIRTHDATE:
+					address.setBirthDate( (Date) value );
+					break;
 				case TITLE:
-					address.setTitle( value );
+					address.setTitle( (String) value );
+					break;
+				case COMPANY:
+					address.setCompany( (String) value );
 					break;
 				case POSITION:
-					address.setPosition( value );
+					address.setPosition( (String) value );
 					break;
 				case DEPARTMENT:
-					address.setDepartment( value );
+					address.setDepartment( (String) value );
 					break;
 				case URL:
-					address.setUrl( value );
+					address.setUrl( (String) value );
 					break;
 				case IM:
-					address.setIm( value );
+					address.setIm( (String) value );
 					break;
 				case PAGER:
-					address.setPager( value );
+					address.setPager( (String) value );
 					break;
 				}
 			}
@@ -75,6 +83,9 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 		if ( GWTUtil.hasText( address.getTitle() ) ) {
 			addForm( AddressEditFormTypeEnum.TITLE, address.getTitle() );
 		}
+		if ( GWTUtil.hasText( address.getCompany() ) ) {
+			addForm( AddressEditFormTypeEnum.COMPANY, address.getCompany() );
+		}
 		if ( GWTUtil.hasText( address.getPosition() ) ) {
 			addForm( AddressEditFormTypeEnum.POSITION, address.getPosition() );
 		}
@@ -89,6 +100,9 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 		}
 		if ( GWTUtil.hasText( address.getPager() ) ) {
 			addForm( AddressEditFormTypeEnum.PAGER, address.getPager() );
+		}
+		if ( address.getBirthDate() != null ) {
+			addForm( AddressEditFormTypeEnum.BIRTHDATE, address.getBirthDate() );
 		}
 	}
 }

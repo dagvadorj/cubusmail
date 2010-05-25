@@ -66,7 +66,6 @@ abstract class AddressEditAbstractForm extends DynamicForm {
 		this.addItem.setVisible( false );
 	}
 
-
 	public StaticTextItem getRemoveItem() {
 
 		return removeItem;

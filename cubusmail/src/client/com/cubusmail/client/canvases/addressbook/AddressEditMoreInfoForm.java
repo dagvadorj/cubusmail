@@ -19,8 +19,13 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.Date;
+
 import com.cubusmail.client.util.GWTUtil;
+import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
  * TODO: documentation
@@ -30,6 +35,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 
 	private TextItem infoItem;
+	private DateItem birthdateItem;
 
 	public AddressEditMoreInfoForm() {
 
@@ -40,7 +46,23 @@ public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 		this.infoItem.setShowHintInField( true );
 		this.infoItem.setShowTitle( false );
 
-		setItems( this.typeSelectionItem, this.infoItem, this.removeItem, this.addItem );
+		this.birthdateItem = new DateItem( "birthdateItem" );
+		this.birthdateItem.setShowTitle( false );
+		this.birthdateItem.setUseMask( false );
+		this.birthdateItem.setUseTextField( false );
+		this.setVisible( false );
+
+		this.typeSelectionItem.addChangedHandler( new ChangedHandler() {
+
+			@Override
+			public void onChanged( ChangedEvent event ) {
+
+				AddressEditFormTypeEnum typeEnum = AddressEditFormTypeEnum.getByTitle( (String) event.getValue() );
+				setType( typeEnum );
+			}
+		} );
+
+		setItems( this.typeSelectionItem, this.birthdateItem, this.infoItem, this.removeItem, this.addItem );
 	}
 
 	/*
@@ -52,9 +74,14 @@ public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public String getValue() {
+	public Object getValue() {
 
-		return (String) this.infoItem.getValue();
+		if ( getType() == AddressEditFormTypeEnum.BIRTHDATE ) {
+			return this.birthdateItem.getValue();
+		}
+		else {
+			return this.infoItem.getValue();
+		}
 	}
 
 	/*
@@ -66,14 +93,40 @@ public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 	 */
 	@Override
 	public void setValue( Object value ) {
-		if ( GWTUtil.hasText( (String)value ) ) {
-			this.infoItem.setValue( (String)value );
+
+		if ( getType() == AddressEditFormTypeEnum.BIRTHDATE ) {
+			if ( value != null ) {
+				this.birthdateItem.setValue( (Date) value );
+			}
+			else {
+				this.birthdateItem.setValue( new Date() );
+			}
 		}
 		else {
-			if ( this.infoItem.getValue() != null ) {
-				this.infoItem.clearValue();
+			if ( GWTUtil.hasText( (String) value ) ) {
+				this.infoItem.setValue( (String) value );
+			}
+			else {
+				if ( this.infoItem.getValue() != null ) {
+					this.infoItem.clearValue();
+				}
 			}
 		}
 	}
 
+	@Override
+	public void setType( AddressEditFormTypeEnum type ) {
+
+		super.setType( type );
+
+		if ( type == AddressEditFormTypeEnum.BIRTHDATE ) {
+			this.infoItem.setVisible( false );
+			this.birthdateItem.setVisible( true );
+		}
+		else {
+			this.infoItem.setVisible( true );
+			this.birthdateItem.setVisible( false );
+		}
+		redraw();
+	}
 }

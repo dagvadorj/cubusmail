@@ -45,7 +45,7 @@ public enum AddressEditFormTypeEnum {
 	public final static AddressEditFormTypeEnum[] EMAIL_GROUP = { EMAIL1, EMAIL2, EMAIL3, EMAIL4, EMAIL5 };
 
 	public final static AddressEditFormTypeEnum[] MORE_INFO_GROUP = { TITLE, COMPANY, POSITION, DEPARTMENT, URL, IM,
-			PAGER };
+			PAGER, BIRTHDATE };
 
 	public final static AddressEditFormTypeEnum[] ADDRESS_GROUP = { PRVATE_ADDRESS, WORK_ADDRESS };
 
@@ -74,4 +74,5 @@ public enum AddressEditFormTypeEnum {
 
 		return null;
 	}
+
 }
