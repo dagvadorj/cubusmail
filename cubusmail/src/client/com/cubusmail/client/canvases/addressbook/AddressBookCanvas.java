@@ -22,6 +22,8 @@ package com.cubusmail.client.canvases.addressbook;
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.IWorkbenchCanvas;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -52,6 +54,17 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 		addressHLayout.addMember( CanvasRegistry.ADDRESS_DETAILS.get() );
 		addressListLayout.addMember( addressHLayout );
 
+		CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class )
+				.addEditButtonHandler( new EditAddressHandler() );
+
 		addMember( addressListLayout );
+	}
+
+	private class EditAddressHandler implements ClickHandler {
+
+		@Override
+		public void onClick( ClickEvent event ) {
+			
+		}
 	}
 }

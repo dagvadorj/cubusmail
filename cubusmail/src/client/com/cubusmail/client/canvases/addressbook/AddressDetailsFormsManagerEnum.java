@@ -95,20 +95,6 @@ public enum AddressDetailsFormsManagerEnum {
 		throw new IllegalArgumentException( "AddressDetailsFormsManagerEnum type missing: " + name() );
 	}
 
-	/**
-	 * @param address
-	 */
-	public static void setAddress( Address address ) {
-
-		for (AddressDetailsFormsManagerEnum form : values()) {
-			if ( address != null ) {
-				form.get().setAddress( address );
-			}
-			else {
-				form.get().setVisible( false );
-			}
-		}
-	}
 
 	public String getTitle() {
 

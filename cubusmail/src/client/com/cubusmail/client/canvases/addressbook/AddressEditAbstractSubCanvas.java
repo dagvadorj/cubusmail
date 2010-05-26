@@ -68,9 +68,6 @@ public abstract class AddressEditAbstractSubCanvas extends VLayout {
 					removeForm( form );
 				}
 			} );
-			if ( i == 0 ) {
-				form.getRemoveItem().setVisible( false );
-			}
 
 			this.forms.add( form );
 			addMember( form );
@@ -121,18 +118,24 @@ public abstract class AddressEditAbstractSubCanvas extends VLayout {
 	protected void removeForm( AddressEditAbstractForm form ) {
 
 		int index = this.forms.indexOf( form );
-		for (int i = index; i < this.forms.size() - 1; i++) {
-			AddressEditAbstractForm target = this.forms.get( i );
-			AddressEditAbstractForm source = this.forms.get( i + 1 );
-			if ( source.isVisible() ) {
-				target.setValue( (String) source.getValue() );
-				target.setType( source.getType() );
-			}
+
+		if ( index == 0 ) {
+			this.forms.get( 0 ).setValue( null );
 		}
-		for (int i = this.forms.size() - 1; i >= 0; i--) {
-			if ( this.forms.get( i ).isVisible() ) {
-				this.forms.get( i ).setVisible( false );
-				break;
+		else {
+			for (int i = index; i < this.forms.size() - 1; i++) {
+				AddressEditAbstractForm target = this.forms.get( i );
+				AddressEditAbstractForm source = this.forms.get( i + 1 );
+				if ( source.isVisible() ) {
+					target.setValue( (String) source.getValue() );
+					target.setType( source.getType() );
+				}
+			}
+			for (int i = this.forms.size() - 1; i >= 0; i--) {
+				if ( this.forms.get( i ).isVisible() ) {
+					this.forms.get( i ).setVisible( false );
+					break;
+				}
 			}
 		}
 

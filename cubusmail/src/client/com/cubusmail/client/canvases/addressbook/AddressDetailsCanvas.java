@@ -19,7 +19,10 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import com.cubusmail.common.model.Address;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -30,16 +33,54 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public class AddressDetailsCanvas extends VLayout {
 
+	private Button editButton;
+
 	public AddressDetailsCanvas() {
 
 		super();
 		setOverflow( Overflow.SCROLL );
+		setMembersMargin( 5 );
 
 		DynamicForm[] forms = new DynamicForm[AddressDetailsFormsManagerEnum.values().length];
 		for (int i = 0; i < AddressDetailsFormsManagerEnum.values().length; i++) {
 			forms[i] = AddressDetailsFormsManagerEnum.values()[i].get();
 		}
 		setMembers( forms );
-		
+
+		this.editButton = new Button( "Edit" );
+		this.editButton.setPadding( 30 );
+		this.editButton.setVisible( false );
+
+		addMember( this.editButton );
+	}
+
+	/**
+	 * @param address
+	 */
+	public void setAddress( Address address ) {
+
+		for (AddressDetailsFormsManagerEnum form : AddressDetailsFormsManagerEnum.values()) {
+			if ( address != null ) {
+				form.get().setAddress( address );
+			}
+			else {
+				form.get().setVisible( false );
+			}
+		}
+
+		if ( address == null ) {
+			this.editButton.setVisible( false );
+		}
+		else {
+			this.editButton.setVisible( true );
+		}
+	}
+
+	/**
+	 * @param handler
+	 */
+	public void addEditButtonHandler( ClickHandler handler ) {
+
+		this.editButton.addClickHandler( handler );
 	}
 }
