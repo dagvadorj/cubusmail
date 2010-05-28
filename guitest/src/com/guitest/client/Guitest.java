@@ -2,6 +2,7 @@ package com.guitest.client;
 
 import java.util.Date;
 
+import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.addressbook.AddressDetailsCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressDetailsFormsManagerEnum;
 import com.cubusmail.client.canvases.addressbook.AddressEditAddressForm;
@@ -128,7 +129,8 @@ public class Guitest implements EntryPoint {
 		detail.setWidth100();
 		detail.setHeight100();
 
-		AddressDetailsFormsManagerEnum.setAddress(createTestAddress());
+		CanvasRegistry.ADDRESS_DETAILS.get(AddressDetailsCanvas.class)
+				.setAddress(createTestAddress());
 
 		detail.draw();
 	}
