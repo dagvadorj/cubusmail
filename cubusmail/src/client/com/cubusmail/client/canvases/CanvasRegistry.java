@@ -24,6 +24,7 @@ import java.util.Map;
 
 import com.cubusmail.client.canvases.addressbook.AddressBookCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressDetailsCanvas;
+import com.cubusmail.client.canvases.addressbook.AddressEditCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressFolderCanvas;
 import com.cubusmail.client.canvases.addressbook.AddressListGrid;
 import com.cubusmail.client.canvases.mail.MailCanvas;
@@ -40,7 +41,7 @@ import com.smartgwt.client.widgets.Canvas;
 public enum CanvasRegistry {
 	MAIL_CANVAS, MAIL_FOLDER_CANVAS, MESSAGE_LIST_CANVAS, MESSAGE_READING_PANE,
 
-	ADDRESS_BOOK_CANVAS, ADDRESS_FOLDER_CANVAS, ADDRESS_LIST, ADDRESS_DETAILS;
+	ADDRESS_BOOK_CANVAS, ADDRESS_FOLDER_CANVAS, ADDRESS_LIST, ADDRESS_DETAILS, ADDRESS_EDIT;
 
 	private final static Map<CanvasRegistry, Canvas> CANVAS_MAP = new HashMap<CanvasRegistry, Canvas>();
 
@@ -86,6 +87,8 @@ public enum CanvasRegistry {
 			return new AddressListGrid();
 		case ADDRESS_DETAILS:
 			return new AddressDetailsCanvas();
+		case ADDRESS_EDIT:
+			return new AddressEditCanvas();
 		}
 
 		throw new IllegalArgumentException( "Canvas missing: " + name() );

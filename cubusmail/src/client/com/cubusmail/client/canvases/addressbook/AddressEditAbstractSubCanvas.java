@@ -22,7 +22,6 @@ package com.cubusmail.client.canvases.addressbook;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
@@ -35,11 +34,11 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public abstract class AddressEditAbstractSubCanvas extends VLayout {
 
-	protected List<AddressEditAbstractForm> forms = new ArrayList<AddressEditAbstractForm>();
+	protected List<? extends AddressEditAbstractForm> forms;
 
 	private AddressEditFormTypeEnum[] enumGroup = null;
 
-	public AddressEditAbstractSubCanvas( Class<? extends AddressEditAbstractForm> type,
+	public AddressEditAbstractSubCanvas( List<? extends AddressEditAbstractForm> forms,
 			AddressEditFormTypeEnum[] enumGroup ) {
 
 		super();
@@ -47,10 +46,10 @@ public abstract class AddressEditAbstractSubCanvas extends VLayout {
 		setShowEdges( false );
 		setAutoHeight();
 
+		this.forms = forms;
 		this.enumGroup = enumGroup;
 
-		for (int i = 0; i < this.enumGroup.length; i++) {
-			final AddressEditAbstractForm form = GWT.create( type );
+		for (final AddressEditAbstractForm form : this.forms) {
 			form.getAddItem().addIconClickHandler( new IconClickHandler() {
 
 				@Override
@@ -69,7 +68,6 @@ public abstract class AddressEditAbstractSubCanvas extends VLayout {
 				}
 			} );
 
-			this.forms.add( form );
 			addMember( form );
 		}
 	}

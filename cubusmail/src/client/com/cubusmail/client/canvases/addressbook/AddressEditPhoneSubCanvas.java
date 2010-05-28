@@ -19,8 +19,12 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.google.gwt.core.client.GWT;
 
 /**
  * TODO: documentation
@@ -31,7 +35,7 @@ public class AddressEditPhoneSubCanvas extends AddressEditAbstractSubCanvas {
 
 	public AddressEditPhoneSubCanvas() {
 
-		super( AddressEditPhoneForm.class, AddressEditFormTypeEnum.PHONE_GROUP );
+		super( getFormList( AddressEditFormTypeEnum.PHONE_GROUP ), AddressEditFormTypeEnum.PHONE_GROUP );
 	}
 
 	public void fillAddress( Address address ) {
@@ -75,23 +79,36 @@ public class AddressEditPhoneSubCanvas extends AddressEditAbstractSubCanvas {
 			}
 		}
 
-		if ( GWTUtil.hasText( address.getPrivatePhone() ) ) {
-			addForm( AddressEditFormTypeEnum.PRIVATE_PHONE, address.getPrivatePhone() );
+		if ( address != null ) {
+			if ( GWTUtil.hasText( address.getPrivatePhone() ) ) {
+				addForm( AddressEditFormTypeEnum.PRIVATE_PHONE, address.getPrivatePhone() );
+			}
+			if ( GWTUtil.hasText( address.getWorkPhone() ) ) {
+				addForm( AddressEditFormTypeEnum.WORK_PHONE, address.getWorkPhone() );
+			}
+			if ( GWTUtil.hasText( address.getPrivateMobile() ) ) {
+				addForm( AddressEditFormTypeEnum.PRIVATE_MOBILE, address.getPrivateMobile() );
+			}
+			if ( GWTUtil.hasText( address.getWorkMobile() ) ) {
+				addForm( AddressEditFormTypeEnum.WORK_MOBILE, address.getWorkMobile() );
+			}
+			if ( GWTUtil.hasText( address.getPrivateFax() ) ) {
+				addForm( AddressEditFormTypeEnum.PRIVATE_FAX, address.getPrivateFax() );
+			}
+			if ( GWTUtil.hasText( address.getWorkFax() ) ) {
+				addForm( AddressEditFormTypeEnum.WORK_FAX, address.getWorkFax() );
+			}
 		}
-		if ( GWTUtil.hasText( address.getWorkPhone() ) ) {
-			addForm( AddressEditFormTypeEnum.WORK_PHONE, address.getWorkPhone() );
+	}
+
+	private static List<AddressEditAbstractForm> getFormList( AddressEditFormTypeEnum[] group ) {
+
+		List<AddressEditAbstractForm> formList = new ArrayList<AddressEditAbstractForm>();
+		for (int i = 0; i < group.length; i++) {
+			AddressEditAbstractForm form = GWT.create( AddressEditPhoneForm.class );
+			formList.add( form );
 		}
-		if ( GWTUtil.hasText( address.getPrivateMobile() ) ) {
-			addForm( AddressEditFormTypeEnum.PRIVATE_MOBILE, address.getPrivateMobile() );
-		}
-		if ( GWTUtil.hasText( address.getWorkMobile() ) ) {
-			addForm( AddressEditFormTypeEnum.WORK_MOBILE, address.getWorkMobile() );
-		}
-		if ( GWTUtil.hasText( address.getPrivateFax() ) ) {
-			addForm( AddressEditFormTypeEnum.PRIVATE_FAX, address.getPrivateFax() );
-		}
-		if ( GWTUtil.hasText( address.getWorkFax() ) ) {
-			addForm( AddressEditFormTypeEnum.WORK_FAX, address.getWorkFax() );
-		}
+
+		return formList;
 	}
 }

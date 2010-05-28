@@ -19,8 +19,12 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.google.gwt.core.client.GWT;
 
 /**
  * TODO: documentation
@@ -31,7 +35,7 @@ public class AddressEditEmailSubCanvas extends AddressEditAbstractSubCanvas {
 
 	public AddressEditEmailSubCanvas() {
 
-		super( AddressEditEmailForm.class, AddressEditFormTypeEnum.EMAIL_GROUP );
+		super( getFormList( AddressEditFormTypeEnum.EMAIL_GROUP ), AddressEditFormTypeEnum.EMAIL_GROUP );
 	}
 
 	public void fillAddress( Address address ) {
@@ -73,20 +77,33 @@ public class AddressEditEmailSubCanvas extends AddressEditAbstractSubCanvas {
 			}
 		}
 
-		if ( GWTUtil.hasText( address.getEmail() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL1, address.getEmail() );
+		if ( address != null ) {
+			if ( GWTUtil.hasText( address.getEmail() ) ) {
+				addForm( AddressEditFormTypeEnum.EMAIL1, address.getEmail() );
+			}
+			if ( GWTUtil.hasText( address.getEmail2() ) ) {
+				addForm( AddressEditFormTypeEnum.EMAIL2, address.getEmail2() );
+			}
+			if ( GWTUtil.hasText( address.getEmail3() ) ) {
+				addForm( AddressEditFormTypeEnum.EMAIL3, address.getEmail3() );
+			}
+			if ( GWTUtil.hasText( address.getEmail4() ) ) {
+				addForm( AddressEditFormTypeEnum.EMAIL4, address.getEmail4() );
+			}
+			if ( GWTUtil.hasText( address.getEmail5() ) ) {
+				addForm( AddressEditFormTypeEnum.EMAIL5, address.getEmail5() );
+			}
 		}
-		if ( GWTUtil.hasText( address.getEmail2() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL2, address.getEmail2() );
+	}
+
+	private static List<AddressEditAbstractForm> getFormList( AddressEditFormTypeEnum[] group ) {
+
+		List<AddressEditAbstractForm> formList = new ArrayList<AddressEditAbstractForm>();
+		for (int i = 0; i < group.length; i++) {
+			AddressEditAbstractForm form = GWT.create( AddressEditEmailForm.class );
+			formList.add( form );
 		}
-		if ( GWTUtil.hasText( address.getEmail3() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL3, address.getEmail3() );
-		}
-		if ( GWTUtil.hasText( address.getEmail4() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL4, address.getEmail4() );
-		}
-		if ( GWTUtil.hasText( address.getEmail5() ) ) {
-			addForm( AddressEditFormTypeEnum.EMAIL5, address.getEmail5() );
-		}
+
+		return formList;
 	}
 }

@@ -19,8 +19,12 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.google.gwt.core.client.GWT;
 
 /**
  * TODO: documentation
@@ -31,7 +35,7 @@ public class AddressEditAddressSubCanvas extends AddressEditAbstractSubCanvas {
 
 	public AddressEditAddressSubCanvas() {
 
-		super( AddressEditAddressForm.class, AddressEditFormTypeEnum.ADDRESS_GROUP );
+		super( getFormList( AddressEditFormTypeEnum.ADDRESS_GROUP ), AddressEditFormTypeEnum.ADDRESS_GROUP );
 	}
 
 	public void fillAddress( Address address ) {
@@ -41,14 +45,14 @@ public class AddressEditAddressSubCanvas extends AddressEditAbstractSubCanvas {
 				Address source = form.getValue();
 				if ( form.getType() == AddressEditFormTypeEnum.PRVATE_ADDRESS ) {
 					address.setPrivateStreet( source.getPrivateStreet() );
-					address.setPrivateState(  source.getPrivateState() );
+					address.setPrivateState( source.getPrivateState() );
 					address.setPrivateZipcode( source.getPrivateZipcode() );
 					address.setPrivateCity( source.getPrivateCity() );
 					address.setPrivateCountry( source.getPrivateCountry() );
 				}
 				else if ( form.getType() == AddressEditFormTypeEnum.WORK_ADDRESS ) {
 					address.setWorkStreet( source.getWorkStreet() );
-					address.setWorkState(  source.getWorkState() );
+					address.setWorkState( source.getWorkState() );
 					address.setWorkZipcode( source.getWorkZipcode() );
 					address.setWorkCity( source.getWorkCity() );
 					address.setWorkCountry( source.getWorkCountry() );
@@ -65,15 +69,28 @@ public class AddressEditAddressSubCanvas extends AddressEditAbstractSubCanvas {
 			}
 		}
 
-		if ( GWTUtil.hasText( address.getPrivateStreet() ) || GWTUtil.hasText( address.getPrivateZipcode() )
-				|| GWTUtil.hasText( address.getPrivateState() ) || GWTUtil.hasText( address.getPrivateCity() )
-				|| GWTUtil.hasText( address.getPrivateCountry() ) ) {
-			addForm( AddressEditFormTypeEnum.PRVATE_ADDRESS, address );
+		if ( address != null ) {
+			if ( GWTUtil.hasText( address.getPrivateStreet() ) || GWTUtil.hasText( address.getPrivateZipcode() )
+					|| GWTUtil.hasText( address.getPrivateState() ) || GWTUtil.hasText( address.getPrivateCity() )
+					|| GWTUtil.hasText( address.getPrivateCountry() ) ) {
+				addForm( AddressEditFormTypeEnum.PRVATE_ADDRESS, address );
+			}
+			if ( GWTUtil.hasText( address.getWorkStreet() ) || GWTUtil.hasText( address.getWorkZipcode() )
+					|| GWTUtil.hasText( address.getWorkState() ) || GWTUtil.hasText( address.getWorkCity() )
+					|| GWTUtil.hasText( address.getWorkCountry() ) ) {
+				addForm( AddressEditFormTypeEnum.WORK_ADDRESS, address );
+			}
 		}
-		if ( GWTUtil.hasText( address.getWorkStreet() ) || GWTUtil.hasText( address.getWorkZipcode() )
-				|| GWTUtil.hasText( address.getWorkState() ) || GWTUtil.hasText( address.getWorkCity() )
-				|| GWTUtil.hasText( address.getWorkCountry() ) ) {
-			addForm( AddressEditFormTypeEnum.WORK_ADDRESS, address );
+	}
+
+	private static List<AddressEditAbstractForm> getFormList( AddressEditFormTypeEnum[] group ) {
+
+		List<AddressEditAbstractForm> formList = new ArrayList<AddressEditAbstractForm>();
+		for (int i = 0; i < group.length; i++) {
+			AddressEditAbstractForm form = GWT.create( AddressEditAddressForm.class );
+			formList.add( form );
 		}
+
+		return formList;
 	}
 }

@@ -48,7 +48,7 @@ public class GWTSessionManager {
 
 	
 	private List<AddressFolder> contactFolderList;
-	private Address currentContact;
+	private Address currentAddress;
 
 	/**
 	 * 
@@ -198,20 +198,20 @@ public class GWTSessionManager {
 	}
 
 	/**
-	 * @return Returns the currentContact.
+	 * @return Returns the currentAddress.
 	 */
-	public Address getCurrentContact() {
+	public Address getCurrentAddress() {
 
-		return this.currentContact;
+		return this.currentAddress;
 	}
 
 	/**
-	 * @param currentContact
-	 *            The currentContact to set.
+	 * @param currentAddress
+	 *            The currentAddress to set.
 	 */
-	public void setCurrentContact( Address currentContact ) {
+	public void setCurrentAddress( Address currentContact ) {
 
-		this.currentContact = currentContact;
+		this.currentAddress = currentContact;
 	}
 
 	/**

@@ -127,6 +127,8 @@ public class AddressEditMoreInfoForm extends AddressEditAbstractForm {
 			this.infoItem.setVisible( true );
 			this.birthdateItem.setVisible( false );
 		}
-		redraw();
+		if ( isDrawn() ) {
+			redraw();
+		}
 	}
 }

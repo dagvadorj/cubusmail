@@ -45,7 +45,6 @@ public class AddressEditCanvas extends VLayout {
 		super();
 		setOverflow( Overflow.SCROLL );
 		setWidth100();
-		setAutoHeight();
 		setMembersMargin( 15 );
 
 		this.nameForm = new AddressEditNameForm();

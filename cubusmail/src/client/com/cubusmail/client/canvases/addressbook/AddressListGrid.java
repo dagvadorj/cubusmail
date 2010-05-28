@@ -24,11 +24,13 @@ import com.cubusmail.client.datasource.DataSourceRegistry;
 import com.cubusmail.client.events.DelayedResizeHandlerProxy;
 import com.cubusmail.client.events.EventBroker;
 import com.cubusmail.client.events.ReloadAddressListListener;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.cubusmail.client.util.TextProvider;
 import com.cubusmail.common.model.Address;
 import com.cubusmail.common.model.AddressFolder;
 import com.cubusmail.common.model.AddressListFields;
 import com.cubusmail.common.model.GWTConstants;
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SelectionAppearance;
@@ -77,7 +79,12 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 
 				Address address = (Address) event.getRecord().getAttributeAsObject(
 						AddressListFields.ADDRESS_OBJECT.name() );
-				CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class ).setAddress( address );
+				if ( !(GWTSessionManager.get().getCurrentAddress() != null && GWTSessionManager.get()
+						.getCurrentAddress().equals( address )) ) {
+					GWTSessionManager.get().setCurrentAddress( address );
+					CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class ).setAddress( address );
+					GWT.log( address.toString() );
+				}
 			}
 		} );
 
@@ -108,7 +115,7 @@ public class AddressListGrid extends ListGrid implements ReloadAddressListListen
 	 */
 	public void onReloadAddressList( AddressFolder folder, String beginChars ) {
 
-		CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class ).setAddress( null );
+		CanvasRegistry.ADDRESS_EDIT.get( AddressEditCanvas.class ).setAddress( null );
 		Criteria criteria = new Criteria();
 		criteria.addCriteria( GWTConstants.ADDRESS_FOLDER_ID, String.valueOf( folder.getId() ) );
 		criteria.addCriteria( GWTConstants.ADDRESS_BEGIN_CHARS, beginChars );

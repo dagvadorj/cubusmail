@@ -19,10 +19,13 @@
  */
 package com.cubusmail.client.canvases.addressbook;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.cubusmail.client.util.GWTUtil;
 import com.cubusmail.common.model.Address;
+import com.google.gwt.core.client.GWT;
 
 /**
  * TODO: documentation
@@ -33,7 +36,7 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 
 	public AddressEditMoreInfoSubCanvas() {
 
-		super( AddressEditMoreInfoForm.class, AddressEditFormTypeEnum.MORE_INFO_GROUP );
+		super( getFormList( AddressEditFormTypeEnum.MORE_INFO_GROUP ), AddressEditFormTypeEnum.MORE_INFO_GROUP );
 	}
 
 	public void fillAddress( Address address ) {
@@ -80,29 +83,42 @@ public class AddressEditMoreInfoSubCanvas extends AddressEditAbstractSubCanvas {
 			}
 		}
 
-		if ( GWTUtil.hasText( address.getTitle() ) ) {
-			addForm( AddressEditFormTypeEnum.TITLE, address.getTitle() );
+		if ( address != null ) {
+			if ( GWTUtil.hasText( address.getTitle() ) ) {
+				addForm( AddressEditFormTypeEnum.TITLE, address.getTitle() );
+			}
+			if ( GWTUtil.hasText( address.getCompany() ) ) {
+				addForm( AddressEditFormTypeEnum.COMPANY, address.getCompany() );
+			}
+			if ( GWTUtil.hasText( address.getPosition() ) ) {
+				addForm( AddressEditFormTypeEnum.POSITION, address.getPosition() );
+			}
+			if ( GWTUtil.hasText( address.getDepartment() ) ) {
+				addForm( AddressEditFormTypeEnum.DEPARTMENT, address.getDepartment() );
+			}
+			if ( GWTUtil.hasText( address.getUrl() ) ) {
+				addForm( AddressEditFormTypeEnum.URL, address.getUrl() );
+			}
+			if ( GWTUtil.hasText( address.getIm() ) ) {
+				addForm( AddressEditFormTypeEnum.IM, address.getIm() );
+			}
+			if ( GWTUtil.hasText( address.getPager() ) ) {
+				addForm( AddressEditFormTypeEnum.PAGER, address.getPager() );
+			}
+			if ( address.getBirthDate() != null ) {
+				addForm( AddressEditFormTypeEnum.BIRTHDATE, address.getBirthDate() );
+			}
 		}
-		if ( GWTUtil.hasText( address.getCompany() ) ) {
-			addForm( AddressEditFormTypeEnum.COMPANY, address.getCompany() );
+	}
+
+	private static List<AddressEditAbstractForm> getFormList( AddressEditFormTypeEnum[] group ) {
+
+		List<AddressEditAbstractForm> formList = new ArrayList<AddressEditAbstractForm>();
+		for (int i = 0; i < group.length; i++) {
+			AddressEditAbstractForm form = GWT.create( AddressEditMoreInfoForm.class );
+			formList.add( form );
 		}
-		if ( GWTUtil.hasText( address.getPosition() ) ) {
-			addForm( AddressEditFormTypeEnum.POSITION, address.getPosition() );
-		}
-		if ( GWTUtil.hasText( address.getDepartment() ) ) {
-			addForm( AddressEditFormTypeEnum.DEPARTMENT, address.getDepartment() );
-		}
-		if ( GWTUtil.hasText( address.getUrl() ) ) {
-			addForm( AddressEditFormTypeEnum.URL, address.getUrl() );
-		}
-		if ( GWTUtil.hasText( address.getIm() ) ) {
-			addForm( AddressEditFormTypeEnum.IM, address.getIm() );
-		}
-		if ( GWTUtil.hasText( address.getPager() ) ) {
-			addForm( AddressEditFormTypeEnum.PAGER, address.getPager() );
-		}
-		if ( address.getBirthDate() != null ) {
-			addForm( AddressEditFormTypeEnum.BIRTHDATE, address.getBirthDate() );
-		}
+
+		return formList;
 	}
 }

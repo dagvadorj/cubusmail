@@ -22,6 +22,7 @@ package com.cubusmail.client.canvases.addressbook;
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.IWorkbenchCanvas;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
+import com.cubusmail.client.util.GWTSessionManager;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -52,6 +53,8 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 		CanvasRegistry.ADDRESS_LIST.get().setWidth( "220px" );
 		addressHLayout.addMember( CanvasRegistry.ADDRESS_LIST.get() );
 		addressHLayout.addMember( CanvasRegistry.ADDRESS_DETAILS.get() );
+		CanvasRegistry.ADDRESS_EDIT.get().setVisible( false );
+		addressHLayout.addMember( CanvasRegistry.ADDRESS_EDIT.get() );
 		addressListLayout.addMember( addressHLayout );
 
 		CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class )
@@ -64,7 +67,11 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 
 		@Override
 		public void onClick( ClickEvent event ) {
-			
+
+			CanvasRegistry.ADDRESS_DETAILS.get().setVisible( false );
+			CanvasRegistry.ADDRESS_EDIT.get( AddressEditCanvas.class ).setAddress(
+					GWTSessionManager.get().getCurrentAddress() );
+			CanvasRegistry.ADDRESS_EDIT.get().setVisible( true );
 		}
 	}
 }
