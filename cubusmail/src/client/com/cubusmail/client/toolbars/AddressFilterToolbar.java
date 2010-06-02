@@ -50,6 +50,7 @@ public class AddressFilterToolbar extends ToolStrip {
 			@Override
 			public void onClick( ClickEvent event ) {
 
+				GWTSessionManager.get().setCurrentBeginChars( null );
 				EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(), null );
 			}
 		} );
@@ -64,6 +65,7 @@ public class AddressFilterToolbar extends ToolStrip {
 			@Override
 			public void onClick( ClickEvent event ) {
 
+				GWTSessionManager.get().setCurrentBeginChars( "0123456789" );
 				EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(),
 						"0123456789" );
 			}
@@ -80,7 +82,8 @@ public class AddressFilterToolbar extends ToolStrip {
 
 				@Override
 				public void onClick( ClickEvent event ) {
-
+					
+					GWTSessionManager.get().setCurrentBeginChars( beginChar);
 					EventBroker.get().fireReloadAddressList( GWTSessionManager.get().getCurrentAddressFolder(),
 							beginChar );
 				}

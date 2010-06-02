@@ -1,6 +1,7 @@
 package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.common.model.Address;
+import com.cubusmail.common.model.GWTConstants;
 import com.smartgwt.client.widgets.form.fields.SpacerItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
@@ -15,6 +16,9 @@ public class AddressEditAddressForm extends AddressEditAbstractForm {
 	public AddressEditAddressForm() {
 
 		super();
+		setNumCols( 5 );
+		setColWidths( GWTConstants.ADDRESS_TITLE_WIDTH, 100, 15, 15, "*" );
+
 		this.streetItem = new TextItem( "streetItem" );
 		this.streetItem.setHint( "Street" );
 		this.streetItem.setShowHintInField( true );

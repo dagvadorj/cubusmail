@@ -43,12 +43,12 @@ public class GWTSessionManager {
 	private GWTMailbox mailbox;
 	private GWTMailFolder mailFolder;
 	private GWTMailFolder currentMailFolder;
-	private AddressFolder currentAddressFolder;
 	private GWTMessage currentMessage;
 
-	
-	private List<AddressFolder> contactFolderList;
+	private List<AddressFolder> addressFolderList;
 	private Address currentAddress;
+	private AddressFolder currentAddressFolder;
+	private String currentBeginChars;
 
 	/**
 	 * 
@@ -169,17 +169,17 @@ public class GWTSessionManager {
 	}
 
 	/**
-	 * @return Returns the contactFolderList.
+	 * @return Returns the addressFolderList.
 	 */
-	public List<AddressFolder> getContactFolderList() {
+	public List<AddressFolder> getAddressFolderList() {
 
-		return this.contactFolderList;
+		return this.addressFolderList;
 	}
 
 	public AddressFolder getStandardContactFolder() {
 
-		if ( getContactFolderList() != null ) {
-			for (AddressFolder folder : getContactFolderList()) {
+		if ( getAddressFolderList() != null ) {
+			for (AddressFolder folder : getAddressFolderList()) {
 				if ( AddressFolderType.STANDARD == folder.getType() ) {
 					return folder;
 				}
@@ -189,12 +189,12 @@ public class GWTSessionManager {
 	}
 
 	/**
-	 * @param contactFolderList
-	 *            The contactFolderList to set.
+	 * @param addressFolderList
+	 *            The addressFolderList to set.
 	 */
 	public void setAddressFolderList( List<AddressFolder> contactFolderList ) {
 
-		this.contactFolderList = contactFolderList;
+		this.addressFolderList = contactFolderList;
 	}
 
 	/**
@@ -229,5 +229,22 @@ public class GWTSessionManager {
 	public GWTMessage getCurrentMessage() {
 
 		return this.currentMessage;
+	}
+
+	/**
+	 * @return Returns the currentBeginChars.
+	 */
+	public String getCurrentBeginChars() {
+
+		return currentBeginChars;
+	}
+
+	/**
+	 * @param currentBeginChars
+	 *            The currentBeginChars to set.
+	 */
+	public void setCurrentBeginChars( String currentBeginChars ) {
+
+		this.currentBeginChars = currentBeginChars;
 	}
 }

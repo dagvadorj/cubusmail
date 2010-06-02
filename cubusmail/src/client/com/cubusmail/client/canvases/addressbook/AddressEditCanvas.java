@@ -38,6 +38,8 @@ public class AddressEditCanvas extends VLayout {
 	private AddressEditAddressSubCanvas addressSubCanvas;
 	private AddressEditMoreInfoSubCanvas moreInfoSubCanvas;
 
+	private Address currentAddress;
+
 	private Button saveButton;
 
 	public AddressEditCanvas() {
@@ -74,6 +76,7 @@ public class AddressEditCanvas extends VLayout {
 
 	public void setAddress( Address address ) {
 
+		this.currentAddress = address;
 		this.nameForm.setAddress( address );
 		this.phoneSubCanvas.setAddress( address );
 		this.emailSubCanvas.setAddress( address );
@@ -90,6 +93,11 @@ public class AddressEditCanvas extends VLayout {
 		this.emailSubCanvas.fillAddress( result );
 		this.addressSubCanvas.fillAddress( result );
 		this.moreInfoSubCanvas.fillAddress( result );
+
+		if ( this.currentAddress != null ) {
+			result.setAddressFolder( this.currentAddress.getAddressFolder() );
+			result.setId( this.currentAddress.getId() );
+		}
 
 		return result;
 	}

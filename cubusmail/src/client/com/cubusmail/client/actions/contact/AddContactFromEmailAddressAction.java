@@ -81,12 +81,12 @@ public class AddContactFromEmailAddressAction extends GWTAction implements Async
 	 */
 	private void saveAddress() {
 
-		Address contact = GWT.create( Address.class );
-		contact.setAddressFolder( GWTSessionManager.get().getStandardContactFolder() );
-		contact.setEmail( this.address.getEmail() );
-		contact.setLastName( this.address.getName() );
+		Address address = GWT.create( Address.class );
+		address.setAddressFolder( GWTSessionManager.get().getStandardContactFolder() );
+		address.setEmail( this.address.getEmail() );
+		address.setLastName( this.address.getName() );
 
-		ServiceProvider.getUserAccountService().saveContact( contact, this );
+		ServiceProvider.getUserAccountService().saveAddress( address, this );
 	}
 
 	/*

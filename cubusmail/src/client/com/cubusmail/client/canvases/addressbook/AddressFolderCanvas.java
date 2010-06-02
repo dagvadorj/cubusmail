@@ -133,6 +133,7 @@ public class AddressFolderCanvas extends SectionStack {
 				currentTreeNode = selectedNode;
 				GWTSessionManager.get().setCurrentAddressFolder( folder );
 				EventBroker.get().fireAddressFolderSelected( folder );
+				GWTSessionManager.get().setCurrentBeginChars( null );
 				EventBroker.get().fireReloadAddressList( folder, null );
 			}
 		}

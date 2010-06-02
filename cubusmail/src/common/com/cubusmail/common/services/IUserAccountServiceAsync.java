@@ -76,7 +76,7 @@ public interface IUserAccountServiceAsync {
 	/**
 	 * @param contact
 	 */
-	public void saveContact( Address contact, AsyncCallback<Void> callback );
+	public void saveAddress( Address address, AsyncCallback<Void> callback );
 
 	/**
 	 * @param contacts

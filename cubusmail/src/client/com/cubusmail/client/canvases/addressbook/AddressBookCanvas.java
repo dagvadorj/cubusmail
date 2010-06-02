@@ -21,8 +21,12 @@ package com.cubusmail.client.canvases.addressbook;
 
 import com.cubusmail.client.canvases.CanvasRegistry;
 import com.cubusmail.client.canvases.IWorkbenchCanvas;
+import com.cubusmail.client.exceptions.GWTExceptionHandler;
 import com.cubusmail.client.toolbars.ToolbarRegistry;
 import com.cubusmail.client.util.GWTSessionManager;
+import com.cubusmail.client.util.ServiceProvider;
+import com.cubusmail.common.model.Address;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -59,6 +63,7 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 
 		CanvasRegistry.ADDRESS_DETAILS.get( AddressDetailsCanvas.class )
 				.addEditButtonHandler( new EditAddressHandler() );
+		CanvasRegistry.ADDRESS_EDIT.get( AddressEditCanvas.class ).addSaveButtonHandler( new SaveAddressHandler() );
 
 		addMember( addressListLayout );
 	}
@@ -72,6 +77,31 @@ public class AddressBookCanvas extends HLayout implements IWorkbenchCanvas {
 			CanvasRegistry.ADDRESS_EDIT.get( AddressEditCanvas.class ).setAddress(
 					GWTSessionManager.get().getCurrentAddress() );
 			CanvasRegistry.ADDRESS_EDIT.get().setVisible( true );
+		}
+	}
+
+	private class SaveAddressHandler implements ClickHandler {
+
+		@Override
+		public void onClick( ClickEvent event ) {
+
+			final Address address = CanvasRegistry.ADDRESS_EDIT.get( AddressEditCanvas.class ).getAddress();
+			ServiceProvider.getUserAccountService().saveAddress( address, new AsyncCallback<Void>() {
+
+				@Override
+				public void onSuccess( Void result ) {
+
+					CanvasRegistry.ADDRESS_EDIT.get().setVisible( false );
+					CanvasRegistry.ADDRESS_DETAILS.get().setVisible( true );
+					GWTSessionManager.get().setCurrentAddress( address );
+				}
+
+				@Override
+				public void onFailure( Throwable caught ) {
+
+					GWTExceptionHandler.handleException( caught );
+				}
+			} );
 		}
 	}
 }

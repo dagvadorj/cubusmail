@@ -75,7 +75,7 @@ public interface IUserAccountService extends RemoteService {
 	/**
 	 * @param contact
 	 */
-	public void saveContact( Address contact );
+	public void saveAddress( Address address );
 
 	/**
 	 * @param contacts

@@ -282,9 +282,9 @@ public class UserAccountService extends AbstractGwtService implements IUserAccou
 	 * com.cubusmail.gwtui.client.services.IUserAccountService#saveContact(com
 	 * .cubusmail.gwtui.domain.Contact)
 	 */
-	public void saveContact( Address contact ) {
+	public void saveAddress( Address address ) {
 
-		this.userAccountDao.saveAddress( contact );
+		this.userAccountDao.saveAddress( address );
 	}
 
 	/*
